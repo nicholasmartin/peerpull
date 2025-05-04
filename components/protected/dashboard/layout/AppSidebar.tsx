@@ -6,16 +6,18 @@ import { usePathname } from "next/navigation";
 import { useSidebar } from "@/context/SidebarContext";
 
 // Import SVG icons directly
-import BoxCubeIcon from "@/components/icons/box-cube.svg";
 import ChevronDownIcon from "@/components/icons/chevron-down.svg";
 import GridIcon from "@/components/icons/grid.svg";
 import HorizontaLDots from "@/components/icons/horizontal-dots.svg";
 import TableIcon from "@/components/icons/table.svg";
-import PieChartIcon from "@/components/icons/pie-chart.svg";
+import BoxCubeIcon from "@/components/icons/box-cube.svg";
+import CheckIcon from "@/components/icons/check-circle.svg";
+import DollarLineIcon from "@/components/icons/dollar-line.svg";
+import GroupIcon from "@/components/icons/group.svg";
 import UserCircleIcon from "@/components/icons/user-circle.svg";
 import AlertIcon from "@/components/icons/alert.svg";
-import DollarLineIcon from "@/components/icons/dollar-line.svg";
 import ChatIcon from "@/components/icons/chat.svg";
+import PlusIcon from "@/components/icons/plus.svg";
 
 type NavItem = {
   name: string;
@@ -24,6 +26,7 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
+// Primary Navigation Items based on UI mockup
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
@@ -31,42 +34,53 @@ const navItems: NavItem[] = [
     path: "/dashboard",
   },
   {
-    icon: <PieChartIcon />,
-    name: "Analytics",
-    path: "/dashboard/analytics",
+    icon: <BoxCubeIcon />,
+    name: "My PullRequests",
+    path: "/dashboard/pull-requests",
+    subItems: [
+      { name: "New PullRequest", path: "/dashboard/pull-requests/new", new: true }
+    ]
   },
   {
-    icon: <BoxCubeIcon />,
-    name: "Projects",
-    path: "/dashboard/projects",
+    icon: <CheckIcon />,
+    name: "Review Queue",
+    path: "/dashboard/review-queue"
+  },
+  {
+    icon: <DollarLineIcon />,
+    name: "PeerPoints",
+    path: "/dashboard/peerpoints",
+  },
+  {
+    icon: <GroupIcon />,
+    name: "Community",
+    path: "/dashboard/community"
+  },
+  {
+    icon: <UserCircleIcon />,
+    name: "Profile",
+    path: "/dashboard/profile",
   },
   {
     icon: <TableIcon />,
     name: "Settings",
-    path: "/dashboard/settings",
-  },
-  {
-    icon: <AlertIcon />,
-    name: "Notifications",
-    path: "/dashboard/notifications",
-  },
-  {
-    icon: <DollarLineIcon />,
-    name: "Billing",
-    path: "/dashboard/billing",
-  },
-  {
-    icon: <UserCircleIcon />,
-    name: "Users",
-    path: "/dashboard/users",
-  },
-  {
-    icon: <ChatIcon />,
-    name: "Support",
-    path: "/dashboard/support",
+    path: "/dashboard/settings"
   },
 ];
 
+// Secondary Navigation Items (bottom of sidebar)
+const secondaryNavItems: NavItem[] = [
+  {
+    icon: <ChatIcon />,
+    name: "Help & Support",
+    path: "/dashboard/help",
+  },
+  {
+    icon: <PlusIcon />,
+    name: "Invite Founders",
+    path: "/dashboard/invite",
+  },
+];
 
 
 const AppSidebar: React.FC = () => {
@@ -252,7 +266,7 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-[#182B49] text-white h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-700 
         ${
           isExpanded || isMobileOpen
             ? "w-[290px]"
@@ -317,9 +331,26 @@ const AppSidebar: React.FC = () => {
               </h2>
               {renderMenuItems(navItems)}
             </div>
+            
+            {/* Secondary Navigation Items */}
+            <div className="mt-auto">
+              <h2
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                  !isExpanded && !isHovered
+                    ? "lg:justify-center"
+                    : "justify-start"
+                }`}
+              >
+                {isExpanded || isHovered || isMobileOpen ? (
+                  "Support"
+                ) : (
+                  <HorizontaLDots />
+                )}
+              </h2>
+              {renderMenuItems(secondaryNavItems)}
+            </div>
           </div>
         </nav>
-
       </div>
     </aside>
   );
