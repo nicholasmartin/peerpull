@@ -38,6 +38,7 @@ const navItems: NavItem[] = [
     name: "My PullRequests",
     path: "/dashboard/pull-requests",
     subItems: [
+      { name: "All", path: "/dashboard/pull-requests" },
       { name: "New PullRequest", path: "/dashboard/pull-requests/new", new: true }
     ]
   },
