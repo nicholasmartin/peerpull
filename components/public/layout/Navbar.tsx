@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 // Light theme only - no theme switching
 import { User } from '@supabase/supabase-js';
 
@@ -51,31 +52,18 @@ type NavbarProps = {
 export function Navbar({ user }: NavbarProps) {
   // Using light theme only
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center space-x-2">
-            <svg 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              className="h-6 w-6 text-primary"
-            >
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-              <line x1="9" y1="9" x2="9.01" y2="9"/>
-              <line x1="15" y1="9" x2="15.01" y2="9"/>
-            </svg>
-            <span className="font-bold">SaaSMatrix</span>
+          <Link href="/" className="flex items-center">
+            <span className="text-xl font-bold text-prussian-blue">PeerPull</span>
           </Link>
         </div>
         <nav className="hidden md:flex gap-6">
-          <NavLink href="#features">Features</NavLink>
-          <NavLink href="#testimonials">Testimonials</NavLink>
-          <NavLink href="#pricing">Pricing</NavLink>
+          <NavLink href="#problem">Problem</NavLink>
+          <NavLink href="#solution">Solution</NavLink>
+          <NavLink href="#how-it-works">How it Works</NavLink>
+          <NavLink href="#use-cases">Use Cases</NavLink>
           <NavLink href="#faq">FAQ</NavLink>
         </nav>
         <div className="flex items-center gap-4">

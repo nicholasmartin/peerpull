@@ -17,10 +17,10 @@ export default async function AuthLayout({
         <div className="flex h-full w-full items-center justify-center">
           <div className="text-center">
             <h2 className="mb-5 text-[34px] font-semibold leading-[44px] text-white">
-              SaaS Starter Kit
+              PeerPull
             </h2>
             <p className="mx-auto max-w-[410px] text-base font-medium leading-[24px] text-white opacity-60">
-              Build your SaaS application with this modern dashboard template powered by Next.js and Supabase.
+              Connect with experienced peers for technical validation that moves your startup forward.
             </p>
           </div>
         </div>

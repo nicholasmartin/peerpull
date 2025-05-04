@@ -4,7 +4,7 @@ import React from 'react';
 
 export function UseCases() {
   return (
-    <section className="py-16 md:py-24 bg-prussian-blue text-papaya-whip">
+    <section id="use-cases" className="py-16 md:py-24 bg-prussian-blue text-papaya-whip">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">

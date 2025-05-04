@@ -4,7 +4,7 @@ import React from 'react';
 
 export function Problem() {
   return (
-    <section className="py-16 md:py-24 bg-papaya-whip text-prussian-blue">
+    <section id="problem" className="py-16 md:py-24 bg-papaya-whip text-prussian-blue">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">

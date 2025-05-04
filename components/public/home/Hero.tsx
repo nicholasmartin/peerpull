@@ -21,9 +21,11 @@ export function Hero() {
           </div>
           
           <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
-            <Button size="md" className="text-base font-medium px-6 py-4 bg-fire-brick hover:bg-barn-red text-papaya-whip">
-              Get Early Access
-            </Button>
+            <Link href="/signup">
+              <Button size="md" className="text-base font-medium px-6 py-4 bg-fire-brick hover:bg-barn-red text-papaya-whip">
+                Get Early Access
+              </Button>
+            </Link>
             <Button size="md" variant="outline" className="text-base font-medium px-6 py-4 border-air-blue text-air-blue hover:bg-air-blue/10">
               See How It Works
             </Button>

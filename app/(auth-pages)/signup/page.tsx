@@ -28,7 +28,7 @@ export default async function Signup(props: {
               Create an Account
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your email and password to create your account
+              Join PeerPull and get the technical validation your startup needs to succeed
             </p>
           </div>
           <div>

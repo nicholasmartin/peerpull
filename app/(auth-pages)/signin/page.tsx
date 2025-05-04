@@ -18,7 +18,7 @@ export default async function Signin(props: { searchParams: Promise<Message> }) 
               Sign In
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your email and password to sign in to your account
+              Sign in to access your PeerPull dashboard and connect with technical peers
             </p>
           </div>
           <div>
