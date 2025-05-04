@@ -53,6 +53,22 @@ const config = {
           400: "#9ca3af",
           600: "#4b5563",
         },
+        // Custom color palette
+        "barn-red": "#780000",
+        "fire-brick": "#C1121F",
+        "papaya-whip": "#FDF0D5",
+        "prussian-blue": "#003049",
+        "air-blue": "#669BBC",
+        primary: "#003049", // prussian-blue as primary
+        secondary: "#669BBC", // air-superiority-blue as secondary
+        accent: "#C1121F", // fire-brick as accent
+        background: "#FDF0D5", // papaya-whip as background
+        foreground: "#003049", // prussian-blue as foreground text
+        muted: {
+          DEFAULT: "#E6D7B3", // lighter papaya-whip
+          foreground: "#003049", // prussian-blue
+        },
+        border: "#C1121F", // fire-brick as border
       },
       borderRadius: {
         "2xl": "16px",

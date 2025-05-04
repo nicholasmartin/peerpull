@@ -9,13 +9,13 @@ type AccordionProps = {
 
 const Accordion = ({ items }: AccordionProps) => {
   return (
-    <div className="divide-y rounded-md border">
+    <div className="divide-y rounded-md border-2 border-air-blue bg-white shadow-md">
       {items.map((item, i: number) => (
         <details key={i} className="group p-6 [&_summary::-webkit-details-marker]:hidden">
-          <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900 dark:text-white font-medium">
+          <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-prussian-blue font-medium hover:bg-air-blue/10 rounded-md p-2">
             <h3 className="text-lg font-medium">{item.question}</h3>
             <svg
-              className="h-5 w-5 transform transition duration-300 group-open:rotate-180"
+              className="h-5 w-5 transform transition duration-300 group-open:rotate-180 text-fire-brick"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -29,7 +29,7 @@ const Accordion = ({ items }: AccordionProps) => {
               />
             </svg>
           </summary>
-          <p className="mt-4 px-4 text-sm text-muted-foreground">{item.answer}</p>
+          <p className="mt-4 px-4 text-prussian-blue/80">{item.answer}</p>
         </details>
       ))}
     </div>
@@ -38,43 +38,44 @@ const Accordion = ({ items }: AccordionProps) => {
 
 export function FAQ() {
   return (
-    <section id="faq" className="py-16 md:py-24 bg-muted/30">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-              Frequently Asked Questions
-            </h2>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Have questions? We've got answers.
-            </p>
+    <section id="faq" className="py-16 md:py-24 bg-papaya-whip">
+      <div className="container px-4 md:px-6 mx-auto">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-2 text-barn-red">Frequently Asked Questions</h2>
+            <h3 className="text-2xl font-semibold text-prussian-blue mb-6">Everything You Need to Know</h3>
           </div>
-        </div>
-        <div className="mx-auto max-w-3xl py-12">
-          <Accordion 
-            items={[
-              {
-                question: "How does the 14-day trial work?",
-                answer: "Our 14-day trial gives you full access to all features of your chosen plan. No credit card is required to start, and you can cancel anytime during the trial period with no obligation."
-              },
-              {
-                question: "Can I change plans later?",
-                answer: "Yes, you can upgrade or downgrade your plan at any time. If you upgrade, the new features will be available immediately. If you downgrade, the changes will take effect at the start of your next billing cycle."
-              },
-              {
-                question: "Is there a setup fee?",
-                answer: "No, there are no setup fees for any of our plans. You only pay the monthly subscription fee for your chosen plan."
-              },
-              {
-                question: "What kind of support is included?",
-                answer: "All plans include access to our help center and email support. The Professional plan includes priority support with faster response times, while Enterprise customers get a dedicated account manager."
-              },
-              {
-                question: "Do you offer discounts for non-profits or educational institutions?",
-                answer: "Yes, we offer special pricing for non-profit organizations and educational institutions. Please contact our sales team for more information."
-              }
-            ]}
-          />
+          
+          <div className="mx-auto max-w-3xl py-6">
+            <Accordion 
+              items={[
+                {
+                  question: "How do you ensure quality feedback?",
+                  answer: "All PeerInsights must be approved by recipients before the reviewer earns PeerPoints. Our templates also guide reviewers to provide specific, actionable insights rather than generic comments."
+                },
+                {
+                  question: "What if I don't have a landing page yet?",
+                  answer: "You can still submit a concept document, pitch deck, or even a detailed description of your idea as a PullRequest. The key is having something concrete for others to evaluate."
+                },
+                {
+                  question: "How technical should the feedback be?",
+                  answer: "Our community is primarily technical founders, so the feedback tends to be practical and implementation-focused. However, you can specify if you want feedback on specific aspects like market fit, UX, or technical architecture."
+                },
+                {
+                  question: "What if I'm an experienced founder without a current project?",
+                  answer: "We welcome experienced founders to join as PeerPros! You'll get special recognition and can bank PeerPoints for future projects."
+                },
+                {
+                  question: "Is my idea protected?",
+                  answer: "While we can't guarantee absolute confidentiality in a community setting, our terms prohibit stealing ideas. Remember that execution, not the idea itself, is typically the differentiator in startup success."
+                }
+              ]}
+            />
+          </div>
+          
+          <div className="text-center mt-12 p-6 bg-fire-brick/10 rounded-xl border-2 border-fire-brick shadow-md">
+            <p className="text-lg text-prussian-blue">Still have questions? <a href="#" className="text-fire-brick font-medium hover:underline">Contact us</a></p>
+          </div>
         </div>
       </div>
     </section>

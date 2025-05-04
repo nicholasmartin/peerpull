@@ -4,64 +4,56 @@ type TestimonialCardProps = {
   quote: string;
   author: string;
   role: string;
-  company: string;
+  imagePlaceholder?: boolean;
 };
 
-const TestimonialCard = ({ quote, author, role, company }: TestimonialCardProps) => (
-  <div className="rounded-lg border bg-card p-6 shadow-sm">
-    <div className="mb-4 flex">
-      {[...Array(5)].map((_, i: number) => (
-        <svg
-          key={i}
-          className="h-5 w-5 text-yellow-400"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+const TestimonialCard = ({ quote, author, role, imagePlaceholder = true }: TestimonialCardProps) => (
+  <div className="rounded-xl border-2 border-fire-brick bg-papaya-whip/20 p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
+    {imagePlaceholder && (
+      <div className="w-16 h-16 rounded-full bg-air-blue mb-4 flex items-center justify-center text-papaya-whip shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
         </svg>
-      ))}
-    </div>
-    <p className="text-muted-foreground mb-4">"{quote}"</p>
+      </div>
+    )}
+    <p className="text-papaya-whip mb-4 italic">"{quote}"</p>
     <div>
-      <p className="font-semibold">{author}</p>
-      <p className="text-xs text-muted-foreground">{role}, {company}</p>
+      <p className="font-semibold text-fire-brick">{author}</p>
+      <p className="text-sm text-papaya-whip/80">{role}</p>
     </div>
   </div>
 );
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-muted/30">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+    <section className="py-16 md:py-24 bg-prussian-blue text-papaya-whip">
+      <div className="container px-4 md:px-6 mx-auto">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-              What Our Customers Say
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-2 text-papaya-whip">
+              Why Founders Love Us
             </h2>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Don't just take our word for it. Here's what our customers have to say about their experience.
-            </p>
+            <h3 className="text-2xl font-semibold text-air-blue mb-6">
+              Real Stories from Technical Founders
+            </h3>
           </div>
         </div>
-        <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
           <TestimonialCard
-            quote="SaaSMatrix has completely transformed how we manage our customer relationships. Our team saves hours every week with the automation features."
-            author="Jane Cooper"
-            role="CEO"
-            company="Acme Inc."
+            quote="After six months of building my SaaS tool, I realized I was solving the wrong problem. PeerPull would have saved me thousands of dollars and countless hours."
+            author="Mira J."
+            role="First-time Founder"
           />
           <TestimonialCard
-            quote="The analytics dashboard gives us insights we never had before. We've been able to increase conversion rates by 45% in just three months."
-            author="John Smith"
-            role="Marketing Director"
-            company="TechCorp"
+            quote="The technical feedback I received was invaluable—fellow developers immediately spotted architecture issues I had missed completely."
+            author="Chris T."
+            role="Solo Technical Founder"
           />
           <TestimonialCard
-            quote="Implementation was seamless and the support team went above and beyond to ensure we were successful. Highly recommend!"
-            author="Sarah Johnson"
-            role="COO"
-            company="Startify"
+            quote="It's like having a team of co-founders available whenever I need a reality check on my ideas."
+            author="Samantha L."
+            role="Developer Turned Entrepreneur"
           />
         </div>
       </div>
