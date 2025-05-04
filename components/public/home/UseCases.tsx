@@ -9,7 +9,7 @@ export function UseCases() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-2 text-papaya-whip">Use Cases</h2>
-            <h3 className="text-2xl font-semibold text-air-blue mb-6">Perfect For Technical Founders Who Are:</h3>
+            <h3 className="text-2xl font-semibold text-air-blue mb-6">Perfect For Solo Founders Who Are:</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

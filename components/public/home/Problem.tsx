@@ -14,7 +14,7 @@ export function Problem() {
           
           <div className="prose prose-lg mx-auto">
             <p className="text-lg mb-6 text-prussian-blue">
-              As a solo technical founder, you face challenges that funded startups don't:
+              As a solo founder, you face challenges that funded startups don't:
             </p>
             
             <ul className="space-y-4 my-8">

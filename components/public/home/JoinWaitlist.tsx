@@ -18,7 +18,7 @@ export function JoinWaitlist() {
             <div className="space-y-6">
               <h3 className="text-2xl font-bold text-prussian-blue">Ready to get started?</h3>
               <p className="text-lg text-prussian-blue/80 max-w-xl mx-auto">
-                Join PeerPull today and connect with experienced technical founders who can help validate your ideas and accelerate your startup journey.
+                Join PeerPull today and connect with experienced founders who can help validate your ideas and accelerate your startup journey.
               </p>
               
               <div className="mt-8">

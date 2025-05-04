@@ -10,13 +10,13 @@ export function Hero() {
         <div className="flex flex-col items-center gap-6 text-center max-w-4xl mx-auto">
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-papaya-whip">
-              Validate Before You Build
+              Get Valuable Feedback on Your Startup Idea Today!
             </h1>
             <p className="text-xl md:text-2xl font-semibold text-air-blue">
-              Pull your startup forward with honest feedback from fellow technical founders.
+              Submit Your Landing Page or MVP for Free Feedback From Other Founders and Startup Entrepreneurs.
             </p>
             <p className="text-lg text-papaya-whip/80 mt-2">
-              Join 500+ founders who are building better startups through peer validation
+              Join a community of like minded founders eager to provide feedback on your startup idea.
             </p>
           </div>
           
@@ -26,7 +26,12 @@ export function Hero() {
                 Get Early Access
               </Button>
             </Link>
-            <Button size="md" variant="outline" className="text-base font-medium px-6 py-4 border-air-blue text-air-blue hover:bg-air-blue/10">
+            <Button 
+              size="md" 
+              variant="outline" 
+              className="text-base font-medium px-6 py-4 border-air-blue text-air-blue hover:bg-air-blue/10"
+              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               See How It Works
             </Button>
           </div>

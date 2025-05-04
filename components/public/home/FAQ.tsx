@@ -73,9 +73,7 @@ export function FAQ() {
             />
           </div>
           
-          <div className="text-center mt-12 p-6 bg-fire-brick/10 rounded-xl border-2 border-fire-brick shadow-md">
-            <p className="text-lg text-prussian-blue">Still have questions? <a href="#" className="text-fire-brick font-medium hover:underline">Contact us</a></p>
-          </div>
+          
         </div>
       </div>
     </section>

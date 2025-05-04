@@ -14,7 +14,7 @@ export function Solution() {
           
           <div className="prose prose-lg prose-invert mx-auto">
             <p className="text-lg mb-8 text-papaya-whip/90">
-              PeerPull connects you with other technical founders who understand what you're building.
+              PeerPull connects you with other startup founders who understand what you're building.
             </p>
             
             <div className="bg-papaya-whip/10 p-8 rounded-xl border border-air-blue/30 shadow-lg">
@@ -22,28 +22,28 @@ export function Solution() {
               
               <ol className="space-y-6 counter-reset my-counter">
                 <li className="flex items-start gap-4">
-                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-fire-brick text-papaya-whip font-medium text-sm shadow-md">1</div>
+                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-emerald-600 text-papaya-whip font-medium text-sm shadow-md">1</div>
                   <div>
                     <p className="font-medium text-papaya-whip">Submit your landing page or startup concept as a PullRequest</p>
                   </div>
                 </li>
                 
                 <li className="flex items-start gap-4">
-                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-fire-brick text-papaya-whip font-medium text-sm shadow-md">2</div>
+                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-emerald-600 text-papaya-whip font-medium text-sm shadow-md">2</div>
                   <div>
                     <p className="font-medium text-papaya-whip">Give quality feedback to two other founders</p>
                   </div>
                 </li>
                 
                 <li className="flex items-start gap-4">
-                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-fire-brick text-papaya-whip font-medium text-sm shadow-md">3</div>
+                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-emerald-600 text-papaya-whip font-medium text-sm shadow-md">3</div>
                   <div>
                     <p className="font-medium text-papaya-whip">Receive one thoughtful review in return—usually within hours</p>
                   </div>
                 </li>
                 
                 <li className="flex items-start gap-4">
-                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-fire-brick text-papaya-whip font-medium text-sm shadow-md">4</div>
+                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-emerald-600 text-papaya-whip font-medium text-sm shadow-md">4</div>
                   <div>
                     <p className="font-medium text-papaya-whip">Iterate with confidence, knowing real founders have validated your direction</p>
                   </div>
