@@ -18,7 +18,7 @@ export default function DashboardShell({
   profile: Profile | null;
 }) {
   return (
-    <ThemeProvider>
+    <ThemeProvider isProtected={true}>
       <div className="min-h-screen xl:flex">
         {/* Sidebar and Backdrop */}
         <AppSidebar />

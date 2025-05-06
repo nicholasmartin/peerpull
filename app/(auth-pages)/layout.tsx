@@ -1,4 +1,5 @@
 import React from "react";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export default async function AuthLayout({
   children,
@@ -6,7 +7,8 @@ export default async function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative flex min-h-screen">
+    <ThemeProvider isProtected={false}>
+      <div className="relative flex min-h-screen">
       {/* Left Side - Form */}
       <div className="flex w-full items-center justify-center bg-white p-4 dark:bg-gray-900 lg:w-1/2">
         {children}
@@ -26,5 +28,6 @@ export default async function AuthLayout({
         </div>
       </div>
     </div>
+    </ThemeProvider>
   );
 }

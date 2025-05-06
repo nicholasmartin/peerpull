@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { useTheme } from "@/context/ThemeContext";
 import { 
   Bell, 
   Lock, 
@@ -18,10 +21,71 @@ import {
   Globe, 
   Moon, 
   Sun, 
-  LogOut
+  LogOut,
+  Monitor
 } from "lucide-react";
 
 export default function SettingsPage() {
+  const { theme, toggleTheme } = useTheme();
+  const [selectedTheme, setSelectedTheme] = useState(theme || "dark");
+  const [mounted, setMounted] = useState(false);
+  
+  // After mounting, get the theme from localStorage or system preference
+  useEffect(() => {
+    setMounted(true);
+    // Get theme from localStorage
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      setSelectedTheme(storedTheme as "light" | "dark" | "system");
+    } else {
+      // If no theme in localStorage, check system preference
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setSelectedTheme(systemPrefersDark ? "system" : "light");
+    }
+  }, []);
+  
+  // Function to apply the selected theme
+  const applyTheme = (newTheme: "light" | "dark" | "system") => {
+    if (!mounted) return;
+    
+    setSelectedTheme(newTheme);
+    
+    if (newTheme === "system") {
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (systemPrefersDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+      localStorage.setItem("theme", "system");
+    } else if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
+  
+  // Set up listener for system preference changes (only if using "system" theme)
+  useEffect(() => {
+    if (!mounted) return;
+    
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (selectedTheme === "system") {
+        if (e.matches) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      }
+    };
+    
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [mounted, selectedTheme]);
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Settings</h1>
@@ -393,25 +457,36 @@ export default function SettingsPage() {
                     <h3 className="font-medium">Theme</h3>
                     
                     <div className="grid grid-cols-3 gap-4">
-                      <div className="flex flex-col items-center space-y-2">
-                        <div className="flex h-20 w-full items-center justify-center rounded-md border-2 border-gray-200 bg-white dark:border-gray-700">
+                      {/* Light Theme Option */}
+                      <div 
+                        className="flex flex-col items-center space-y-2 cursor-pointer"
+                        onClick={() => applyTheme("light")}
+                      >
+                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "light" ? "border-[#3366FF]" : "border-gray-200 dark:border-gray-700"} bg-white`}>
                           <Sun className="h-6 w-6 text-gray-800" />
                         </div>
                         <Label className="text-sm font-normal">Light</Label>
                       </div>
                       
-                      <div className="flex flex-col items-center space-y-2">
-                        <div className="flex h-20 w-full items-center justify-center rounded-md border-2 border-[#3366FF] bg-gray-950">
+                      {/* Dark Theme Option */}
+                      <div 
+                        className="flex flex-col items-center space-y-2 cursor-pointer"
+                        onClick={() => applyTheme("dark")}
+                      >
+                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "dark" ? "border-[#3366FF]" : "border-gray-200 dark:border-gray-700"} bg-gray-950`}>
                           <Moon className="h-6 w-6 text-gray-100" />
                         </div>
                         <Label className="text-sm font-normal">Dark</Label>
                       </div>
                       
-                      <div className="flex flex-col items-center space-y-2">
-                        <div className="flex h-20 w-full items-center justify-center rounded-md border-2 border-gray-200 bg-gradient-to-r from-white to-gray-950 dark:border-gray-700">
+                      {/* System Theme Option */}
+                      <div 
+                        className="flex flex-col items-center space-y-2 cursor-pointer"
+                        onClick={() => applyTheme("system")}
+                      >
+                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "system" ? "border-[#3366FF]" : "border-gray-200 dark:border-gray-700"} bg-gradient-to-r from-white to-gray-950`}>
                           <div className="flex space-x-1">
-                            <Sun className="h-6 w-6 text-gray-800" />
-                            <Moon className="h-6 w-6 text-gray-100" />
+                            <Monitor className="h-6 w-6 text-gray-600" />
                           </div>
                         </div>
                         <Label className="text-sm font-normal">System</Label>

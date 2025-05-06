@@ -13,7 +13,7 @@ export default async function PublicLayout({
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <ThemeProvider>
+    <ThemeProvider isProtected={false}>
       <div className="min-h-screen flex flex-col">
         <Navbar user={user} />
         <main className="flex-1">{children}</main>
