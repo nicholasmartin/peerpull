@@ -4,8 +4,8 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata = {
-  title: "SaaS Starter Kit - Launch Projects Faster",
-  description: "Build your SaaS application with this modern dashboard template powered by Next.js and Supabase.",
+  title: "PeerPull - Get Valuable Feedback Early!",
+  description: "Valueable Feedback Exchange For Startup Founders to Validate Ideas Early.",
 };
 
 const inter = Inter({
