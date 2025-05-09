@@ -14,9 +14,9 @@ export default async function PublicLayout({
 
   return (
     <ThemeProvider isProtected={false}>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col overflow-x-hidden">
         <Navbar user={user} />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 overflow-x-hidden">{children}</main>
         <Footer />
       </div>
     </ThemeProvider>
