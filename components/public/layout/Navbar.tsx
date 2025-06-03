@@ -2,9 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-// Light theme only - no theme switching
 import { User } from '@supabase/supabase-js';
 import { useState, useEffect } from 'react';
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 type NavLinkProps = {
   href: string;
@@ -12,8 +17,12 @@ type NavLinkProps = {
 };
 
 const NavLink = ({ href, children }: NavLinkProps) => (
-  <Link href={href} className="text-sm font-medium transition-colors hover:text-primary">
-    {children}
+  <Link 
+    href={href} 
+    className={`text-sm font-medium transition-all duration-200 text-dark-text-muted hover:text-dark-text relative group`}
+  >
+    <span className="relative z-10">{children}</span>
+    <span className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-gradient-to-r from-blue-primary to-teal-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
   </Link>
 );
 
@@ -26,13 +35,13 @@ type ButtonProps = {
 };
 
 const Button = ({ children, variant = 'default', className = '', href, ...props }: ButtonProps) => {
-  const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
+  const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-primary/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
   
   const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    outline: "border border-input hover:bg-accent hover:text-accent-foreground",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
+    default: "bg-gradient-to-r from-blue-primary to-teal-accent text-white hover:shadow-lg hover:shadow-blue-primary/20",
+    secondary: "bg-dark-card text-dark-text hover:bg-dark-card/80",
+    outline: "border border-glass-border backdrop-blur-sm text-dark-text hover:border-glass-highlight hover:bg-glass-highlight/10",
+    ghost: "text-dark-text-muted hover:text-dark-text hover:bg-dark-card/30",
   };
   
   const sizeClasses = "h-10 py-2 px-4";
@@ -91,13 +100,18 @@ export function Navbar({ user }: NavbarProps) {
     }
   };
   
-  // Using light theme only
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center">
-            <span className="text-xl font-bold text-prussian-blue">PeerPull</span>
+    <header className="sticky top-0 z-50 w-full border-b border-glass-border bg-dark-bg/80 backdrop-blur-lg shadow-md">
+      {/* Subtle glass reflection */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-glass-highlight to-transparent opacity-30"></div>
+      
+      <div className="container flex h-16 items-center justify-between relative z-10">
+        <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="bg-gradient-to-r from-blue-primary to-teal-accent rounded-md w-8 h-8 flex items-center justify-center shadow-sm">
+              <span className={`${montserrat.className} text-dark-text font-bold text-lg`}>P</span>
+            </div>
+            <span className={`${montserrat.className} text-xl font-bold bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent`}>PeerPull</span>
           </Link>
         </div>
         
@@ -114,7 +128,7 @@ export function Navbar({ user }: NavbarProps) {
           {/* Mobile Menu Toggle */}
           <button 
             id="menu-toggle"
-            className="md:hidden flex items-center justify-center p-2 rounded-md text-prussian-blue hover:bg-gray-100 focus:outline-none"
+            className="md:hidden flex items-center justify-center p-2 rounded-md text-dark-text hover:bg-dark-card/50 focus:outline-none transition-colors duration-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
             aria-label="Toggle menu"
@@ -145,11 +159,11 @@ export function Navbar({ user }: NavbarProps) {
           </button>
           
           {user ? (
-            <Button href="/dashboard" variant="default">Dashboard</Button>
+            <Button href="/dashboard" variant="default" className="font-medium">Dashboard</Button>
           ) : (
             <>
-              <Button href="/signin" variant="ghost" className="hidden sm:inline-flex">Sign in</Button>
-              <Button href="/signup" variant="default">Sign Up</Button>
+              <Button href="/signin" variant="ghost" className="hidden sm:inline-flex font-medium">Sign in</Button>
+              <Button href="/signup" variant="default" className="font-medium">Sign Up</Button>
             </>
           )}
         </div>
@@ -158,50 +172,50 @@ export function Navbar({ user }: NavbarProps) {
       {/* Mobile Navigation Menu */}
       <div 
         id="mobile-menu"
-        className={`md:hidden absolute top-16 inset-x-0 z-50 bg-white border-b shadow-lg transform transition-transform duration-200 ease-in-out ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}
+        className={`md:hidden absolute top-16 inset-x-0 z-50 bg-dark-bg/95 backdrop-blur-lg border-b border-glass-border shadow-lg transform transition-all duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
       >
-        <div className="container py-4 px-4">
-          <nav className="flex flex-col space-y-4">
+        <div className="container py-6 px-4">
+          <nav className="flex flex-col space-y-2">
             <Link 
               href="#problem" 
-              className="text-base font-medium py-2 px-3 rounded-md hover:bg-gray-100 text-prussian-blue"
+              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
               onClick={(e) => handleAnchorClick(e, '#problem')}
             >
               Problem
             </Link>
             <Link 
               href="#solution" 
-              className="text-base font-medium py-2 px-3 rounded-md hover:bg-gray-100 text-prussian-blue"
+              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
               onClick={(e) => handleAnchorClick(e, '#solution')}
             >
               Solution
             </Link>
             <Link 
               href="#how-it-works" 
-              className="text-base font-medium py-2 px-3 rounded-md hover:bg-gray-100 text-prussian-blue"
+              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
               onClick={(e) => handleAnchorClick(e, '#how-it-works')}
             >
               How it Works
             </Link>
             <Link 
               href="#use-cases" 
-              className="text-base font-medium py-2 px-3 rounded-md hover:bg-gray-100 text-prussian-blue"
+              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
               onClick={(e) => handleAnchorClick(e, '#use-cases')}
             >
               Use Cases
             </Link>
             <Link 
               href="#faq" 
-              className="text-base font-medium py-2 px-3 rounded-md hover:bg-gray-100 text-prussian-blue"
+              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
               onClick={(e) => handleAnchorClick(e, '#faq')}
             >
               FAQ
             </Link>
             {/* Only show Sign In in mobile menu if it's hidden in the header */}
-            <div className="sm:hidden pt-2 border-t">
+            <div className="sm:hidden pt-4 mt-2 border-t border-glass-border/30">
               <Link 
                 href="/signin" 
-                className="block text-base font-medium py-2 px-3 rounded-md hover:bg-gray-100 text-prussian-blue"
+                className="block text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
               >
                 Sign in
               </Link>

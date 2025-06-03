@@ -1,7 +1,13 @@
-import { Inter } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import { SidebarProvider } from "@/context/SidebarContext";
 import Script from "next/script";
 import "./globals.css";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
+});
 
 export const metadata = {
   title: "PeerPull - Get Valuable Feedback Early!",
@@ -18,34 +24,9 @@ const inter = Inter({
 const darkModeScript = `
   (function() {
     try {
-      // Check stored theme preference first
-      const storedTheme = localStorage.getItem('theme');
-      
-      if (storedTheme) {
-        if (storedTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else if (storedTheme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else if (storedTheme === 'system') {
-          // Apply theme based on system preference
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (prefersDark) {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-        }
-      } else {
-        // No stored preference, use route-based default
-        const isProtectedRoute = window.location.pathname.startsWith('/dashboard');
-        if (isProtectedRoute) {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        }
-      }
+      // Always use dark mode for the entire application
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     } catch (e) {}
   })();
 `;
@@ -56,12 +37,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${montserrat.variable}`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <Script id="dark-mode-script" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: darkModeScript }} />
       </head>
-      <body className="font-inter">
+      <body className="font-inter bg-dark-bg text-dark-text antialiased">
         <SidebarProvider>
           {children}
         </SidebarProvider>

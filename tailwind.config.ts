@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config = {
-  // Enable dark mode via class strategy
+  // Using dark mode by default - no toggle needed
   darkMode: 'class',
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -17,6 +17,10 @@ const config = {
       screens: {
         "2xl": "1400px",
       },
+    },
+    fontFamily: {
+      inter: ['var(--font-inter)'],
+      montserrat: ['var(--font-montserrat)'],
     },
     extend: {
       colors: {
@@ -54,22 +58,30 @@ const config = {
           400: "#9ca3af",
           600: "#4b5563",
         },
-        // Custom color palette
-        "barn-red": "#780000",
-        "fire-brick": "#C1121F",
-        "papaya-whip": "#FDF0D5",
-        "prussian-blue": "#003049",
-        "air-blue": "#669BBC",
-        primary: "#003049", // prussian-blue as primary
-        secondary: "#669BBC", // air-superiority-blue as secondary
-        accent: "#C1121F", // fire-brick as accent
-        background: "#FDF0D5", // papaya-whip as background
-        foreground: "#003049", // prussian-blue as foreground text
+        // Premium Dark Mode Theme
+        "dark-bg": "#121212",
+        "dark-card": "#1e1e1e",
+        "dark-surface": "#252525",
+        "dark-border": "#333333",
+        "dark-text": "#f5f5f5",
+        "dark-text-muted": "#a0a0a0",
+        "blue-primary": "#0ea5e9",
+        "blue-secondary": "#06b6d4",
+        "teal-accent": "#2dd4bf",
+        "gradient-start": "#0ea5e9",
+        "gradient-end": "#2dd4bf",
+        "glass-highlight": "rgba(255, 255, 255, 0.05)",
+        "glass-border": "rgba(255, 255, 255, 0.1)",
+        primary: "#0ea5e9", // blue primary
+        secondary: "#2dd4bf", // teal accent
+        accent: "#06b6d4", // blue secondary
+        background: "#121212", // dark bg
+        foreground: "#f5f5f5", // dark text
         muted: {
-          DEFAULT: "#E6D7B3", // lighter papaya-whip
-          foreground: "#003049", // prussian-blue
+          DEFAULT: "#252525", // dark surface
+          foreground: "#a0a0a0", // dark text muted
         },
-        border: "#C1121F", // fire-brick as border
+        border: "#333333" // dark border
       },
       borderRadius: {
         "2xl": "16px",

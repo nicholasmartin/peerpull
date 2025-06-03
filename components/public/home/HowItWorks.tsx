@@ -2,107 +2,187 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-papaya-whip text-prussian-blue">
-      <div className="container px-4 md:px-6 mx-auto">
+    <section id="how-it-works" className="py-20 md:py-32 bg-dark-surface relative">
+      {/* Abstract geometric shapes for background */}
+      <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
+        <div className="absolute top-[10%] right-[5%] w-[350px] h-[350px] rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary blur-3xl opacity-20"></div>
+        <div className="absolute bottom-[5%] left-[10%] w-[250px] h-[250px] rounded-full bg-gradient-to-r from-teal-accent to-blue-secondary blur-3xl opacity-20"></div>
+      </div>
+      
+      <div className="container px-4 md:px-6 mx-auto relative z-10">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-2 text-barn-red">How It Works</h2>
-            <h3 className="text-2xl font-semibold text-prussian-blue mb-6">The 2:1 Exchange That Powers PeerPull</h3>
+          <div className="text-center mb-16">
+            <h2 className={`${montserrat.className} text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-4`}>
+              <span className="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">How It Works</span>
+            </h2>
+            <h3 className="text-xl font-medium text-dark-text-muted mb-6">The 2:1 Exchange That Powers PeerPull</h3>
           </div>
           
-          {/* Placeholder for diagram - would be replaced with actual image */}
-          <div className="relative w-full h-64 md:h-80 mb-16 bg-prussian-blue/10 rounded-xl flex items-center justify-center border-2 border-air-blue shadow-lg">
-            <p className="text-prussian-blue font-semibold">How PeerPull Works - Diagram</p>
+          {/* Placeholder for diagram with dark mode styling */}
+          <div className="relative w-full h-64 md:h-96 mb-16 bg-glass-highlight backdrop-blur-sm rounded-xl flex items-center justify-center border border-glass-border shadow-xl overflow-hidden">
+            {/* Gradient decoration */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-r from-blue-primary/10 to-teal-accent/10 rounded-full blur-2xl"></div>
+            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-gradient-to-r from-teal-accent/10 to-blue-primary/10 rounded-full blur-2xl"></div>
+            
+            <div className="absolute inset-0 flex items-center justify-center p-8">
+              <div className="bg-dark-card/60 backdrop-blur-md p-8 rounded-lg border border-glass-border w-full max-w-2xl">
+                <div className="grid grid-cols-3 gap-6 relative">
+                  {/* Flow diagram with gradient arrows */}
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary flex items-center justify-center text-dark-text text-lg font-medium">1</div>
+                    <p className="text-sm text-dark-text">Submit your project</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary flex items-center justify-center text-dark-text text-lg font-medium">2</div>
+                    <p className="text-sm text-dark-text">Review two others</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary flex items-center justify-center text-dark-text text-lg font-medium">3</div>
+                    <p className="text-sm text-dark-text">Get one review back</p>
+                  </div>
+                  
+                  {/* Connecting arrows */}
+                  <div className="absolute top-1/2 left-[27%] w-[12%] h-0.5 bg-gradient-to-r from-blue-primary to-teal-accent transform -translate-y-1/2"></div>
+                  <div className="absolute top-1/2 left-[60%] w-[12%] h-0.5 bg-gradient-to-r from-blue-primary to-teal-accent transform -translate-y-1/2"></div>
+                </div>
+                
+                <p className="text-dark-text-muted text-center mt-6 text-sm">The 2:1 exchange ensures quality feedback for everyone</p>
+              </div>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            <div className="bg-white rounded-xl border-2 border-fire-brick p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-fire-brick text-papaya-whip font-medium text-lg shadow-md">1</div>
-                <h4 className="text-xl font-semibold text-barn-red">Submit Your PullRequest</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14">
+            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
+              {/* Gradient accent line at top */}
+              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-blue-primary to-teal-accent"></div>
+              
+              {/* Background gradient */}
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-primary/5 to-teal-accent/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text font-medium text-lg shadow-lg">
+                  1
+                </div>
+                <h4 className="text-xl font-semibold bg-gradient-to-r from-blue-primary to-blue-secondary bg-clip-text text-transparent">Submit Your PullRequest</h4>
               </div>
-              <ul className="space-y-3 pl-14">
-                <li className="flex items-start gap-2">
-                  <span className="text-fire-brick mr-2">•</span>
-                  <span className="text-prussian-blue">Add your landing page URL</span>
+              
+              <ul className="space-y-4 pl-16">
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-primary mr-2">•</span>
+                  <span className="text-dark-text">Add your landing page URL</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-fire-brick mr-2">•</span>
-                  <span className="text-prussian-blue">Specify what feedback you need most</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-primary mr-2">•</span>
+                  <span className="text-dark-text">Specify what feedback you need most</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-fire-brick mr-2">•</span>
-                  <span className="text-prussian-blue">Choose from our templates to get structured insights</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-primary mr-2">•</span>
+                  <span className="text-dark-text">Choose from our templates to get structured insights</span>
                 </li>
               </ul>
             </div>
             
-            <div className="bg-white rounded-xl border-2 border-air-blue p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-air-blue text-white font-medium text-lg shadow-md">2</div>
-                <h4 className="text-xl font-semibold text-air-blue">Review Other Projects</h4>
+            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
+              {/* Gradient accent line at top */}
+              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-teal-accent to-blue-primary"></div>
+              
+              {/* Background gradient */}
+              <div className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-r from-teal-accent/5 to-blue-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-teal-accent to-blue-primary text-dark-text font-medium text-lg shadow-lg">
+                  2
+                </div>
+                <h4 className="text-xl font-semibold bg-gradient-to-r from-teal-accent to-blue-primary bg-clip-text text-transparent">Review Other Projects</h4>
               </div>
-              <ul className="space-y-3 pl-14">
-                <li className="flex items-start gap-2">
-                  <span className="text-air-blue mr-2">•</span>
-                  <span className="text-prussian-blue">Browse available projects in your expertise areas</span>
+              
+              <ul className="space-y-4 pl-16">
+                <li className="flex items-start gap-3">
+                  <span className="text-teal-accent mr-2">•</span>
+                  <span className="text-dark-text">Browse available projects in your expertise areas</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-air-blue mr-2">•</span>
-                  <span className="text-prussian-blue">Provide thoughtful reviews using our guided frameworks</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-teal-accent mr-2">•</span>
+                  <span className="text-dark-text">Provide thoughtful reviews using our guided frameworks</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-air-blue mr-2">•</span>
-                  <span className="text-prussian-blue">Each review takes about 10-15 minutes</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-teal-accent mr-2">•</span>
+                  <span className="text-dark-text">Each review takes about 10-15 minutes</span>
                 </li>
               </ul>
             </div>
             
-            <div className="bg-white rounded-xl border-2 border-fire-brick p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-fire-brick text-papaya-whip font-medium text-lg shadow-md">3</div>
-                <h4 className="text-xl font-semibold text-barn-red">Earn PeerPoints</h4>
+            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
+              {/* Gradient accent line at top */}
+              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-blue-primary to-teal-accent"></div>
+              
+              {/* Background gradient */}
+              <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-primary/5 to-teal-accent/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text font-medium text-lg shadow-lg">
+                  3
+                </div>
+                <h4 className="text-xl font-semibold bg-gradient-to-r from-blue-primary to-blue-secondary bg-clip-text text-transparent">Earn PeerPoints</h4>
               </div>
-              <ul className="space-y-3 pl-14">
-                <li className="flex items-start gap-2">
-                  <span className="text-fire-brick mr-2">•</span>
-                  <span className="text-prussian-blue">For every two reviews you give, you earn one PeerPoint</span>
+              
+              <ul className="space-y-4 pl-16">
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-primary mr-2">•</span>
+                  <span className="text-dark-text">For every two reviews you give, you earn one PeerPoint</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-fire-brick mr-2">•</span>
-                  <span className="text-prussian-blue">Each PeerPoint gets you one review on your project</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-primary mr-2">•</span>
+                  <span className="text-dark-text">Each PeerPoint gets you one review on your project</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-fire-brick mr-2">•</span>
-                  <span className="text-prussian-blue">All feedback is vetted to ensure quality</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-primary mr-2">•</span>
+                  <span className="text-dark-text">All feedback is vetted to ensure quality</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-fire-brick mr-2">•</span>
-                  <span className="text-prussian-blue">Average time to first PeerInsight: under 4 hours</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-primary mr-2">•</span>
+                  <span className="text-dark-text">Average time to first PeerInsight: under 4 hours</span>
                 </li>
               </ul>
             </div>
             
-            <div className="bg-white rounded-xl border-2 border-air-blue p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-air-blue text-white font-medium text-lg shadow-md">4</div>
-                <h4 className="text-xl font-semibold text-air-blue">Build Better, Faster</h4>
+            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
+              {/* Gradient accent line at top */}
+              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-teal-accent to-blue-primary"></div>
+              
+              {/* Background gradient */}
+              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-r from-teal-accent/5 to-blue-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-teal-accent to-blue-primary text-dark-text font-medium text-lg shadow-lg">
+                  4
+                </div>
+                <h4 className="text-xl font-semibold bg-gradient-to-r from-teal-accent to-blue-primary bg-clip-text text-transparent">Build Better, Faster</h4>
               </div>
-              <ul className="space-y-3 pl-14">
-                <li className="flex items-start gap-2">
-                  <span className="text-air-blue mr-2">•</span>
-                  <span className="text-prussian-blue">Identify blindspots before writing a line of code</span>
+              
+              <ul className="space-y-4 pl-16">
+                <li className="flex items-start gap-3">
+                  <span className="text-teal-accent mr-2">•</span>
+                  <span className="text-dark-text">Identify blindspots before writing a line of code</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-air-blue mr-2">•</span>
-                  <span className="text-prussian-blue">Avoid wasting time on features your users won't want</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-teal-accent mr-2">•</span>
+                  <span className="text-dark-text">Avoid wasting time on features your users won't want</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-air-blue mr-2">•</span>
-                  <span className="text-prussian-blue">Make data-driven decisions based on real founder insights</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-teal-accent mr-2">•</span>
+                  <span className="text-dark-text">Make data-driven decisions based on real founder insights</span>
                 </li>
               </ul>
             </div>

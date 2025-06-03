@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerPull Logo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        /* Logo container with different sizes */
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .logo-row {
+            display: flex;
+            gap: 40px;
+        }
+        
+        /* Logo Style */
+        .logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(to right, #0ea5e9, #2dd4bf);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        /* Larger version for higher resolution */
+        .logo-lg {
+            width: 128px;
+            height: 128px;
+            border-radius: 12px;
+        }
+        
+        /* Extra large version for even higher resolution */
+        .logo-xl {
+            width: 256px;
+            height: 256px;
+            border-radius: 16px;
+        }
+        
+        /* Small version */
+        .logo-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+        
+        /* Text P */
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #f5f5f5;
+            font-size: 32px;
+        }
+        
+        .logo-lg .logo-text {
+            font-size: 64px;
+        }
+        
+        .logo-xl .logo-text {
+            font-size: 128px;
+        }
+        
+        .logo-sm .logo-text {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <div class="logo-row">
+            <div class="logo logo-sm">
+                <div class="logo-text">P</div>
+            </div>
+            <div class="logo">
+                <div class="logo-text">P</div>
+            </div>
+        </div>
+        <div class="logo-row">
+            <div class="logo logo-lg">
+                <div class="logo-text">P</div>
+            </div>
+            <div class="logo logo-xl">
+                <div class="logo-text">P</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
