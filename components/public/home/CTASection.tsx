@@ -2,6 +2,7 @@
 
 import Button from "@/components/ui/button/Button";
 import { Montserrat } from "next/font/google";
+import Link from "next/link";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ export function CTASection() {
           <div className="grid grid-cols-1 items-center">
             <div className="relative bg-dark-card/60 backdrop-blur-md p-8 md:p-12 rounded-lg border border-glass-border shadow-xl">
               {/* Gradient border effect */}
-              <div className="absolute inset-0 rounded-lg p-[1px] overflow-hidden">
+              <div className="absolute inset-0 rounded-lg p-[1px] overflow-hidden pointer-events-none">
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-primary/30 to-teal-accent/30 blur-sm"></div>
               </div>
               
@@ -104,13 +105,22 @@ export function CTASection() {
                 </div>
               </div>
               <div className="mt-10">
-                <Button 
-                  size="md" 
-                  className="bg-gradient-to-r from-blue-primary to-teal-accent text-white hover:from-blue-primary/90 hover:to-teal-accent/90 border-none font-medium shadow-lg px-8 py-6 text-lg transition-all duration-300 hover:shadow-xl"
-                  onClick={() => window.location.href = '/signup'}
+                <a 
+                  href="/signup"
+                  style={{
+                    display: 'inline-block',
+                    padding: '16px 32px',
+                    background: 'linear-gradient(to right, #4F46E5, #06B6D4)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
+                    cursor: 'pointer'
+                  }}
                 >
-                  Join the Waitlist
-                </Button>
+                  Secure your spot on the waitlist
+                </a>
               </div>
             </div>
           </div>
