@@ -30,7 +30,7 @@ export function Problem() {
           <h2 className={`${montserrat.className} text-3xl font-bold md:text-4xl lg:text-5xl mb-4`}>
             <span className="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">The Problem & Solution</span>
           </h2>
-          <p className="text-dark-text-muted max-w-2xl mx-auto text-lg">Most technical founders spend weeks building the wrong thing because they lack objective feedback at crucial early stages.</p>
+          <p className="text-dark-text-muted max-w-2xl mx-auto text-lg">Most solo founders spend weeks building the wrong thing because they lack unbiased feedback at crucial early stages.</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
@@ -73,7 +73,7 @@ export function Problem() {
                   <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
                     <CheckCircleIcon />
                   </div>
-                  <span className="text-dark-text"><strong className="text-blue-primary">Limited network</strong> of other technical founders who understand your challenges</span>
+                  <span className="text-dark-text"><strong className="text-blue-primary">Limited network</strong> of other solo founders who understand your challenges</span>
                 </li>
                 <li className="flex items-start gap-4">
                   <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
@@ -98,7 +98,7 @@ export function Problem() {
               <div className="mt-8 p-0.5 rounded-lg bg-gradient-to-r from-blue-primary to-teal-accent">
                 <div className="bg-dark-surface rounded-md p-5">
                   <p className="text-lg font-medium text-dark-text">
-                    Most technical founders spend weeks building the <span className="text-blue-primary">wrong thing</span> because they lacked <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">objective feedback</span> at the crucial early stage.
+                    Most solo founders spend weeks building the <span className="text-blue-primary">wrong thing</span> because they lacked <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">unbiased feedback</span> at the crucial early stage.
                   </p>
                 </div>
               </div>
@@ -117,7 +117,7 @@ export function Problem() {
             
             <div className="mx-auto">
               <p className="text-lg mb-8 text-dark-text">
-                PeerPull connects you with other technical founders who understand what you're building.
+                PeerPull connects you with a community of solo founders who love giving unbiased feedback and understand what you're building.
               </p>
               
               <div className="bg-glass-highlight backdrop-blur-md p-6 rounded-xl border border-glass-border shadow-xl relative overflow-hidden">
@@ -148,7 +148,7 @@ export function Problem() {
                       3
                     </div>
                     <div>
-                      <p className="font-medium text-dark-text">Receive one thoughtful review in return—usually within hours</p>
+                      <p className="font-medium text-dark-text">Receive one thoughtful review in return—usually within minutes</p>
                     </div>
                   </li>
                   
@@ -164,7 +164,7 @@ export function Problem() {
               </div>
               
               <p className="text-lg font-medium mt-8 text-center">
-                <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">It's that simple.</span> <span className="text-dark-text-muted">No marketing fluff, no generic advice—just targeted, technical feedback from people who speak your language.</span>
+                <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">It's that simple.</span> <span className="text-dark-text-muted">No marketing fluff, no generic advice—just targeted, unbiased feedback from solo founders who speak your language.</span>
               </p>
             </div>
           </div>

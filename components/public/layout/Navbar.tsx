@@ -120,7 +120,6 @@ export function Navbar({ user }: NavbarProps) {
           <NavLink href="#problem">Problem</NavLink>
           <NavLink href="#solution">Solution</NavLink>
           <NavLink href="#how-it-works">How it Works</NavLink>
-          <NavLink href="#use-cases">Use Cases</NavLink>
           <NavLink href="#faq">FAQ</NavLink>
         </nav>
         

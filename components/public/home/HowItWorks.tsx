@@ -24,7 +24,7 @@ export function HowItWorks() {
             <h2 className={`${montserrat.className} text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-4`}>
               <span className="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">How It Works</span>
             </h2>
-            <h3 className="text-xl font-medium text-dark-text-muted mb-6">The 2:1 Exchange That Powers PeerPull</h3>
+            <h3 className="text-xl font-medium text-dark-text-muted mb-6">Get Quality Feedback Super Early & Super Quickly from Solo Founders Who Get It</h3>
           </div>
           
           {/* Placeholder for diagram with dark mode styling */}
@@ -57,12 +57,12 @@ export function HowItWorks() {
                   <div className="absolute top-1/2 left-[60%] w-[12%] h-0.5 bg-gradient-to-r from-blue-primary to-teal-accent transform -translate-y-1/2"></div>
                 </div>
                 
-                <p className="text-dark-text-muted text-center mt-6 text-sm">The 2:1 exchange ensures quality feedback for everyone</p>
+                <p className="text-dark-text-muted text-center mt-6 text-sm">The 2:1 exchange ensures unbiased, quality feedback for everyone</p>
               </div>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-14">
             <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
               {/* Gradient accent line at top */}
               <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-blue-primary to-teal-accent"></div>
@@ -77,20 +77,11 @@ export function HowItWorks() {
                 <h4 className="text-xl font-semibold bg-gradient-to-r from-blue-primary to-blue-secondary bg-clip-text text-transparent">Submit Your PullRequest</h4>
               </div>
               
-              <ul className="space-y-4 pl-16">
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Add your landing page URL</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Specify what feedback you need most</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Choose from our templates to get structured insights</span>
-                </li>
-              </ul>
+              <div className="space-y-4 pl-16">
+                <p className="text-dark-text">Add your landing page URL</p>
+                <p className="text-dark-text">Specify what feedback you need most</p>
+                <p className="text-dark-text">Choose from our templates to get structured insights</p>
+              </div>
             </div>
             
             <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
@@ -107,20 +98,11 @@ export function HowItWorks() {
                 <h4 className="text-xl font-semibold bg-gradient-to-r from-teal-accent to-blue-primary bg-clip-text text-transparent">Review Other Projects</h4>
               </div>
               
-              <ul className="space-y-4 pl-16">
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Browse available projects in your expertise areas</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Provide thoughtful reviews using our guided frameworks</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Each review takes about 10-15 minutes</span>
-                </li>
-              </ul>
+              <div className="space-y-4 pl-16">
+                <p className="text-dark-text">Browse available projects in your expertise areas</p>
+                <p className="text-dark-text">Provide thoughtful reviews using our guided frameworks</p>
+                <p className="text-dark-text">Each review takes about 1-2 minutes</p>
+              </div>
             </div>
             
             <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
@@ -137,55 +119,13 @@ export function HowItWorks() {
                 <h4 className="text-xl font-semibold bg-gradient-to-r from-blue-primary to-blue-secondary bg-clip-text text-transparent">Earn PeerPoints</h4>
               </div>
               
-              <ul className="space-y-4 pl-16">
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">For every two reviews you give, you earn one PeerPoint</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Each PeerPoint gets you one review on your project</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">All feedback is vetted to ensure quality</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Average time to first PeerInsight: under 4 hours</span>
-                </li>
-              </ul>
+              <div className="space-y-4 pl-16">
+                <p className="text-dark-text">For every two reviews you give, you earn one PeerPoint</p>
+                <p className="text-dark-text">Each PeerPoint gets you one review on your project</p>
+                <p className="text-dark-text">All feedback is vetted to ensure quality</p>
+              </div>
             </div>
             
-            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
-              {/* Gradient accent line at top */}
-              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-teal-accent to-blue-primary"></div>
-              
-              {/* Background gradient */}
-              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-r from-teal-accent/5 to-blue-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-teal-accent to-blue-primary text-dark-text font-medium text-lg shadow-lg">
-                  4
-                </div>
-                <h4 className="text-xl font-semibold bg-gradient-to-r from-teal-accent to-blue-primary bg-clip-text text-transparent">Build Better, Faster</h4>
-              </div>
-              
-              <ul className="space-y-4 pl-16">
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Identify blindspots before writing a line of code</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Avoid wasting time on features your users won't want</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Make data-driven decisions based on real founder insights</span>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>

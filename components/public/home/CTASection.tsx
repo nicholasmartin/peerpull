@@ -73,9 +73,9 @@ export function CTASection() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-dark-text">Connect with Experienced Peers</h3>
+                    <h3 className="text-lg font-semibold text-dark-text">Connect with Fellow Solo Founders</h3>
                     <p className="text-dark-text-muted mt-1">
-                      Tap into a network of startup founders who've been where you are.
+                      Tap into a community of solo founders who understand your challenges and love giving unbiased feedback.
                     </p>
                   </div>
                 </div>
@@ -97,9 +97,9 @@ export function CTASection() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-dark-text">Get Rapid Feedback</h3>
+                    <h3 className="text-lg font-semibold text-dark-text">Get Quality Feedback Super Fast</h3>
                     <p className="text-dark-text-muted mt-1">
-                      Receive valuable insights on your startup idea within hours, not weeks.
+                      Receive unbiased, quality insights on your startup idea within hours, not weeks—it's hard to find this elsewhere as a solo founder.
                     </p>
                   </div>
                 </div>

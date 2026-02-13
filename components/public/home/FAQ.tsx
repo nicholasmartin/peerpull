@@ -78,7 +78,7 @@ export function FAQ() {
                 },
                 {
                   question: "How technical should the feedback be?",
-                  answer: "Our community is primarily technical founders, so the feedback tends to be practical and implementation-focused. However, you can specify if you want feedback on specific aspects like market fit, UX, or technical architecture."
+                  answer: "Our community is primarily solo founders, so the feedback tends to be practical and implementation-focused. However, you can specify if you want feedback on specific aspects like market fit, UX, or technical architecture."
                 },
                 {
                   question: "What if I'm an experienced founder without a current project?",
