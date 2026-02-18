@@ -8,6 +8,8 @@ export type Profile = {
   full_name: string;
   avatar_url: string | null;
   website: string | null;
+  expertise: string[];
+  peer_points_balance: number;
   created_at: string;
   updated_at: string;
 };

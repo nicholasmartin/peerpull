@@ -10,6 +10,7 @@ export interface AudioDevice {
 }
 
 const MAX_DURATION = 300; // 5 minutes
+const MIN_DURATION = 5; // TODO: change back to 60 for production
 const WARNING_THRESHOLD = 270; // 4:30
 
 function getSupportedMimeType(): string {
@@ -215,6 +216,8 @@ export function useScreenRecorder() {
     URL.revokeObjectURL(a.href);
   }, []);
 
+  const getBlob = useCallback(() => blobRef.current, []);
+
   return {
     status,
     duration,
@@ -230,6 +233,7 @@ export function useScreenRecorder() {
     stopRecording,
     resetRecording,
     downloadRecording,
+    getBlob,
     maxDuration: MAX_DURATION,
   };
 }
