@@ -311,10 +311,15 @@ export async function approveReview(reviewId: string) {
   if (!pr || pr.user_id !== user.id) return { error: "Only the PR owner can approve reviews" };
 
   // Approve
-  await supabase
+  const { error: updateError } = await supabase
     .from("reviews")
     .update({ status: "approved" })
     .eq("id", reviewId);
+
+  if (updateError) {
+    console.error("Failed to approve review:", updateError);
+    return { error: "Failed to approve review" };
+  }
 
   // Credit reviewer +1 point
   const { data: reviewerProfile } = await supabase
@@ -362,10 +367,15 @@ export async function rejectReview(reviewId: string) {
 
   if (!pr || pr.user_id !== user.id) return { error: "Only the PR owner can reject reviews" };
 
-  await supabase
+  const { error: updateError } = await supabase
     .from("reviews")
     .update({ status: "rejected" })
     .eq("id", reviewId);
+
+  if (updateError) {
+    console.error("Failed to reject review:", updateError);
+    return { error: "Failed to reject review" };
+  }
 
   return { success: true };
 }
