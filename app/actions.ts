@@ -161,7 +161,7 @@ export async function submitPullRequest(formData: FormData) {
   ].filter(Boolean) as string[];
 
   if (!title) {
-    return encodedRedirect("error", "/dashboard/pull-requests/new", "Project name is required");
+    return encodedRedirect("error", "/dashboard/request-feedback", "Project name is required");
   }
 
   // Check points balance
@@ -172,7 +172,7 @@ export async function submitPullRequest(formData: FormData) {
     .single();
 
   if (!profile || profile.peer_points_balance < 2) {
-    return encodedRedirect("error", "/dashboard/pull-requests/new", "You need at least 2 PeerPoints to submit a PullRequest. Review other projects to earn points!");
+    return encodedRedirect("error", "/dashboard/request-feedback", "You need at least 2 PeerPoints to submit a PullRequest. Review other projects to earn points!");
   }
 
   // Insert pull request
@@ -192,62 +192,34 @@ export async function submitPullRequest(formData: FormData) {
     .single();
 
   if (prError) {
-    return encodedRedirect("error", "/dashboard/pull-requests/new", "Failed to create PullRequest");
+    return encodedRedirect("error", "/dashboard/request-feedback", "Failed to create PullRequest");
   }
 
-  // Deduct 2 points
-  await supabase
-    .from("profiles")
-    .update({ peer_points_balance: profile.peer_points_balance - 2 })
-    .eq("id", user.id);
+  // Assign queue position (points charged on review completion, not upfront)
+  await supabase.rpc("assign_queue_position", { p_pr_id: pr.id });
 
-  await supabase.from("peer_point_transactions").insert({
-    user_id: user.id,
-    amount: -2,
-    type: "spent_submission",
-    reference_id: pr.id,
-  });
-
-  return redirect("/dashboard/pull-requests");
+  return redirect("/dashboard/request-feedback");
 }
 
-export async function claimReview(pullRequestId: string): Promise<{ error: string } | undefined> {
+export async function getNextReview(): Promise<{ error: string } | undefined> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
 
-  // Check not own PR
-  const { data: pr } = await supabase
-    .from("pull_requests")
-    .select("user_id")
-    .eq("id", pullRequestId)
-    .single();
-
-  if (!pr) return { error: "PullRequest not found" };
-  if (pr.user_id === user.id) return { error: "You cannot review your own project" };
-
-  // Check no existing review
-  const { data: existing } = await supabase
-    .from("reviews")
-    .select("id")
-    .eq("pull_request_id", pullRequestId)
-    .eq("reviewer_id", user.id)
-    .single();
-
-  if (existing) return { error: "You already have a review for this project" };
-
-  const { error } = await supabase.from("reviews").insert({
-    pull_request_id: pullRequestId,
-    reviewer_id: user.id,
-    status: "in_progress",
+  const { data, error } = await supabase.rpc("get_next_review", {
+    p_reviewer_id: user.id,
   });
 
   if (error) {
-    console.error("claimReview insert error:", error);
-    return { error: "Failed to claim review: " + error.message };
+    console.error("getNextReview error:", error);
+    return { error: "Failed to get next review" };
   }
 
-  redirect(`/dashboard/review-queue/${pullRequestId}/review`);
+  if (!data || data.length === 0) {
+    return { error: "No projects available in the queue right now. Check back soon!" };
+  }
+
+  redirect(`/dashboard/submit-feedback/${data[0].pr_id}/review`);
 }
 
 export async function submitReview(formData: FormData) {
@@ -263,9 +235,8 @@ export async function submitReview(formData: FormData) {
   const videoDuration = Number(formData.get("video_duration") || 0);
 
   if (!reviewId) return { error: "Review ID is required" };
-  if (!rating || rating < 1 || rating > 5) return { error: "Rating must be 1-5" };
-  if (strengths.length < 50) return { error: "Strengths must be at least 50 characters" };
-  if (improvements.length < 50) return { error: "Improvements must be at least 50 characters" };
+  if (strengths && strengths.length < 50) return { error: "Strengths must be at least 50 characters" };
+  if (improvements && improvements.length < 50) return { error: "Improvements must be at least 50 characters" };
   if (videoDuration < 5) return { error: "Video must be at least 5 seconds" }; // TODO: change back to 60 for production
 
   const { error } = await supabase
@@ -284,7 +255,17 @@ export async function submitReview(formData: FormData) {
 
   if (error) return { error: "Failed to submit review" };
 
-  return redirect("/dashboard/review-queue");
+  // Award reviewer +1, charge owner -2, auto-re-queue if affordable
+  const { error: rpcError } = await supabase.rpc("complete_review_and_charge", {
+    p_reviewer_id: user.id,
+    p_review_id: reviewId,
+  });
+
+  if (rpcError) {
+    console.error("Failed to complete review and charge:", rpcError);
+  }
+
+  return redirect("/dashboard/submit-feedback");
 }
 
 export async function approveReview(reviewId: string) {
@@ -319,27 +300,6 @@ export async function approveReview(reviewId: string) {
   if (updateError) {
     console.error("Failed to approve review:", updateError);
     return { error: "Failed to approve review" };
-  }
-
-  // Credit reviewer +1 point
-  const { data: reviewerProfile } = await supabase
-    .from("profiles")
-    .select("peer_points_balance")
-    .eq("id", review.reviewer_id)
-    .single();
-
-  if (reviewerProfile) {
-    await supabase
-      .from("profiles")
-      .update({ peer_points_balance: reviewerProfile.peer_points_balance + 1 })
-      .eq("id", review.reviewer_id);
-
-    await supabase.from("peer_point_transactions").insert({
-      user_id: review.reviewer_id,
-      amount: 1,
-      type: "earned_review",
-      reference_id: review.id,
-    });
   }
 
   return { success: true };
