@@ -10,8 +10,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "PeerPull - Get Valuable Feedback Early!",
-  description: "Valueable Feedback Exchange For Startup Founders to Validate Ideas Early.",
+  title: "PeerPull - Valuable Feedback Early!",
+  description: "Valueable Feedback Exchange For Builders to Validate Ideas Early.",
 };
 
 const inter = Inter({

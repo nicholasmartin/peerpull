@@ -92,7 +92,8 @@
       "Bash(git merge:*)",
       "WebFetch(domain:docs.slack.dev)",
       "Bash(npm show:*)",
-      "Bash(supabase:*)"
+      "Bash(supabase:*)",
+      "Bash(tasklist:*)"
     ],
     "deny": []
   },

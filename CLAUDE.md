@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run dev` - Start the development server on localhost:3000
 - `npm run build` - Build the application for production
 - `npm start` - Start the production server
+- `npx supabase db push` - Push pending migrations to the remote Supabase database
 
 ## Architecture Overview
 
@@ -47,6 +48,11 @@ This is a Next.js 14 application built with the App Router pattern, using Supaba
 - shadcn/ui components configured in `components.json`
 - Component path alias: `@/components` maps to `./components`
 - Utils path alias: `@/lib/utils` maps to `./lib/utils`
+
+### Database Migrations
+- Migration files live in `supabase/migrations/` with the naming pattern `<timestamp>_name.sql`
+- To apply migrations to the remote database, run `npx supabase db push` (do NOT rely on the Supabase MCP tool, which is read-only)
+- Always use `npx supabase db push` after creating a new migration file
 
 ### Key Configuration Notes
 - TypeScript build errors are ignored in production (`ignoreBuildErrors: true`)

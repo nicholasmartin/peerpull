@@ -29,8 +29,8 @@ export function Hero() {
             </div>
             
             <h1 className={`${montserrat.className} text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl`}>
-              <span className="bg-gradient-to-r from-gradient-start via-blue-secondary to-gradient-end bg-clip-text text-transparent">Get Valuable Feedback</span>
-              <span className="text-dark-text"> on Your Startup Idea Within Minutes</span>
+              <span className="bg-gradient-to-r from-gradient-start via-blue-secondary to-gradient-end bg-clip-text text-transparent">Valuable Feedback</span>
+              <span className="text-dark-text"> For Builders in Minutes</span>
             </h1>
             
             <p className="text-lg md:text-xl lg:text-2xl text-dark-text-muted max-w-3xl mx-auto">
