@@ -10,17 +10,17 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/context/ThemeContext";
-import { 
-  Bell, 
-  Lock, 
-  CreditCard, 
-  User, 
-  Shield, 
-  Mail, 
-  Smartphone, 
-  Globe, 
-  Moon, 
-  Sun, 
+import { createClient } from "@/utils/supabase/client";
+import {
+  Bell,
+  Lock,
+  CreditCard,
+  User,
+  Shield,
+  Mail,
+  Globe,
+  Moon,
+  Sun,
   LogOut,
   Monitor
 } from "lucide-react";
@@ -29,19 +29,37 @@ export default function SettingsPage() {
   const { theme, toggleTheme } = useTheme();
   const [selectedTheme, setSelectedTheme] = useState(theme || "dark");
   const [mounted, setMounted] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   
-  // After mounting, get the theme from localStorage or system preference
+  // After mounting, get the theme and user data
   useEffect(() => {
     setMounted(true);
-    // Get theme from localStorage
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {
       setSelectedTheme(storedTheme as "light" | "dark" | "system");
     } else {
-      // If no theme in localStorage, check system preference
       const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       setSelectedTheme(systemPrefersDark ? "system" : "light");
     }
+
+    // Fetch user data
+    const supabase = createClient();
+    (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setEmail(user.email || "");
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("full_name")
+          .eq("id", user.id)
+          .single();
+        if (profile) {
+          setFullName(profile.full_name || "");
+        }
+      }
+    })();
   }, []);
   
   // Function to apply the selected theme
@@ -144,17 +162,17 @@ export default function SettingsPage() {
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name</Label>
-                    <Input id="name" defaultValue="John Smith" />
+                    <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="email">Email Address</Label>
-                    <Input id="email" type="email" defaultValue="john@techlaunch.io" />
+                    <Input id="email" type="email" value={email} disabled />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="username">Username</Label>
-                    <Input id="username" defaultValue="johnsmith" />
+                    <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Not set" />
                   </div>
                   
                   <Button className="bg-[#3366FF] hover:bg-blue-600">
@@ -240,10 +258,10 @@ export default function SettingsPage() {
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className="text-sm text-gray-500 dark:text-gray-400">
-                        +1 (555) 123-4567
+                        Not configured
                       </span>
                       <Button variant="outline" size="sm">
-                        Change
+                        Setup
                       </Button>
                     </div>
                   </div>
@@ -271,47 +289,10 @@ export default function SettingsPage() {
                     Manage your active sessions across devices
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                          <Smartphone className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <div>
-                          <p className="font-medium">iPhone 13 Pro</p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            Boston, MA • Last active: 2 minutes ago
-                          </p>
-                        </div>
-                      </div>
-                      <Badge className="bg-green-100 text-green-800 border-green-200 dark:bg-green-900 dark:text-green-200 dark:border-green-800">
-                        Current
-                      </Badge>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                          <Globe className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Chrome on MacBook Pro</p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            Boston, MA • Last active: Yesterday at 2:30 PM
-                          </p>
-                        </div>
-                      </div>
-                      <Button variant="outline" size="sm">
-                        Logout
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <Button variant="outline" className="w-full">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Logout of All Devices
-                  </Button>
+                <CardContent>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Session management coming soon
+                  </p>
                 </CardContent>
               </Card>
             </TabsContent>

@@ -51,7 +51,7 @@ export default async function DashboardPage() {
             </p>
           </div>
           <div className="hidden md:block">
-            <Link href="/dashboard/pull-requests/new" className="rounded-lg bg-white px-4 py-2 font-medium text-[#3366FF] hover:bg-opacity-90 transition">
+            <Link href="/dashboard/request-feedback" className="rounded-lg bg-white px-4 py-2 font-medium text-[#3366FF] hover:bg-opacity-90 transition">
               Submit New PullRequest
             </Link>
           </div>
@@ -60,15 +60,15 @@ export default async function DashboardPage() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Link href="/dashboard/pull-requests/new" className="rounded-lg bg-white p-4 text-center shadow-sm hover:shadow-md transition dark:bg-gray-800">
+        <Link href="/dashboard/request-feedback" className="rounded-lg bg-white p-4 text-center shadow-sm hover:shadow-md transition dark:bg-gray-800">
           <span className="block text-lg font-semibold text-[#3366FF]">Submit PullRequest</span>
           <span className="text-sm text-gray-500 dark:text-gray-400">Get feedback on your project</span>
         </Link>
-        <Link href="/dashboard/review-queue" className="rounded-lg bg-white p-4 text-center shadow-sm hover:shadow-md transition dark:bg-gray-800">
+        <Link href="/dashboard/submit-feedback" className="rounded-lg bg-white p-4 text-center shadow-sm hover:shadow-md transition dark:bg-gray-800">
           <span className="block text-lg font-semibold text-[#FF6633]">Start Reviewing</span>
           <span className="text-sm text-gray-500 dark:text-gray-400">Earn PeerPoints</span>
         </Link>
-        <Link href="/dashboard/pull-requests" className="rounded-lg bg-white p-4 text-center shadow-sm hover:shadow-md transition dark:bg-gray-800">
+        <Link href="/dashboard/request-feedback" className="rounded-lg bg-white p-4 text-center shadow-sm hover:shadow-md transition dark:bg-gray-800">
           <span className="block text-lg font-semibold text-[#2EC4B6]">View Feedback</span>
           <span className="text-sm text-gray-500 dark:text-gray-400">See your latest reviews</span>
         </Link>
@@ -101,8 +101,8 @@ export default async function DashboardPage() {
           {/* My PullRequests */}
           <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">My PullRequests</h2>
-              <Link href="/dashboard/pull-requests" className="text-sm font-medium text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+              <h2 className="text-xl font-bold">Feedback Requests</h2>
+              <Link href="/dashboard/request-feedback" className="text-sm font-medium text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
                 View all →
               </Link>
             </div>
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
                     {recentPRs.map((pr: any) => (
                       <tr key={pr.id} className="border-b border-gray-100 dark:border-gray-800">
                         <td className="py-3">
-                          <Link href={`/dashboard/pull-requests/${pr.id}`} className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                          <Link href={`/dashboard/request-feedback/${pr.id}`} className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
                             {pr.title}
                           </Link>
                         </td>
@@ -169,7 +169,7 @@ export default async function DashboardPage() {
               <p className="text-gray-500 dark:text-gray-400">
                 {balance >= 2 ? "Ready to submit a PullRequest!" : `Need ${2 - balance} more to submit`}
               </p>
-              <Link href="/dashboard/review-queue" className="mt-3 inline-block rounded-lg bg-[#3366FF] px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition">
+              <Link href="/dashboard/submit-feedback" className="mt-3 inline-block rounded-lg bg-[#3366FF] px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition">
                 {balance >= 2 ? "Submit PullRequest" : "Earn Points by Reviewing"}
               </Link>
             </div>
@@ -183,7 +183,7 @@ export default async function DashboardPage() {
                 ? `${availableCount} project${availableCount === 1 ? "" : "s"} waiting for your feedback`
                 : "No projects available for review right now"}
             </p>
-            <Link href="/dashboard/review-queue" className="mt-4 block w-full rounded-lg border border-gray-200 py-2 text-center text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 transition">
+            <Link href="/dashboard/submit-feedback" className="mt-4 block w-full rounded-lg border border-gray-200 py-2 text-center text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 transition">
               Browse Review Queue
             </Link>
           </div>

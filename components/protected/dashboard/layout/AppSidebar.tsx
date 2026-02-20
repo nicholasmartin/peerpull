@@ -35,17 +35,12 @@ const navItems: NavItem[] = [
   },
   {
     icon: <BoxCubeIcon />,
-    name: "My PullRequests",
-    path: "/dashboard/pull-requests",
+    name: "Feedback",
+    path: "/dashboard/request-feedback",
     subItems: [
-      { name: "All", path: "/dashboard/pull-requests" },
-      { name: "New PullRequest", path: "/dashboard/pull-requests/new", new: true }
+      { name: "Request Feedback", path: "/dashboard/request-feedback" },
+      { name: "Submit Feedback", path: "/dashboard/submit-feedback" }
     ]
-  },
-  {
-    icon: <CheckIcon />,
-    name: "Review Queue",
-    path: "/dashboard/review-queue"
   },
   {
     icon: <DollarLineIcon />,

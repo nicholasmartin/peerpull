@@ -52,24 +52,29 @@ function RecordingArea({ projectUrl, projectName }: { projectUrl: string; projec
 
   return (
     <>
-      {/* Controls bar — always visible above iframe */}
+      {/* Controls bar */}
       <div className="shrink-0 border-b border-white/10 bg-[#0a0a1a]/95 backdrop-blur-sm px-4 py-3">
         <RecorderControls recorder={recorder} />
       </div>
 
       {/* Content area */}
       <div className="flex-1 min-h-0 relative">
-        {/* Iframe — hidden when previewing */}
-        <iframe
-          src={projectUrl}
-          className={showPreview ? "hidden" : "w-full h-full border-0"}
-          title={projectName}
-          sandbox="allow-scripts allow-same-origin allow-popups"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
-        />
-
-        {/* Video preview — replaces iframe */}
-        {showPreview && (
+        {!showPreview ? (
+          <div className="w-full h-full flex items-center justify-center p-6">
+            <div className="text-center space-y-4">
+              <button
+                onClick={() => window.open(projectUrl, "_blank")}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#3366FF] hover:bg-blue-600 text-white font-medium transition-colors"
+              >
+                <span>🔗</span> Open Site in New Tab
+              </button>
+              <p className="text-xs text-white/40">{projectUrl}</p>
+              <p className="text-xs text-white/30">
+                Click above to open the site, then start recording. Select the site&apos;s tab when prompted.
+              </p>
+            </div>
+          </div>
+        ) : (
           <div className="w-full h-full flex items-center justify-center bg-black p-6">
             <video
               src={recorder.previewUrl!}

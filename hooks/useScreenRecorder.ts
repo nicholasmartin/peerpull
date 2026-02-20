@@ -87,8 +87,7 @@ export function useScreenRecorder() {
       const screenStream = await navigator.mediaDevices.getDisplayMedia({
         video: { displaySurface: "browser" },
         audio: true,
-        preferCurrentTab: true,
-        selfBrowserSurface: "include",
+        selfBrowserSurface: "exclude",
         surfaceSwitching: "exclude",
         systemAudio: "exclude",
       } as DisplayMediaStreamOptions);
