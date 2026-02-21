@@ -11,8 +11,8 @@ export default function HomePage() {
         <Hero />
         <Problem />
         <HowItWorks />
-        <CTASection />
         <FAQ />
+        <CTASection />
       </main>
     </div>
   );

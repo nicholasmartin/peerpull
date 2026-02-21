@@ -1,12 +1,5 @@
 "use client";
 
-import { Montserrat } from "next/font/google";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  display: "swap",
-});
-
 type AccordionProps = {
   items: Array<{
     question: string;
@@ -20,7 +13,7 @@ const Accordion = ({ items }: AccordionProps) => {
       {items.map((item, i: number) => (
         <details key={i} className="group p-6 [&_summary::-webkit-details-marker]:hidden">
           <summary className="flex cursor-pointer items-center justify-between gap-3 text-dark-text font-medium rounded-md p-3 hover:bg-glass-highlight/20 transition-all duration-300">
-            <h3 className={`${montserrat.className} text-lg font-medium`}>{item.question}</h3>
+            <h3 className="text-lg font-medium">{item.question}</h3>
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-blue-primary to-teal-accent bg-opacity-10 flex items-center justify-center">
               <svg
                 className="h-4 w-4 transform transition duration-300 ease-out group-open:rotate-180 text-dark-text"
@@ -53,18 +46,18 @@ export function FAQ() {
       {/* Abstract geometric shapes for background */}
       <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
         <div className="absolute bottom-[30%] right-[20%] w-[280px] h-[280px] rounded-full bg-gradient-to-r from-blue-primary to-teal-accent blur-3xl opacity-20"></div>
-        <div className="absolute top-[20%] left-[15%] w-[320px] h-[320px] rounded-full bg-gradient-to-r from-teal-accent to-blue-primary blur-3xl opacity-15"></div>
+        <div className="absolute top-[20%] left-[15%] w-[320px] h-[320px] rounded-full bg-gradient-to-r from-teal-accent to-blue-primary blur-3xl opacity-[0.15]"></div>
       </div>
-      
+
       <div className="container px-4 md:px-6 mx-auto relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className={`${montserrat.className} text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-4`}>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-4">
               <span className="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">Frequently Asked Questions</span>
             </h2>
             <h3 className="text-xl font-medium text-dark-text-muted mb-6">Everything You Need to Know</h3>
           </div>
-          
+
           <div className="mx-auto max-w-3xl py-6">
             <Accordion
               items={[
@@ -99,8 +92,8 @@ export function FAQ() {
               ]}
             />
           </div>
-          
-          
+
+
         </div>
       </div>
     </section>
