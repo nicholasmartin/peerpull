@@ -44,7 +44,7 @@ export function ReviewSession({
   }, [recorder.refreshMicList]);
 
   const showPreview = recorder.status === "stopped" && !!recorder.previewUrl;
-  const canSubmit = showPreview && recorder.duration >= 5;
+  const canSubmit = showPreview && recorder.duration >= 5 && rating >= 1;
 
   async function handleSubmit() {
     if (!canSubmit) return;
@@ -241,7 +241,7 @@ export function ReviewSession({
               <CardContent className="space-y-4">
                 {/* Rating */}
                 <div className="space-y-2">
-                  <Label>Rating</Label>
+                  <Label>Rating <span className="text-red-500">*</span></Label>
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button

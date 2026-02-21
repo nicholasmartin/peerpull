@@ -256,14 +256,15 @@ export async function submitReview(formData: FormData) {
 
   const reviewId = formData.get("review_id")?.toString();
   const rating = Number(formData.get("rating"));
-  const strengths = formData.get("strengths")?.toString() || "";
-  const improvements = formData.get("improvements")?.toString() || "";
+  const strengths = formData.get("strengths")?.toString()?.trim() || null;
+  const improvements = formData.get("improvements")?.toString()?.trim() || null;
   const videoUrl = formData.get("video_url")?.toString() || "";
   const videoDuration = Number(formData.get("video_duration") || 0);
 
   const settings = await getSettings();
 
   if (!reviewId) return { error: "Review ID is required" };
+  if (rating < 1 || rating > 5) return { error: "Please select a star rating (1-5)" };
   if (strengths && strengths.length < 50) return { error: "Strengths must be at least 50 characters" };
   if (improvements && improvements.length < 50) return { error: "Improvements must be at least 50 characters" };
   if (videoDuration < settings.min_video_duration_seconds) return { error: `Video must be at least ${settings.min_video_duration_seconds} seconds` };
