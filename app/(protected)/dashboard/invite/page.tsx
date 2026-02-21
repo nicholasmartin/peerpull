@@ -49,7 +49,7 @@ export default function InviteFoundersPage() {
       // Fetch referrals
       const { data: refs } = await supabase
         .from("referrals")
-        .select("*, invitee:profiles!referrals_invitee_id_fkey(first_name, last_name)")
+        .select("*, invitee:profiles!referrals_invitee_id_profiles_fkey(first_name, last_name)")
         .eq("inviter_id", user.id)
         .order("created_at", { ascending: false });
 

@@ -109,12 +109,12 @@ BEGIN
 
   -- Generate a unique referral code (6 chars alphanumeric)
   LOOP
-    v_referral_code := upper(substr(md5(random()::text || clock_timestamp()::text), 1, 6));
+    v_referral_code := lower(substr(md5(random()::text || clock_timestamp()::text), 1, 6));
     EXIT WHEN NOT EXISTS (SELECT 1 FROM public.profiles WHERE referral_code = v_referral_code);
     v_attempts := v_attempts + 1;
     IF v_attempts > 10 THEN
       -- Fallback to 8 chars if collisions
-      v_referral_code := upper(substr(md5(random()::text || clock_timestamp()::text), 1, 8));
+      v_referral_code := lower(substr(md5(random()::text || clock_timestamp()::text), 1, 8));
       EXIT;
     END IF;
   END LOOP;
@@ -303,7 +303,7 @@ BEGIN
   -- Look up inviter by referral code
   SELECT id INTO v_inviter_id
   FROM public.profiles
-  WHERE referral_code = upper(trim(p_code));
+  WHERE referral_code = lower(trim(p_code));
 
   IF v_inviter_id IS NULL THEN
     RAISE EXCEPTION 'Invalid referral code';
