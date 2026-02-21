@@ -23,9 +23,15 @@ export function Hero() {
         <div className="flex flex-col items-center gap-4 md:gap-8 text-center max-w-4xl mx-auto">
           <div className="space-y-5 md:space-y-6">
             <div className="inline-flex items-center px-6 py-3 rounded-md bg-glass-highlight backdrop-blur-sm border border-glass-border mb-4">
-              <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent font-semibold text-lg">2:1 Exchange Ratio</span>
-              <div className="w-2 h-2 rounded-full bg-dark-text-muted mx-3"></div>
-              <span className="text-dark-text-muted text-lg">Give 2 reviews, get 1 back</span>
+              <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent font-semibold text-lg">Closed Beta</span>
+              <div className="w-2 h-2 rounded-full bg-emerald-400 mx-3 animate-pulse"></div>
+              <span className="text-dark-text-muted text-lg">Invite Only — Limited Spots</span>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-glass-highlight border border-glass-border text-sm text-dark-text">1:1 Exchange Ratio</span>
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-glass-highlight border border-glass-border text-sm text-dark-text">3 Free Credits at Signup</span>
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-glass-highlight border border-glass-border text-sm text-dark-text">Earn 5 Credits Per Referral</span>
             </div>
             
             <h1 className={`${montserrat.className} text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl`}>
@@ -34,7 +40,7 @@ export function Hero() {
             </h1>
             
             <p className="text-lg md:text-xl lg:text-2xl text-dark-text-muted max-w-3xl mx-auto">
-              Submit your landing page or MVP for unbiased feedback from other solo founders who understand your challenges—get quality insights within minutes and completely free!
+              Join an exclusive community of solo founders giving each other real, unbiased feedback on landing pages and MVPs — completely free during beta.
             </p>
           </div>
           
@@ -44,7 +50,7 @@ export function Hero() {
                 size="md" 
                 className="text-base font-medium px-6 py-3.5 md:px-8 md:py-4 bg-gradient-to-r from-blue-primary to-blue-secondary hover:from-blue-primary/90 hover:to-blue-secondary/90 transition-all text-white shadow-lg shadow-blue-primary/20 w-full sm:w-auto"
               >
-                Get Early Access
+                Join the Beta
               </Button>
             </Link>
             <Button 

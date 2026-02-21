@@ -139,7 +139,7 @@ export function Problem() {
                       2
                     </div>
                     <div>
-                      <p className="font-medium text-dark-text">Give quality feedback to two other founders</p>
+                      <p className="font-medium text-dark-text">Give quality feedback to one other founder</p>
                     </div>
                   </li>
                   

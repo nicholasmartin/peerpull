@@ -66,11 +66,19 @@ export function FAQ() {
           </div>
           
           <div className="mx-auto max-w-3xl py-6">
-            <Accordion 
+            <Accordion
               items={[
                 {
+                  question: "How do I get access to the beta?",
+                  answer: "PeerPull is currently in closed beta and available by invite only. Request an invite from our homepage or get one from an existing member. Existing members earn 5 bonus credits for every friend they invite."
+                },
+                {
+                  question: "What are the beta perks?",
+                  answer: "Beta members enjoy a 1:1 exchange ratio (give 1 review, get 1 back), 3 free credits at signup, and a +2 credit bonus for your first review. Plus, refer a friend and you both earn bonus credits. These perks are time-limited and will adjust as we grow."
+                },
+                {
                   question: "How do you ensure quality feedback?",
-                  answer: "All PeerInsights must be approved by recipients before the reviewer earns PeerPoints. Our templates also guide reviewers to provide specific, actionable insights rather than generic comments."
+                  answer: "All reviews must be approved by recipients before the reviewer earns PeerPoints. Our templates also guide reviewers to provide specific, actionable insights rather than generic comments. This approval mechanism works the same during beta."
                 },
                 {
                   question: "What if I don't have a landing page yet?",

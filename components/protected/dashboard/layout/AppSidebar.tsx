@@ -18,6 +18,7 @@ import UserCircleIcon from "@/components/icons/user-circle.svg";
 import AlertIcon from "@/components/icons/alert.svg";
 import ChatIcon from "@/components/icons/chat.svg";
 import PlusIcon from "@/components/icons/plus.svg";
+import BoltIcon from "@/components/icons/bolt.svg";
 
 type NavItem = {
   name: string;
@@ -79,9 +80,18 @@ const secondaryNavItems: NavItem[] = [
 ];
 
 
-const AppSidebar: React.FC = () => {
+const AppSidebar: React.FC<{ isAdmin?: boolean }> = ({ isAdmin }) => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
+
+  const dynamicSecondaryNavItems: NavItem[] = [
+    ...(isAdmin ? [{
+      icon: <BoltIcon />,
+      name: "Admin",
+      path: "/dashboard/admin",
+    }] : []),
+    ...secondaryNavItems,
+  ];
 
   const renderMenuItems = (navItems: NavItem[]) => (
     <ul className="flex flex-col gap-4">
@@ -343,7 +353,7 @@ const AppSidebar: React.FC = () => {
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(secondaryNavItems)}
+              {renderMenuItems(dynamicSecondaryNavItems)}
             </div>
           </div>
         </nav>

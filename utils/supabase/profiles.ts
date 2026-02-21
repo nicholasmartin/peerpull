@@ -10,6 +10,9 @@ export type Profile = {
   website: string | null;
   expertise: string[];
   peer_points_balance: number;
+  is_admin: boolean;
+  referral_code: string | null;
+  invited_by: string | null;
   created_at: string;
   updated_at: string;
 };

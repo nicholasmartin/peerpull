@@ -28,7 +28,7 @@ export function CTASection() {
               </div>
               
               <h2 className={`${montserrat.className} text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-8 text-dark-text relative z-10`}>
-                Ready to Get the <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">Startup Validation</span> You Need?
+                Ready to <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">Join the Beta</span>?
               </h2>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -49,9 +49,9 @@ export function CTASection() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-dark-text">Avoid Building the Wrong Thing</h3>
+                    <h3 className="text-lg font-semibold text-dark-text">1:1 Exchange — Limited Time</h3>
                     <p className="text-dark-text-muted mt-1">
-                      Get startup validation before investing months of development time.
+                      During beta, give just one review to get one back. This generous ratio won't last forever — lock it in now.
                     </p>
                   </div>
                 </div>
@@ -73,9 +73,9 @@ export function CTASection() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-dark-text">Connect with Fellow Solo Founders</h3>
+                    <h3 className="text-lg font-semibold text-dark-text">3 Free Credits on Signup</h3>
                     <p className="text-dark-text-muted mt-1">
-                      Tap into a community of solo founders who understand your challenges and love giving unbiased feedback.
+                      Start reviewing and getting feedback immediately. No earning required to submit your first project.
                     </p>
                   </div>
                 </div>
@@ -97,9 +97,9 @@ export function CTASection() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-dark-text">Get Quality Feedback Super Fast</h3>
+                    <h3 className="text-lg font-semibold text-dark-text">Earn More Through Referrals</h3>
                     <p className="text-dark-text-muted mt-1">
-                      Receive unbiased, quality insights on your startup idea within hours, not weeks—it's hard to find this elsewhere as a solo founder.
+                      Invite fellow founders and earn 5 credits per referral. Build your feedback balance before the ratio changes.
                     </p>
                   </div>
                 </div>
@@ -119,7 +119,7 @@ export function CTASection() {
                     cursor: 'pointer'
                   }}
                 >
-                  Secure your spot on the waitlist
+                  Join the Beta
                 </a>
               </div>
             </div>

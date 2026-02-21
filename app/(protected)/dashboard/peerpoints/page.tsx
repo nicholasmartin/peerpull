@@ -99,7 +99,14 @@ export default async function PeerPointsPage() {
                             {t.amount > 0 ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
                           </div>
                           <div className="font-medium text-gray-900 dark:text-gray-100">
-                            {t.type === "earned_review" ? "Review approved" : "PullRequest submitted"}
+                            {{
+                              earned_review: "Review approved",
+                              spent_submission: "PullRequest submitted",
+                              signup_bonus: "Welcome bonus",
+                              first_review_bonus: "First review bonus",
+                              referral_bonus: "Referral bonus",
+                              admin_injection: "Bonus points",
+                            }[t.type as string] || t.type}
                           </div>
                         </div>
                       </td>
@@ -129,9 +136,9 @@ export default async function PeerPointsPage() {
           <CardTitle>How PeerPoints Work</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-          <p><strong className="text-gray-900 dark:text-gray-100">Earn points:</strong> Review other founders' projects. When your review is approved, you earn +1 PeerPoint.</p>
-          <p><strong className="text-gray-900 dark:text-gray-100">Spend points:</strong> Submit a PullRequest to get video feedback on your project. Costs 2 PeerPoints.</p>
-          <p><strong className="text-gray-900 dark:text-gray-100">Get started:</strong> New users start with 0 points. Complete 2 reviews to earn enough for your first submission.</p>
+          <p><strong className="text-gray-900 dark:text-gray-100">Earn points:</strong> Review other founders' projects to earn PeerPoints. You also get a bonus for your first review!</p>
+          <p><strong className="text-gray-900 dark:text-gray-100">Spend points:</strong> Submit a PullRequest to get video feedback on your project.</p>
+          <p><strong className="text-gray-900 dark:text-gray-100">Get started:</strong> New users start with bonus PeerPoints. Invite friends to earn even more!</p>
         </CardContent>
       </Card>
     </div>

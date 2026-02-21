@@ -7,10 +7,11 @@ import Link from "next/link";
 import React from "react";
 
 export default async function Signup(props: {
-  searchParams: Promise<Message>;
+  searchParams: Promise<Message & { ref?: string }>;
 }) {
   const searchParams = await props.searchParams;
-  
+  const referralCode = ("ref" in searchParams ? (searchParams as any).ref : "") || "";
+
   if ("message" in searchParams) {
     return (
       <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
@@ -25,36 +26,16 @@ export default async function Signup(props: {
         <div>
           <div className="mb-5 sm:mb-8 text-center">
             <h1 className="mb-2 font-semibold text-gray-800 text-title-xl dark:text-white/90 sm:text-title-2xl">
-              Create an Account
+              Join the Beta
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Join PeerPull and get the technical validation your startup needs to succeed
             </p>
           </div>
           <div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
-              <button className="inline-flex items-center justify-center gap-3 py-3 text-sm font-normal text-gray-700 transition-colors bg-gray-100 rounded-lg px-7 hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10">
-                <img src="/images/google-logo.svg" alt="Google logo" width="20" height="20" />
-                Sign up with Google
-              </button>
-              <button className="inline-flex items-center justify-center gap-3 py-3 text-sm font-normal text-gray-700 transition-colors bg-gray-100 rounded-lg px-7 hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10">
-                <img src="/images/x-logo.svg" alt="X logo" width="21" height="20" className="fill-current" />
-                Sign up with X
-              </button>
-            </div>
-            <div className="relative py-3 sm:py-5">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200 dark:border-gray-800"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="p-2 text-gray-400 bg-white dark:bg-gray-900 sm:px-5 sm:py-2">
-                  Or
-                </span>
-              </div>
-            </div>
             <form>
               <div className="space-y-5">
-                {/* <!-- Name Fields --> */}
+                {/* Name Fields */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <Label>
@@ -79,7 +60,7 @@ export default async function Signup(props: {
                     />
                   </div>
                 </div>
-                {/* <!-- Email --> */}
+                {/* Email */}
                 <div>
                   <Label>
                     Email<span className="text-error-500">*</span>
@@ -91,7 +72,7 @@ export default async function Signup(props: {
                     placeholder="Enter your email"
                   />
                 </div>
-                {/* <!-- Password --> */}
+                {/* Password */}
                 <div>
                   <Label>
                     Password<span className="text-error-500">*</span>
@@ -105,7 +86,20 @@ export default async function Signup(props: {
                     />
                   </div>
                 </div>
-                {/* <!-- Terms --> */}
+                {/* Referral Code */}
+                <div>
+                  <Label>
+                    Referral Code <span className="text-gray-400 text-xs font-normal">(optional)</span>
+                  </Label>
+                  <Input
+                    type="text"
+                    id="referral_code"
+                    name="referral_code"
+                    placeholder="Enter referral code"
+                    defaultValue={referralCode}
+                  />
+                </div>
+                {/* Terms */}
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
@@ -122,7 +116,7 @@ export default async function Signup(props: {
                     </span>
                   </p>
                 </div>
-                {/* <!-- Button --> */}
+                {/* Button */}
                 <div>
                   <SubmitButton pendingText="Signing up..." formAction={signUpAction} className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-blue-500 shadow-sm hover:bg-blue-600">
                     Create Account

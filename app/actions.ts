@@ -2,6 +2,7 @@
 
 import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
+import { getSettings } from "@/utils/supabase/settings";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -10,6 +11,7 @@ export const signUpAction = async (formData: FormData) => {
   const password = formData.get("password")?.toString();
   const firstname = formData.get("firstname")?.toString() || "";
   const lastname = formData.get("lastname")?.toString() || "";
+  const referralCode = formData.get("referral_code")?.toString()?.trim() || "";
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
 
@@ -21,7 +23,7 @@ export const signUpAction = async (formData: FormData) => {
     );
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -36,13 +38,24 @@ export const signUpAction = async (formData: FormData) => {
   if (error) {
     console.error(error.code + " " + error.message);
     return encodedRedirect("error", "/signup", error.message);
-  } else {
-    return encodedRedirect(
-      "success",
-      "/signup",
-      "Thanks for signing up! Please check your email for a verification link.",
-    );
   }
+
+  // Redeem referral code if provided
+  if (referralCode && data.user) {
+    const { error: refError } = await supabase.rpc("redeem_referral", {
+      p_code: referralCode,
+      p_new_user_id: data.user.id,
+    });
+    if (refError) {
+      console.error("Referral redemption failed:", refError.message);
+    }
+  }
+
+  return encodedRedirect(
+    "success",
+    "/signup",
+    "Thanks for signing up! Please check your email for a verification link.",
+  );
 };
 
 export const signInAction = async (formData: FormData) => {
@@ -164,6 +177,8 @@ export async function submitPullRequest(formData: FormData) {
     return encodedRedirect("error", "/dashboard/request-feedback", "Project name is required");
   }
 
+  const settings = await getSettings();
+
   // Check points balance
   const { data: profile } = await supabase
     .from("profiles")
@@ -171,8 +186,20 @@ export async function submitPullRequest(formData: FormData) {
     .eq("id", user.id)
     .single();
 
-  if (!profile || profile.peer_points_balance < 2) {
-    return encodedRedirect("error", "/dashboard/request-feedback", "You need at least 2 PeerPoints to submit a PullRequest. Review other projects to earn points!");
+  if (!profile || profile.peer_points_balance < settings.review_cost_amount) {
+    return encodedRedirect("error", "/dashboard/request-feedback", `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to submit a PullRequest. Review other projects to earn points!`);
+  }
+
+  // Check active project limit
+  const { count: activeCount } = await supabase
+    .from("pull_requests")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("status", "open")
+    .not("queue_position", "is", null);
+
+  if ((activeCount ?? 0) >= settings.active_project_limit) {
+    return encodedRedirect("error", "/dashboard/request-feedback", `You can only have ${settings.active_project_limit} active project${settings.active_project_limit !== 1 ? "s" : ""} in the queue at a time.`);
   }
 
   // Insert pull request
@@ -234,10 +261,12 @@ export async function submitReview(formData: FormData) {
   const videoUrl = formData.get("video_url")?.toString() || "";
   const videoDuration = Number(formData.get("video_duration") || 0);
 
+  const settings = await getSettings();
+
   if (!reviewId) return { error: "Review ID is required" };
   if (strengths && strengths.length < 50) return { error: "Strengths must be at least 50 characters" };
   if (improvements && improvements.length < 50) return { error: "Improvements must be at least 50 characters" };
-  if (videoDuration < 5) return { error: "Video must be at least 5 seconds" }; // TODO: change back to 60 for production
+  if (videoDuration < settings.min_video_duration_seconds) return { error: `Video must be at least ${settings.min_video_duration_seconds} seconds` };
 
   const { error } = await supabase
     .from("reviews")

@@ -21,7 +21,7 @@ export default function DashboardShell({
     <ThemeProvider isProtected={true}>
       <div className="min-h-screen xl:flex">
         {/* Sidebar and Backdrop */}
-        <AppSidebar />
+        <AppSidebar isAdmin={profile?.is_admin} />
         <Backdrop />
         
         {/* Main Content Area */}

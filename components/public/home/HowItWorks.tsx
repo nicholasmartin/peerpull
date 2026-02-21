@@ -44,7 +44,7 @@ export function HowItWorks() {
                   
                   <div className="flex flex-col items-center text-center space-y-2">
                     <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary flex items-center justify-center text-dark-text text-lg font-medium">2</div>
-                    <p className="text-sm text-dark-text">Review two others</p>
+                    <p className="text-sm text-dark-text">Review one project</p>
                   </div>
                   
                   <div className="flex flex-col items-center text-center space-y-2">
@@ -57,7 +57,7 @@ export function HowItWorks() {
                   <div className="absolute top-1/2 left-[60%] w-[12%] h-0.5 bg-gradient-to-r from-blue-primary to-teal-accent transform -translate-y-1/2"></div>
                 </div>
                 
-                <p className="text-dark-text-muted text-center mt-6 text-sm">The 2:1 exchange ensures unbiased, quality feedback for everyone</p>
+                <p className="text-dark-text-muted text-center mt-6 text-sm">During beta: 1:1 exchange — give one review, get one back. It's that fair.</p>
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@ export function HowItWorks() {
               </div>
               
               <div className="space-y-4 pl-16">
-                <p className="text-dark-text">For every two reviews you give, you earn one PeerPoint</p>
+                <p className="text-dark-text">During beta, every review you give earns you one PeerPoint</p>
                 <p className="text-dark-text">Each PeerPoint gets you one review on your project</p>
                 <p className="text-dark-text">All feedback is vetted to ensure quality</p>
               </div>
