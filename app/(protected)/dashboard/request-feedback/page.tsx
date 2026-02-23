@@ -56,9 +56,29 @@ export default async function PullRequestsPage() {
     }
   };
 
-  const EmptyState = ({ message }: { message: string }) => (
+  const ActiveEmptyState = () => (
     <div className="rounded-lg bg-white dark:bg-gray-800 shadow-sm p-12 text-center">
-      <p className="text-gray-500 dark:text-gray-400">{message}</p>
+      <PlusCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+      <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">No projects yet</h3>
+      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+        1 PeerPoint per review received, not upfront &mdash; you start with 3.
+      </p>
+      <Link href="/dashboard/request-feedback/new">
+        <Button className="mt-4 bg-[#3366FF] hover:bg-blue-600">
+          <PlusCircle className="h-4 w-4 mr-2" />
+          Submit Your First Project
+        </Button>
+      </Link>
+    </div>
+  );
+
+  const CompletedEmptyState = () => (
+    <div className="rounded-lg bg-white dark:bg-gray-800 shadow-sm p-12 text-center">
+      <PlusCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+      <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">No completed projects yet</h3>
+      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+        Once your projects have been reviewed, they&apos;ll appear here.
+      </p>
     </div>
   );
 
@@ -119,7 +139,7 @@ export default async function PullRequestsPage() {
               </div>
             </div>
           ) : (
-            <EmptyState message="No active PullRequests. Submit one to get video feedback!" />
+            <ActiveEmptyState />
           )}
         </TabsContent>
 
@@ -162,7 +182,7 @@ export default async function PullRequestsPage() {
               </div>
             </div>
           ) : (
-            <EmptyState message="No completed PullRequests yet." />
+            <CompletedEmptyState />
           )}
         </TabsContent>
       </Tabs>

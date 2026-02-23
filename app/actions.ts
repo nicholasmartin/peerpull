@@ -225,7 +225,8 @@ export async function submitPullRequest(formData: FormData) {
   // Assign queue position (points charged on review completion, not upfront)
   await supabase.rpc("assign_queue_position", { p_pr_id: pr.id });
 
-  return redirect("/dashboard/request-feedback");
+  const redirectTo = formData.get("redirectTo")?.toString() || "/dashboard/request-feedback";
+  return redirect(redirectTo);
 }
 
 export async function getNextReview(): Promise<{ error: string } | undefined> {

@@ -41,6 +41,45 @@ export default async function ReviewQueuePage() {
         </TabsList>
 
         <TabsContent value="get-review" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">How Reviewing Works</CardTitle>
+              <CardDescription>Follow these steps to complete a review and earn PeerPoints</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ol className="space-y-3">
+                {[
+                  { title: "Click \"Get Next Review\"", desc: "You'll be assigned the next project in the queue" },
+                  { title: "Read the briefing", desc: "Review the project details, focus areas, and questions to address" },
+                  { title: "Open the project", desc: "Click \"Open Site in New Tab\" to load their project" },
+                  { title: "Allow screen recording", desc: "When prompted, select the browser tab with the project (not your whole screen)" },
+                  { title: "Allow microphone (optional)", desc: "Narrate your thoughts as you review for richer feedback" },
+                  { title: "Record your review", desc: "Navigate the project while sharing your honest feedback aloud (1\u20135 minutes)" },
+                  { title: "Stop recording & submit", desc: "Rate the project, add written notes, and submit" },
+                ].map((step, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#3366FF]/10 text-xs font-bold text-[#3366FF]">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{step.title}</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400"> &mdash; {step.desc}</span>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-2 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex-1 rounded-lg bg-[#3366FF]/5 px-3 py-2 text-sm text-[#3366FF] dark:text-blue-300">
+                  <strong>Earn:</strong> 1 PeerPoint per review (+2 bonus on your first!)
+                </div>
+                <div className="flex-1 rounded-lg bg-[#2EC4B6]/5 px-3 py-2 text-sm text-[#2EC4B6]">
+                  <strong>Tip:</strong> Think out loud &mdash; founders get the most value from hearing your raw reactions
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           <GetNextReviewButton />
         </TabsContent>
 

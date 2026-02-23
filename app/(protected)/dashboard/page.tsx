@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getUserProfile } from "@/utils/supabase/profiles";
+import { GettingStartedChecklist } from "@/components/protected/dashboard/GettingStartedChecklist";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -23,6 +24,13 @@ export default async function DashboardPage() {
     .select("*", { count: "exact", head: true })
     .eq("reviewer_id", user.id);
 
+  // Received reviews count (reviews on user's own PRs)
+  const { count: receivedReviewCount } = await supabase
+    .from("reviews")
+    .select("*, pull_requests!inner(user_id)", { count: "exact", head: true })
+    .eq("pull_requests.user_id", user.id)
+    .in("status", ["submitted", "approved"]);
+
   // Available PRs to review
   const { count: availableCount } = await supabase
     .from("pull_requests")
@@ -38,25 +46,38 @@ export default async function DashboardPage() {
     .order("created_at", { ascending: false })
     .limit(3);
 
+  const hasSubmittedProject = (prCount || 0) > 0;
+  const hasReviewedProject = (reviewCount || 0) > 0;
+  const hasReceivedReview = (receivedReviewCount || 0) > 0;
+  const isNewUser = !hasSubmittedProject || !hasReviewedProject || !hasReceivedReview;
+
   return (
     <div className="space-y-6">
-      {/* Welcome Banner */}
-      <div className="rounded-lg bg-gradient-to-r from-[#3366FF] to-[#2EC4B6] p-6 text-white shadow-md">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">Welcome back, {firstName}!</h1>
-            <p className="mt-1">
-              You have <strong>{balance} PeerPoints</strong> available
-              {availableCount ? ` and ${availableCount} projects waiting for review.` : "."}
-            </p>
-          </div>
-          <div className="hidden md:block">
-            <Link href="/dashboard/request-feedback" className="rounded-lg bg-white px-4 py-2 font-medium text-[#3366FF] hover:bg-opacity-90 transition">
-              Submit New PullRequest
-            </Link>
+      {/* Welcome Banner or Getting Started Checklist */}
+      {isNewUser ? (
+        <GettingStartedChecklist
+          hasSubmittedProject={hasSubmittedProject}
+          hasReviewedProject={hasReviewedProject}
+          hasReceivedReview={hasReceivedReview}
+        />
+      ) : (
+        <div className="rounded-lg bg-gradient-to-r from-[#3366FF] to-[#2EC4B6] p-6 text-white shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold">Welcome back, {firstName}!</h1>
+              <p className="mt-1">
+                You have <strong>{balance} PeerPoints</strong> available
+                {availableCount ? ` and ${availableCount} projects waiting for review.` : "."}
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <Link href="/dashboard/request-feedback" className="rounded-lg bg-white px-4 py-2 font-medium text-[#3366FF] hover:bg-opacity-90 transition">
+                Submit New PullRequest
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">

@@ -192,10 +192,27 @@ export function ReviewSession({
                 </div>
               )}
 
-              {/* Instructions */}
-              <p className="text-xs text-white/30 text-center">
-                Click &quot;Open Site&quot; then start recording. Select the project&apos;s tab when prompted. Navigate and narrate your review.
-              </p>
+              {/* Step-by-step instructions */}
+              <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-2">
+                <h3 className="text-xs font-semibold text-white/60 uppercase tracking-wide">How to record your review</h3>
+                <ol className="space-y-1.5">
+                  {[
+                    { title: "Open the project", desc: "click the button above to open it in a new tab" },
+                    { title: "Start recording", desc: "click \"Start Recording\", then select the project's browser tab when prompted" },
+                    { title: "Narrate your review", desc: "explore the project and think out loud (minimum 60 seconds, max 5 minutes)" },
+                    { title: "Stop & submit", desc: "click \"Stop Recording\", then rate and submit your feedback" },
+                  ].map((step, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#3366FF]/20 text-[10px] font-bold text-[#3366FF] mt-0.5">
+                        {i + 1}
+                      </span>
+                      <span className="text-white/50">
+                        <strong className="text-white/70">{step.title}</strong> &mdash; {step.desc}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
           </div>
         ) : (
