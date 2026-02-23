@@ -61,59 +61,59 @@ export function GettingStartedChecklist({
   const firstIncompleteIndex = steps.findIndex((s) => !s.complete);
 
   return (
-    <div className="rounded-lg border border-white/10 bg-gray-900 p-6 shadow-md relative">
+    <div className="rounded-md border border-dark-border bg-dark-card p-6 relative">
       {/* Dismiss button */}
       <button
         onClick={handleDismiss}
-        className="absolute top-4 right-4 text-white/40 hover:text-white/70 transition"
+        className="absolute top-4 right-4 text-dark-text-muted hover:text-dark-text transition"
         aria-label="Dismiss"
       >
         <X className="h-5 w-5" />
       </button>
 
-      <h2 className="text-xl font-bold text-white mb-1">Getting Started</h2>
-      <p className="text-sm text-white/50 mb-4">Complete these steps to get the most out of PeerPull</p>
+      <h2 className="text-lg font-semibold text-dark-text mb-1">Getting Started</h2>
+      <p className="text-sm text-dark-text-muted mb-4">Complete these steps to get the most out of PeerPull</p>
 
       {/* Progress bar */}
       <div className="mb-6">
-        <div className="flex items-center justify-between text-xs text-white/50 mb-1">
+        <div className="flex items-center justify-between text-xs text-dark-text-muted mb-1">
           <span>{completedCount} of 3 complete</span>
           <span>{progressPercent}%</span>
         </div>
-        <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+        <div className="h-1 rounded bg-dark-surface overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#3366FF] to-[#2EC4B6] transition-all duration-500"
+            className="h-full rounded bg-primary transition-all duration-500"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
       </div>
 
       {/* Steps */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {steps.map((step, i) => {
           const isHighlighted = i === firstIncompleteIndex;
           return (
             <div
               key={step.key}
-              className={`rounded-lg border p-4 transition ${
+              className={`rounded-md border p-4 transition ${
                 step.complete
-                  ? "border-white/10 bg-white/5"
+                  ? "border-dark-border bg-dark-surface/50"
                   : isHighlighted
-                    ? "border-transparent bg-gradient-to-r from-[#3366FF]/10 to-[#2EC4B6]/10 ring-1 ring-[#3366FF]/40"
-                    : "border-white/10 bg-white/5 opacity-60"
+                    ? "border-primary/20 bg-primary-subtle"
+                    : "border-dark-border bg-dark-surface/50 opacity-60"
               }`}
             >
               <div className="flex items-start gap-3">
                 {step.complete ? (
-                  <CheckCircle2 className="h-5 w-5 text-[#2EC4B6] shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 ) : (
-                  <Circle className="h-5 w-5 text-white/30 shrink-0 mt-0.5" />
+                  <Circle className="h-5 w-5 text-dark-text-muted/30 shrink-0 mt-0.5" />
                 )}
                 <div className="flex-1 min-w-0">
-                  <h3 className={`text-sm font-semibold ${step.complete ? "text-white/60 line-through" : "text-white"}`}>
+                  <h3 className={`text-sm font-semibold ${step.complete ? "text-dark-text-muted line-through" : "text-dark-text"}`}>
                     {step.label}
                   </h3>
-                  <p className="text-xs text-white/40 mt-0.5">{step.description}</p>
+                  <p className="text-xs text-dark-text-muted mt-0.5">{step.description}</p>
 
                   {/* Inline quick-submit form for step 1 */}
                   {step.key === "submit" && !step.complete && isHighlighted && (
@@ -130,26 +130,25 @@ export function GettingStartedChecklist({
                         type="text"
                         required
                         placeholder="Project name"
-                        className="w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-[#3366FF]"
+                        className="w-full rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm text-dark-text placeholder-dark-text-muted focus:outline-none focus:ring-1 focus:ring-primary/30 focus:border-primary/50"
                       />
                       <input
                         name="url"
                         type="url"
                         placeholder="https://yourproject.com"
-                        className="w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-[#3366FF]"
+                        className="w-full rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm text-dark-text placeholder-dark-text-muted focus:outline-none focus:ring-1 focus:ring-primary/30 focus:border-primary/50"
                       />
                       <div className="flex items-center gap-2">
                         <Button
                           type="submit"
                           disabled={submitting}
                           size="sm"
-                          className="bg-[#3366FF] hover:bg-blue-600"
                         >
                           {submitting ? "Submitting..." : "Submit Project"}
                         </Button>
                         <Link
                           href="/dashboard/request-feedback/new"
-                          className="text-xs text-white/40 hover:text-white/70 transition"
+                          className="text-xs text-dark-text-muted hover:text-dark-text transition"
                         >
                           Add more details <ArrowRight className="inline h-3 w-3" />
                         </Link>
@@ -161,7 +160,7 @@ export function GettingStartedChecklist({
                   {step.key === "review" && !step.complete && isHighlighted && (
                     <Link
                       href="/dashboard/submit-feedback"
-                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-[#3366FF] hover:text-blue-400 transition"
+                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition"
                     >
                       Start Reviewing <ArrowRight className="h-4 w-4" />
                     </Link>

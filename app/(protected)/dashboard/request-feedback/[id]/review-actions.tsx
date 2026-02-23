@@ -24,7 +24,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
   }
 
   return (
-    <div className="flex gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+    <div className="flex gap-2 pt-2 border-t border-dark-border">
       <Button
         onClick={handleApprove}
         disabled={loading}
@@ -36,7 +36,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
         onClick={handleReject}
         disabled={loading}
         variant="outline"
-        className="text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600"
+        className="text-red-400 border-red-500/20 hover:bg-red-500/10 hover:text-red-300"
       >
         Reject
       </Button>

@@ -46,23 +46,26 @@ export default async function PullRequestDetailPage({ params }: Props) {
   const reviewerMap = Object.fromEntries((reviewerProfiles || []).map((p: any) => [p.id, p.full_name]));
 
   const statusLabel = pr.status === "open" ? "Open" : pr.status === "in_review" ? "In Review" : pr.status === "completed" ? "Completed" : "Closed";
-  const statusColor = pr.status === "open" ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200" : pr.status === "completed" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+  const dotColor = pr.status === "open" ? "bg-yellow-500" : pr.status === "completed" ? "bg-green-500" : "bg-primary";
 
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
-        <Link href="/dashboard/request-feedback" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+        <Link href="/dashboard/request-feedback" className="text-dark-text-muted hover:text-dark-text">
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold">{pr.title}</h1>
-          <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+          <h1 className="text-xl font-semibold">{pr.title}</h1>
+          <div className="flex items-center space-x-2 text-sm text-dark-text-muted">
             {pr.stage && <span className="capitalize">{pr.stage}</span>}
             <span>•</span>
             <span>{new Date(pr.created_at).toLocaleDateString()}</span>
           </div>
         </div>
-        <Badge variant="outline" className={statusColor}>{statusLabel}</Badge>
+        <span className="inline-flex items-center gap-1.5 text-xs text-dark-text-muted">
+          <span className={`inline-block h-1.5 w-1.5 rounded-full ${dotColor}`} />
+          {statusLabel}
+        </span>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -80,13 +83,13 @@ export default async function PullRequestDetailPage({ params }: Props) {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {pr.description && (
-                    <p className="text-gray-700 dark:text-gray-300">{pr.description}</p>
+                    <p className="text-dark-text-muted">{pr.description}</p>
                   )}
 
                   {pr.url && (
                     <div>
-                      <h3 className="font-medium text-gray-900 dark:text-gray-100">Project URL</h3>
-                      <a href={pr.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">
+                      <h3 className="font-medium text-dark-text">Project URL</h3>
+                      <a href={pr.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                         {pr.url}
                       </a>
                     </div>
@@ -94,7 +97,7 @@ export default async function PullRequestDetailPage({ params }: Props) {
 
                   {pr.categories?.length > 0 && (
                     <div>
-                      <h3 className="font-medium text-gray-900 dark:text-gray-100">Categories</h3>
+                      <h3 className="font-medium text-dark-text">Categories</h3>
                       <div className="flex flex-wrap gap-2 mt-2">
                         {pr.categories.map((cat: string, i: number) => (
                           <Badge key={i} variant="secondary">{cat}</Badge>
@@ -105,7 +108,7 @@ export default async function PullRequestDetailPage({ params }: Props) {
 
                   {pr.focus_areas?.length > 0 && (
                     <div>
-                      <h3 className="font-medium text-gray-900 dark:text-gray-100">Feedback Focus</h3>
+                      <h3 className="font-medium text-dark-text">Feedback Focus</h3>
                       <div className="flex flex-wrap gap-2 mt-2">
                         {pr.focus_areas.map((area: string, i: number) => (
                           <Badge key={i} variant="outline">{area}</Badge>
@@ -116,8 +119,8 @@ export default async function PullRequestDetailPage({ params }: Props) {
 
                   {pr.questions?.length > 0 && (
                     <div>
-                      <h3 className="font-medium text-gray-900 dark:text-gray-100">Specific Questions</h3>
-                      <ul className="mt-2 list-disc list-inside text-gray-700 dark:text-gray-300">
+                      <h3 className="font-medium text-dark-text">Specific Questions</h3>
+                      <ul className="mt-2 list-disc list-inside text-dark-text-muted">
                         {pr.questions.map((q: string, i: number) => (
                           <li key={i}>{q}</li>
                         ))}
@@ -146,7 +149,7 @@ export default async function PullRequestDetailPage({ params }: Props) {
                                   <svg
                                     key={i}
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className={`h-4 w-4 ${i < (review.rating || 0) ? "text-yellow-400" : "text-gray-300"}`}
+                                    className={`h-4 w-4 ${i < (review.rating || 0) ? "text-yellow-400" : "text-dark-text-muted/50"}`}
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
                                   >
@@ -154,17 +157,17 @@ export default async function PullRequestDetailPage({ params }: Props) {
                                   </svg>
                                 ))}
                               </div>
-                              <Badge variant="outline" className={
-                                review.status === "approved" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" :
-                                review.status === "rejected" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" :
-                                "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-                              }>
+                              <span className="inline-flex items-center gap-1.5 text-xs text-dark-text-muted">
+                                <span className={`inline-block h-1.5 w-1.5 rounded-full ${
+                                  review.status === "approved" ? "bg-green-500" :
+                                  review.status === "rejected" ? "bg-red-500" : "bg-yellow-500"
+                                }`} />
                                 {review.status}
-                              </Badge>
+                              </span>
                             </div>
                           </div>
                         </div>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                        <span className="text-xs text-dark-text-muted">
                           {review.submitted_at ? new Date(review.submitted_at).toLocaleDateString() : ""}
                         </span>
                       </div>
@@ -172,7 +175,7 @@ export default async function PullRequestDetailPage({ params }: Props) {
                     <CardContent className="space-y-4">
                       {/* Video player */}
                       {review.video_url && (
-                        <div className="rounded-lg overflow-hidden bg-black">
+                        <div className="rounded-md overflow-hidden bg-black">
                           <video src={review.video_url} controls className="w-full max-h-[400px]" />
                         </div>
                       )}
@@ -180,14 +183,14 @@ export default async function PullRequestDetailPage({ params }: Props) {
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         {review.strengths && (
                           <div>
-                            <h3 className="font-medium text-green-600 dark:text-green-400 mb-2">Strengths</h3>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm">{review.strengths}</p>
+                            <h3 className="font-medium text-green-400 mb-2">Strengths</h3>
+                            <p className="text-dark-text-muted text-sm">{review.strengths}</p>
                           </div>
                         )}
                         {review.improvements && (
                           <div>
-                            <h3 className="font-medium text-amber-600 dark:text-amber-400 mb-2">Areas for Improvement</h3>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm">{review.improvements}</p>
+                            <h3 className="font-medium text-amber-400 mb-2">Areas for Improvement</h3>
+                            <p className="text-dark-text-muted text-sm">{review.improvements}</p>
                           </div>
                         )}
                       </div>
@@ -201,9 +204,9 @@ export default async function PullRequestDetailPage({ params }: Props) {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <MessageSquare className="h-12 w-12 text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">No feedback yet</h3>
-                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  <MessageSquare className="h-12 w-12 text-dark-text-muted mb-4" />
+                  <h3 className="text-lg font-medium text-dark-text">No feedback yet</h3>
+                  <p className="mt-2 text-sm text-dark-text-muted">
                     Feedback will appear here once reviewers submit their reviews.
                   </p>
                 </div>
@@ -220,23 +223,23 @@ export default async function PullRequestDetailPage({ params }: Props) {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-4 text-center">
-                <div className="rounded-lg border p-3">
-                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                <div className="rounded-md border p-3">
+                  <div className="text-2xl font-bold text-green-400">
                     {reviews?.filter((r: any) => r.status === "approved").length || 0}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">Approved</div>
+                  <div className="text-xs text-dark-text-muted">Approved</div>
                 </div>
-                <div className="rounded-lg border p-3">
-                  <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+                <div className="rounded-md border p-3">
+                  <div className="text-2xl font-bold text-yellow-400">
                     {reviews?.filter((r: any) => r.status === "submitted").length || 0}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">Pending</div>
+                  <div className="text-xs text-dark-text-muted">Pending</div>
                 </div>
-                <div className="rounded-lg border p-3">
+                <div className="rounded-md border p-3">
                   <div className="text-2xl font-bold">
                     {reviews?.length || 0}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">Total</div>
+                  <div className="text-xs text-dark-text-muted">Total</div>
                 </div>
               </div>
             </CardContent>

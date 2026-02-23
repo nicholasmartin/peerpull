@@ -26,45 +26,35 @@ export default async function PullRequestsPage() {
   );
 
   const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "open":
-        return (
-          <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-            Open
-          </span>
-        );
-      case "in_review":
-        return (
-          <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
-            In Review
-          </span>
-        );
-      case "completed":
-        return (
-          <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-            Completed
-          </span>
-        );
-      case "closed":
-        return (
-          <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800 dark:bg-gray-800 dark:text-gray-200">
-            Closed
-          </span>
-        );
-      default:
-        return null;
-    }
+    const color = {
+      open: "bg-yellow-500",
+      in_review: "bg-green-500",
+      completed: "bg-primary",
+      closed: "bg-dark-text-muted",
+    }[status] || "bg-dark-text-muted";
+    const label = {
+      open: "Open",
+      in_review: "In Review",
+      completed: "Completed",
+      closed: "Closed",
+    }[status] || status;
+    return (
+      <span className="inline-flex items-center gap-1.5 text-xs text-dark-text-muted">
+        <span className={`inline-block h-1.5 w-1.5 rounded-full ${color}`} />
+        {label}
+      </span>
+    );
   };
 
   const ActiveEmptyState = () => (
-    <div className="rounded-lg bg-white dark:bg-gray-800 shadow-sm p-12 text-center">
-      <PlusCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-      <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">No projects yet</h3>
-      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+    <div className="rounded-md border border-dark-border bg-dark-card p-12 text-center">
+      <PlusCircle className="h-12 w-12 text-dark-text-muted mx-auto mb-4" />
+      <h3 className="text-lg font-medium text-dark-text">No projects yet</h3>
+      <p className="mt-2 text-sm text-dark-text-muted max-w-sm mx-auto">
         1 PeerPoint per review received, not upfront &mdash; you start with 3.
       </p>
       <Link href="/dashboard/request-feedback/new">
-        <Button className="mt-4 bg-[#3366FF] hover:bg-blue-600">
+        <Button className="mt-4 bg-primary hover:bg-primary-muted">
           <PlusCircle className="h-4 w-4 mr-2" />
           Submit Your First Project
         </Button>
@@ -73,10 +63,10 @@ export default async function PullRequestsPage() {
   );
 
   const CompletedEmptyState = () => (
-    <div className="rounded-lg bg-white dark:bg-gray-800 shadow-sm p-12 text-center">
-      <PlusCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-      <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">No completed projects yet</h3>
-      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+    <div className="rounded-md border border-dark-border bg-dark-card p-12 text-center">
+      <PlusCircle className="h-12 w-12 text-dark-text-muted mx-auto mb-4" />
+      <h3 className="text-lg font-medium text-dark-text">No completed projects yet</h3>
+      <p className="mt-2 text-sm text-dark-text-muted max-w-sm mx-auto">
         Once your projects have been reviewed, they&apos;ll appear here.
       </p>
     </div>
@@ -85,7 +75,7 @@ export default async function PullRequestsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Request Feedback</h1>
+        <h1 className="text-xl font-semibold">Request Feedback</h1>
         <Link href="/dashboard/request-feedback/new">
           <Button className="flex items-center gap-2">
             <PlusCircle className="h-4 w-4" />
@@ -102,29 +92,29 @@ export default async function PullRequestsPage() {
 
         <TabsContent value="active" className="space-y-4">
           {activePRs.length > 0 ? (
-            <div className="rounded-lg bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+            <div className="rounded-md border border-dark-border bg-dark-card overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Project Name</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Date Submitted</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Status</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Feedback</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Actions</th>
+                    <tr className="border-b border-dark-border">
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Project Name</th>
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Date Submitted</th>
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Status</th>
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Feedback</th>
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {activePRs.map((pr: any) => (
-                      <tr key={pr.id} className="border-b border-gray-100 dark:border-gray-800">
+                      <tr key={pr.id} className="border-b border-dark-border/50">
                         <td className="px-4 py-4">
-                          <Link href={`/dashboard/request-feedback/${pr.id}`} className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                          <Link href={`/dashboard/request-feedback/${pr.id}`} className="font-medium text-primary hover:underline">
                             {pr.title}
                           </Link>
                         </td>
-                        <td className="px-4 py-4 text-gray-600 dark:text-gray-300">{new Date(pr.created_at).toLocaleDateString()}</td>
+                        <td className="px-4 py-4 text-dark-text-muted">{new Date(pr.created_at).toLocaleDateString()}</td>
                         <td className="px-4 py-4">{getStatusBadge(pr.status)}</td>
-                        <td className="px-4 py-4 text-gray-600 dark:text-gray-300">{pr.reviews?.length || 0} reviews</td>
+                        <td className="px-4 py-4 text-dark-text-muted">{pr.reviews?.length || 0} reviews</td>
                         <td className="px-4 py-4">
                           <Link href={`/dashboard/request-feedback/${pr.id}`}>
                             <Button variant="outline" size="sm">
@@ -145,29 +135,29 @@ export default async function PullRequestsPage() {
 
         <TabsContent value="completed" className="space-y-4">
           {completedPRs.length > 0 ? (
-            <div className="rounded-lg bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+            <div className="rounded-md border border-dark-border bg-dark-card overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Project Name</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Date Submitted</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Status</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Feedback</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Actions</th>
+                    <tr className="border-b border-dark-border">
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Project Name</th>
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Date Submitted</th>
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Status</th>
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Feedback</th>
+                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {completedPRs.map((pr: any) => (
-                      <tr key={pr.id} className="border-b border-gray-100 dark:border-gray-800">
+                      <tr key={pr.id} className="border-b border-dark-border/50">
                         <td className="px-4 py-4">
-                          <Link href={`/dashboard/request-feedback/${pr.id}`} className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                          <Link href={`/dashboard/request-feedback/${pr.id}`} className="font-medium text-primary hover:underline">
                             {pr.title}
                           </Link>
                         </td>
-                        <td className="px-4 py-4 text-gray-600 dark:text-gray-300">{new Date(pr.created_at).toLocaleDateString()}</td>
+                        <td className="px-4 py-4 text-dark-text-muted">{new Date(pr.created_at).toLocaleDateString()}</td>
                         <td className="px-4 py-4">{getStatusBadge(pr.status)}</td>
-                        <td className="px-4 py-4 text-gray-600 dark:text-gray-300">{pr.reviews?.length || 0} reviews</td>
+                        <td className="px-4 py-4 text-dark-text-muted">{pr.reviews?.length || 0} reviews</td>
                         <td className="px-4 py-4">
                           <Link href={`/dashboard/request-feedback/${pr.id}`}>
                             <Button variant="outline" size="sm">

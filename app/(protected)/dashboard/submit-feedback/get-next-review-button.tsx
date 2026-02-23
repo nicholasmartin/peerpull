@@ -20,15 +20,15 @@ export function GetNextReviewButton() {
 
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
-      <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+      <h3 className="text-lg font-medium text-dark-text">
         Ready to review?
       </h3>
-      <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md">
+      <p className="text-sm text-dark-text-muted max-w-md">
         Click the button below to get assigned the next project in the queue.
         You&apos;ll earn <span className="font-semibold text-green-400">+1 PeerPoint</span> for each completed review.
       </p>
       <Button
-        className="bg-[#3366FF] hover:bg-blue-600 px-8 py-3 text-base"
+        className="bg-primary hover:bg-primary-muted px-8 py-3 text-base"
         onClick={handleClick}
         disabled={isPending}
       >

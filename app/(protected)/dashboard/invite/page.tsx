@@ -77,15 +77,15 @@ export default function InviteFoundersPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold">Invite Founders</h1>
-        <div className="text-gray-500 dark:text-gray-400">Loading...</div>
+        <h1 className="text-xl font-semibold">Invite Founders</h1>
+        <div className="text-dark-text-muted">Loading...</div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Invite Founders</h1>
+      <h1 className="text-xl font-semibold">Invite Founders</h1>
 
       <Card>
         <CardHeader>
@@ -96,15 +96,15 @@ export default function InviteFoundersPage() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-            <div className="flex-1 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex-1 rounded-md border border-dark-border bg-dark-surface p-4">
               <h3 className="font-medium mb-2">Your Referral Link</h3>
               <div className="flex items-center gap-2">
-                <code className="flex-1 text-sm bg-white dark:bg-gray-900 px-3 py-2 rounded border border-gray-200 dark:border-gray-600 truncate">
+                <code className="flex-1 text-sm bg-dark-card px-3 py-2 rounded border border-dark-border truncate">
                   {referralLink || "Loading..."}
                 </code>
                 <button
                   onClick={() => referralLink && handleCopy(referralLink, "link")}
-                  className="flex items-center gap-1 px-3 py-2 text-sm font-medium bg-blue-500 text-white rounded hover:bg-blue-600 transition shrink-0"
+                  className="flex items-center gap-1 px-3 py-2 text-sm font-medium bg-primary text-white rounded hover:bg-primary-muted transition shrink-0"
                 >
                   {copied === "link" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   {copied === "link" ? "Copied!" : "Copy"}
@@ -112,15 +112,15 @@ export default function InviteFoundersPage() {
               </div>
             </div>
 
-            <div className="flex-1 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex-1 rounded-md border border-dark-border bg-dark-surface p-4">
               <h3 className="font-medium mb-2">Your Referral Code</h3>
               <div className="flex items-center gap-2">
-                <code className="flex-1 text-lg font-mono font-bold bg-white dark:bg-gray-900 px-3 py-2 rounded border border-gray-200 dark:border-gray-600 text-center tracking-widest">
+                <code className="flex-1 text-lg font-mono font-bold bg-dark-card px-3 py-2 rounded border border-dark-border text-center tracking-widest">
                   {referralCode || "Loading..."}
                 </code>
                 <button
                   onClick={() => referralCode && handleCopy(referralCode, "code")}
-                  className="flex items-center gap-1 px-3 py-2 text-sm font-medium bg-blue-500 text-white rounded hover:bg-blue-600 transition shrink-0"
+                  className="flex items-center gap-1 px-3 py-2 text-sm font-medium bg-primary text-white rounded hover:bg-primary-muted transition shrink-0"
                 >
                   {copied === "code" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   {copied === "code" ? "Copied!" : "Copy"}
@@ -130,37 +130,37 @@ export default function InviteFoundersPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <Card className="bg-white dark:bg-gray-800">
+            <Card className="bg-dark-card">
               <CardContent className="flex flex-col items-center justify-center p-6 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-subtle text-primary">
                   <Users className="h-6 w-6" />
                 </div>
                 <h3 className="mt-4 font-medium">Invite Founders</h3>
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                <p className="mt-2 text-sm text-dark-text-muted">
                   Share your referral link with other founders
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white dark:bg-gray-800">
+            <Card className="bg-dark-card">
               <CardContent className="flex flex-col items-center justify-center p-6 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10 text-green-400">
                   <CheckCircle2 className="h-6 w-6" />
                 </div>
                 <h3 className="mt-4 font-medium">They Join</h3>
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                <p className="mt-2 text-sm text-dark-text-muted">
                   They sign up using your referral link or code
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white dark:bg-gray-800">
+            <Card className="bg-dark-card">
               <CardContent className="flex flex-col items-center justify-center p-6 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-400">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-500/10 text-yellow-400">
                   <Gift className="h-6 w-6" />
                 </div>
                 <h3 className="mt-4 font-medium">Earn Rewards</h3>
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                <p className="mt-2 text-sm text-dark-text-muted">
                   Get {referralBonus} PeerPoints for each successful referral
                 </p>
               </CardContent>
@@ -178,19 +178,19 @@ export default function InviteFoundersPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="rounded-lg border border-gray-200 p-4 text-center dark:border-gray-700">
-              <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{referrals.length}</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">Total Referrals</div>
+            <div className="rounded-md border border-dark-border p-4 text-center">
+              <div className="text-2xl font-semibold tabular-nums text-dark-text">{referrals.length}</div>
+              <div className="text-sm text-dark-text-muted">Total Referrals</div>
             </div>
-            <div className="rounded-lg border border-gray-200 p-4 text-center dark:border-gray-700">
-              <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            <div className="rounded-md border border-dark-border p-4 text-center">
+              <div className="text-2xl font-semibold tabular-nums text-dark-text">
                 {referrals.filter(r => r.status === "signed_up").length}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">Signed Up</div>
+              <div className="text-sm text-dark-text-muted">Signed Up</div>
             </div>
-            <div className="rounded-lg border border-gray-200 p-4 text-center dark:border-gray-700">
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{totalBonus}</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">PeerPoints Earned</div>
+            <div className="rounded-md border border-dark-border p-4 text-center">
+              <div className="text-2xl font-semibold tabular-nums text-primary">{totalBonus}</div>
+              <div className="text-sm text-dark-text-muted">PeerPoints Earned</div>
             </div>
           </div>
         </CardContent>
@@ -202,31 +202,32 @@ export default function InviteFoundersPage() {
             <CardTitle>Referral History</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="rounded-lg bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+            <div className="rounded-md bg-dark-card overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-                    <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Invitee</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Status</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Bonus</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Date</th>
+                  <tr className="border-b border-dark-border">
+                    <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Invitee</th>
+                    <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Status</th>
+                    <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Bonus</th>
+                    <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Date</th>
                   </tr>
                 </thead>
                 <tbody>
                   {referrals.map((r) => (
-                    <tr key={r.id} className="border-b border-gray-100 dark:border-gray-800">
-                      <td className="px-4 py-3 text-gray-900 dark:text-gray-100">
+                    <tr key={r.id} className="border-b border-dark-border/50">
+                      <td className="px-4 py-3 text-dark-text">
                         {r.invitee?.first_name} {r.invitee?.last_name}
                       </td>
                       <td className="px-4 py-3">
-                        <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-400">
+                          <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
                           {r.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-blue-600 dark:text-blue-400 font-medium">
+                      <td className="px-4 py-3 text-primary font-medium">
                         +{r.bonus_awarded}
                       </td>
-                      <td className="px-4 py-3 text-gray-600 dark:text-gray-300">
+                      <td className="px-4 py-3 text-dark-text-muted">
                         {new Date(r.created_at).toLocaleDateString()}
                       </td>
                     </tr>

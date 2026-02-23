@@ -11,7 +11,7 @@ export default function CommunityPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Community</h1>
+        <h1 className="text-xl font-semibold">Community</h1>
       </div>
 
       <Tabs defaultValue="founders" className="w-full">
@@ -33,9 +33,9 @@ export default function CommunityPage() {
         <TabsContent value="founders">
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-              <Users className="mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
-              <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Community features coming soon</h3>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <Users className="mb-4 h-12 w-12 text-dark-text-muted" />
+              <h3 className="text-lg font-medium text-dark-text">Community features coming soon</h3>
+              <p className="mt-2 text-sm text-dark-text-muted">
                 Connect with other founders and share feedback.
               </p>
             </CardContent>
@@ -45,9 +45,9 @@ export default function CommunityPage() {
         <TabsContent value="events">
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-              <Calendar className="mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
-              <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">No upcoming events</h3>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <Calendar className="mb-4 h-12 w-12 text-dark-text-muted" />
+              <h3 className="text-lg font-medium text-dark-text">No upcoming events</h3>
+              <p className="mt-2 text-sm text-dark-text-muted">
                 Community events will appear here once available.
               </p>
             </CardContent>
@@ -57,9 +57,9 @@ export default function CommunityPage() {
         <TabsContent value="discussions">
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-              <MessageSquare className="mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
-              <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">No discussions yet</h3>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <MessageSquare className="mb-4 h-12 w-12 text-dark-text-muted" />
+              <h3 className="text-lg font-medium text-dark-text">No discussions yet</h3>
+              <p className="mt-2 text-sm text-dark-text-muted">
                 Discussion forums are coming soon.
               </p>
             </CardContent>

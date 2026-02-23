@@ -76,10 +76,10 @@ export default async function AdminOverviewPage() {
     : 0;
   const healthStatus = completionRate >= 70 ? "Green" : completionRate >= 40 ? "Yellow" : "Red";
   const healthColor = healthStatus === "Green"
-    ? "text-green-600 dark:text-green-400"
+    ? "text-green-400"
     : healthStatus === "Yellow"
-    ? "text-yellow-600 dark:text-yellow-400"
-    : "text-red-600 dark:text-red-400";
+    ? "text-yellow-400"
+    : "text-red-400";
 
   const metrics = [
     { label: "Total Users", value: totalUsers ?? 0 },
@@ -98,10 +98,10 @@ export default async function AdminOverviewPage() {
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <h2 className="text-lg font-semibold">Platform Health</h2>
-        <span className={`font-bold text-sm px-3 py-1 rounded-full ${
-          healthStatus === "Green" ? "bg-green-100 dark:bg-green-900" :
-          healthStatus === "Yellow" ? "bg-yellow-100 dark:bg-yellow-900" :
-          "bg-red-100 dark:bg-red-900"
+        <span className={`font-bold text-sm px-3 py-1 rounded ${
+          healthStatus === "Green" ? "bg-green-500/10" :
+          healthStatus === "Yellow" ? "bg-yellow-500/10" :
+          "bg-red-500/10"
         } ${healthColor}`}>
           {healthStatus} — {completionRate.toFixed(0)}% completion rate
         </span>
@@ -111,7 +111,7 @@ export default async function AdminOverviewPage() {
         {metrics.map((m) => (
           <Card key={m.label}>
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+              <CardTitle className="text-xs font-medium text-dark-text-muted uppercase tracking-wide">
                 {m.label}
               </CardTitle>
             </CardHeader>

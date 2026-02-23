@@ -106,7 +106,7 @@ export default function SettingsPage() {
   }, [mounted, selectedTheme]);
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Settings</h1>
+      <h1 className="text-xl font-semibold">Settings</h1>
       
       <Tabs defaultValue="account" className="w-full">
         <div className="flex flex-col md:flex-row gap-6">
@@ -114,35 +114,35 @@ export default function SettingsPage() {
             <TabsList className="flex flex-col h-auto bg-transparent p-0 space-y-1">
               <TabsTrigger 
                 value="account" 
-                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-gray-800"
+                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-dark-surface"
               >
                 <User className="mr-2 h-4 w-4" />
                 Account
               </TabsTrigger>
               <TabsTrigger 
                 value="security" 
-                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-gray-800"
+                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-dark-surface"
               >
                 <Lock className="mr-2 h-4 w-4" />
                 Security
               </TabsTrigger>
               <TabsTrigger 
                 value="notifications" 
-                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-gray-800"
+                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-dark-surface"
               >
                 <Bell className="mr-2 h-4 w-4" />
                 Notifications
               </TabsTrigger>
               <TabsTrigger 
                 value="appearance" 
-                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-gray-800"
+                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-dark-surface"
               >
                 <Globe className="mr-2 h-4 w-4" />
                 Appearance
               </TabsTrigger>
               <TabsTrigger 
                 value="billing" 
-                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-gray-800"
+                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-dark-surface"
               >
                 <CreditCard className="mr-2 h-4 w-4" />
                 Billing
@@ -175,7 +175,7 @@ export default function SettingsPage() {
                     <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Not set" />
                   </div>
                   
-                  <Button className="bg-[#3366FF] hover:bg-blue-600">
+                  <Button className="bg-primary hover:bg-primary-muted">
                     Save Changes
                   </Button>
                 </CardContent>
@@ -189,7 +189,7 @@ export default function SettingsPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-dark-text-muted">
                     Once you delete your account, there is no going back. All of your data will be permanently removed.
                   </p>
                   <Button variant="destructive">
@@ -223,7 +223,7 @@ export default function SettingsPage() {
                     <Input id="confirm-password" type="password" />
                   </div>
                   
-                  <Button className="bg-[#3366FF] hover:bg-blue-600">
+                  <Button className="bg-primary hover:bg-primary-muted">
                     Update Password
                   </Button>
                 </CardContent>
@@ -240,7 +240,7 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="2fa">Two-Factor Authentication</Label>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-dark-text-muted">
                         Require a verification code when logging in
                       </p>
                     </div>
@@ -252,12 +252,12 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="sms-auth">SMS Authentication</Label>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-dark-text-muted">
                         Receive verification codes via SMS
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                      <span className="text-sm text-dark-text-muted">
                         Not configured
                       </span>
                       <Button variant="outline" size="sm">
@@ -271,7 +271,7 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="app-auth">Authenticator App</Label>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-dark-text-muted">
                         Use an authenticator app to generate verification codes
                       </p>
                     </div>
@@ -290,7 +290,7 @@ export default function SettingsPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-dark-text-muted">
                     Session management coming soon
                   </p>
                 </CardContent>
@@ -312,7 +312,7 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="new-review">New Review Received</Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           When someone submits a review on your PullRequest
                         </p>
                       </div>
@@ -322,7 +322,7 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="review-reminder">Review Reminders</Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           Reminders when your PullRequest is waiting for reviews
                         </p>
                       </div>
@@ -332,7 +332,7 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="review-complete">Review Completed</Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           When all reviews for your PullRequest are completed
                         </p>
                       </div>
@@ -348,7 +348,7 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="new-pullrequest">New PullRequests Available</Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           When new PullRequests are available for review
                         </p>
                       </div>
@@ -358,7 +358,7 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="review-due">Review Due Reminders</Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           Reminders when your reviews are due soon
                         </p>
                       </div>
@@ -374,7 +374,7 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="new-event">New Events</Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           When new community events are scheduled
                         </p>
                       </div>
@@ -384,7 +384,7 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="discussion-reply">Discussion Replies</Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           When someone replies to your discussion post
                         </p>
                       </div>
@@ -399,7 +399,7 @@ export default function SettingsPage() {
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <Mail className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                        <Mail className="h-5 w-5 text-dark-text-muted" />
                         <div className="space-y-0.5">
                           <Label htmlFor="email-notifications">Email Notifications</Label>
                         </div>
@@ -409,7 +409,7 @@ export default function SettingsPage() {
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <Bell className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                        <Bell className="h-5 w-5 text-dark-text-muted" />
                         <div className="space-y-0.5">
                           <Label htmlFor="push-notifications">Push Notifications</Label>
                         </div>
@@ -418,7 +418,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
                   
-                  <Button className="bg-[#3366FF] hover:bg-blue-600">
+                  <Button className="bg-primary hover:bg-primary-muted">
                     Save Preferences
                   </Button>
                 </CardContent>
@@ -443,8 +443,8 @@ export default function SettingsPage() {
                         className="flex flex-col items-center space-y-2 cursor-pointer"
                         onClick={() => applyTheme("light")}
                       >
-                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "light" ? "border-[#3366FF]" : "border-gray-200 dark:border-gray-700"} bg-white`}>
-                          <Sun className="h-6 w-6 text-gray-800" />
+                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "light" ? "border-primary" : "border-dark-border"} bg-dark-card`}>
+                          <Sun className="h-6 w-6 text-dark-text" />
                         </div>
                         <Label className="text-sm font-normal">Light</Label>
                       </div>
@@ -454,8 +454,8 @@ export default function SettingsPage() {
                         className="flex flex-col items-center space-y-2 cursor-pointer"
                         onClick={() => applyTheme("dark")}
                       >
-                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "dark" ? "border-[#3366FF]" : "border-gray-200 dark:border-gray-700"} bg-gray-950`}>
-                          <Moon className="h-6 w-6 text-gray-100" />
+                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "dark" ? "border-primary" : "border-dark-border"} bg-dark-bg`}>
+                          <Moon className="h-6 w-6 text-dark-text" />
                         </div>
                         <Label className="text-sm font-normal">Dark</Label>
                       </div>
@@ -465,9 +465,9 @@ export default function SettingsPage() {
                         className="flex flex-col items-center space-y-2 cursor-pointer"
                         onClick={() => applyTheme("system")}
                       >
-                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "system" ? "border-[#3366FF]" : "border-gray-200 dark:border-gray-700"} bg-gradient-to-r from-white to-gray-950`}>
+                        <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "system" ? "border-primary" : "border-dark-border"} bg-gradient-to-r from-dark-card to-dark-bg`}>
                           <div className="flex space-x-1">
-                            <Monitor className="h-6 w-6 text-gray-600" />
+                            <Monitor className="h-6 w-6 text-dark-text-muted" />
                           </div>
                         </div>
                         <Label className="text-sm font-normal">System</Label>
@@ -482,21 +482,21 @@ export default function SettingsPage() {
                     
                     <div className="grid grid-cols-3 gap-4">
                       <div className="flex flex-col items-center space-y-2">
-                        <div className="flex h-12 w-full items-center justify-center rounded-md border-2 border-gray-200 bg-white text-sm dark:border-gray-700 dark:bg-gray-800">
+                        <div className="flex h-12 w-full items-center justify-center rounded-md border-2 border-dark-border bg-dark-surface text-sm">
                           <span>Aa</span>
                         </div>
                         <Label className="text-sm font-normal">Small</Label>
                       </div>
                       
                       <div className="flex flex-col items-center space-y-2">
-                        <div className="flex h-12 w-full items-center justify-center rounded-md border-2 border-[#3366FF] bg-white text-base dark:bg-gray-800">
+                        <div className="flex h-12 w-full items-center justify-center rounded-md border-2 border-primary bg-dark-surface text-base">
                           <span>Aa</span>
                         </div>
                         <Label className="text-sm font-normal">Medium</Label>
                       </div>
                       
                       <div className="flex flex-col items-center space-y-2">
-                        <div className="flex h-12 w-full items-center justify-center rounded-md border-2 border-gray-200 bg-white text-lg dark:border-gray-700 dark:bg-gray-800">
+                        <div className="flex h-12 w-full items-center justify-center rounded-md border-2 border-dark-border bg-dark-surface text-lg">
                           <span>Aa</span>
                         </div>
                         <Label className="text-sm font-normal">Large</Label>
@@ -504,7 +504,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
                   
-                  <Button className="bg-[#3366FF] hover:bg-blue-600">
+                  <Button className="bg-primary hover:bg-primary-muted">
                     Save Preferences
                   </Button>
                 </CardContent>
@@ -520,11 +520,11 @@ export default function SettingsPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                  <div className="rounded-md border border-dark-border p-4">
                     <div className="flex justify-between items-center">
                       <div>
                         <h3 className="font-medium text-lg">Free Plan</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           Basic features for early-stage founders
                         </p>
                       </div>
@@ -549,16 +549,16 @@ export default function SettingsPage() {
                     </div>
                   </div>
                   
-                  <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                  <div className="rounded-md border border-dark-border p-4">
                     <div className="flex justify-between items-center">
                       <div>
                         <h3 className="font-medium text-lg">Pro Plan</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           Advanced features for growing startups
                         </p>
                       </div>
                       <div className="text-lg font-bold">
-                        $29<span className="text-sm font-normal text-gray-500 dark:text-gray-400">/month</span>
+                        $29<span className="text-sm font-normal text-dark-text-muted">/month</span>
                       </div>
                     </div>
                     
@@ -583,7 +583,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
                     
-                    <Button className="w-full mt-4 bg-[#3366FF] hover:bg-blue-600">
+                    <Button className="w-full mt-4 bg-primary hover:bg-primary-muted">
                       Upgrade to Pro
                     </Button>
                   </div>
@@ -598,12 +598,12 @@ export default function SettingsPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center justify-between p-4 rounded-md border border-dark-border">
                     <div className="flex items-center space-x-4">
-                      <CreditCard className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                      <CreditCard className="h-6 w-6 text-dark-text-muted" />
                       <div>
                         <p className="font-medium">Add Payment Method</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-dark-text-muted">
                           Add a credit card or PayPal account
                         </p>
                       </div>
@@ -621,7 +621,7 @@ export default function SettingsPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-center py-6 text-gray-500 dark:text-gray-400">
+                  <div className="text-center py-6 text-dark-text-muted">
                     <p>No billing history available</p>
                   </div>
                 </CardContent>

@@ -14,7 +14,7 @@ export default async function EconomySettingsPage() {
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold">Point Economy Settings</h2>
-      <p className="text-sm text-gray-500 dark:text-gray-400">
+      <p className="text-sm text-dark-text-muted">
         Configure how PeerPoints are earned, spent, and awarded across the platform.
       </p>
       <SettingsEditor settings={settings || []} />

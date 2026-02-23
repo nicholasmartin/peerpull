@@ -39,7 +39,7 @@ export default async function ProfilePage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">My Profile</h1>
+      <h1 className="text-xl font-semibold">My Profile</h1>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div className="md:col-span-1 space-y-6">
@@ -51,26 +51,26 @@ export default async function ProfilePage() {
                   <AvatarFallback>{initials}</AvatarFallback>
                 </Avatar>
 
-                <h2 className="mt-4 text-xl font-bold">{displayName}</h2>
+                <h2 className="mt-4 text-lg font-semibold">{displayName}</h2>
 
                 {profile?.website && (
-                  <a href={profile.website.startsWith("http") ? profile.website : `https://${profile.website}`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline mt-1">
+                  <a href={profile.website.startsWith("http") ? profile.website : `https://${profile.website}`} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline mt-1">
                     {profile.website}
                   </a>
                 )}
 
                 <div className="w-full mt-6 grid grid-cols-2 gap-2">
-                  <div className="flex flex-col items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700">
-                    <span className="text-xl font-bold">{prCount || 0}</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">PullRequests</span>
+                  <div className="flex flex-col items-center p-3 rounded-md border border-dark-border">
+                    <span className="text-lg font-semibold">{prCount || 0}</span>
+                    <span className="text-xs text-dark-text-muted">PullRequests</span>
                   </div>
-                  <div className="flex flex-col items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700">
-                    <span className="text-xl font-bold">{reviewCount || 0}</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">Reviews</span>
+                  <div className="flex flex-col items-center p-3 rounded-md border border-dark-border">
+                    <span className="text-lg font-semibold">{reviewCount || 0}</span>
+                    <span className="text-xs text-dark-text-muted">Reviews</span>
                   </div>
-                  <div className="flex flex-col items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 col-span-2">
-                    <span className="text-xl font-bold">{balance}</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">PeerPoints</span>
+                  <div className="flex flex-col items-center p-3 rounded-md border border-dark-border col-span-2">
+                    <span className="text-lg font-semibold">{balance}</span>
+                    <span className="text-xs text-dark-text-muted">PeerPoints</span>
                   </div>
                 </div>
               </div>
@@ -83,8 +83,8 @@ export default async function ProfilePage() {
               <CardDescription>Badges and milestones you've earned</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center justify-center py-8 text-gray-500 dark:text-gray-400">
-                <Award className="mb-3 h-10 w-10 text-gray-300 dark:text-gray-600" />
+              <div className="flex flex-col items-center justify-center py-8 text-dark-text-muted">
+                <Award className="mb-3 h-10 w-10 text-dark-text-muted" />
                 <p className="text-sm">No achievements yet</p>
               </div>
             </CardContent>
@@ -106,7 +106,7 @@ export default async function ProfilePage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                    <Mail className="h-5 w-5 text-dark-text-muted" />
                     <span>{user.email}</span>
                   </div>
                 </CardContent>
@@ -134,8 +134,8 @@ export default async function ProfilePage() {
                   <CardTitle>Recent Activity</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex flex-col items-center justify-center py-8 text-gray-500 dark:text-gray-400">
-                    <User className="mb-3 h-10 w-10 text-gray-300 dark:text-gray-600" />
+                  <div className="flex flex-col items-center justify-center py-8 text-dark-text-muted">
+                    <User className="mb-3 h-10 w-10 text-dark-text-muted" />
                     <p className="text-sm">No recent activity</p>
                   </div>
                 </CardContent>
@@ -187,7 +187,7 @@ export default async function ProfilePage() {
 
               <div className="flex justify-end space-x-2">
                 <Button variant="outline">Cancel</Button>
-                <Button className="bg-[#3366FF] hover:bg-blue-600">Save Changes</Button>
+                <Button className="bg-primary hover:bg-primary-muted">Save Changes</Button>
               </div>
             </TabsContent>
           </Tabs>

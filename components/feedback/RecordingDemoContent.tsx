@@ -64,7 +64,7 @@ function RecordingArea({ projectUrl, projectName }: { projectUrl: string; projec
             <div className="text-center space-y-4">
               <button
                 onClick={() => window.open(projectUrl, "_blank")}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#3366FF] hover:bg-blue-600 text-white font-medium transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary hover:bg-primary-muted text-white font-medium transition-colors"
               >
                 <span>🔗</span> Open Site in New Tab
               </button>

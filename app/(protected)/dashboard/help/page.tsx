@@ -52,38 +52,38 @@ export default function HelpSupportPage() {
       id: 1,
       title: "Getting Started with PeerPull",
       description: "A comprehensive guide to setting up your profile and submitting your first PullRequest",
-      icon: <CheckCircle2 className="h-8 w-8 text-green-500" />,
+      icon: <CheckCircle2 className="h-8 w-8 text-dark-text-muted" />,
       type: "Article"
     },
     {
       id: 2,
       title: "How to Write Effective Reviews",
       description: "Learn how to provide valuable feedback that helps other founders improve their projects",
-      icon: <FileText className="h-8 w-8 text-blue-500" />,
+      icon: <FileText className="h-8 w-8 text-primary" />,
       type: "Article"
     },
     {
       id: 3,
       title: "Understanding PeerPoints",
       description: "Everything you need to know about earning and spending PeerPoints",
-      icon: <Video className="h-8 w-8 text-purple-500" />,
+      icon: <Video className="h-8 w-8 text-dark-text-muted" />,
       type: "Video"
     },
     {
       id: 4,
       title: "Optimizing Your PullRequest for Better Feedback",
       description: "Tips and tricks to structure your submission for maximum value",
-      icon: <BookOpen className="h-8 w-8 text-yellow-500" />,
+      icon: <BookOpen className="h-8 w-8 text-dark-text-muted" />,
       type: "Guide"
     }
   ];
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Help & Support</h1>
+      <h1 className="text-xl font-semibold">Help & Support</h1>
       
       <div className="relative">
-        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
+        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-dark-text-muted" />
         <Input
           type="search"
           placeholder="Search for help articles, FAQs, or topics..."
@@ -122,7 +122,7 @@ export default function HelpSupportPage() {
                     <AccordionTrigger className="text-left font-medium">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-600 dark:text-gray-300">
+                    <AccordionContent className="text-dark-text-muted">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -140,57 +140,57 @@ export default function HelpSupportPage() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <div className="flex flex-col space-y-2 rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                <div className="flex flex-col space-y-2 rounded-md border border-dark-border p-4">
                   <h3 className="font-medium">Getting Started</h3>
-                  <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Creating your profile</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Submitting your first PullRequest</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Claiming reviews</li>
+                  <ul className="space-y-1 text-sm text-dark-text-muted">
+                    <li className="hover:text-primary hover:underline cursor-pointer">Creating your profile</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Submitting your first PullRequest</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Claiming reviews</li>
                   </ul>
                 </div>
                 
-                <div className="flex flex-col space-y-2 rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                <div className="flex flex-col space-y-2 rounded-md border border-dark-border p-4">
                   <h3 className="font-medium">PeerPoints</h3>
-                  <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">How to earn PeerPoints</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Spending PeerPoints</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">PeerPoint rewards</li>
+                  <ul className="space-y-1 text-sm text-dark-text-muted">
+                    <li className="hover:text-primary hover:underline cursor-pointer">How to earn PeerPoints</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Spending PeerPoints</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">PeerPoint rewards</li>
                   </ul>
                 </div>
                 
-                <div className="flex flex-col space-y-2 rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                <div className="flex flex-col space-y-2 rounded-md border border-dark-border p-4">
                   <h3 className="font-medium">Reviews</h3>
-                  <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Writing effective reviews</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Review etiquette</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Responding to feedback</li>
+                  <ul className="space-y-1 text-sm text-dark-text-muted">
+                    <li className="hover:text-primary hover:underline cursor-pointer">Writing effective reviews</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Review etiquette</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Responding to feedback</li>
                   </ul>
                 </div>
                 
-                <div className="flex flex-col space-y-2 rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                <div className="flex flex-col space-y-2 rounded-md border border-dark-border p-4">
                   <h3 className="font-medium">Account Management</h3>
-                  <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Updating your profile</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Notification settings</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Privacy and security</li>
+                  <ul className="space-y-1 text-sm text-dark-text-muted">
+                    <li className="hover:text-primary hover:underline cursor-pointer">Updating your profile</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Notification settings</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Privacy and security</li>
                   </ul>
                 </div>
                 
-                <div className="flex flex-col space-y-2 rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                <div className="flex flex-col space-y-2 rounded-md border border-dark-border p-4">
                   <h3 className="font-medium">Community</h3>
-                  <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Joining discussions</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Community guidelines</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Events and meetups</li>
+                  <ul className="space-y-1 text-sm text-dark-text-muted">
+                    <li className="hover:text-primary hover:underline cursor-pointer">Joining discussions</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Community guidelines</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Events and meetups</li>
                   </ul>
                 </div>
                 
-                <div className="flex flex-col space-y-2 rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                <div className="flex flex-col space-y-2 rounded-md border border-dark-border p-4">
                   <h3 className="font-medium">Troubleshooting</h3>
-                  <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Common issues</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Bug reporting</li>
-                    <li className="hover:text-blue-600 hover:underline cursor-pointer">Feature requests</li>
+                  <ul className="space-y-1 text-sm text-dark-text-muted">
+                    <li className="hover:text-primary hover:underline cursor-pointer">Common issues</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Bug reporting</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Feature requests</li>
                   </ul>
                 </div>
               </div>
@@ -209,20 +209,20 @@ export default function HelpSupportPage() {
             <CardContent>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {guides.map((guide) => (
-                  <div key={guide.id} className="flex space-x-4 rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                  <div key={guide.id} className="flex space-x-4 rounded-md border border-dark-border p-4">
                     <div className="flex h-12 w-12 items-center justify-center">
                       {guide.icon}
                     </div>
                     <div className="space-y-1">
                       <h3 className="font-medium">{guide.title}</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <p className="text-sm text-dark-text-muted">
                         {guide.description}
                       </p>
                       <div className="flex items-center pt-2">
-                        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 mr-2">
+                        <span className="text-xs font-medium text-dark-text-muted mr-2">
                           {guide.type}
                         </span>
-                        <Button variant="link" className="h-auto p-0 text-blue-600 dark:text-blue-400">
+                        <Button variant="link" className="h-auto p-0 text-primary">
                           Read More
                           <ArrowRight className="ml-1 h-3 w-3" />
                         </Button>
@@ -235,37 +235,37 @@ export default function HelpSupportPage() {
               <div className="mt-6">
                 <h3 className="font-medium mb-4">Video Tutorials</h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-                    <div className="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                      <Video className="h-10 w-10 text-gray-400" />
+                  <div className="overflow-hidden rounded-md border border-dark-border">
+                    <div className="aspect-w-16 aspect-h-9 bg-dark-surface flex items-center justify-center">
+                      <Video className="h-10 w-10 text-dark-text-muted" />
                     </div>
                     <div className="p-3">
                       <h4 className="font-medium">Getting Started with PeerPull</h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <p className="text-xs text-dark-text-muted mt-1">
                         5:32 • 2.5k views
                       </p>
                     </div>
                   </div>
                   
-                  <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-                    <div className="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                      <Video className="h-10 w-10 text-gray-400" />
+                  <div className="overflow-hidden rounded-md border border-dark-border">
+                    <div className="aspect-w-16 aspect-h-9 bg-dark-surface flex items-center justify-center">
+                      <Video className="h-10 w-10 text-dark-text-muted" />
                     </div>
                     <div className="p-3">
                       <h4 className="font-medium">How to Write Effective Reviews</h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <p className="text-xs text-dark-text-muted mt-1">
                         7:15 • 1.8k views
                       </p>
                     </div>
                   </div>
                   
-                  <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-                    <div className="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                      <Video className="h-10 w-10 text-gray-400" />
+                  <div className="overflow-hidden rounded-md border border-dark-border">
+                    <div className="aspect-w-16 aspect-h-9 bg-dark-surface flex items-center justify-center">
+                      <Video className="h-10 w-10 text-dark-text-muted" />
                     </div>
                     <div className="p-3">
                       <h4 className="font-medium">Maximizing Your PeerPoints</h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <p className="text-xs text-dark-text-muted mt-1">
                         6:48 • 1.2k views
                       </p>
                     </div>
@@ -286,10 +286,10 @@ export default function HelpSupportPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="flex flex-col items-center justify-center space-y-2 rounded-lg border border-gray-200 p-6 text-center dark:border-gray-700">
-                  <Mail className="h-10 w-10 text-blue-500" />
+                <div className="flex flex-col items-center justify-center space-y-2 rounded-md border border-dark-border p-6 text-center">
+                  <Mail className="h-10 w-10 text-primary" />
                   <h3 className="font-medium">Email Support</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-dark-text-muted">
                     Send us an email and we'll get back to you within 24 hours
                   </p>
                   <Button variant="outline">
@@ -297,19 +297,19 @@ export default function HelpSupportPage() {
                   </Button>
                 </div>
                 
-                <div className="flex flex-col items-center justify-center space-y-2 rounded-lg border border-gray-200 p-6 text-center dark:border-gray-700">
-                  <MessageSquare className="h-10 w-10 text-green-500" />
+                <div className="flex flex-col items-center justify-center space-y-2 rounded-md border border-dark-border p-6 text-center">
+                  <MessageSquare className="h-10 w-10 text-dark-text-muted" />
                   <h3 className="font-medium">Live Chat</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-dark-text-muted">
                     Chat with our support team in real-time during business hours
                   </p>
-                  <Button className="bg-[#3366FF] hover:bg-blue-600">
+                  <Button className="bg-primary hover:bg-primary-muted">
                     Start Chat
                   </Button>
                 </div>
               </div>
               
-              <div className="rounded-lg border border-gray-200 p-6 dark:border-gray-700">
+              <div className="rounded-md border border-dark-border p-6">
                 <h3 className="font-medium mb-4">Send a Support Request</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -349,17 +349,17 @@ export default function HelpSupportPage() {
                     <input
                       type="checkbox"
                       id="terms"
-                      className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="h-4 w-4 rounded border-dark-border text-primary focus:ring-primary"
                     />
-                    <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-300">
+                    <label htmlFor="terms" className="text-sm text-dark-text-muted">
                       I agree to the{" "}
-                      <a href="#" className="text-blue-600 hover:underline dark:text-blue-400">
+                      <a href="#" className="text-primary hover:underline ">
                         privacy policy
                       </a>
                     </label>
                   </div>
                   
-                  <Button className="bg-[#3366FF] hover:bg-blue-600">
+                  <Button className="bg-primary hover:bg-primary-muted">
                     Submit Request
                   </Button>
                 </div>

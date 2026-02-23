@@ -100,20 +100,20 @@ export function ReviewSession({
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">
       {/* Project info bar */}
-      <div className="shrink-0 border-b border-white/10 bg-white/5 px-4 py-3 flex items-center justify-between gap-4">
+      <div className="shrink-0 border-b border-dark-border bg-dark-surface px-4 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">
           {pullRequest.stage && (
             <Badge variant="secondary" className="capitalize shrink-0">{pullRequest.stage}</Badge>
           )}
           <h1 className="text-sm font-semibold truncate">{pullRequest.title}</h1>
-          <span className="text-xs text-white/40 hidden sm:inline">—</span>
-          <p className="text-xs text-white/50 truncate hidden sm:block">{pullRequest.description}</p>
+          <span className="text-xs text-dark-text-muted hidden sm:inline">—</span>
+          <p className="text-xs text-dark-text-muted truncate hidden sm:block">{pullRequest.description}</p>
         </div>
-        <span className="text-xs text-white/40 shrink-0">by {pullRequest.founderName}</span>
+        <span className="text-xs text-dark-text-muted shrink-0">by {pullRequest.founderName}</span>
       </div>
 
       {/* Recorder controls */}
-      <div className="shrink-0 border-b border-white/10 bg-[#0a0a1a]/95 backdrop-blur-sm px-4 py-3">
+      <div className="shrink-0 border-b border-dark-border bg-dark-bg/95 backdrop-blur-sm px-4 py-3">
         <RecorderControls recorder={recorder} />
       </div>
 
@@ -130,8 +130,8 @@ export function ReviewSession({
               {/* Description */}
               {pullRequest.description && (
                 <div className="space-y-1">
-                  <h3 className="text-sm font-medium text-white/70">Description</h3>
-                  <p className="text-sm text-white/50">{pullRequest.description}</p>
+                  <h3 className="text-sm font-medium text-dark-text">Description</h3>
+                  <p className="text-sm text-dark-text-muted">{pullRequest.description}</p>
                 </div>
               )}
 
@@ -139,11 +139,11 @@ export function ReviewSession({
               <div className="grid grid-cols-2 gap-4">
                 {pullRequest.focusAreas.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/70">Focus Areas</h3>
+                    <h3 className="text-sm font-medium text-dark-text">Focus Areas</h3>
                     <ul className="space-y-1">
                       {pullRequest.focusAreas.map((area, i) => (
-                        <li key={i} className="text-sm text-white/50 flex items-center gap-1.5">
-                          <span className="text-white/30">•</span> {area}
+                        <li key={i} className="text-sm text-dark-text-muted flex items-center gap-1.5">
+                          <span className="text-dark-text-muted/50">•</span> {area}
                         </li>
                       ))}
                     </ul>
@@ -151,11 +151,11 @@ export function ReviewSession({
                 )}
                 {pullRequest.categories.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/70">Categories</h3>
+                    <h3 className="text-sm font-medium text-dark-text">Categories</h3>
                     <ul className="space-y-1">
                       {pullRequest.categories.map((cat, i) => (
-                        <li key={i} className="text-sm text-white/50 flex items-center gap-1.5">
-                          <span className="text-white/30">•</span> {cat}
+                        <li key={i} className="text-sm text-dark-text-muted flex items-center gap-1.5">
+                          <span className="text-dark-text-muted/50">•</span> {cat}
                         </li>
                       ))}
                     </ul>
@@ -166,10 +166,10 @@ export function ReviewSession({
               {/* Questions */}
               {pullRequest.questions.length > 0 && (
                 <div className="space-y-2">
-                  <h3 className="text-sm font-medium text-white/70">Questions to Address</h3>
+                  <h3 className="text-sm font-medium text-dark-text">Questions to Address</h3>
                   <ol className="list-decimal list-inside space-y-1">
                     {pullRequest.questions.map((q, i) => (
-                      <li key={i} className="text-sm text-white/50">{q}</li>
+                      <li key={i} className="text-sm text-dark-text-muted">{q}</li>
                     ))}
                   </ol>
                 </div>
@@ -177,24 +177,24 @@ export function ReviewSession({
 
               {/* Open Site button */}
               {pullRequest.url ? (
-                <div className="rounded-lg border border-white/10 bg-white/5 p-4 text-center space-y-2">
+                <div className="rounded-md border border-dark-border bg-dark-surface p-4 text-center space-y-2">
                   <Button
                     onClick={() => window.open(pullRequest.url, "_blank")}
-                    className="bg-[#3366FF] hover:bg-blue-600 gap-2"
+                    className="bg-primary hover:bg-primary-muted gap-2"
                   >
                     <span>🔗</span> Open Site in New Tab
                   </Button>
-                  <p className="text-xs text-white/40">{pullRequest.url}</p>
+                  <p className="text-xs text-dark-text-muted">{pullRequest.url}</p>
                 </div>
               ) : (
-                <div className="rounded-lg border border-white/10 bg-white/5 p-4 text-center">
-                  <p className="text-sm text-white/40">No project URL provided</p>
+                <div className="rounded-md border border-dark-border bg-dark-surface p-4 text-center">
+                  <p className="text-sm text-dark-text-muted">No project URL provided</p>
                 </div>
               )}
 
               {/* Step-by-step instructions */}
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-2">
-                <h3 className="text-xs font-semibold text-white/60 uppercase tracking-wide">How to record your review</h3>
+              <div className="rounded-md border border-dark-border bg-dark-surface p-4 space-y-2">
+                <h3 className="text-xs font-semibold text-dark-text-muted uppercase tracking-wide">How to record your review</h3>
                 <ol className="space-y-1.5">
                   {[
                     { title: "Open the project", desc: "click the button above to open it in a new tab" },
@@ -203,11 +203,11 @@ export function ReviewSession({
                     { title: "Stop & submit", desc: "click \"Stop Recording\", then rate and submit your feedback" },
                   ].map((step, i) => (
                     <li key={i} className="flex items-start gap-2 text-xs">
-                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#3366FF]/20 text-[10px] font-bold text-[#3366FF] mt-0.5">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-[10px] font-bold text-primary mt-0.5">
                         {i + 1}
                       </span>
-                      <span className="text-white/50">
-                        <strong className="text-white/70">{step.title}</strong> &mdash; {step.desc}
+                      <span className="text-dark-text-muted">
+                        <strong className="text-dark-text">{step.title}</strong> &mdash; {step.desc}
                       </span>
                     </li>
                   ))}
@@ -219,17 +219,17 @@ export function ReviewSession({
           /* Post-recording: video preview + review form */
           <div className="flex-1 p-6 space-y-6 overflow-auto">
             {/* Video preview */}
-            <div className="flex justify-center bg-black rounded-lg p-4">
+            <div className="flex justify-center bg-black rounded-md p-4">
               <video
                 src={recorder.previewUrl!}
                 controls
                 autoPlay
-                className="max-w-full max-h-[400px] rounded-lg"
+                className="max-w-full max-h-[400px] rounded-md"
               />
             </div>
 
             {recorder.duration < 5 && (
-              <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-200 text-sm">
+              <div className="rounded-md border border-yellow-500/20 bg-yellow-500/10 p-3 text-yellow-400 text-sm">
                 Your recording is {recorder.duration}s — minimum 5 seconds required. Please re-record.
               </div>
             )}
@@ -241,7 +241,7 @@ export function ReviewSession({
                   <CardTitle className="text-base">Questions to Address</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className="list-disc list-inside space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                  <ul className="list-disc list-inside space-y-1 text-sm text-dark-text-muted">
                     {pullRequest.questions.map((q, i) => (
                       <li key={i}>{q}</li>
                     ))}
@@ -269,7 +269,7 @@ export function ReviewSession({
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className={`h-8 w-8 ${star <= rating ? "text-yellow-400" : "text-gray-300"}`}
+                          className={`h-8 w-8 ${star <= rating ? "text-yellow-400" : "text-dark-text-muted/50"}`}
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
@@ -283,7 +283,7 @@ export function ReviewSession({
                 {/* Strengths */}
                 <div className="space-y-2">
                   <Label htmlFor="strengths">
-                    Strengths <span className="text-xs text-gray-400">({strengths.length}/50 min)</span>
+                    Strengths <span className="text-xs text-dark-text-muted">({strengths.length}/50 min)</span>
                   </Label>
                   <Textarea
                     id="strengths"
@@ -297,7 +297,7 @@ export function ReviewSession({
                 {/* Improvements */}
                 <div className="space-y-2">
                   <Label htmlFor="improvements">
-                    Areas for Improvement <span className="text-xs text-gray-400">({improvements.length}/50 min)</span>
+                    Areas for Improvement <span className="text-xs text-dark-text-muted">({improvements.length}/50 min)</span>
                   </Label>
                   <Textarea
                     id="improvements"
@@ -315,7 +315,7 @@ export function ReviewSession({
                 <Button
                   onClick={handleSubmit}
                   disabled={!canSubmit || submitting}
-                  className="w-full bg-[#3366FF] hover:bg-blue-600"
+                  className="w-full bg-primary hover:bg-primary-muted"
                 >
                   {submitting ? "Submitting Review..." : "Submit Review"}
                 </Button>

@@ -24,13 +24,13 @@ const config = {
     },
     extend: {
       colors: {
-        // TailAdmin colors
+        // Legacy tokens kept for compatibility
         stroke: "#E2E8F0",
         dark: "#0F172A",
         black: "#000000",
         "black-2": "#1C2434",
         "body-color": "#64748B",
-        body: "#64748B",  // Added for text-body class
+        body: "#64748B",
         bodydark: "#AEB7C0",
         bodydark1: "#DEE4EE",
         bodydark2: "#8A99AF",
@@ -38,55 +38,31 @@ const config = {
         "boxdark-2": "#1A222C",
         strokedark: "#2E3A47",
         "form-strokedark": "#3D4D60",
-        "meta-1": "#DC3545",
-        "meta-2": "#EFF2F7",
-        "meta-3": "#10B981",
-        "meta-4": "#313D4A",
-        "meta-5": "#259AE6",
-        "meta-6": "#FFBA00",
-        "meta-7": "#FF6766",
-        "meta-8": "#F0950C",
-        "meta-9": "#E5E7EB",
         success: "#219653",
         danger: "#D34053",
         warning: "#FFA70B",
-        blue: {
-          500: "#3b82f6",
+        // Dark theme palette
+        "dark-bg": "#0a0a0b",
+        "dark-card": "#141416",
+        "dark-surface": "#1c1c1f",
+        "dark-border": "#27272a",
+        "dark-text": "#fafafa",
+        "dark-text-muted": "#71717a",
+        // Single accent
+        primary: {
+          DEFAULT: "#3b82f6",
+          muted: "#1d4ed8",
+          subtle: "rgba(59,130,246,0.08)",
         },
-        gray: {
-          100: "#f3f4f6",
-          400: "#9ca3af",
-          600: "#4b5563",
-        },
-        // Premium Dark Mode Theme
-        "dark-bg": "#121212",
-        "dark-card": "#1e1e1e",
-        "dark-surface": "#252525",
-        "dark-border": "#333333",
-        "dark-text": "#f5f5f5",
-        "dark-text-muted": "#a0a0a0",
-        "blue-primary": "#0ea5e9",
-        "blue-secondary": "#06b6d4",
-        "teal-accent": "#2dd4bf",
-        "gradient-start": "#0ea5e9",
-        "gradient-end": "#2dd4bf",
-        "glass-highlight": "rgba(255, 255, 255, 0.05)",
-        "glass-border": "rgba(255, 255, 255, 0.1)",
-        primary: "#0ea5e9", // blue primary
-        secondary: "#2dd4bf", // teal accent
-        accent: "#06b6d4", // blue secondary
-        background: "#121212", // dark bg
-        foreground: "#f5f5f5", // dark text
+        background: "#0a0a0b",
+        foreground: "#fafafa",
         muted: {
-          DEFAULT: "#252525", // dark surface
-          foreground: "#a0a0a0", // dark text muted
+          DEFAULT: "#1c1c1f",
+          foreground: "#71717a",
         },
-        border: "#333333" // dark border
+        border: "#27272a",
       },
-      borderRadius: {
-        "2xl": "16px",
-        "3xl": "24px",
-      },
+      borderRadius: {},
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

@@ -29,7 +29,7 @@ export default async function PeerPointsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">PeerPoints</h1>
+      <h1 className="text-xl font-semibold">PeerPoints</h1>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <Card>
@@ -39,8 +39,8 @@ export default async function PeerPointsPage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
-              <Coins className="h-8 w-8 text-yellow-500 mr-3" />
-              <div className="text-3xl font-bold">{balance}</div>
+              <Coins className="h-8 w-8 text-dark-text-muted mr-3" />
+              <div className="text-2xl font-semibold tabular-nums text-dark-text">{balance}</div>
             </div>
           </CardContent>
         </Card>
@@ -52,8 +52,8 @@ export default async function PeerPointsPage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
-              <Award className="h-8 w-8 text-purple-500 mr-3" />
-              <div className="text-3xl font-bold">{totalEarned}</div>
+              <Award className="h-8 w-8 text-dark-text-muted mr-3" />
+              <div className="text-2xl font-semibold tabular-nums text-dark-text">{totalEarned}</div>
             </div>
           </CardContent>
         </Card>
@@ -65,40 +65,40 @@ export default async function PeerPointsPage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
-              <ArrowUpRight className="h-8 w-8 text-blue-500 mr-3" />
-              <div className="text-3xl font-bold">{transactions?.length || 0}</div>
+              <ArrowUpRight className="h-8 w-8 text-dark-text-muted mr-3" />
+              <div className="text-2xl font-semibold tabular-nums text-dark-text">{transactions?.length || 0}</div>
             </div>
           </CardContent>
         </Card>
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Transaction History</h2>
+        <h2 className="text-sm font-medium text-dark-text-muted uppercase tracking-wider">Transaction History</h2>
 
         {transactions && transactions.length > 0 ? (
-          <div className="rounded-lg bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+          <div className="rounded-md border border-dark-border bg-dark-card overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-                    <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Transaction</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Date</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500 dark:text-gray-400">Amount</th>
+                  <tr className="border-b border-dark-border">
+                    <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Transaction</th>
+                    <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Date</th>
+                    <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Amount</th>
                   </tr>
                 </thead>
                 <tbody>
                   {transactions.map((t: any) => (
-                    <tr key={t.id} className="border-b border-gray-100 dark:border-gray-800">
+                    <tr key={t.id} className="border-b border-dark-border/50">
                       <td className="px-4 py-4">
                         <div className="flex items-center">
-                          <div className={`flex h-8 w-8 items-center justify-center rounded-full mr-3 ${
+                          <div className={`flex h-8 w-8 items-center justify-center rounded-md mr-3 ${
                             t.amount > 0
-                              ? "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400"
-                              : "bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-400"
+                              ? "bg-green-500/10 text-green-400"
+                              : "bg-red-500/10 text-red-400"
                           }`}>
                             {t.amount > 0 ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
                           </div>
-                          <div className="font-medium text-gray-900 dark:text-gray-100">
+                          <div className="font-medium text-dark-text">
                             {{
                               earned_review: "Review approved",
                               spent_submission: "PullRequest submitted",
@@ -110,11 +110,11 @@ export default async function PeerPointsPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-gray-600 dark:text-gray-300">
+                      <td className="px-4 py-4 text-dark-text-muted">
                         {new Date(t.created_at).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-4">
-                        <span className={`font-medium ${t.amount > 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
+                        <span className={`font-medium ${t.amount > 0 ? "text-green-400" : "text-red-400"}`}>
                           {t.amount > 0 ? "+" : ""}{t.amount} PeerPoints
                         </span>
                       </td>
@@ -125,7 +125,7 @@ export default async function PeerPointsPage() {
             </div>
           </div>
         ) : (
-          <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+          <div className="text-center py-12 text-dark-text-muted">
             <p>No transactions yet. Review projects to earn PeerPoints!</p>
           </div>
         )}
@@ -135,10 +135,10 @@ export default async function PeerPointsPage() {
         <CardHeader>
           <CardTitle>How PeerPoints Work</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-          <p><strong className="text-gray-900 dark:text-gray-100">Earn points:</strong> Review other founders' projects to earn PeerPoints. You also get a bonus for your first review!</p>
-          <p><strong className="text-gray-900 dark:text-gray-100">Spend points:</strong> Submit a PullRequest to get video feedback on your project.</p>
-          <p><strong className="text-gray-900 dark:text-gray-100">Get started:</strong> New users start with bonus PeerPoints. Invite friends to earn even more!</p>
+        <CardContent className="space-y-3 text-sm text-dark-text-muted">
+          <p><strong className="text-dark-text">Earn points:</strong> Review other founders' projects to earn PeerPoints. You also get a bonus for your first review!</p>
+          <p><strong className="text-dark-text">Spend points:</strong> Submit a PullRequest to get video feedback on your project.</p>
+          <p><strong className="text-dark-text">Get started:</strong> New users start with bonus PeerPoints. Invite friends to earn even more!</p>
         </CardContent>
       </Card>
     </div>

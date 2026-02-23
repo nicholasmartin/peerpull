@@ -74,7 +74,7 @@ export default function AdminUsersPage() {
   };
 
   if (loading) {
-    return <div className="text-gray-500 dark:text-gray-400">Loading users...</div>;
+    return <div className="text-dark-text-muted">Loading users...</div>;
   }
 
   return (
@@ -91,7 +91,7 @@ export default function AdminUsersPage() {
                   type="checkbox"
                   checked={injectAll}
                   onChange={(e) => setInjectAll(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 dark:border-gray-600"
+                  className="h-4 w-4 rounded border-dark-border"
                 />
                 All users
               </label>
@@ -103,7 +103,7 @@ export default function AdminUsersPage() {
                 <select
                   value={selectedUser}
                   onChange={(e) => setSelectedUser(e.target.value)}
-                  className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800 outline-none"
+                  className="w-full rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm  outline-none"
                 >
                   <option value="">Select a user...</option>
                   {users.map((u) => (
@@ -123,7 +123,7 @@ export default function AdminUsersPage() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="e.g. 5 or -3"
-                  className="w-32 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800 outline-none"
+                  className="w-32 rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm  outline-none"
                 />
               </div>
               <div className="flex-1">
@@ -133,7 +133,7 @@ export default function AdminUsersPage() {
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   placeholder="Reason for adjustment"
-                  className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800 outline-none"
+                  className="w-full rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm  outline-none"
                 />
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function AdminUsersPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-2 text-sm font-medium bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 transition"
+              className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-md hover:bg-primary-muted disabled:opacity-50 transition"
             >
               {submitting ? "Injecting..." : "Inject Points"}
             </button>
@@ -149,8 +149,8 @@ export default function AdminUsersPage() {
             {message && (
               <div className={`text-sm px-3 py-2 rounded ${
                 message.type === "success"
-                  ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
-                  : "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
+                  ? "bg-green-500/10 text-green-400"
+                  : "bg-red-500/10 text-red-400"
               }`}>
                 {message.text}
               </div>
@@ -167,38 +167,39 @@ export default function AdminUsersPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Name</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Balance</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Referral Code</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Admin</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Joined</th>
+                <tr className="border-b border-dark-border">
+                  <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Name</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Balance</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Referral Code</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Admin</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Joined</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((u) => (
-                  <tr key={u.id} className="border-b border-gray-100 dark:border-gray-800">
-                    <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
+                  <tr key={u.id} className="border-b border-dark-border/50">
+                    <td className="px-4 py-3 font-medium text-dark-text">
                       {u.first_name} {u.last_name}
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`font-medium ${u.peer_points_balance > 0 ? "text-green-600 dark:text-green-400" : "text-gray-500"}`}>
+                      <span className={`font-medium ${u.peer_points_balance > 0 ? "text-green-400" : "text-gray-500"}`}>
                         {u.peer_points_balance}
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <code className="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
+                      <code className="text-xs bg-dark-surface px-2 py-1 rounded">
                         {u.referral_code || "—"}
                       </code>
                     </td>
                     <td className="px-4 py-3">
                       {u.is_admin && (
-                        <span className="inline-flex items-center rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-300">
+                        <span className="inline-flex items-center gap-1.5 text-xs text-dark-text-muted">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
                           Admin
                         </span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">
+                    <td className="px-4 py-3 text-sm text-dark-text-muted">
                       {new Date(u.created_at).toLocaleDateString()}
                     </td>
                   </tr>
