@@ -7,9 +7,21 @@ import {
   Users,
   CheckCircle2,
   Copy,
-  Check
+  Check,
+  Pencil
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
+import { changeReferralCode } from "@/app/actions";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function InviteFoundersPage() {
   const [referralCode, setReferralCode] = useState<string | null>(null);
@@ -17,6 +29,13 @@ export default function InviteFoundersPage() {
   const [referrals, setReferrals] = useState<any[]>([]);
   const [copied, setCopied] = useState<"link" | "code" | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Edit referral code state
+  const [isEditing, setIsEditing] = useState(false);
+  const [newCode, setNewCode] = useState("");
+  const [codeError, setCodeError] = useState<string | null>(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -74,6 +93,58 @@ export default function InviteFoundersPage() {
 
   const totalBonus = referrals.reduce((sum, r) => sum + (r.bonus_awarded || 0), 0);
 
+  const isValidCode = (code: string) => /^[a-z0-9]{3,20}$/.test(code);
+
+  const handleStartEdit = () => {
+    setNewCode(referralCode || "");
+    setCodeError(null);
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setNewCode("");
+    setCodeError(null);
+  };
+
+  const handleNewCodeChange = (value: string) => {
+    const normalized = value.toLowerCase().replace(/[^a-z0-9]/g, "");
+    setNewCode(normalized);
+    if (normalized.length > 0 && !isValidCode(normalized)) {
+      setCodeError("Code must be 3–20 lowercase letters or numbers");
+    } else {
+      setCodeError(null);
+    }
+  };
+
+  const handleSaveClick = () => {
+    if (!isValidCode(newCode)) {
+      setCodeError("Code must be 3–20 lowercase letters or numbers");
+      return;
+    }
+    if (newCode === referralCode) {
+      handleCancelEdit();
+      return;
+    }
+    setShowConfirm(true);
+  };
+
+  const handleConfirmChange = async () => {
+    setSaving(true);
+    setShowConfirm(false);
+    const result = await changeReferralCode(newCode);
+    if ("error" in result) {
+      setCodeError(result.error!);
+      setSaving(false);
+      return;
+    }
+    setReferralCode(newCode);
+    setIsEditing(false);
+    setNewCode("");
+    setCodeError(null);
+    setSaving(false);
+  };
+
   if (loading) {
     return (
       <div className="space-y-6">
@@ -114,18 +185,58 @@ export default function InviteFoundersPage() {
 
             <div className="flex-1 rounded-md border border-dark-border bg-dark-surface p-4">
               <h3 className="font-medium mb-2">Your Referral Code</h3>
-              <div className="flex items-center gap-2">
-                <code className="flex-1 text-lg font-mono font-bold bg-dark-card px-3 py-2 rounded border border-dark-border text-center tracking-widest">
-                  {referralCode || "Loading..."}
-                </code>
-                <button
-                  onClick={() => referralCode && handleCopy(referralCode, "code")}
-                  className="flex items-center gap-1 px-3 py-2 text-sm font-medium bg-primary text-white rounded hover:bg-primary-muted transition shrink-0"
-                >
-                  {copied === "code" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                  {copied === "code" ? "Copied!" : "Copy"}
-                </button>
-              </div>
+              {isEditing ? (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={newCode}
+                      onChange={(e) => handleNewCodeChange(e.target.value)}
+                      maxLength={20}
+                      placeholder="Enter new code"
+                      className="flex-1 text-lg font-mono font-bold bg-dark-card px-3 py-2 rounded border border-dark-border text-center tracking-widest focus:outline-none focus:ring-2 focus:ring-primary"
+                      autoFocus
+                    />
+                    <button
+                      onClick={handleSaveClick}
+                      disabled={!isValidCode(newCode) || saving}
+                      className="px-3 py-2 text-sm font-medium bg-primary text-white rounded hover:bg-primary-muted transition shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {saving ? "Saving..." : "Save"}
+                    </button>
+                    <button
+                      onClick={handleCancelEdit}
+                      disabled={saving}
+                      className="px-3 py-2 text-sm font-medium bg-dark-card text-dark-text-muted rounded border border-dark-border hover:bg-dark-surface transition shrink-0 disabled:opacity-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  {codeError && (
+                    <p className="text-sm text-red-400">{codeError}</p>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 text-lg font-mono font-bold bg-dark-card px-3 py-2 rounded border border-dark-border text-center tracking-widest">
+                    {referralCode || "Loading..."}
+                  </code>
+                  <button
+                    onClick={() => referralCode && handleCopy(referralCode, "code")}
+                    className="flex items-center gap-1 px-3 py-2 text-sm font-medium bg-primary text-white rounded hover:bg-primary-muted transition shrink-0"
+                  >
+                    {copied === "code" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                    {copied === "code" ? "Copied!" : "Copy"}
+                  </button>
+                  <button
+                    onClick={handleStartEdit}
+                    className="p-2 text-dark-text-muted hover:text-dark-text rounded hover:bg-dark-card transition shrink-0"
+                    title="Edit referral code"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -238,6 +349,23 @@ export default function InviteFoundersPage() {
           </CardContent>
         </Card>
       )}
+
+      <AlertDialog open={showConfirm} onOpenChange={setShowConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Change your referral code?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your code will change from &ldquo;<strong>{referralCode}</strong>&rdquo; to &ldquo;<strong>{newCode}</strong>&rdquo;. Any links or promotions you&apos;ve previously shared will continue to work — old codes remain valid.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmChange}>
+              Change Code
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

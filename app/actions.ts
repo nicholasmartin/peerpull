@@ -299,6 +299,31 @@ export async function submitReview(formData: FormData) {
   return redirect("/dashboard/submit-feedback");
 }
 
+export async function changeReferralCode(newCode: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const normalized = newCode.trim().toLowerCase();
+  if (!/^[a-z0-9]{3,20}$/.test(normalized)) {
+    return { error: "Code must be 3–20 lowercase letters or numbers" };
+  }
+
+  const { error } = await supabase.rpc("change_referral_code", {
+    p_user_id: user.id,
+    p_new_code: normalized,
+  });
+
+  if (error) {
+    if (error.message.includes("already taken")) {
+      return { error: "That code is already taken" };
+    }
+    return { error: error.message };
+  }
+
+  return { success: true };
+}
+
 export async function approveReview(reviewId: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
