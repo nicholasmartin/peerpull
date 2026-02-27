@@ -48,6 +48,14 @@ const config = {
         "dark-border": "#27272a",
         "dark-text": "#fafafa",
         "dark-text-muted": "#71717a",
+        // Public page tokens (gradients, glass effects)
+        "blue-primary": "#0ea5e9",
+        "blue-secondary": "#06b6d4",
+        "teal-accent": "#2dd4bf",
+        "gradient-start": "#0ea5e9",
+        "gradient-end": "#2dd4bf",
+        "glass-highlight": "rgba(255, 255, 255, 0.1)",
+        "glass-border": "rgba(255, 255, 255, 0.08)",
         // Single accent
         primary: {
           DEFAULT: "#3b82f6",
