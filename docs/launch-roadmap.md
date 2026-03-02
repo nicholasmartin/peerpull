@@ -17,14 +17,14 @@ PeerPull is a beta-ready MVP with the core feedback loop fully functional: signu
 
 ### 1.2 Email Notifications [L]
 Send transactional emails at 3 trigger points:
-1. Reviewer submits a review -> notify PR owner
-2. PR owner approves review -> notify reviewer
-3. PR owner rejects review -> notify reviewer
+1. Reviewer submits a review -> notify project owner
+2. project owner approves review -> notify reviewer
+3. project owner rejects review -> notify reviewer
 
 **Approach:** Use Resend (free tier) called from existing server actions in `app/actions.ts` (`submitReview` line 252, `approveReview` line 301, `rejectReview` line 338). Add `utils/email.ts` utility + inline HTML templates. Add `email_notifications` boolean to profiles for opt-out (needed by Settings in week 3).
 
 ### 1.3 Duplicate URL Detection [M]
-In `app/actions.ts` `submitPullRequest` (line 159): normalize submitted URL (strip protocol, www, trailing slash, query params), query `pull_requests` for same user + matching normalized URL + status='open'. Block with clear error if found.
+In `app/actions.ts` `submitFeedbackRequest` (line 159): normalize submitted URL (strip protocol, www, trailing slash, query params), query `feedback_requests` for same user + matching normalized URL + status='open'. Block with clear error if found.
 
 ### 1.4 Wire Up Profile Edit [M]
 The profile page has an "Edit Profile" tab with inputs but the Save button does nothing. Add `updateProfile` server action in `app/actions.ts`, wire up the form in `app/(protected)/dashboard/profile/page.tsx`. The profiles RLS already allows self-updates.
@@ -39,7 +39,7 @@ Backend already enforces the limit. Add a check on `app/(protected)/dashboard/re
 ### 2.1 Reviewer Reputation System [L]
 **Migration:** Add to profiles: `reviewer_avg_rating NUMERIC(3,2)`, `total_reviews_given INTEGER DEFAULT 0`, `total_ratings_received INTEGER DEFAULT 0`. Create `update_reviewer_reputation(reviewer_id)` function that recalculates from reviews table.
 
-**Display:** Show reputation on profile page and as a badge next to reviewer name on PR detail pages (`app/(protected)/dashboard/request-feedback/[id]/page.tsx`).
+**Display:** Show reputation on profile page and as a badge next to reviewer name on Feedback Request detail pages (`app/(protected)/dashboard/request-feedback/[id]/page.tsx`).
 
 ### 2.2 Low-Quality Reviewer Penalties [M]
 Modify `complete_review_and_charge()` DB function: if reviewer's `reviewer_avg_rating < 3.5` AND `total_ratings_received >= 3`, award 0 points on alternating reviews (track with `penalty_skip_next` boolean on profiles). Show warning on submit-feedback page if reviewer has low reputation.
@@ -139,7 +139,7 @@ After each week, test the full user flow end-to-end:
 1. Sign up with referral code -> verify bonus points awarded
 2. Submit a project -> verify queue placement + point deduction
 3. Claim a review from queue -> record video (60s+) -> submit with rating
-4. As PR owner: receive email notification -> approve review
+4. As project owner: receive email notification -> approve review
 5. As reviewer: receive approval email -> check points earned
 6. Verify reputation updates on profile
 7. Admin panel: check metrics reflect activity correctly

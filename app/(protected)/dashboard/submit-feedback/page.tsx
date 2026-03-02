@@ -16,7 +16,7 @@ export default async function ReviewQueuePage() {
   // My in-progress reviews
   const { data: myReviews } = await supabase
     .from("reviews")
-    .select("*, pull_requests(*)")
+    .select("*, feedback_requests(*)")
     .eq("reviewer_id", user.id)
     .in("status", ["in_progress"])
     .order("created_at", { ascending: false });
@@ -24,7 +24,7 @@ export default async function ReviewQueuePage() {
   // My completed reviews
   const { data: completedReviews } = await supabase
     .from("reviews")
-    .select("*, pull_requests(*)")
+    .select("*, feedback_requests(*)")
     .eq("reviewer_id", user.id)
     .in("status", ["submitted", "approved", "rejected"])
     .order("submitted_at", { ascending: false });
@@ -90,8 +90,8 @@ export default async function ReviewQueuePage() {
                 <Card key={review.id}>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg">
-                      <Link href={`/dashboard/submit-feedback/${review.pull_request_id}/review`} className="hover:text-primary hover:underline">
-                        {review.pull_requests?.title}
+                      <Link href={`/dashboard/submit-feedback/${review.feedback_request_id}/review`} className="hover:text-primary hover:underline">
+                        {review.feedback_requests?.title}
                       </Link>
                     </CardTitle>
                     <CardDescription>
@@ -100,7 +100,7 @@ export default async function ReviewQueuePage() {
                   </CardHeader>
                   <CardContent>
                     <Link
-                      href={`/dashboard/submit-feedback/${review.pull_request_id}/review`}
+                      href={`/dashboard/submit-feedback/${review.feedback_request_id}/review`}
                       className="inline-flex items-center justify-center w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted"
                     >
                       Continue Review
@@ -136,7 +136,7 @@ export default async function ReviewQueuePage() {
                   <tbody>
                     {completedReviews.map((review: any) => (
                       <tr key={review.id} className="border-b border-dark-border/50">
-                        <td className="px-4 py-4 font-medium">{review.pull_requests?.title}</td>
+                        <td className="px-4 py-4 font-medium">{review.feedback_requests?.title}</td>
                         <td className="px-4 py-4">
                           <Badge variant="outline" className={
                             review.status === "approved"

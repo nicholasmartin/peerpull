@@ -23,7 +23,7 @@ export default async function ProfilePage() {
   const profile = await getUserProfile(user);
 
   const { count: prCount } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("*", { count: "exact", head: true })
     .eq("user_id", user.id);
 
@@ -62,7 +62,7 @@ export default async function ProfilePage() {
                 <div className="w-full mt-6 grid grid-cols-2 gap-2">
                   <div className="flex flex-col items-center p-3 rounded-md border border-dark-border">
                     <span className="text-lg font-semibold">{prCount || 0}</span>
-                    <span className="text-xs text-dark-text-muted">PullRequests</span>
+                    <span className="text-xs text-dark-text-muted">Feedback Requests</span>
                   </div>
                   <div className="flex flex-col items-center p-3 rounded-md border border-dark-border">
                     <span className="text-lg font-semibold">{reviewCount || 0}</span>

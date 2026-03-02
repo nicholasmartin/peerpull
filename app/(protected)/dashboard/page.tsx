@@ -15,7 +15,7 @@ export default async function DashboardPage() {
 
   // Real counts
   const { count: prCount } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("*", { count: "exact", head: true })
     .eq("user_id", user.id);
 
@@ -27,20 +27,20 @@ export default async function DashboardPage() {
   // Received reviews count (reviews on user's own PRs)
   const { count: receivedReviewCount } = await supabase
     .from("reviews")
-    .select("*, pull_requests!inner(user_id)", { count: "exact", head: true })
-    .eq("pull_requests.user_id", user.id)
+    .select("*, feedback_requests!inner(user_id)", { count: "exact", head: true })
+    .eq("feedback_requests.user_id", user.id)
     .in("status", ["submitted", "approved"]);
 
   // Available PRs to review
   const { count: availableCount } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("*", { count: "exact", head: true })
     .eq("status", "open")
     .neq("user_id", user.id);
 
   // My recent PRs
   const { data: recentPRs } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("id, title, status, created_at")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
             </div>
             <div className="hidden md:block">
               <Link href="/dashboard/request-feedback" className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted transition">
-                Submit New PullRequest
+                Submit New Feedback Request
               </Link>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default async function DashboardPage() {
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <Link href="/dashboard/request-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 transition">
-          <span className="block text-sm font-semibold text-dark-text">Submit PullRequest</span>
+          <span className="block text-sm font-semibold text-dark-text">Submit Feedback Request</span>
           <span className="text-xs text-dark-text-muted">Get feedback on your project</span>
         </Link>
         <Link href="/dashboard/submit-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 transition">
@@ -121,7 +121,7 @@ export default async function DashboardPage() {
             </div>
             <div className="rounded-md border border-dark-border bg-dark-card p-4 text-center">
               <div className="text-2xl font-semibold tabular-nums text-dark-text">{prCount || 0}</div>
-              <div className="text-xs text-dark-text-muted">PullRequests</div>
+              <div className="text-xs text-dark-text-muted">Feedback Requests</div>
             </div>
             <div className="rounded-md border border-dark-border bg-dark-card p-4 text-center">
               <div className="text-2xl font-semibold tabular-nums text-dark-text">{reviewCount || 0}</div>
@@ -129,7 +129,7 @@ export default async function DashboardPage() {
             </div>
           </div>
 
-          {/* My PullRequests */}
+          {/* My Feedback Requests */}
           <div className="rounded-md border border-dark-border bg-dark-card p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-medium text-dark-text-muted uppercase tracking-wider">Feedback Requests</h2>
@@ -168,7 +168,7 @@ export default async function DashboardPage() {
               </div>
             ) : (
               <p className="text-dark-text-muted text-sm">
-                No PullRequests yet. Submit one to get video feedback!
+                No Feedback Requests yet. Submit one to get video feedback!
               </p>
             )}
           </div>
@@ -187,10 +187,10 @@ export default async function DashboardPage() {
             </div>
             <div className="mt-4 text-center">
               <p className="text-sm text-dark-text-muted">
-                {balance >= 2 ? "Ready to submit a PullRequest!" : `Need ${2 - balance} more to submit`}
+                {balance >= 2 ? "Ready to submit a Feedback Request!" : `Need ${2 - balance} more to submit`}
               </p>
               <Link href="/dashboard/submit-feedback" className="mt-3 inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted transition">
-                {balance >= 2 ? "Submit PullRequest" : "Earn Points by Reviewing"}
+                {balance >= 2 ? "Submit Feedback Request" : "Earn Points by Reviewing"}
               </Link>
             </div>
           </div>

@@ -14,14 +14,14 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default async function PullRequestDetailPage({ params }: Props) {
+export default async function FeedbackRequestDetailPage({ params }: Props) {
   const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
 
   const { data: pr } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("*")
     .eq("id", id)
     .single();
@@ -34,7 +34,7 @@ export default async function PullRequestDetailPage({ params }: Props) {
   const { data: reviews } = await supabase
     .from("reviews")
     .select("*")
-    .eq("pull_request_id", id)
+    .eq("feedback_request_id", id)
     .in("status", ["submitted", "approved", "rejected"])
     .order("submitted_at", { ascending: false });
 
@@ -195,7 +195,7 @@ export default async function PullRequestDetailPage({ params }: Props) {
                         )}
                       </div>
 
-                      {/* Approve/Reject buttons for PR owner */}
+                      {/* Approve/Reject buttons for project owner */}
                       {isOwner && review.status === "submitted" && (
                         <ReviewActions reviewId={review.id} />
                       )}

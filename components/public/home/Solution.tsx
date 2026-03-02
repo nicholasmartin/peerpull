@@ -24,7 +24,7 @@ export function Solution() {
                 <li className="flex items-start gap-4">
                   <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-emerald-600 text-papaya-whip font-medium text-sm shadow-md">1</div>
                   <div>
-                    <p className="font-medium text-papaya-whip">Submit your landing page or startup concept as a PullRequest</p>
+                    <p className="font-medium text-papaya-whip">Submit your landing page or startup concept as a Feedback Request</p>
                   </div>
                 </li>
                 

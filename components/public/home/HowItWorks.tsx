@@ -6,7 +6,7 @@ export function HowItWorks() {
   const steps = [
     {
       num: "01",
-      title: "Submit Your PullRequest",
+      title: "Submit Your Feedback Request",
       items: [
         "Add your landing page URL",
         "Specify what feedback you need most",

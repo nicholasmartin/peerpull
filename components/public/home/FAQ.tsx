@@ -68,7 +68,7 @@ export function FAQ({ settings }: { settings: SiteSettings }) {
               },
               {
                 question: "What if I don't have a landing page yet?",
-                answer: "You can still submit a concept document, pitch deck, or even a detailed description of your idea as a PullRequest. The key is having something concrete for others to evaluate."
+                answer: "You can still submit a concept document, pitch deck, or even a detailed description of your idea as a Feedback Request. The key is having something concrete for others to evaluate."
               },
               {
                 question: "How technical should the feedback be?",

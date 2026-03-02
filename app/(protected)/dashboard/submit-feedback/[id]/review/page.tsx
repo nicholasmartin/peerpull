@@ -12,9 +12,9 @@ export default async function ReviewPage({ params }: Props) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
 
-  // Load PR data
+  // Load feedback request data
   const { data: pr } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("*")
     .eq("id", id)
     .single();
@@ -28,12 +28,13 @@ export default async function ReviewPage({ params }: Props) {
     .eq("id", pr.user_id)
     .single();
 
-  // Load reviewer's review for this PR
+  // Load reviewer's active review for this feedback request
   const { data: review } = await supabase
     .from("reviews")
     .select("*")
-    .eq("pull_request_id", id)
+    .eq("feedback_request_id", id)
     .eq("reviewer_id", user.id)
+    .eq("status", "in_progress")
     .single();
 
   if (!review || review.status !== "in_progress") {
@@ -42,7 +43,7 @@ export default async function ReviewPage({ params }: Props) {
 
   return (
     <ReviewSession
-      pullRequest={{
+      feedbackRequest={{
         id: pr.id,
         title: pr.title,
         url: pr.url || "",

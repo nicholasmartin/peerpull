@@ -7,14 +7,14 @@ type Props = {
   params: { id: string }
 }
 
-export default function DraftPullRequestPage({ params }: Props) {
+export default function DraftFeedbackRequestPage({ params }: Props) {
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
         <Link href="/dashboard/request-feedback" className="text-dark-text-muted hover:text-dark-text">
           <ArrowLeft className="h-5 w-5" />
         </Link>
-        <h1 className="text-xl font-semibold">Draft PullRequest</h1>
+        <h1 className="text-xl font-semibold">Draft Feedback Request</h1>
       </div>
 
       <Card>
@@ -23,7 +23,7 @@ export default function DraftPullRequestPage({ params }: Props) {
         </CardHeader>
         <CardContent>
           <p className="text-dark-text-muted">
-            Draft PullRequests are not currently supported. Go to the{" "}
+            Draft Feedback Requests are not currently supported. Go to the{" "}
             <Link href="/dashboard/request-feedback" className="text-primary hover:text-primary/80 hover:underline">
               Request Feedback
             </Link>{" "}

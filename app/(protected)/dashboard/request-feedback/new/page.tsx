@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { submitPullRequest } from "@/app/actions";
+import { submitFeedbackRequest } from "@/app/actions";
 
 const CATEGORIES = [
   "Web App",
@@ -52,7 +52,7 @@ export default function NewRequestPage() {
           </p>
         </CardHeader>
         <CardContent>
-          <form action={submitPullRequest} className="space-y-6">
+          <form action={submitFeedbackRequest} className="space-y-6">
             {/* Project Name */}
             <div className="space-y-2">
               <label htmlFor="title" className="block text-sm font-medium text-gray-300">
