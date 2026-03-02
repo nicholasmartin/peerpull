@@ -18,7 +18,7 @@ type NavLinkProps = {
 const NavLink = ({ href, children }: NavLinkProps) => (
   <Link
     href={href}
-    className="text-sm font-medium transition-colors duration-200 text-dark-text-muted hover:text-dark-text"
+    className="text-base font-medium transition-colors duration-200 text-dark-text-muted hover:text-dark-text"
   >
     {children}
   </Link>
