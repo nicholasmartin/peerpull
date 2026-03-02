@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import Button from "@/components/ui/button/Button";
 import type { SiteSettings } from "@/app/(public)/page";
 
 function useCountdown(targetDate: Date) {
@@ -96,23 +95,14 @@ export function Hero({ settings }: { settings: SiteSettings }) {
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mt-4 sm:mt-6 w-full sm:w-auto">
-            <Link href="/signup" className="w-full sm:w-auto">
-              <Button
-                size="md"
-                className="text-lg font-semibold px-10 py-5 bg-blue-primary hover:bg-blue-secondary transition-colors text-dark-bg w-full sm:w-auto"
-              >
-                Join the Beta
-              </Button>
-            </Link>
-            <Button
-              size="md"
-              variant="outline"
-              className="text-lg font-medium px-10 py-5 border-dark-border text-dark-text-muted hover:text-dark-text hover:border-dark-text-muted/30 transition-all w-full sm:w-auto mt-3 sm:mt-0"
-              onClick={() => document.getElementById('how-it-works')?.scrollIntoView()}
+          <div className="flex items-center justify-center mt-4 sm:mt-6">
+            <Link
+              href="/signup"
+              className="group relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-primary to-teal-accent px-12 py-4 text-lg font-semibold text-dark-bg shadow-[0_0_20px_rgba(212,168,83,0.3)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,168,83,0.5)] overflow-hidden"
             >
-              See How It Works
-            </Button>
+              <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full"></span>
+              <span className="relative">Join the private beta launch</span>
+            </Link>
           </div>
         </div>
       </div>
