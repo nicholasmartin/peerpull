@@ -72,6 +72,7 @@ The platform is already functional with a working feedback exchange loop, PeerPo
 - ✅ Unified profile page with builder + reviewer stats
 - ✅ Pre-launch waitlist & onboarding flow
 - ✅ Notification system (core review lifecycle events)
+- ✅ Toast notification system (immediate action feedback across all pages)
 - ✅ Profile edit save functionality (currently broken)
 
 **Technical:**
@@ -377,6 +378,113 @@ Name → Email → Password → Account Type (Builder/Investor/Early Adopter) �
 - Use Mailgun API for email delivery
 - Simple, clean email templates — not over-designed
 
+### 7.9 Toast Notification System (NEW — Infrastructure)
+
+**Purpose:** Provide immediate, consistent visual feedback for every user action across the entire app. Currently, action outcomes (errors, successes, warnings) are handled inconsistently — some use URL query params that pages never read, some use inline state with different styling, and some are silently swallowed. Users frequently perform actions with zero confirmation that anything happened.
+
+**Problem Statement:**
+The app has ~30+ action outcomes (errors, successes, validations) spread across server actions, client components, and form submissions. Today these are handled by 4 different ad-hoc patterns:
+1. `encodedRedirect` — encodes messages in URL params, but most dashboard pages never read them (messages invisible)
+2. `FormMessage` component — only used on auth pages, uses light-mode colors incompatible with the dark theme
+3. Inline `useState` error strings — each component styles differently (`text-red-500`, `bg-red-500/10 text-red-400`, `text-yellow-500`)
+4. Silent redirects — most successful mutations redirect with no confirmation at all
+
+**Solution:** A single toast notification system that provides the universal feedback layer for the entire app.
+
+**Toast Behavior:**
+- **Position:** Top-right of viewport, stacked vertically (newest on top)
+- **Duration:** 5 seconds default, configurable per toast (errors persist longer at 8 seconds)
+- **Dismiss:** Click to dismiss, or swipe on mobile. Optional close button (X) always visible
+- **Persistence:** Toasts survive client-side navigation within the dashboard (important for redirect-after-action flows)
+- **Stacking:** Maximum 3 visible at once, older toasts auto-dismiss when limit exceeded
+- **Animation:** Slide in from right, fade out on dismiss
+
+**Toast Types:**
+
+| Type | Color | Icon | Use Case |
+|------|-------|------|----------|
+| `success` | Green accent (`emerald-500/10` bg, `emerald-400` text) | CheckCircle | Action completed — review submitted, profile saved, feedback request created |
+| `error` | Red accent (`red-500/10` bg, `red-400` text) | AlertCircle | Action failed — validation error, insufficient points, permission denied |
+| `warning` | Amber accent (`amber-500/10` bg, `amber-400` text) | AlertTriangle | Limit approaching, degraded state — "You have 1/1 active projects" |
+| `info` | Blue accent (`blue-500/10` bg, `blue-400` text) | Info | Neutral information — "No projects in queue right now, check back soon" |
+
+**Library Choice:** [Sonner](https://sonner.emilkowal.dev/) — lightweight (~3KB), works with Next.js App Router and Server Actions, supports custom styling, has built-in accessibility (ARIA live regions), and integrates naturally with the `<Toaster />` provider pattern.
+
+**Architecture:**
+
+```
+app/layout.tsx
+└── <Toaster /> provider (renders toast portal at viewport level)
+
+Server Actions (app/actions.ts)
+└── Return { error/success } objects (no change to action signatures)
+
+Page/Component Layer
+├── Server Components: read searchParams → trigger toast via client wrapper
+└── Client Components: call action → read result → call toast()
+```
+
+*Provider Setup:*
+- Add `<Toaster />` to the root layout (`app/layout.tsx`) so toasts work on every page
+- Configure with dark theme defaults, top-right position, 5s duration
+- Style to match the existing dark theme tokens (`dark-card` background, `dark-border`, `dark-text`)
+
+*Client Components (direct usage):*
+```tsx
+import { toast } from "sonner";
+
+const result = await submitReview(formData);
+if (result?.error) {
+  toast.error(result.error);
+} else {
+  toast.success("Review submitted! You earned 1 PeerPoint.");
+}
+```
+
+*Server Action Redirects (searchParams bridge):*
+- Create a `<ToastFromParams />` client component that reads `searchParams` and triggers toasts
+- Place it in the dashboard layout so ALL dashboard pages automatically surface error/success messages from `encodedRedirect`
+- This fixes the immediate problem where `submitFeedbackRequest` errors are invisible
+
+*Migration Strategy:*
+1. Install Sonner, add `<Toaster />` to root layout
+2. Create `<ToastFromParams />` bridge component in dashboard layout — instantly fixes all `encodedRedirect` messages
+3. Replace inline error `useState` patterns in client components one by one with `toast()` calls
+4. Update `FormMessage` component to dark-theme colors for auth pages (keep it for inline form validation, not action feedback)
+5. Add success toasts to actions that currently redirect silently
+
+**Action-to-Toast Coverage Map:**
+
+| Action | Current Feedback | Target |
+|--------|-----------------|--------|
+| `submitFeedbackRequest` success | Silent redirect | `toast.success("Feedback Request created and added to queue!")` |
+| `submitFeedbackRequest` insufficient points | URL param (invisible) | `toast.error("You need at least X PeerPoints...")` |
+| `submitFeedbackRequest` limit hit | URL param (invisible) | `toast.warning("You can only have X active projects...")` |
+| `getNextReview` no queue | Inline yellow text | `toast.info("No projects in queue right now...")` |
+| `getNextReview` error | Inline yellow text | `toast.error("Failed to get next review")` |
+| `submitReview` validation fail | Inline red text | `toast.error(validationMessage)` |
+| `submitReview` success | Silent redirect | `toast.success("Review submitted! You earned 1 PeerPoint.")` |
+| `approveReview` success | `{ success: true }` (not shown) | `toast.success("Review approved")` |
+| `rejectReview` success | `{ success: true }` (not shown) | `toast.success("Review rejected")` |
+| `changeReferralCode` success | `{ success: true }` (unclear) | `toast.success("Referral code updated!")` |
+| `changeReferralCode` taken | `{ error }` (unclear) | `toast.error("That code is already taken")` |
+| Profile save | Broken / no feedback | `toast.success("Profile saved")` |
+| Admin settings save | 2s inline "Saved" | `toast.success("Setting updated")` |
+| Admin point injection | Inline message | `toast.success("Injected X points to user")` |
+| Video upload failure | Inline red text | `toast.error("Failed to upload video: ...")` |
+| Sign in/up errors | FormMessage (light theme) | Keep FormMessage (fix dark styling) + optionally toast |
+
+**Accessibility:**
+- Sonner uses ARIA live regions (`role="status"`, `aria-live="polite"`) by default
+- Error toasts use `aria-live="assertive"` for screen reader priority
+- Toast text must meet WCAG AA contrast ratio (4.5:1 minimum) — the dark theme accent colors satisfy this
+- Keyboard accessible: toasts can be focused and dismissed with Escape
+
+**Interaction with Existing Systems:**
+- **7.8 Notification System (lifecycle events):** Toasts are for *immediate action feedback* ("your review was submitted"). The notification bell + email system (7.8) is for *asynchronous lifecycle events* ("someone reviewed your project 2 hours ago"). These are complementary, not overlapping.
+- **FormMessage component:** Retained for inline form validation on auth pages (field-level errors that should stay visible near the form). Upgraded to dark theme colors. Toasts handle page-level action outcomes.
+- **encodedRedirect pattern:** Continues to work as-is. The `<ToastFromParams />` bridge reads the URL params and displays them as toasts, then optionally cleans the URL via `replaceState`.
+
 ---
 
 ## 8. Technology Stack
@@ -390,6 +498,7 @@ Name → Email → Password → Account Type (Builder/Investor/Early Adopter) �
 ### Key Libraries
 - **React 19** — UI rendering
 - **Lucide React** — icons
+- **Sonner** — toast notifications (lightweight, App Router compatible, accessible)
 - **MediaRecorder API** — browser-native screen + mic recording
 - **@supabase/ssr** — server-side Supabase client with cookie-based sessions
 
@@ -515,16 +624,17 @@ The platform is ready for public launch when a new user can sign up, complete on
 ## 12. Implementation Phases
 
 ### Phase 1: Foundation & Cleanup (Days 1-2)
-**Goal:** Clean up terminology and establish new database schema.
+**Goal:** Clean up terminology, establish new database schema, and build the feedback infrastructure.
 
 **Deliverables:**
 - ✅ Database migration: rename `pull_requests` → `feedback_requests`, add new columns to `profiles` and `reviews`, create notification tables
 - ✅ Update all RPC functions for new table name
 - ✅ Terminology migration across all UI components and server actions
+- ✅ Toast notification system: install Sonner, add `<Toaster />` provider, create `<ToastFromParams />` bridge, fix `FormMessage` dark theme, wire up toasts to all server action outcomes
 - ✅ Add `account_type` field and selection to signup form
 - ✅ Wire up profile edit save action
 
-**Validation:** App builds and all existing functionality works with new naming.
+**Validation:** App builds, all existing functionality works with new naming, every user action produces visible feedback via toast.
 
 ### Phase 2: Quality & Signals (Days 3-4)
 **Goal:** Build the enhanced review quality controls and reviewer action signals.

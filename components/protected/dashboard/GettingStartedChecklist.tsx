@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { CheckCircle2, Circle, ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { submitPullRequest } from "@/app/actions";
+import { submitFeedbackRequest } from "@/app/actions";
 
 const DISMISS_KEY = "peerpull_onboarding_dismissed";
 
@@ -120,7 +120,7 @@ export function GettingStartedChecklist({
                     <form
                       action={async (formData) => {
                         setSubmitting(true);
-                        await submitPullRequest(formData);
+                        await submitFeedbackRequest(formData);
                       }}
                       className="mt-3 space-y-2"
                     >

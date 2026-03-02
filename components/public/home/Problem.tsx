@@ -79,7 +79,7 @@ export function Problem() {
 
               <ol className="space-y-5">
                 {[
-                  "Submit your landing page or startup concept as a PullRequest",
+                  "Submit your landing page or startup concept as a Feedback Request",
                   "Give quality feedback to one other founder",
                   "Receive one thoughtful review in return — usually within minutes",
                   "Iterate with confidence, knowing real founders have validated your direction",

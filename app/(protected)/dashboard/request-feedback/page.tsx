@@ -6,23 +6,23 @@ import { PlusCircle } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
-export default async function PullRequestsPage() {
+export default async function FeedbackRequestsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
 
-  // Fetch user's pull requests with review counts
-  const { data: pullRequests } = await supabase
-    .from("pull_requests")
+  // Fetch user's feedback requests with review counts
+  const { data: feedbackRequests } = await supabase
+    .from("feedback_requests")
     .select("id, title, url, description, stage, categories, status, created_at, reviews(id)")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
-  const activePRs = (pullRequests || []).filter(
-    (pr: any) => pr.status === "open" || pr.status === "in_review"
+  const activeFeedbackRequests = (feedbackRequests || []).filter(
+    (fr: any) => fr.status === "open" || fr.status === "in_review"
   );
-  const completedPRs = (pullRequests || []).filter(
-    (pr: any) => pr.status === "completed" || pr.status === "closed"
+  const completedFeedbackRequests = (feedbackRequests || []).filter(
+    (fr: any) => fr.status === "completed" || fr.status === "closed"
   );
 
   const getStatusBadge = (status: string) => {
@@ -86,12 +86,12 @@ export default async function PullRequestsPage() {
 
       <Tabs defaultValue="active" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="active">Active PullRequests</TabsTrigger>
+          <TabsTrigger value="active">Active Feedback Requests</TabsTrigger>
           <TabsTrigger value="completed">Completed</TabsTrigger>
         </TabsList>
 
         <TabsContent value="active" className="space-y-4">
-          {activePRs.length > 0 ? (
+          {activeFeedbackRequests.length > 0 ? (
             <div className="rounded-md border border-dark-border bg-dark-card overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -105,7 +105,7 @@ export default async function PullRequestsPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {activePRs.map((pr: any) => (
+                    {activeFeedbackRequests.map((pr: any) => (
                       <tr key={pr.id} className="border-b border-dark-border/50">
                         <td className="px-4 py-4">
                           <Link href={`/dashboard/request-feedback/${pr.id}`} className="font-medium text-primary hover:underline">
@@ -134,7 +134,7 @@ export default async function PullRequestsPage() {
         </TabsContent>
 
         <TabsContent value="completed" className="space-y-4">
-          {completedPRs.length > 0 ? (
+          {completedFeedbackRequests.length > 0 ? (
             <div className="rounded-md border border-dark-border bg-dark-card overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -148,7 +148,7 @@ export default async function PullRequestsPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {completedPRs.map((pr: any) => (
+                    {completedFeedbackRequests.map((pr: any) => (
                       <tr key={pr.id} className="border-b border-dark-border/50">
                         <td className="px-4 py-4">
                           <Link href={`/dashboard/request-feedback/${pr.id}`} className="font-medium text-primary hover:underline">

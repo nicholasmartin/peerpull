@@ -1,19 +1,23 @@
 "use client";
 
 import { useTransition, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { getNextReview } from "@/app/actions";
 
 export function GetNextReviewButton() {
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
+  const router = useRouter();
 
   function handleClick() {
     setMessage(null);
     startTransition(async () => {
       const result = await getNextReview();
-      if (result?.error) {
+      if (result && "error" in result) {
         setMessage(result.error);
+      } else if (result && "pr_id" in result) {
+        router.push(`/dashboard/submit-feedback/${result.pr_id}/review`);
       }
     });
   }

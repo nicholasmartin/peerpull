@@ -307,13 +307,13 @@ export default function SettingsPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-4">
-                    <h3 className="font-medium">PullRequest Notifications</h3>
+                    <h3 className="font-medium">Feedback Request Notifications</h3>
                     
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="new-review">New Review Received</Label>
                         <p className="text-sm text-dark-text-muted">
-                          When someone submits a review on your PullRequest
+                          When someone submits a review on your Feedback Request
                         </p>
                       </div>
                       <Switch id="new-review" defaultChecked />
@@ -323,7 +323,7 @@ export default function SettingsPage() {
                       <div className="space-y-0.5">
                         <Label htmlFor="review-reminder">Review Reminders</Label>
                         <p className="text-sm text-dark-text-muted">
-                          Reminders when your PullRequest is waiting for reviews
+                          Reminders when your Feedback Request is waiting for reviews
                         </p>
                       </div>
                       <Switch id="review-reminder" defaultChecked />
@@ -333,7 +333,7 @@ export default function SettingsPage() {
                       <div className="space-y-0.5">
                         <Label htmlFor="review-complete">Review Completed</Label>
                         <p className="text-sm text-dark-text-muted">
-                          When all reviews for your PullRequest are completed
+                          When all reviews for your Feedback Request are completed
                         </p>
                       </div>
                       <Switch id="review-complete" defaultChecked />
@@ -347,12 +347,12 @@ export default function SettingsPage() {
                     
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <Label htmlFor="new-pullrequest">New PullRequests Available</Label>
+                        <Label htmlFor="new-feedback-request">New Feedback Requests Available</Label>
                         <p className="text-sm text-dark-text-muted">
-                          When new PullRequests are available for review
+                          When new Feedback Requests are available for review
                         </p>
                       </div>
-                      <Switch id="new-pullrequest" defaultChecked />
+                      <Switch id="new-feedback-request" defaultChecked />
                     </div>
                     
                     <div className="flex items-center justify-between">
@@ -536,7 +536,7 @@ export default function SettingsPage() {
                     <div className="space-y-2">
                       <div className="flex items-center">
                         <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Up to 3 PullRequests per month</span>
+                        <span className="text-sm">Up to 3 Feedback Requests per month</span>
                       </div>
                       <div className="flex items-center">
                         <Shield className="h-4 w-4 mr-2 text-green-500" />
@@ -567,7 +567,7 @@ export default function SettingsPage() {
                     <div className="space-y-2">
                       <div className="flex items-center">
                         <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Unlimited PullRequests</span>
+                        <span className="text-sm">Unlimited Feedback Requests</span>
                       </div>
                       <div className="flex items-center">
                         <Shield className="h-4 w-4 mr-2 text-green-500" />

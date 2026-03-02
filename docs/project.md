@@ -21,7 +21,7 @@ Solo technical founders often build in isolation without adequate feedback, lead
 
 ### Key Terminology
 
-- **PullRequest**: A project submitted for feedback (landing page, concept, prototype)
+- **Feedback Request**: A project submitted for feedback (landing page, concept, prototype)
 - **PeerPoints**: The credit system that powers the exchange (2 reviews given = 1 PeerPoint earned)
 - **PeerInsights**: The structured feedback received from other founders
 - **PeerPros**: Experienced founders who participate in the platform
@@ -58,7 +58,7 @@ Solo technical founders often build in isolation without adequate feedback, lead
    - Standard Supabase auth users plus profile information
    - Expertise areas, experience level, bio
 
-2. **pull_requests**
+2. **feedback_requests**
    - Project submissions requiring feedback
    - Status, type, focus areas, URLs, description
 
@@ -84,7 +84,7 @@ Solo technical founders often build in isolation without adequate feedback, lead
    - Initial walkthrough of the exchange concept
 
 2. **Submission Flow**
-   - Create a new PullRequest with project details
+   - Create a new Feedback Request with project details
    - Specify areas for feedback focus
    - Submit for review (costs 1 PeerPoint)
 
@@ -130,7 +130,7 @@ Solo technical founders often build in isolation without adequate feedback, lead
 ### Phase 1: MVP (Current Focus)
 
 - User authentication and profiles
-- Basic PullRequest submission
+- Basic Feedback Request submission
 - Review queue with simple filtering
 - Core PeerPoints exchange mechanism
 - Minimal viable feedback templates
@@ -184,7 +184,7 @@ export async function createClient(cookies) {
     /signup
     /reset-password
   /dashboard
-  /pull-requests
+  /feedback-requests
     /[id]
     /new
   /review
@@ -196,7 +196,7 @@ export async function createClient(cookies) {
     /[username]
   /settings
   /api
-    /pull-requests
+    /feedback-requests
     /reviews
     /peer-points
     /users
@@ -204,7 +204,7 @@ export async function createClient(cookies) {
 
 ### Key Components
 
-- **PullRequestCard**: Displays project submission previews
+- **FeedbackRequestCard**: Displays project submission previews
 - **ReviewForm**: Structured feedback entry with templates
 - **PeerPointsWidget**: Shows current balance and recent transactions
 - **QueueFilters**: Filters review opportunities by relevance
@@ -212,7 +212,7 @@ export async function createClient(cookies) {
 
 ### Data Flow
 
-1. User creates a PullRequest which is stored in Supabase
+1. User creates a Feedback Request which is stored in Supabase
 2. Queue is populated with available reviews from database
 3. Completed reviews trigger PeerPoints transactions
 4. Approved feedback updates review status and notifies users

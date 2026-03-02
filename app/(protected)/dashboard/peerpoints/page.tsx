@@ -101,7 +101,7 @@ export default async function PeerPointsPage() {
                           <div className="font-medium text-dark-text">
                             {{
                               earned_review: "Review approved",
-                              spent_submission: "PullRequest submitted",
+                              spent_submission: "Feedback Request submitted",
                               signup_bonus: "Welcome bonus",
                               first_review_bonus: "First review bonus",
                               referral_bonus: "Referral bonus",
@@ -137,7 +137,7 @@ export default async function PeerPointsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-dark-text-muted">
           <p><strong className="text-dark-text">Earn points:</strong> Review other founders' projects to earn PeerPoints. You also get a bonus for your first review!</p>
-          <p><strong className="text-dark-text">Spend points:</strong> Submit a PullRequest to get video feedback on your project.</p>
+          <p><strong className="text-dark-text">Spend points:</strong> Submit a Feedback Request to get video feedback on your project.</p>
           <p><strong className="text-dark-text">Get started:</strong> New users start with bonus PeerPoints. Invite friends to earn even more!</p>
         </CardContent>
       </Card>

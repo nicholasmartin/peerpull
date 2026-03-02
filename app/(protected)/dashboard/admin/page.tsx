@@ -25,7 +25,7 @@ export default async function AdminOverviewPage() {
 
   // Queue depth
   const { count: queueDepth } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("id", { count: "exact", head: true })
     .not("queue_position", "is", null)
     .eq("status", "open");

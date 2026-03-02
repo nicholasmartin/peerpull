@@ -108,7 +108,7 @@ docs/                      # PRD, design docs, economic simulation docs
 | Table | Purpose |
 |-------|---------|
 | `profiles` | User profiles (name, avatar, expertise, peer_points_balance, referral_code) |
-| `feedback_requests` | Submitted products requesting feedback (title, url, status) |
+| `feedback_requests` | Submitted products requesting feedback (title, url, status, queue_position) |
 | `reviews` | Video reviews (video_url, duration, rating, status) |
 | `peer_point_transactions` | Point ledger (earned_review, spent_submission, etc.) |
 | `system_settings` | Runtime config (signup_bonus, review_reward, min_video_duration, etc.) |
@@ -119,6 +119,6 @@ docs/                      # PRD, design docs, economic simulation docs
 - **No tests configured** — hackathon project, no vitest/jest setup
 - **TS errors ignored on build** — `ignoreBuildErrors: true` in next.config.ts
 - **Windows dev workaround** — dev uses `.next-dev`, prod uses `.next` to avoid lock conflicts
-- **Terminology migration** — "Pull Request" is being renamed to "Feedback Request" across the codebase
+- **Terminology migration complete** — "Pull Request" has been renamed to "Feedback Request" across the codebase (DB table: `feedback_requests`, FK column: `feedback_request_id`)
 - **OAuth buttons are placeholders** — Google/GitHub login not functional yet
 - **Video duration** — configurable via system_settings (60-300 seconds range)

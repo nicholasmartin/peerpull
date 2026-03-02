@@ -23,7 +23,7 @@ export default function HelpSupportPage() {
     {
       id: "faq-1",
       question: "How does the PeerPull review process work?",
-      answer: "When you submit a PullRequest, it enters our review queue where other founders can claim it for review. Each PullRequest requires 3 reviews to be considered complete. Reviewers provide structured feedback on your project, focusing on the areas you've specified. Once all reviews are in, you'll receive a notification and can view the detailed feedback."
+      answer: "When you submit a Feedback Request, it enters our review queue where other founders can claim it for review. Each Feedback Request requires 3 reviews to be considered complete. Reviewers provide structured feedback on your project, focusing on the areas you've specified. Once all reviews are in, you'll receive a notification and can view the detailed feedback."
     },
     {
       id: "faq-2",
@@ -51,7 +51,7 @@ export default function HelpSupportPage() {
     {
       id: 1,
       title: "Getting Started with PeerPull",
-      description: "A comprehensive guide to setting up your profile and submitting your first PullRequest",
+      description: "A comprehensive guide to setting up your profile and submitting your first Feedback Request",
       icon: <CheckCircle2 className="h-8 w-8 text-dark-text-muted" />,
       type: "Article"
     },
@@ -71,7 +71,7 @@ export default function HelpSupportPage() {
     },
     {
       id: 4,
-      title: "Optimizing Your PullRequest for Better Feedback",
+      title: "Optimizing Your Feedback Request for Better Feedback",
       description: "Tips and tricks to structure your submission for maximum value",
       icon: <BookOpen className="h-8 w-8 text-dark-text-muted" />,
       type: "Guide"
@@ -144,7 +144,7 @@ export default function HelpSupportPage() {
                   <h3 className="font-medium">Getting Started</h3>
                   <ul className="space-y-1 text-sm text-dark-text-muted">
                     <li className="hover:text-primary hover:underline cursor-pointer">Creating your profile</li>
-                    <li className="hover:text-primary hover:underline cursor-pointer">Submitting your first PullRequest</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Submitting your first Feedback Request</li>
                     <li className="hover:text-primary hover:underline cursor-pointer">Claiming reviews</li>
                   </ul>
                 </div>

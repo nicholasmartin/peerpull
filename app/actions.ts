@@ -156,7 +156,7 @@ export const signOutAction = async () => {
 // PeerPull MVP Actions
 // ============================================================
 
-export async function submitPullRequest(formData: FormData) {
+export async function submitFeedbackRequest(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
@@ -187,12 +187,12 @@ export async function submitPullRequest(formData: FormData) {
     .single();
 
   if (!profile || profile.peer_points_balance < settings.review_cost_amount) {
-    return encodedRedirect("error", "/dashboard/request-feedback", `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to submit a PullRequest. Review other projects to earn points!`);
+    return encodedRedirect("error", "/dashboard/request-feedback", `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to submit a Feedback Request. Review other projects to earn points!`);
   }
 
   // Check active project limit
   const { count: activeCount } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("id", { count: "exact", head: true })
     .eq("user_id", user.id)
     .eq("status", "open")
@@ -202,9 +202,9 @@ export async function submitPullRequest(formData: FormData) {
     return encodedRedirect("error", "/dashboard/request-feedback", `You can only have ${settings.active_project_limit} active project${settings.active_project_limit !== 1 ? "s" : ""} in the queue at a time.`);
   }
 
-  // Insert pull request
+  // Insert feedback request
   const { data: pr, error: prError } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .insert({
       user_id: user.id,
       title,
@@ -219,7 +219,7 @@ export async function submitPullRequest(formData: FormData) {
     .single();
 
   if (prError) {
-    return encodedRedirect("error", "/dashboard/request-feedback", "Failed to create PullRequest");
+    return encodedRedirect("error", "/dashboard/request-feedback", "Failed to create Feedback Request");
   }
 
   // Assign queue position (points charged on review completion, not upfront)
@@ -229,7 +229,7 @@ export async function submitPullRequest(formData: FormData) {
   return redirect(redirectTo);
 }
 
-export async function getNextReview(): Promise<{ error: string } | undefined> {
+export async function getNextReview(): Promise<{ error: string } | { pr_id: string } | undefined> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
@@ -247,7 +247,7 @@ export async function getNextReview(): Promise<{ error: string } | undefined> {
     return { error: "No projects available in the queue right now. Check back soon!" };
   }
 
-  redirect(`/dashboard/submit-feedback/${data[0].pr_id}/review`);
+  return { pr_id: data[0].pr_id };
 }
 
 export async function submitReview(formData: FormData) {
@@ -329,10 +329,10 @@ export async function approveReview(reviewId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
 
-  // Verify caller owns the PR
+  // Verify caller owns the feedback request
   const { data: review } = await supabase
     .from("reviews")
-    .select("id, reviewer_id, pull_request_id, status")
+    .select("id, reviewer_id, feedback_request_id, status")
     .eq("id", reviewId)
     .single();
 
@@ -340,12 +340,12 @@ export async function approveReview(reviewId: string) {
   if (review.status !== "submitted") return { error: "Review is not in submitted state" };
 
   const { data: pr } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("user_id")
-    .eq("id", review.pull_request_id)
+    .eq("id", review.feedback_request_id)
     .single();
 
-  if (!pr || pr.user_id !== user.id) return { error: "Only the PR owner can approve reviews" };
+  if (!pr || pr.user_id !== user.id) return { error: "Only the project owner can approve reviews" };
 
   // Approve
   const { error: updateError } = await supabase
@@ -368,7 +368,7 @@ export async function rejectReview(reviewId: string) {
 
   const { data: review } = await supabase
     .from("reviews")
-    .select("id, pull_request_id, status")
+    .select("id, feedback_request_id, status")
     .eq("id", reviewId)
     .single();
 
@@ -376,12 +376,12 @@ export async function rejectReview(reviewId: string) {
   if (review.status !== "submitted") return { error: "Review is not in submitted state" };
 
   const { data: pr } = await supabase
-    .from("pull_requests")
+    .from("feedback_requests")
     .select("user_id")
-    .eq("id", review.pull_request_id)
+    .eq("id", review.feedback_request_id)
     .single();
 
-  if (!pr || pr.user_id !== user.id) return { error: "Only the PR owner can reject reviews" };
+  if (!pr || pr.user_id !== user.id) return { error: "Only the project owner can reject reviews" };
 
   const { error: updateError } = await supabase
     .from("reviews")

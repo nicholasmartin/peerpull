@@ -17,7 +17,7 @@ The sidebar should be a dark blue (#182B49) column on the left side of the inter
 ### Primary Navigation Items
 
 1. **Dashboard** - Icon: Grid/Home
-2. **My PullRequests** - Icon: Document/Code
+2. **My Feedback Requests** - Icon: Document/Code
 3. **Review Queue** - Icon: Checkmark/Review
 4. **PeerPoints** - Icon: Coin/Credit
 5. **Community** - Icon: People/Group
@@ -40,11 +40,11 @@ The sidebar should be a dark blue (#182B49) column on the left side of the inter
 - **Welcome Banner**: Personalized greeting with quick stats
 - **Activity Summary Card**: Shows recent activity
 - **PeerPoints Balance Widget**: Visual display of available points
-- **My Active PullRequests**: Shows status of your current submissions
+- **My Active Feedback Requests**: Shows status of your current submissions
 - **Pending Reviews**: Shows how many reviews you have pending
 - **Recent Feedback**: Preview of most recent feedback received
 - **Community Highlights**: Featured reviews or members
-- **Quick Actions Bar**: Submit new PullRequest, Start Reviewing, etc.
+- **Quick Actions Bar**: Submit new Feedback Request, Start Reviewing, etc.
 - **Progress Metrics**: Visual charts showing feedback quality score, response times
 
 **Layout**: 
@@ -52,13 +52,13 @@ Two-column grid layout with cards/widgets arranged by priority
 
 ---
 
-### 2. My PullRequests Page
+### 2. My Feedback Requests Page
 
 **Purpose**: Manage all your submitted projects/requests for feedback
 
 **Elements**:
-- **Create New PullRequest Button**: Prominent at top
-- **Active PullRequests Tab**:
+- **Create New Feedback Request Button**: Prominent at top
+- **Active Feedback Requests Tab**:
   - List view of active submissions with:
     - Project name/title
     - Date submitted
@@ -66,7 +66,7 @@ Two-column grid layout with cards/widgets arranged by priority
     - Status indicator (awaiting reviews, reviews in)
     - Feedback count
     - Quick view/edit buttons
-- **Completed PullRequests Tab**:
+- **Completed Feedback Requests Tab**:
   - Historical list of past submissions
   - All metrics and feedback scores
   - Re-activate option
@@ -166,7 +166,7 @@ Tabbed interface with directory, showcase, and leaderboard sections
 - **Expertise Tags**: Areas of technical/business knowledge
 - **Personal Stats**:
   - Reviews given
-  - PullRequests submitted
+  - Feedback Requests submitted
   - Average feedback quality score
   - Response time average
 - **My Achievements**: Badges/milestones reached
@@ -208,7 +208,7 @@ Left sidebar with category selection, right panel with form fields
 
 ---
 
-### 8. Submit New PullRequest Page
+### 8. Submit New Feedback Request Page
 
 **Purpose**: Form for submitting a new project for review
 

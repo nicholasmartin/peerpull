@@ -37,7 +37,7 @@ Most technical founders spend weeks building the wrong thing because they lacked
 PeerPull connects you with other technical founders who understand what you're building. 
 
 **Here's how it works:**
-1. Submit your landing page or startup concept as a PullRequest
+1. Submit your landing page or startup concept as a Feedback Request
 2. Give quality feedback to two other founders
 3. Receive one thoughtful review in return—usually within hours
 4. Iterate with confidence, knowing real founders have validated your direction
@@ -52,7 +52,7 @@ It's that simple. No marketing fluff, no generic advice—just targeted, technic
 
 ![How PeerPull Works - Diagram]
 
-**1. Submit Your PullRequest**
+**1. Submit Your Feedback Request**
 * Add your landing page URL
 * Specify what feedback you need most
 * Choose from our templates to get structured insights
@@ -183,7 +183,7 @@ Don't wait until you've built the wrong product. Pull in validation now.
 A: All PeerInsights must be approved by recipients before the reviewer earns PeerPoints. Our templates also guide reviewers to provide specific, actionable insights rather than generic comments.
 
 **Q: What if I don't have a landing page yet?**
-A: You can still submit a concept document, pitch deck, or even a detailed description of your idea as a PullRequest. The key is having something concrete for others to evaluate.
+A: You can still submit a concept document, pitch deck, or even a detailed description of your idea as a Feedback Request. The key is having something concrete for others to evaluate.
 
 **Q: How technical should the feedback be?**
 A: Our community is primarily technical founders, so the feedback tends to be practical and implementation-focused. However, you can specify if you want feedback on specific aspects like market fit, UX, or technical architecture.

@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/utils/supabase/client";
 import { submitReview } from "@/app/actions";
 
-interface PullRequestData {
+interface FeedbackRequestData {
   id: string;
   title: string;
   url: string;
@@ -25,10 +25,10 @@ interface PullRequestData {
 }
 
 export function ReviewSession({
-  pullRequest,
+  feedbackRequest,
   reviewId,
 }: {
-  pullRequest: PullRequestData;
+  feedbackRequest: FeedbackRequestData;
   reviewId: string;
 }) {
   const recorder = useScreenRecorder();
@@ -102,14 +102,14 @@ export function ReviewSession({
       {/* Project info bar */}
       <div className="shrink-0 border-b border-dark-border bg-dark-surface px-4 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">
-          {pullRequest.stage && (
-            <Badge variant="secondary" className="capitalize shrink-0">{pullRequest.stage}</Badge>
+          {feedbackRequest.stage && (
+            <Badge variant="secondary" className="capitalize shrink-0">{feedbackRequest.stage}</Badge>
           )}
-          <h1 className="text-sm font-semibold truncate">{pullRequest.title}</h1>
+          <h1 className="text-sm font-semibold truncate">{feedbackRequest.title}</h1>
           <span className="text-xs text-dark-text-muted hidden sm:inline">—</span>
-          <p className="text-xs text-dark-text-muted truncate hidden sm:block">{pullRequest.description}</p>
+          <p className="text-xs text-dark-text-muted truncate hidden sm:block">{feedbackRequest.description}</p>
         </div>
-        <span className="text-xs text-dark-text-muted shrink-0">by {pullRequest.founderName}</span>
+        <span className="text-xs text-dark-text-muted shrink-0">by {feedbackRequest.founderName}</span>
       </div>
 
       {/* Recorder controls */}
@@ -128,20 +128,20 @@ export function ReviewSession({
               </h2>
 
               {/* Description */}
-              {pullRequest.description && (
+              {feedbackRequest.description && (
                 <div className="space-y-1">
                   <h3 className="text-sm font-medium text-dark-text">Description</h3>
-                  <p className="text-sm text-dark-text-muted">{pullRequest.description}</p>
+                  <p className="text-sm text-dark-text-muted">{feedbackRequest.description}</p>
                 </div>
               )}
 
               {/* Focus Areas & Categories */}
               <div className="grid grid-cols-2 gap-4">
-                {pullRequest.focusAreas.length > 0 && (
+                {feedbackRequest.focusAreas.length > 0 && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-dark-text">Focus Areas</h3>
                     <ul className="space-y-1">
-                      {pullRequest.focusAreas.map((area, i) => (
+                      {feedbackRequest.focusAreas.map((area, i) => (
                         <li key={i} className="text-sm text-dark-text-muted flex items-center gap-1.5">
                           <span className="text-dark-text-muted/50">•</span> {area}
                         </li>
@@ -149,11 +149,11 @@ export function ReviewSession({
                     </ul>
                   </div>
                 )}
-                {pullRequest.categories.length > 0 && (
+                {feedbackRequest.categories.length > 0 && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-dark-text">Categories</h3>
                     <ul className="space-y-1">
-                      {pullRequest.categories.map((cat, i) => (
+                      {feedbackRequest.categories.map((cat, i) => (
                         <li key={i} className="text-sm text-dark-text-muted flex items-center gap-1.5">
                           <span className="text-dark-text-muted/50">•</span> {cat}
                         </li>
@@ -164,11 +164,11 @@ export function ReviewSession({
               </div>
 
               {/* Questions */}
-              {pullRequest.questions.length > 0 && (
+              {feedbackRequest.questions.length > 0 && (
                 <div className="space-y-2">
                   <h3 className="text-sm font-medium text-dark-text">Questions to Address</h3>
                   <ol className="list-decimal list-inside space-y-1">
-                    {pullRequest.questions.map((q, i) => (
+                    {feedbackRequest.questions.map((q, i) => (
                       <li key={i} className="text-sm text-dark-text-muted">{q}</li>
                     ))}
                   </ol>
@@ -176,15 +176,15 @@ export function ReviewSession({
               )}
 
               {/* Open Site button */}
-              {pullRequest.url ? (
+              {feedbackRequest.url ? (
                 <div className="rounded-md border border-dark-border bg-dark-surface p-4 text-center space-y-2">
                   <Button
-                    onClick={() => window.open(pullRequest.url, "_blank")}
+                    onClick={() => window.open(feedbackRequest.url, "_blank")}
                     className="bg-primary hover:bg-primary-muted gap-2"
                   >
                     <span>🔗</span> Open Site in New Tab
                   </Button>
-                  <p className="text-xs text-dark-text-muted">{pullRequest.url}</p>
+                  <p className="text-xs text-dark-text-muted">{feedbackRequest.url}</p>
                 </div>
               ) : (
                 <div className="rounded-md border border-dark-border bg-dark-surface p-4 text-center">
@@ -235,14 +235,14 @@ export function ReviewSession({
             )}
 
             {/* Questions to address */}
-            {pullRequest.questions.length > 0 && (
+            {feedbackRequest.questions.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle className="text-base">Questions to Address</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="list-disc list-inside space-y-1 text-sm text-dark-text-muted">
-                    {pullRequest.questions.map((q, i) => (
+                    {feedbackRequest.questions.map((q, i) => (
                       <li key={i}>{q}</li>
                     ))}
                   </ul>
