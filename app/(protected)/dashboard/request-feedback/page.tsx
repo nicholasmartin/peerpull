@@ -2,9 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Info } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { getSettings } from "@/utils/supabase/settings";
 
 export default async function FeedbackRequestsPage() {
   const supabase = await createClient();
@@ -14,7 +15,7 @@ export default async function FeedbackRequestsPage() {
   // Fetch user's feedback requests with review counts
   const { data: feedbackRequests } = await supabase
     .from("feedback_requests")
-    .select("id, title, url, description, stage, categories, status, created_at, reviews(id)")
+    .select("id, title, url, description, stage, categories, status, queue_position, created_at, reviews(id)")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
@@ -24,6 +25,13 @@ export default async function FeedbackRequestsPage() {
   const completedFeedbackRequests = (feedbackRequests || []).filter(
     (fr: any) => fr.status === "completed" || fr.status === "closed"
   );
+
+  // Active project limit check
+  const settings = await getSettings();
+  const activeQueuedCount = (feedbackRequests || []).filter(
+    (fr: any) => fr.status === "open" && fr.queue_position != null
+  ).length;
+  const atLimit = activeQueuedCount >= settings.active_project_limit;
 
   const getStatusBadge = (status: string) => {
     const color = {
@@ -75,13 +83,26 @@ export default async function FeedbackRequestsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Request Feedback</h1>
-        <Link href="/dashboard/request-feedback/new">
-          <Button className="flex items-center gap-2">
+        <div className="space-y-1">
+          <h1 className="text-xl font-semibold">Request Feedback</h1>
+          <p className="flex items-center gap-1.5 text-xs text-dark-text-muted">
+            <Info className="h-3 w-3" />
+            {activeQueuedCount}/{settings.active_project_limit} active project{settings.active_project_limit !== 1 ? "s" : ""} in queue
+          </p>
+        </div>
+        {atLimit ? (
+          <Button className="flex items-center gap-2" disabled title={`You can only have ${settings.active_project_limit} active project${settings.active_project_limit !== 1 ? "s" : ""} in the queue at a time`}>
             <PlusCircle className="h-4 w-4" />
             New Request
           </Button>
-        </Link>
+        ) : (
+          <Link href="/dashboard/request-feedback/new">
+            <Button className="flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" />
+              New Request
+            </Button>
+          </Link>
+        )}
       </div>
 
       <Tabs defaultValue="active" className="w-full">

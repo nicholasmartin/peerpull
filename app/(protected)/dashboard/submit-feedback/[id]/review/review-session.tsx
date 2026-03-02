@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/utils/supabase/client";
 import { submitReview } from "@/app/actions";
+import { toast } from "sonner";
 
 interface FeedbackRequestData {
   id: string;
@@ -69,7 +70,9 @@ export function ReviewSession({
         .upload(filePath, blob, { contentType: "video/webm" });
 
       if (uploadError) {
-        setError("Failed to upload video: " + uploadError.message);
+        const msg = "Failed to upload video: " + uploadError.message;
+        setError(msg);
+        toast.error(msg);
         setSubmitting(false);
         return;
       }
@@ -90,6 +93,7 @@ export function ReviewSession({
       const result = await submitReview(formData);
       if (result && "error" in result) {
         setError(result.error);
+        toast.error(result.error);
         setSubmitting(false);
       }
     } catch {

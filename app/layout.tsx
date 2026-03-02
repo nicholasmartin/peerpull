@@ -1,5 +1,6 @@
 import { Inter, Montserrat } from "next/font/google";
 import { SidebarProvider } from "@/context/SidebarContext";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -33,6 +34,22 @@ export default function RootLayout({
         <SidebarProvider>
           {children}
         </SidebarProvider>
+        <Toaster
+          theme="dark"
+          position="bottom-right"
+          richColors
+          closeButton
+          visibleToasts={3}
+          duration={5000}
+          toastOptions={{
+            classNames: {
+              toast: "!bg-[#1a1f2e] !border-[#2d3348]",
+              title: "!text-gray-100",
+              description: "!text-gray-400",
+              closeButton: "!bg-[#2d3348] !border-[#3d4458] !text-gray-400",
+            },
+          }}
+        />
       </body>
     </html>
   );

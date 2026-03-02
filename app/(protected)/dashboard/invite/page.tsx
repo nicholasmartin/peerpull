@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { changeReferralCode } from "@/app/actions";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -134,10 +135,11 @@ export default function InviteFoundersPage() {
     setShowConfirm(false);
     const result = await changeReferralCode(newCode);
     if ("error" in result) {
-      setCodeError(result.error!);
+      toast.error(result.error!);
       setSaving(false);
       return;
     }
+    toast.success("Referral code updated!");
     setReferralCode(newCode);
     setIsEditing(false);
     setNewCode("");

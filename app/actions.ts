@@ -226,7 +226,7 @@ export async function submitFeedbackRequest(formData: FormData) {
   await supabase.rpc("assign_queue_position", { p_pr_id: pr.id });
 
   const redirectTo = formData.get("redirectTo")?.toString() || "/dashboard/request-feedback";
-  return redirect(redirectTo);
+  return encodedRedirect("success", redirectTo, "Feedback Request created and added to queue!");
 }
 
 export async function getNextReview(): Promise<{ error: string } | { pr_id: string } | undefined> {

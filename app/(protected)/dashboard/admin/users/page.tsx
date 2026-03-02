@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/client";
 import { injectPoints, injectPointsToAll } from "../actions";
+import { toast } from "sonner";
 
 type UserRow = {
   id: string;
@@ -23,7 +24,6 @@ export default function AdminUsersPage() {
   const [reason, setReason] = useState<string>("");
   const [injectAll, setInjectAll] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const loadUsers = async () => {
     const supabase = createClient();
@@ -43,14 +43,13 @@ export default function AdminUsersPage() {
     e.preventDefault();
     if (!amount || Number(amount) === 0) return;
     setSubmitting(true);
-    setMessage(null);
 
     let result;
     if (injectAll) {
       result = await injectPointsToAll(Number(amount), reason || "Admin adjustment");
     } else {
       if (!selectedUser) {
-        setMessage({ type: "error", text: "Select a user" });
+        toast.error("Select a user");
         setSubmitting(false);
         return;
       }
@@ -59,14 +58,13 @@ export default function AdminUsersPage() {
 
     setSubmitting(false);
     if (result.error) {
-      setMessage({ type: "error", text: result.error });
+      toast.error(result.error);
     } else {
-      setMessage({
-        type: "success",
-        text: injectAll
+      toast.success(
+        injectAll
           ? `Injected ${amount} points to all users`
-          : `Injected ${amount} points successfully`,
-      });
+          : `Injected ${amount} points successfully`
+      );
       setAmount("");
       setReason("");
       loadUsers();
@@ -146,15 +144,6 @@ export default function AdminUsersPage() {
               {submitting ? "Injecting..." : "Inject Points"}
             </button>
 
-            {message && (
-              <div className={`text-sm px-3 py-2 rounded ${
-                message.type === "success"
-                  ? "bg-green-500/10 text-green-400"
-                  : "bg-red-500/10 text-red-400"
-              }`}>
-                {message.text}
-              </div>
-            )}
           </form>
         </CardContent>
       </Card>

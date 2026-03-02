@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { approveReview, rejectReview } from "@/app/actions";
+import { toast } from "sonner";
 
 export function ReviewActions({ reviewId }: { reviewId: string }) {
   const [loading, setLoading] = useState(false);
@@ -11,14 +12,24 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
 
   async function handleApprove() {
     setLoading(true);
-    await approveReview(reviewId);
+    const result = await approveReview(reviewId);
+    if (result && "error" in result) {
+      toast.error(result.error);
+    } else {
+      toast.success("Review approved");
+    }
     router.refresh();
     setLoading(false);
   }
 
   async function handleReject() {
     setLoading(true);
-    await rejectReview(reviewId);
+    const result = await rejectReview(reviewId);
+    if (result && "error" in result) {
+      toast.error(result.error);
+    } else {
+      toast.success("Review rejected");
+    }
     router.refresh();
     setLoading(false);
   }
