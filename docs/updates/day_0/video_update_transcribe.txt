@@ -1,0 +1,36 @@
+ Hey, I'm Nick Martin, and I am building Peerpool for this Build Story hackathon. The idea behind Peerpool is an exchange for builders. So very, very simple. You give one review, you get one review back. So it's kind of this exchange platform.
+
+ And we have a problem solution section. I want to do like a quick overview of where we're at as we start this. I did give this a little quick overhaul, just a redesign. But we have a very simple landing page. We're going to build more on this. We want to build a waiting list, a proper waiting list. And you are able to sign up. You are also able to obviously sign in. So I can just quickly sign in.
+
+ So this is what the backend currently looks like. It's all very, very rough around the edges, but the basics should be there. So I am able to submit, there's a lot of terminology and wording and design. Like one of the goals of the hackathon is really to make this as simple and as easy to use as possible.
+
+ And they're no longer called pull requests. But if you want to have someone review your page, you can do that. You can submit a page. I think there's a restriction currently for just one at the moment. But you can create a new request. You can add your project.
+
+ it goes into basically a queue we have the queue system as well so once that's in you can now give feedback to others so the way this works again it's very crude but the core mechanics are there you click here to get next next review so you don't actually know which project you're going to review yeah you'll click and it'll find the next one in the queue so everyone's working in the same queue it's the fifo queue
+
+ There may not be any in the system at the moment, but basically what happens is it will open in a new tab. And from this page, you could start recording. So it'll record in the browser. It'll record the audio. You go through it as kind of a think aloud review, and you submit it to the person who owns the page that you're reviewing.
+
+ We have a simple peer points overview here because you can earn peer points by referring others when you sign up and there'll be a couple of milestones or goals as well. Like your first review, your 10th review, things like that, where you can earn these points and points are used to get you feedback on your project.
+
+ that's where we are right now so i could probably view this one here let's see which one have i done um i think i've done this one maybe we'll have you it does say there's one review so this is like the view of me the owner this is my project that i've requested feedback on i can see i've received one and it comes in the form of a video there's going to be an audio as well we won't it's not recording
+
+ This is what it looks like. There'll be some strings. There's a lot of stuff that could be done here, but I just really wanted to make sure that the tech works from recording in the browser. This has already been approved. So what you can do today is you can sign up. You can submit your project. You can give other people review by recording your screen and your microphone.
+
+ and then you earn points and then other people can review your project and you receive reviews that way. The very, very, very barebone is...
+
+ I think kind of in place. It hasn't been tested. I'm sure there's leaks and edge cases and stuff. So what we really want to build out in this hackathon is obviously making it a lot more crisp. We want to have a really nice waiting list because this is a little bit of a chicken and egg. It's a marketplace. So we need both people reviewing and projects to review. So I'm hoping to build up a wait list and then we can launch it at the end of the hackathon.
+
+ there's going to be a lot more around the community there's going to be a lot more around the profile i think the profile is going to be key in this project obviously when i receive a review
+
+ from someone um i will have ways to kind of rate that review if you will because with everything they're going to be people that will try to automate or or cheat or just find workarounds we want to try and capture those there are going to be genuinely
+
+ poor quality reviews, they're going to be genuine mistakes. Like someone is without a doubt going to record the wrong tab until we figure that out. So we need to take into account that the person receiving the review can actually get that feedback both like in a positive and yeah, in a
+
+ carrot and stick kind of way so that the profile builds out you can build out like a really strong profile you're like getting or giving good quality reviews or if you're trying to game the system it will reflect in your profile that actually this doesn't look quite legit or it's not in good faith so then the system could say well you are now you know put on a week's notice or whatever we want to do
+
+ So we have this kind of in place. We also did build out an admin section for, obviously, the Exchange owner or runner, where we can see an overall review of the platform. I'll need to do a lot more simulations to make sure that the supply and demand evens out. Later on, it will have some kind of an automated way to match supply and demand. There's a point economy.
+
+ um initially it was a two to one exchange ratio so give two get one back all of this can be controlled now there's some queue settings there's some review settings like these are just um how many times can you read you a couple of things here and review settings that's just the video duration i think five minutes is the maximum length for now minimum is currently set to five seconds we'll change that
+
+ So that's where we're at. It's all kind of rough, but it is kind of working, I think, quote unquote. I've just been testing this personally. I'm hoping that the video at the end of the week will show a much more polished version where we actually have users actually using it. That could be super awesome. All right, so we'll check in in a week and see how far we got.
+
