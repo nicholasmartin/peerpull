@@ -12,6 +12,7 @@ export type SystemSettings = {
   review_claim_timeout_minutes: number;
   min_video_duration_seconds: number;
   max_video_duration_seconds: number;
+  platform_launched: boolean;
 };
 
 const DEFAULTS: SystemSettings = {
@@ -26,6 +27,7 @@ const DEFAULTS: SystemSettings = {
   review_claim_timeout_minutes: 10,
   min_video_duration_seconds: 60,
   max_video_duration_seconds: 300,
+  platform_launched: false,
 };
 
 export async function getSettings(): Promise<SystemSettings> {
@@ -41,7 +43,9 @@ export async function getSettings(): Promise<SystemSettings> {
 
   const settings = { ...DEFAULTS };
   for (const row of data) {
-    if (row.key in settings) {
+    if (row.key === 'platform_launched') {
+      (settings as any)[row.key] = row.value === 'true';
+    } else if (row.key in settings) {
       (settings as any)[row.key] = Number(row.value);
     }
   }

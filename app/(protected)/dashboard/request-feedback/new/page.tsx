@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { ArrowLeft, AlertCircle } from "lucide-react";
+import { ArrowLeft, AlertCircle, Lock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { submitFeedbackRequest } from "@/app/actions";
 import { createClient } from "@/utils/supabase/server";
 import { getSettings } from "@/utils/supabase/settings";
+import { getUserProfile } from "@/utils/supabase/profiles";
 import { redirect } from "next/navigation";
 
 const CATEGORIES = [
@@ -42,7 +43,27 @@ export default async function NewRequestPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
 
+  const profile = await getUserProfile(user);
   const settings = await getSettings();
+  const isActive = profile?.status === 'active' || settings.platform_launched;
+
+  if (!isActive) {
+    return (
+      <div className="mx-auto max-w-md mt-16 text-center">
+        <div className="rounded-xl border border-dark-border bg-dark-card p-8">
+          <Lock className="h-12 w-12 text-dark-text-muted mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-dark-text mb-3">Coming Soon</h2>
+          <p className="text-dark-text-muted mb-6">
+            Feedback requests will be available when the platform launches.
+          </p>
+          <Link href="/dashboard">
+            <Button className="bg-primary hover:bg-primary-muted">Back to Dashboard</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   const { count: activeCount } = await supabase
     .from("feedback_requests")
     .select("id", { count: "exact", head: true })

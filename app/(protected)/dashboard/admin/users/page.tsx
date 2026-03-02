@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/client";
-import { injectPoints, injectPointsToAll } from "../actions";
+import { injectPoints, injectPointsToAll, activateUser, activateAllWaitlisted } from "../actions";
 import { toast } from "sonner";
 
 type UserRow = {
@@ -13,6 +13,7 @@ type UserRow = {
   peer_points_balance: number;
   referral_code: string | null;
   is_admin: boolean;
+  status: string;
   created_at: string;
 };
 
@@ -24,12 +25,13 @@ export default function AdminUsersPage() {
   const [reason, setReason] = useState<string>("");
   const [injectAll, setInjectAll] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [activating, setActivating] = useState<string | null>(null);
 
   const loadUsers = async () => {
     const supabase = createClient();
     const { data } = await supabase
       .from("profiles")
-      .select("id, first_name, last_name, peer_points_balance, referral_code, is_admin, created_at")
+      .select("id, first_name, last_name, peer_points_balance, referral_code, is_admin, status, created_at")
       .order("created_at", { ascending: false });
     if (data) setUsers(data);
     setLoading(false);
@@ -150,7 +152,28 @@ export default function AdminUsersPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Users ({users.length})</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Users ({users.length})</CardTitle>
+            {users.some((u) => u.status !== "active") && (
+              <button
+                onClick={async () => {
+                  setActivating("all");
+                  const result = await activateAllWaitlisted();
+                  setActivating(null);
+                  if (result.error) {
+                    toast.error(result.error);
+                  } else {
+                    toast.success("All waitlisted users activated");
+                    loadUsers();
+                  }
+                }}
+                disabled={activating !== null}
+                className="px-3 py-1.5 text-xs font-medium bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 transition"
+              >
+                {activating === "all" ? "Activating..." : "Activate All Waitlisted"}
+              </button>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -160,8 +183,10 @@ export default function AdminUsersPage() {
                   <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Name</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Balance</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Referral Code</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Status</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Admin</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Joined</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-dark-text-muted uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -181,6 +206,16 @@ export default function AdminUsersPage() {
                       </code>
                     </td>
                     <td className="px-4 py-3">
+                      <span className={`inline-flex items-center gap-1.5 text-xs ${
+                        u.status === 'active' ? 'text-green-400' : u.status === 'waitlisted' ? 'text-yellow-400' : 'text-blue-400'
+                      }`}>
+                        <span className={`inline-block h-1.5 w-1.5 rounded-full ${
+                          u.status === 'active' ? 'bg-green-400' : u.status === 'waitlisted' ? 'bg-yellow-400' : 'bg-blue-400'
+                        }`} />
+                        {u.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
                       {u.is_admin && (
                         <span className="inline-flex items-center gap-1.5 text-xs text-dark-text-muted">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
@@ -190,6 +225,27 @@ export default function AdminUsersPage() {
                     </td>
                     <td className="px-4 py-3 text-sm text-dark-text-muted">
                       {new Date(u.created_at).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-3">
+                      {u.status !== 'active' && (
+                        <button
+                          onClick={async () => {
+                            setActivating(u.id);
+                            const result = await activateUser(u.id);
+                            setActivating(null);
+                            if (result.error) {
+                              toast.error(result.error);
+                            } else {
+                              toast.success(`${u.first_name} ${u.last_name} activated`);
+                              loadUsers();
+                            }
+                          }}
+                          disabled={activating !== null}
+                          className="px-2 py-1 text-xs font-medium bg-green-600/20 text-green-400 rounded hover:bg-green-600/30 disabled:opacity-50 transition"
+                        >
+                          {activating === u.id ? "..." : "Activate"}
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}

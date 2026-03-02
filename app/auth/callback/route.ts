@@ -13,6 +13,22 @@ export async function GET(request: Request) {
   if (code) {
     const supabase = await createClient();
     await supabase.auth.exchangeCodeForSession(code);
+
+    // Check if this is a new user in onboarding status
+    if (!redirectTo) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("status")
+          .eq("id", user.id)
+          .single();
+
+        if (profile?.status === 'onboarding') {
+          return NextResponse.redirect(`${origin}/dashboard/onboarding`);
+        }
+      }
+    }
   }
 
   if (redirectTo) {

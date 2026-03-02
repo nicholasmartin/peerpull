@@ -12,16 +12,20 @@ export default function DashboardShell({
   children,
   user,
   profile,
+  userStatus,
+  platformLaunched,
 }: {
   children: React.ReactNode;
   user: User;
   profile: Profile | null;
+  userStatus?: string;
+  platformLaunched?: boolean;
 }) {
   return (
     <ThemeProvider isProtected={true}>
       <div className="min-h-screen xl:flex">
         {/* Sidebar and Backdrop */}
-        <AppSidebar isAdmin={profile?.is_admin} />
+        <AppSidebar isAdmin={profile?.is_admin} userStatus={userStatus} platformLaunched={platformLaunched} />
         <Backdrop />
         
         {/* Main Content Area */}

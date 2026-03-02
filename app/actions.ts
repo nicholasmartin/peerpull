@@ -153,6 +153,34 @@ export const signOutAction = async () => {
 };
 
 // ============================================================
+// Helpers
+// ============================================================
+
+async function requireActiveUser(supabase: any, userId: string): Promise<{ error?: string }> {
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("status")
+    .eq("id", userId)
+    .single();
+
+  if (!profile) return { error: "Profile not found" };
+
+  const { data: launchSetting } = await supabase
+    .from("system_settings")
+    .select("value")
+    .eq("key", "platform_launched")
+    .single();
+
+  const platformLaunched = launchSetting?.value === 'true';
+
+  if (profile.status !== 'active' && !platformLaunched) {
+    return { error: "Your account is not yet active. Please wait for platform launch." };
+  }
+
+  return {};
+}
+
+// ============================================================
 // PeerPull MVP Actions
 // ============================================================
 
@@ -160,6 +188,11 @@ export async function submitFeedbackRequest(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
+
+  const activeCheck = await requireActiveUser(supabase, user.id);
+  if (activeCheck.error) {
+    return encodedRedirect("error", "/dashboard", activeCheck.error);
+  }
 
   const title = formData.get("title")?.toString();
   const url = formData.get("url")?.toString() || null;
@@ -234,6 +267,9 @@ export async function getNextReview(): Promise<{ error: string } | { pr_id: stri
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
 
+  const activeCheck = await requireActiveUser(supabase, user.id);
+  if (activeCheck.error) return { error: activeCheck.error };
+
   const { data, error } = await supabase.rpc("get_next_review", {
     p_reviewer_id: user.id,
   });
@@ -254,6 +290,9 @@ export async function submitReview(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
+
+  const activeCheck = await requireActiveUser(supabase, user.id);
+  if (activeCheck.error) return { error: activeCheck.error };
 
   const reviewId = formData.get("review_id")?.toString();
   const rating = Number(formData.get("rating"));
@@ -356,6 +395,60 @@ export async function approveReview(reviewId: string) {
   if (updateError) {
     console.error("Failed to approve review:", updateError);
     return { error: "Failed to approve review" };
+  }
+
+  return { success: true };
+}
+
+// ============================================================
+// Onboarding Actions
+// ============================================================
+
+export async function updateProfileOnboarding(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return redirect("/signin");
+
+  const firstName = formData.get("first_name")?.toString()?.trim() || null;
+  const lastName = formData.get("last_name")?.toString()?.trim() || null;
+  const website = formData.get("website")?.toString()?.trim() || null;
+  const expertise = formData.getAll("expertise").map(String).filter(Boolean);
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({ first_name: firstName, last_name: lastName, website, expertise })
+    .eq("id", user.id);
+
+  if (error) {
+    return { error: "Failed to update profile" };
+  }
+
+  return { success: true };
+}
+
+export async function completeOnboarding() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return redirect("/signin");
+
+  // Verify user is in onboarding status
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("status")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile || profile.status !== 'onboarding') {
+    return { error: "Not in onboarding state" };
+  }
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({ status: 'waitlisted' })
+    .eq("id", user.id);
+
+  if (error) {
+    return { error: "Failed to complete onboarding" };
   }
 
   return { success: true };

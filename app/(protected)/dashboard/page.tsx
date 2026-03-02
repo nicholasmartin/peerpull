@@ -2,7 +2,9 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getUserProfile } from "@/utils/supabase/profiles";
+import { getSettings } from "@/utils/supabase/settings";
 import { GettingStartedChecklist } from "@/components/protected/dashboard/GettingStartedChecklist";
+import { WaitlistBanner } from "@/components/protected/dashboard/WaitlistBanner";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -10,6 +12,20 @@ export default async function DashboardPage() {
   if (!user) return redirect("/signin");
 
   const profile = await getUserProfile(user);
+
+  // Redirect onboarding users to the onboarding flow
+  if (profile?.status === 'onboarding') {
+    return redirect("/dashboard/onboarding");
+  }
+
+  // Show waitlist dashboard for non-active users
+  const settings = await getSettings();
+  const isActive = profile?.status === 'active' || settings.platform_launched;
+
+  if (!isActive && profile) {
+    return <WaitlistBanner profile={profile} />;
+  }
+
   const firstName = profile?.full_name?.split(' ')[0] || 'there';
   const balance = profile?.peer_points_balance || 0;
 

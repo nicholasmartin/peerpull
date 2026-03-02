@@ -20,10 +20,13 @@ import ChatIcon from "@/components/icons/chat.svg";
 import PlusIcon from "@/components/icons/plus.svg";
 import BoltIcon from "@/components/icons/bolt.svg";
 
+import LockIcon from "@/components/icons/lock.svg";
+
 type NavItem = {
   name: string;
   icon: React.ReactNode;
   path?: string;
+  disabled?: boolean;
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
@@ -80,9 +83,23 @@ const secondaryNavItems: NavItem[] = [
 ];
 
 
-const AppSidebar: React.FC<{ isAdmin?: boolean }> = ({ isAdmin }) => {
+const AppSidebar: React.FC<{
+  isAdmin?: boolean;
+  userStatus?: string;
+  platformLaunched?: boolean;
+}> = ({ isAdmin, userStatus, platformLaunched }) => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
+
+  const isUserActive = userStatus === 'active' || platformLaunched === true;
+
+  // Dynamically compute nav items based on user status
+  const computedNavItems: NavItem[] = navItems.map((item) => {
+    if (item.name === "Feedback" && !isUserActive) {
+      return { ...item, disabled: true };
+    }
+    return item;
+  });
 
   const dynamicSecondaryNavItems: NavItem[] = [
     ...(isAdmin ? [{
@@ -93,11 +110,26 @@ const AppSidebar: React.FC<{ isAdmin?: boolean }> = ({ isAdmin }) => {
     ...secondaryNavItems,
   ];
 
-  const renderMenuItems = (navItems: NavItem[]) => (
+  const renderMenuItems = (items: NavItem[]) => (
     <ul className="flex flex-col gap-4">
-      {navItems.map((nav, index) => (
+      {items.map((nav, index) => (
         <li key={nav.name}>
-          {nav.subItems ? (
+          {nav.disabled ? (
+            <span
+              className="menu-item group menu-item-inactive opacity-50 cursor-not-allowed"
+              title="Available after platform launch"
+            >
+              <span className="menu-item-icon-inactive">
+                {nav.icon}
+              </span>
+              {(isExpanded || isHovered || isMobileOpen) && (
+                <>
+                  <span className="menu-item-text">{nav.name}</span>
+                  <LockIcon className="ml-auto w-4 h-4 text-dark-text-muted" />
+                </>
+              )}
+            </span>
+          ) : nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index)}
               className={`menu-item group  ${
@@ -229,7 +261,7 @@ const AppSidebar: React.FC<{ isAdmin?: boolean }> = ({ isAdmin }) => {
   useEffect(() => {
     // Check if the current path matches any submenu item
     let submenuMatched = false;
-    navItems.forEach((nav, index) => {
+    computedNavItems.forEach((nav, index) => {
       if (nav.subItems) {
         nav.subItems.forEach((subItem) => {
           if (isActive(subItem.path)) {
@@ -335,7 +367,7 @@ const AppSidebar: React.FC<{ isAdmin?: boolean }> = ({ isAdmin }) => {
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(navItems)}
+              {renderMenuItems(computedNavItems)}
             </div>
             
             {/* Secondary Navigation Items */}

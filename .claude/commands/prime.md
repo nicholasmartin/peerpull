@@ -23,7 +23,6 @@ On Linux, run: `tree -L 3 -I 'node_modules|__pycache__|.git|dist|build'`
 - Read the PRD.md or similar spec file
 - Read CLAUDE.md or similar global rules file
 - Read README files at project root and major directories
-- Read any architecture documentation
 
 ### 3. Identify Key Files
 
@@ -36,7 +35,7 @@ Based on the structure, identify and read:
 ### 4. Understand Current State
 
 Check recent activity:
-!`git log -10 --oneline`
+!`git log -5 --oneline`
 
 Check current branch and status:
 !`git status`

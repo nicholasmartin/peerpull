@@ -2,15 +2,37 @@ import React from "react";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Info } from "lucide-react";
+import { PlusCircle, Info, Lock } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getSettings } from "@/utils/supabase/settings";
+import { getUserProfile } from "@/utils/supabase/profiles";
 
 export default async function FeedbackRequestsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
+
+  const profile = await getUserProfile(user);
+  const settings = await getSettings();
+  const isActive = profile?.status === 'active' || settings.platform_launched;
+
+  if (!isActive) {
+    return (
+      <div className="mx-auto max-w-md mt-16 text-center">
+        <div className="rounded-xl border border-dark-border bg-dark-card p-8">
+          <Lock className="h-12 w-12 text-dark-text-muted mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-dark-text mb-3">Coming Soon</h2>
+          <p className="text-dark-text-muted mb-6">
+            Feedback requests will be available when the platform launches. While you wait, complete your profile and invite other founders!
+          </p>
+          <Link href="/dashboard">
+            <Button className="bg-primary hover:bg-primary-muted">Back to Dashboard</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   // Fetch user's feedback requests with review counts
   const { data: feedbackRequests } = await supabase
@@ -27,7 +49,6 @@ export default async function FeedbackRequestsPage() {
   );
 
   // Active project limit check
-  const settings = await getSettings();
   const activeQueuedCount = (feedbackRequests || []).filter(
     (fr: any) => fr.status === "open" && fr.queue_position != null
   ).length;
