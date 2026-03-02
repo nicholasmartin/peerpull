@@ -43,10 +43,13 @@ export function Hero({ settings }: { settings: SiteSettings }) {
 
   return (
     <section id="hero" className="relative min-h-[90vh] md:min-h-screen flex items-center bg-dark-bg overflow-hidden">
-      {/* Larger, more dramatic warm glow */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[1000px] h-[600px] rounded-full bg-gradient-to-r from-blue-primary/10 to-teal-accent/10 blur-3xl"></div>
-        <div className="absolute bottom-[10%] left-[20%] w-[400px] h-[400px] rounded-full bg-blue-primary/5 blur-3xl"></div>
+      {/* Subtle grid overlay */}
+      <div className="absolute inset-0 hero-grid pointer-events-none"></div>
+
+      {/* Animated ambient lights — drift slowly behind the heading */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="hero-glow-1 absolute w-[700px] h-[400px] -ml-[350px] -mt-[200px] rounded-full bg-blue-primary/20 blur-[120px]"></div>
+        <div className="hero-glow-2 absolute w-[500px] h-[350px] -ml-[250px] -mt-[175px] rounded-full bg-teal-accent/15 blur-[100px]"></div>
       </div>
 
       <div className="container px-4 md:px-6 mx-auto relative z-10">
@@ -64,14 +67,14 @@ export function Hero({ settings }: { settings: SiteSettings }) {
               <span className="text-dark-text">From Real Builders</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-dark-text-muted max-w-2xl mx-auto leading-relaxed">
-              PeerPull is a peer exchange platform where builders trade honest feedback. Give a review, get a review.
+            <p className="text-xl md:text-2xl text-dark-text max-w-2xl mx-auto leading-relaxed">
+              PeerPull is a peer exchange platform where builders trade honest feedback. <span className="text-blue-primary font-medium">Give a review, get a review.</span>
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-dark-border bg-dark-card/40 text-sm text-dark-text-muted">{exchangeLabel}</span>
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-dark-border bg-dark-card/40 text-sm text-dark-text-muted">{settings.signupBonus} Free Credits at Signup</span>
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-dark-border bg-dark-card/40 text-sm text-dark-text-muted">Earn {settings.referralBonus} Credits Per Referral</span>
+              <span className="inline-flex items-center px-5 py-2 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">{exchangeLabel}</span>
+              <span className="inline-flex items-center px-5 py-2 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">{settings.signupBonus} Free Credits at Signup</span>
+              <span className="inline-flex items-center px-5 py-2 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">Earn {settings.referralBonus} Credits Per Referral</span>
             </div>
           </div>
 

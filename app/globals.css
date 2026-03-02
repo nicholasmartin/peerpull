@@ -51,6 +51,34 @@ details > :not(summary) > * {
   min-height: 0;
 }
 
+/* Hero ambient light animations */
+@keyframes hero-glow-1 {
+  0%, 100% { left: 25%; top: 30%; }
+  25% { left: 65%; top: 25%; }
+  50% { left: 70%; top: 40%; }
+  75% { left: 30%; top: 35%; }
+}
+
+@keyframes hero-glow-2 {
+  0%, 100% { left: 65%; top: 45%; }
+  33% { left: 25%; top: 35%; }
+  66% { left: 60%; top: 50%; }
+}
+
+.hero-glow-1 {
+  animation: hero-glow-1 10s ease-in-out infinite;
+}
+
+.hero-glow-2 {
+  animation: hero-glow-2 14s ease-in-out infinite;
+}
+
+/* Subtle dot grid for hero background */
+.hero-grid {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
 @layer components {
   /* Sidebar Menu Item Styles */
   .menu-item {

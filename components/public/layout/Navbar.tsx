@@ -18,7 +18,7 @@ type NavLinkProps = {
 const NavLink = ({ href, children }: NavLinkProps) => (
   <Link
     href={href}
-    className="text-base font-medium transition-colors duration-200 text-dark-text-muted hover:text-dark-text"
+    className="text-base font-semibold transition-colors duration-200 text-dark-text/70 hover:text-dark-text"
   >
     {children}
   </Link>
@@ -109,7 +109,7 @@ export function Navbar({ user }: NavbarProps) {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6">
-          <NavLink href="#problem-solution">Problem & Solution</NavLink>
+          <NavLink href="#problem-solution">Why PeerPull</NavLink>
           <NavLink href="#how-it-works">How it Works</NavLink>
           <NavLink href="#faq">FAQ</NavLink>
         </nav>
@@ -167,7 +167,7 @@ export function Navbar({ user }: NavbarProps) {
         <div className="container py-6 px-4">
           <nav className="flex flex-col space-y-1">
             {[
-              { href: "#problem-solution", label: "Problem & Solution" },
+              { href: "#problem-solution", label: "Why PeerPull" },
               { href: "#how-it-works", label: "How it Works" },
               { href: "#faq", label: "FAQ" },
             ].map((link) => (
