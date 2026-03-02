@@ -1,66 +1,124 @@
-# CLAUDE.md
+# PeerPull - CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Project Overview
 
-## Development Commands
+PeerPull is a peer-to-peer feedback exchange platform for indie builders, founders, and makers. Users give video reviews to earn credits (PeerPoints), then spend credits to receive feedback on their own products. Built during a hackathon week (March 2026).
 
-- `npm run dev` - Start the development server on localhost:3000
-- `npm run build` - Build the application for production
-- `npm start` - Start the production server
-- `npx supabase db push` - Push pending migrations to the remote Supabase database
+**Core mechanic:** Credit-based exchange — give a video review → earn points → spend points to request feedback.
 
-## Architecture Overview
+## Tech Stack
 
-This is a Next.js 15 application built with the App Router pattern, using Supabase for backend services and TailwindCSS for styling.
+- **Framework:** Next.js 15 (App Router, Server Components, Server Actions) + React 19
+- **Language:** TypeScript 5.7 (strict mode)
+- **Styling:** TailwindCSS 3.4 + shadcn/ui (Radix UI primitives)
+- **Database/Auth/Storage:** Supabase (PostgreSQL, Auth, Storage, Edge Functions)
+- **Icons:** Lucide React
+- **Charts:** ApexCharts via react-apexcharts
+- **Fonts:** Inter (body), Montserrat (headings)
 
-### Core Technologies
-- **Next.js 15** with App Router (TypeScript)
-- **Supabase** for authentication, database, and real-time features
-- **TailwindCSS** with custom theme and shadcn/ui components
-- **React Context** for state management (SidebarContext)
+## Commands
 
-### Project Structure
-- `app/` - Next.js App Router pages and layouts
-  - `(auth-pages)/` - Authentication related pages
-  - `(protected)/` - Protected routes requiring authentication
-  - `(public)/` - Public facing pages
-- `components/` - Reusable React components organized by feature
-  - `ui/` - shadcn/ui base components
-  - `dashboard-layout/` - Dashboard specific layout components
-  - `auth/`, `tables/`, `charts/` etc. - Feature-specific components
-- `utils/supabase/` - Supabase client configurations for different environments
-  - `client.ts` - Client-side Supabase client
-  - `server.ts` - Server-side Supabase client
-  - `middleware.ts` - Middleware for session management
-- `context/` - React Context providers (SidebarContext for UI state)
-- `lib/utils.ts` - Utility functions including cn() for className merging
+```bash
+npm run dev      # Start dev server (uses .next-dev dir)
+npm run build    # Production build (uses .next dir)
+npm run start    # Start production server
+```
 
-### Authentication Flow
-- Uses Supabase Auth with cookie-based sessions
-- Middleware (`middleware.ts`) handles session updates across all routes
-- Auth utilities in `utils/supabase/` provide different client configurations
-- Protected routes use route groups in `app/(protected)/`
+No test framework is configured.
 
-### Styling System
-- **Dark mode by default** - enforced at the root layout level
-- Custom TailwindCSS theme with premium dark colors (blue-teal gradients)
-- Typography system with custom font sizes (title-*, theme-*)
-- shadcn/ui components configured in `components.json`
-- Component path alias: `@/components` maps to `./components`
-- Utils path alias: `@/lib/utils` maps to `./lib/utils`
+## Project Structure
 
-### Database Migrations
-- Migration files live in `supabase/migrations/` with the naming pattern `<timestamp>_name.sql`
-- To apply migrations to the remote database, run `npx supabase db push` (do NOT rely on the Supabase MCP tool, which is read-only)
-- Always use `npx supabase db push` after creating a new migration file
+```
+app/
+├── (auth-pages)/          # Public auth routes (signin, signup, forgot-password)
+├── (protected)/           # Authenticated routes (gated by middleware)
+│   └── dashboard/         # Main app: request-feedback, submit-feedback, peerpoints, profile, admin, etc.
+├── (public)/              # Landing page
+├── actions.ts             # ALL server actions (~400 lines)
+├── globals.css            # Global styles & custom animations
+└── layout.tsx             # Root layout (fonts, SidebarProvider, dark theme)
 
-### Key Configuration Notes
-- TypeScript build errors are ignored in production (`ignoreBuildErrors: true`)
-- SVG files are processed through @svgr/webpack for React components
-- Middleware excludes static assets and images from session processing
-- Path aliases use `@/*` pattern mapping to root directory
+components/
+├── ui/                    # shadcn/ui base components (button, card, badge, input, etc.)
+├── protected/dashboard/   # Dashboard-specific components
+├── public/                # Landing page components (Hero, Navbar)
+├── auth/                  # SignUpForm, SignInForm
+├── feedback/              # Screen recorder components
+├── form/                  # Form elements (inputs, dropzone, etc.)
+├── dashboard-layout/      # AppHeader, AppSidebar, DashboardShell
+└── charts/                # ApexCharts wrappers
 
-### Environment Setup
-Required environment variables (see `.env.example`):
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+context/                   # React contexts (SidebarContext, ThemeContext)
+hooks/                     # Custom hooks (useScreenRecorder, useModal)
+lib/utils.ts               # cn() utility (clsx + tailwind-merge)
+utils/supabase/            # Supabase client helpers (server.ts, client.ts, middleware.ts)
+supabase/migrations/       # Timestamped SQL migration files
+docs/                      # PRD, design docs, economic simulation docs
+```
+
+## Key Patterns & Conventions
+
+### Data Flow
+- **Server Components by default** — data fetching in layouts and pages
+- **Server Actions for all mutations** — all form submissions go through `app/actions.ts`
+- **FormData → Supabase operation → encodedRedirect()** is the standard action pattern
+
+### Database & Security
+- **RLS on all tables** — users can only access their own data
+- **SECURITY DEFINER RPCs** for sensitive economy operations (point transfers, queue assignment)
+- **Cookie-based sessions** via `@supabase/ssr` — no client-side JWT storage
+- **FIFO queue** with `SKIP LOCKED` for fair review assignment
+- **System settings** stored in `system_settings` table (key/value) for runtime config
+
+### Styling
+- **Dark mode by default** — `dark-bg`, `dark-card`, `dark-surface`, `dark-text`, `dark-border` color tokens
+- **Gold accent on public pages** — `blue-primary` (#d4a853), `teal-accent` (#e8c778)
+- Use `cn()` from `lib/utils` for conditional class merging
+- Mobile-first responsive design with Tailwind utilities
+
+### Components
+- shadcn/ui components live in `components/ui/`
+- Use existing shadcn/ui components before creating custom ones
+- Dashboard layout: AppHeader + AppSidebar + DashboardShell + DashboardContent
+
+### Imports
+- Path alias: `@/*` maps to project root (e.g., `@/components/ui/button`)
+
+### Naming
+- Files: kebab-case for utilities, PascalCase for React components
+- Database: snake_case for tables and columns
+- TypeScript: camelCase for variables/functions, PascalCase for types/interfaces
+
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `app/actions.ts` | All server actions (auth, feedback, reviews, points) |
+| `utils/supabase/server.ts` | Server-side Supabase client creation |
+| `utils/supabase/client.ts` | Browser-side Supabase client creation |
+| `utils/supabase/middleware.ts` | Session refresh + route protection logic |
+| `middleware.ts` | Next.js middleware entry point |
+| `hooks/useScreenRecorder.ts` | Video recording logic (MediaRecorder API) |
+| `context/SidebarContext.tsx` | Sidebar state management |
+| `utils/supabase/settings.ts` | System settings helpers (getSettings, getSetting) |
+| `.claude/PRD.md` | Full product requirements document |
+
+## Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `profiles` | User profiles (name, avatar, expertise, peer_points_balance, referral_code) |
+| `feedback_requests` | Submitted products requesting feedback (title, url, status) |
+| `reviews` | Video reviews (video_url, duration, rating, status) |
+| `peer_point_transactions` | Point ledger (earned_review, spent_submission, etc.) |
+| `system_settings` | Runtime config (signup_bonus, review_reward, min_video_duration, etc.) |
+| `referrals` | Referral tracking and bonuses |
+
+## Important Notes
+
+- **No tests configured** — hackathon project, no vitest/jest setup
+- **TS errors ignored on build** — `ignoreBuildErrors: true` in next.config.ts
+- **Windows dev workaround** — dev uses `.next-dev`, prod uses `.next` to avoid lock conflicts
+- **Terminology migration** — "Pull Request" is being renamed to "Feedback Request" across the codebase
+- **OAuth buttons are placeholders** — Google/GitHub login not functional yet
+- **Video duration** — configurable via system_settings (60-300 seconds range)
