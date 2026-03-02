@@ -1,0 +1,48 @@
+🚀 I'm building a peer review exchange for builders — give one review, get one back. Here's where it all starts.
+
+Hey, I'm Nick Martin, and this is Day 0 of my Build Story (https://www.buildstory.com) hackathon journey. I'm building PeerPull — a platform where indie builders, makers, and founders exchange honest feedback on each other's projects through screen-recorded think-aloud reviews.
+
+The concept is dead simple: submit your project, review someone else's, and earn feedback in return. No cold outreach. No waiting weeks for responses. Just a fair, reciprocal exchange.
+
+———
+
+📌 What you'll see in this video:
+
+• The current state of PeerPull (rough but functional!)
+• How the review queue works (FIFO, anonymous matching)
+• Browser-based screen + audio recording for reviews
+• The Peer Points system (earn points → get reviews)
+• Admin controls for managing the exchange
+• What I'm planning to build during the hackathon
+
+———
+
+🔧 Tech Stack:
+Next.js 15 · Supabase · TailwindCSS · TypeScript
+
+———
+
+🎯 The Challenge:
+PeerPull is a marketplace — so it has a classic chicken-and-egg problem. I need both reviewers AND projects to review at the same time. My plan? Build a killer waitlist, polish the UX, and launch by the end of the hackathon with real users actually using it.
+
+———
+
+⚡ What's Next:
+✅ Polished UI/UX overhaul
+✅ Waiting list with referral mechanics
+✅ Community & profile reputation system
+✅ Review quality ratings (catch the cheaters 👀)
+✅ Supply & demand balancing
+
+———
+
+💬 If you're a builder who's ever struggled to get quality feedback on your projects — this is being built for YOU. Drop a comment and let me know what you think!
+
+👇 Follow the journey:
+🔗 PeerPull: https://www.peerpull.com
+🔗 Build Story Hackathon: https://www.buildstory.com
+🔗 Nick Martin: https://www.nickmartin.com
+
+———
+
+#hackathon #buildinpublic #indiehacker

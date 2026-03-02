@@ -11,10 +11,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This is a Next.js 14 application built with the App Router pattern, using Supabase for backend services and TailwindCSS for styling.
+This is a Next.js 15 application built with the App Router pattern, using Supabase for backend services and TailwindCSS for styling.
 
 ### Core Technologies
-- **Next.js 14** with App Router (TypeScript)
+- **Next.js 15** with App Router (TypeScript)
 - **Supabase** for authentication, database, and real-time features
 - **TailwindCSS** with custom theme and shadcn/ui components
 - **React Context** for state management (SidebarContext)
