@@ -377,6 +377,48 @@ Name → Email → Password → Account Type (Builder/Investor/Early Adopter) �
 - Use Mailgun API for email delivery
 - Simple, clean email templates — not over-designed
 
+### 7.9 Toast Notification System & Active Project Limit UX (NEW)
+
+**Purpose:** Replace invisible URL-bar error messages with visible toast notifications across the dashboard, and add proactive UX guardrails for the active project limit.
+
+**Problem:**
+Server actions use `encodedRedirect("error", path, message)` which appends `?error=...` to the URL, but most dashboard pages don't read `searchParams` or display `FormMessage`. Users see errors only in the URL bar — effectively invisible.
+
+**Part A: Toast System**
+
+*Approach:*
+- Install `sonner` (lightweight toast library, works with Next.js Server Components)
+- Add `<Toaster />` to the dashboard layout
+- Create a `<ToastFromParams />` client component bridge that:
+  - Reads `error` and `success` query params from the URL
+  - Displays them as toasts on mount
+  - Cleans up the URL (removes query params) after displaying
+- Place `<ToastFromParams />` in the dashboard layout so ALL dashboard pages automatically get toast support for `encodedRedirect` errors
+
+*This means:*
+- No per-page `searchParams` handling needed
+- All existing `encodedRedirect` calls (submit feedback request, points errors, etc.) automatically surface as toasts
+- Auth pages continue using `FormMessage` inline (different layout)
+
+**Part B: Active Project Limit UX**
+
+*Listing page (`/dashboard/request-feedback`):*
+- Fetch `active_project_limit` from settings server-side
+- Count user's active queued projects (status `open`, `queue_position IS NOT NULL`)
+- If at limit: disable "New Request" button, show info text: "You have 1/1 active projects in the queue"
+- If under limit: show current count as subtle info text
+
+*New request page (`/dashboard/request-feedback/new`):*
+- Convert to async server component
+- Server-side check: fetch user, settings, active count
+- If at limit: render a "limit reached" card instead of the form, with explanation and link back
+- This prevents users from filling out the entire form only to hit a server-side error
+
+**Part C: Dark Theme FormMessage (minor)**
+- Update `FormMessage` component colors for dark theme compatibility (used on auth pages)
+- Error: dark red bg, light red text
+- Success: dark green bg, light green text
+
 ---
 
 ## 8. Technology Stack
