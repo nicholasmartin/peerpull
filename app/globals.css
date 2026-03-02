@@ -7,6 +7,11 @@
     @apply bg-dark-bg font-normal text-base text-dark-text;
   }
 
+  /* Offset anchors for sticky header */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   /* Use Montserrat for headings */
   h1, h2, h3, h4, h5, h6 {
     @apply font-montserrat;

@@ -1,5 +1,7 @@
 "use client";
 
+import type { SiteSettings } from "@/app/(public)/page";
+
 type AccordionProps = {
   items: Array<{
     question: string;
@@ -9,30 +11,23 @@ type AccordionProps = {
 
 const Accordion = ({ items }: AccordionProps) => {
   return (
-    <div className="divide-y divide-glass-border rounded-lg bg-dark-card/50 backdrop-blur-sm shadow-xl border border-glass-border overflow-hidden">
+    <div className="divide-y divide-dark-border rounded-lg border border-dark-border overflow-hidden">
       {items.map((item, i: number) => (
-        <details key={i} className="group p-6 [&_summary::-webkit-details-marker]:hidden">
-          <summary className="flex cursor-pointer items-center justify-between gap-3 text-dark-text font-medium rounded-md p-3 hover:bg-glass-highlight/20 transition-all duration-300">
-            <h3 className="text-lg font-medium">{item.question}</h3>
-            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-blue-primary to-teal-accent bg-opacity-10 flex items-center justify-center">
-              <svg
-                className="h-4 w-4 transform transition duration-300 ease-out group-open:rotate-180 text-dark-text"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
+        <details key={i} className="group [&_summary::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer items-center justify-between gap-3 p-6 text-dark-text hover:bg-dark-card/50 transition-colors duration-200">
+            <h3 className="text-base font-medium">{item.question}</h3>
+            <svg
+              className="h-4 w-4 flex-shrink-0 transform transition duration-200 group-open:rotate-180 text-dark-text-muted"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
           </summary>
-          <div className="mt-4 ml-2 pl-4 border-l-2 border-glass-border">
-            <p className="text-dark-text-muted">{item.answer}</p>
+          <div className="px-6 pb-6">
+            <p className="text-dark-text-muted text-sm leading-relaxed">{item.answer}</p>
           </div>
         </details>
       ))}
@@ -40,60 +35,55 @@ const Accordion = ({ items }: AccordionProps) => {
   );
 };
 
-export function FAQ() {
+export function FAQ({ settings }: { settings: SiteSettings }) {
+  const exchangeRatio =
+    settings.reviewReward === settings.reviewCost
+      ? `a ${settings.reviewReward}:${settings.reviewCost} exchange ratio (give ${settings.reviewCost} review, get ${settings.reviewReward} back)`
+      : `${settings.reviewReward} points per review given`;
+
   return (
     <section id="faq" className="py-20 md:py-32 bg-dark-surface relative">
-      {/* Abstract geometric shapes for background */}
-      <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-        <div className="absolute bottom-[30%] right-[20%] w-[280px] h-[280px] rounded-full bg-gradient-to-r from-blue-primary to-teal-accent blur-3xl opacity-20"></div>
-        <div className="absolute top-[20%] left-[15%] w-[320px] h-[320px] rounded-full bg-gradient-to-r from-teal-accent to-blue-primary blur-3xl opacity-[0.15]"></div>
-      </div>
-
       <div className="container px-4 md:px-6 mx-auto relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-4">
-              <span className="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">Frequently Asked Questions</span>
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-14">
+            <p className="text-blue-primary text-sm font-semibold tracking-widest uppercase mb-4">FAQ</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-dark-text">
+              Everything You Need to Know
             </h2>
-            <h3 className="text-xl font-medium text-dark-text-muted mb-6">Everything You Need to Know</h3>
           </div>
 
-          <div className="mx-auto max-w-3xl py-6">
-            <Accordion
-              items={[
-                {
-                  question: "How do I get access to the beta?",
-                  answer: "PeerPull is currently in closed beta and available by invite only. Request an invite from our homepage or get one from an existing member. Existing members earn 5 bonus credits for every friend they invite."
-                },
-                {
-                  question: "What are the beta perks?",
-                  answer: "Beta members enjoy a 1:1 exchange ratio (give 1 review, get 1 back), 3 free credits at signup, and a +2 credit bonus for your first review. Plus, refer a friend and you both earn bonus credits. These perks are time-limited and will adjust as we grow."
-                },
-                {
-                  question: "How do you ensure quality feedback?",
-                  answer: "All reviews must be approved by recipients before the reviewer earns PeerPoints. Our templates also guide reviewers to provide specific, actionable insights rather than generic comments. This approval mechanism works the same during beta."
-                },
-                {
-                  question: "What if I don't have a landing page yet?",
-                  answer: "You can still submit a concept document, pitch deck, or even a detailed description of your idea as a PullRequest. The key is having something concrete for others to evaluate."
-                },
-                {
-                  question: "How technical should the feedback be?",
-                  answer: "Our community is primarily solo founders, so the feedback tends to be practical and implementation-focused. However, you can specify if you want feedback on specific aspects like market fit, UX, or technical architecture."
-                },
-                {
-                  question: "What if I'm an experienced founder without a current project?",
-                  answer: "We welcome experienced founders to join as PeerPros! You'll get special recognition and can bank PeerPoints for future projects."
-                },
-                {
-                  question: "Is my idea protected?",
-                  answer: "While we can't guarantee absolute confidentiality in a community setting, our terms prohibit stealing ideas. Remember that execution, not the idea itself, is typically the differentiator in startup success."
-                }
-              ]}
-            />
-          </div>
-
-
+          <Accordion
+            items={[
+              {
+                question: "How do I get access to the beta?",
+                answer: `PeerPull is currently in closed beta and available by invite only. Request an invite from our homepage or get one from an existing member. Existing members earn ${settings.referralBonus} bonus credits for every friend they invite.`
+              },
+              {
+                question: "What are the beta perks?",
+                answer: `Beta members enjoy ${exchangeRatio}, ${settings.signupBonus} free credits at signup, and a +${settings.firstReviewBonus} credit bonus for your first review. Plus, refer a friend and you both earn bonus credits. These perks are time-limited and will adjust as we grow.`
+              },
+              {
+                question: "How do you ensure quality feedback?",
+                answer: "All reviews must be approved by recipients before the reviewer earns PeerPoints. Our templates also guide reviewers to provide specific, actionable insights rather than generic comments. This approval mechanism works the same during beta."
+              },
+              {
+                question: "What if I don't have a landing page yet?",
+                answer: "You can still submit a concept document, pitch deck, or even a detailed description of your idea as a PullRequest. The key is having something concrete for others to evaluate."
+              },
+              {
+                question: "How technical should the feedback be?",
+                answer: "Our community is primarily solo founders, so the feedback tends to be practical and implementation-focused. However, you can specify if you want feedback on specific aspects like market fit, UX, or technical architecture."
+              },
+              {
+                question: "What if I'm an experienced founder without a current project?",
+                answer: "We welcome experienced founders to join as PeerPros! You'll get special recognition and can bank PeerPoints for future projects."
+              },
+              {
+                question: "Is my idea protected?",
+                answer: "While we can't guarantee absolute confidentiality in a community setting, our terms prohibit stealing ideas. Remember that execution, not the idea itself, is typically the differentiator in startup success."
+              }
+            ]}
+          />
         </div>
       </div>
     </section>

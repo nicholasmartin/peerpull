@@ -9,8 +9,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "PeerPull - Valuable Feedback Early!",
-  description: "Valueable Feedback Exchange For Builders to Validate Ideas Early.",
+  title: "PeerPull - Real feedback from Real Builders.",
+  description: "PeerPull is a peer exchange platform where builders trade honest feedback. Give a review, get a review. ",
 };
 
 const inter = Inter({
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${montserrat.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${montserrat.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>

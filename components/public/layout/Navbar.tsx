@@ -1,7 +1,6 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { User } from '@supabase/supabase-js';
 import { useState, useEffect } from 'react';
 import { Montserrat } from "next/font/google";
@@ -17,12 +16,11 @@ type NavLinkProps = {
 };
 
 const NavLink = ({ href, children }: NavLinkProps) => (
-  <Link 
-    href={href} 
-    className={`text-sm font-medium transition-all duration-200 text-dark-text-muted hover:text-dark-text relative group`}
+  <Link
+    href={href}
+    className="text-sm font-medium transition-colors duration-200 text-dark-text-muted hover:text-dark-text"
   >
-    <span className="relative z-10">{children}</span>
-    <span className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-gradient-to-r from-blue-primary to-teal-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+    {children}
   </Link>
 );
 
@@ -35,23 +33,23 @@ type ButtonProps = {
 };
 
 const Button = ({ children, variant = 'default', className = '', href, ...props }: ButtonProps) => {
-  const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-primary/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
-  
+  const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-200 focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none";
+
   const variants = {
-    default: "bg-gradient-to-r from-blue-primary to-teal-accent text-white hover:shadow-lg hover:shadow-blue-primary/20",
+    default: "bg-blue-primary text-dark-bg hover:bg-blue-secondary",
     secondary: "bg-dark-card text-dark-text hover:bg-dark-card/80",
-    outline: "border border-glass-border backdrop-blur-sm text-dark-text hover:border-glass-highlight hover:bg-glass-highlight/10",
-    ghost: "text-dark-text-muted hover:text-dark-text hover:bg-dark-card/30",
+    outline: "border border-dark-border text-dark-text hover:bg-dark-card/50",
+    ghost: "text-dark-text-muted hover:text-dark-text",
   };
-  
+
   const sizeClasses = "h-10 py-2 px-4";
-  
+
   const classes = `${baseStyles} ${variants[variant]} ${sizeClasses} ${className}`;
-  
+
   if (href) {
     return <Link href={href} className={classes} {...props}>{children}</Link>;
   }
-  
+
   return <button className={classes} {...props}>{children}</button>;
 };
 
@@ -61,8 +59,7 @@ type NavbarProps = {
 
 export function Navbar({ user }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  // Close mobile menu when clicking outside or on a link
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -70,77 +67,71 @@ export function Navbar({ user }: NavbarProps) {
         setIsMenuOpen(false);
       }
     };
-    
-    // Close menu when scrolling
+
     const handleScroll = () => {
       if (isMenuOpen) {
         setIsMenuOpen(false);
       }
     };
-    
+
     document.addEventListener('click', handleClickOutside);
     window.addEventListener('scroll', handleScroll);
-    
+
     return () => {
       document.removeEventListener('click', handleClickOutside);
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isMenuOpen]);
-  
-  // Handle anchor link clicks to close menu and smooth scroll
+
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('#')) {
       e.preventDefault();
       setIsMenuOpen(false);
-      
+
       const element = document.getElementById(href.substring(1));
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }
   };
-  
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-glass-border bg-dark-bg/80 backdrop-blur-lg shadow-md">
-      {/* Subtle glass reflection */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-glass-highlight to-transparent opacity-30"></div>
-      
-      <div className="container flex h-16 items-center justify-between relative z-10">
+    <header className="sticky top-0 z-50 w-full border-b border-dark-border bg-dark-bg/90 backdrop-blur-md">
+      <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="bg-gradient-to-r from-blue-primary to-teal-accent rounded-md w-8 h-8 flex items-center justify-center shadow-sm">
-              <span className={`${montserrat.className} text-dark-text font-bold text-lg`}>P</span>
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="bg-blue-primary rounded-md w-7 h-7 flex items-center justify-center">
+              <span className={`${montserrat.className} text-dark-bg font-bold text-sm`}>P</span>
             </div>
-            <span className={`${montserrat.className} text-xl font-bold bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent`}>PeerPull</span>
+            <span className={`${montserrat.className} text-lg font-bold text-dark-text`}>PeerPull</span>
           </Link>
         </div>
-        
+
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6">
-          <NavLink href="#problem">Problem</NavLink>
-          <NavLink href="#solution">Solution</NavLink>
+          <NavLink href="#problem-solution">Problem & Solution</NavLink>
           <NavLink href="#how-it-works">How it Works</NavLink>
           <NavLink href="#faq">FAQ</NavLink>
         </nav>
-        
+
         <div className="flex items-center gap-4">
           {/* Mobile Menu Toggle */}
-          <button 
+          <button
             id="menu-toggle"
-            className="md:hidden flex items-center justify-center p-2 rounded-md text-dark-text hover:bg-dark-card/50 focus:outline-none transition-colors duration-200"
+            className="md:hidden flex items-center justify-center p-2 rounded-md text-dark-text-muted hover:text-dark-text focus:outline-none transition-colors duration-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
             aria-label="Toggle menu"
           >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
               strokeLinejoin="round"
             >
               {isMenuOpen ? (
@@ -156,7 +147,7 @@ export function Navbar({ user }: NavbarProps) {
               )}
             </svg>
           </button>
-          
+
           {user ? (
             <Button href="/dashboard" variant="default" className="font-medium">Dashboard</Button>
           ) : (
@@ -167,54 +158,33 @@ export function Navbar({ user }: NavbarProps) {
           )}
         </div>
       </div>
-      
+
       {/* Mobile Navigation Menu */}
-      <div 
+      <div
         id="mobile-menu"
-        className={`md:hidden absolute top-16 inset-x-0 z-50 bg-dark-bg/95 backdrop-blur-lg border-b border-glass-border shadow-lg transform transition-all duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
+        className={`md:hidden absolute top-16 inset-x-0 z-50 bg-dark-bg/95 backdrop-blur-lg border-b border-dark-border transform transition-all duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
       >
         <div className="container py-6 px-4">
-          <nav className="flex flex-col space-y-2">
-            <Link 
-              href="#problem" 
-              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
-              onClick={(e) => handleAnchorClick(e, '#problem')}
-            >
-              Problem
-            </Link>
-            <Link 
-              href="#solution" 
-              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
-              onClick={(e) => handleAnchorClick(e, '#solution')}
-            >
-              Solution
-            </Link>
-            <Link 
-              href="#how-it-works" 
-              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
-              onClick={(e) => handleAnchorClick(e, '#how-it-works')}
-            >
-              How it Works
-            </Link>
-            <Link 
-              href="#use-cases" 
-              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
-              onClick={(e) => handleAnchorClick(e, '#use-cases')}
-            >
-              Use Cases
-            </Link>
-            <Link 
-              href="#faq" 
-              className="text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
-              onClick={(e) => handleAnchorClick(e, '#faq')}
-            >
-              FAQ
-            </Link>
+          <nav className="flex flex-col space-y-1">
+            {[
+              { href: "#problem-solution", label: "Problem & Solution" },
+              { href: "#how-it-works", label: "How it Works" },
+              { href: "#faq", label: "FAQ" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-base font-medium py-3 px-4 rounded-md text-dark-text-muted hover:text-dark-text hover:bg-dark-card/50 transition-colors duration-200"
+                onClick={(e) => handleAnchorClick(e, link.href)}
+              >
+                {link.label}
+              </Link>
+            ))}
             {/* Only show Sign In in mobile menu if it's hidden in the header */}
-            <div className="sm:hidden pt-4 mt-2 border-t border-glass-border/30">
-              <Link 
-                href="/signin" 
-                className="block text-base font-medium py-3 px-4 rounded-md hover:bg-dark-card/50 text-dark-text transition-colors duration-200 border border-transparent hover:border-glass-border/20"
+            <div className="sm:hidden pt-4 mt-2 border-t border-dark-border">
+              <Link
+                href="/signin"
+                className="block text-base font-medium py-3 px-4 rounded-md text-dark-text-muted hover:text-dark-text hover:bg-dark-card/50 transition-colors duration-200"
               >
                 Sign in
               </Link>
