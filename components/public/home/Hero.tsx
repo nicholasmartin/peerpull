@@ -42,7 +42,7 @@ export function Hero({ settings }: { settings: SiteSettings }) {
   const isExpired = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
 
   return (
-    <section id="hero" className="relative min-h-[90vh] md:min-h-screen flex items-center bg-dark-bg overflow-hidden">
+    <section id="hero" className="relative min-h-[90vh] md:min-h-screen flex items-center pt-16 md:pt-0 bg-dark-bg overflow-hidden">
       {/* Subtle grid overlay */}
       <div className="absolute inset-0 hero-grid pointer-events-none"></div>
 
@@ -55,12 +55,6 @@ export function Hero({ settings }: { settings: SiteSettings }) {
       <div className="container px-4 md:px-6 mx-auto relative z-10">
         <div className="flex flex-col items-center gap-6 md:gap-10 text-center max-w-5xl mx-auto">
           <div className="space-y-6 md:space-y-8">
-            <div className="inline-flex items-center px-5 py-2.5 rounded-full border border-dark-border bg-dark-card/60 backdrop-blur-sm">
-              <span className="text-blue-primary font-semibold text-sm tracking-wide uppercase">Closed Beta</span>
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-primary mx-3 animate-pulse"></div>
-              <span className="text-dark-text-muted text-sm">Invite Only</span>
-            </div>
-
             <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.95]">
               <span className="text-blue-primary">Real Feedback</span>
               <br />

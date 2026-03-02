@@ -73,10 +73,14 @@ details > :not(summary) > * {
   animation: hero-glow-2 14s ease-in-out infinite;
 }
 
-/* Subtle dot grid for hero background */
+/* Line grid for hero background */
 .hero-grid {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
 }
 
 @layer components {
