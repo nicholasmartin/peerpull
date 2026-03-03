@@ -1,19 +1,19 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-03 (late night)
+> Last updated: 2026-03-04
 
 ---
 
 ## Current Sprint
 
-**Focus:** Phase 2 — Quality & Trust Engine complete. Moving to Phase 4 next.
+**Focus:** Phases 1–3 complete. Phase 4 — Notifications & Polish is next.
 
 | Priority | Feature | Status | Blocker |
 |----------|---------|--------|---------|
-| 1 | Reviewer Action Signals (PRD 7.3) | ✅ Done | — |
-| 2 | Enhanced Feedback Quality Panel (PRD 7.4) | ✅ Done | — |
-| 3 | Reviewer Quality Score (PRD 7.5) | ✅ Done | — |
+| 1 | Notifications table + RLS (PRD 7.8) | ⬜ Not Started | — |
+| 2 | In-app notification bell + dropdown (PRD 7.8) | ⬜ Not Started | Depends on 4.1 |
+| 3 | End-to-end user journey polish | ⬜ Not Started | — |
 
 ---
 
@@ -64,7 +64,7 @@
 | 4.4 | Create notifications on review lifecycle events | 7.8 | ⬜ Not Started | Server actions update |
 | 4.5 | Email notifications (Mailgun) | 7.8 | ⬜ Not Started | External service integration |
 | 4.6 | Notification preferences in settings page | 7.8 | ⬜ Not Started | Settings page UI |
-| 4.7 | Unified profile with all stats | 7.6 | ⬜ Not Started | Depends on Phase 2 quality score |
+| 4.7 | Unified profile with all stats | 7.6 | ✅ Done | Completed in Phase 2 — `f9a2a5d`, ProfileStats.tsx + QualityScoreBadge.tsx |
 | 4.8 | End-to-end user journey polish | — | ⬜ Not Started | Final QA pass |
 
 ---
