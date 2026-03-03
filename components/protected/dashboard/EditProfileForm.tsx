@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Profile } from "@/utils/supabase/profiles";
@@ -10,6 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Upload, User } from "lucide-react";
 
 const EXPERTISE_OPTIONS = [
   "SaaS",
@@ -32,18 +34,48 @@ interface EditProfileFormProps {
 
 export default function EditProfileForm({ profile, userEmail }: EditProfileFormProps) {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [firstName, setFirstName] = useState(profile.first_name || "");
   const [lastName, setLastName] = useState(profile.last_name || "");
   const [website, setWebsite] = useState(profile.website || "");
   const [selectedExpertise, setSelectedExpertise] = useState<string[]>(
     profile.expertise || []
   );
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const toggleExpertise = (tag: string) => {
     setSelectedExpertise((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
+  };
+
+  const handleAvatarSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith("image/")) {
+        toast.error("Please select an image file");
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size must be less than 5MB");
+        return;
+      }
+
+      setAvatarFile(file);
+
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setAvatarPreview(previewUrl);
+    }
+  };
+
+  const handleAvatarButtonClick = () => {
+    fileInputRef.current?.click();
   };
 
   const handleSaveProfile = () => {
@@ -53,6 +85,7 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
       formData.append("last_name", lastName.trim());
       if (website) formData.append("website", website);
       selectedExpertise.forEach((tag) => formData.append("expertise", tag));
+      if (avatarFile) formData.append("avatar", avatarFile);
 
       const result = await updateProfile(formData);
 
@@ -74,10 +107,76 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
     setLastName(profile.last_name || "");
     setWebsite(profile.website || "");
     setSelectedExpertise(profile.expertise || []);
+
+    // Reset avatar
+    setAvatarFile(null);
+    if (avatarPreview) {
+      URL.revokeObjectURL(avatarPreview);
+      setAvatarPreview(null);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
     <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Profile Picture</CardTitle>
+          <CardDescription>Upload your profile avatar</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            {/* Current/Preview Avatar */}
+            <div className="flex flex-col items-center gap-2">
+              <Avatar className="h-24 w-24">
+                <AvatarImage
+                  src={avatarPreview || profile.avatar_url || ""}
+                  alt={`${profile.first_name || "User"} ${profile.last_name || ""}`}
+                />
+                <AvatarFallback className="text-2xl">
+                  <User className="h-12 w-12" />
+                </AvatarFallback>
+              </Avatar>
+              {avatarPreview && (
+                <p className="text-xs text-dark-text-muted">New avatar selected</p>
+              )}
+            </div>
+
+            {/* Upload Controls */}
+            <div className="flex-1 space-y-3">
+              <div className="flex flex-col gap-2">
+                <Input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarSelect}
+                  className="hidden"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleAvatarButtonClick}
+                  className="w-full sm:w-auto"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {avatarFile ? "Change Image" : "Upload Image"}
+                </Button>
+                {avatarFile && (
+                  <p className="text-sm text-dark-text-muted">
+                    Selected: {avatarFile.name}
+                  </p>
+                )}
+              </div>
+              <p className="text-xs text-dark-text-muted">
+                Recommended: Square image, at least 200x200px. Max file size: 5MB.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Basic Information</CardTitle>
