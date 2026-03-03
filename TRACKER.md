@@ -7,24 +7,23 @@
 
 ## Current Sprint
 
-**Focus:** Phase 1 completion — finish remaining infrastructure before moving to quality features.
+**Focus:** Phase 1 is complete. Moving to Phase 2 — Quality & Trust Engine.
 
 | Priority | Feature | Status | Blocker |
 |----------|---------|--------|---------|
-| 1 | Active Project Limit UX (PRD 7.9B) | 🟡 Partial | Needs verification |
-| 2 | Reviewer Action Signals (PRD 7.3) | ⬜ Not Started | — |
-| 3 | Enhanced Feedback Quality Panel (PRD 7.4) | ⬜ Not Started | — |
-| 4 | Reviewer Quality Score (PRD 7.5) | ⬜ Not Started | Depends on 7.4 |
+| 1 | Reviewer Action Signals (PRD 7.3) | ⬜ Not Started | — |
+| 2 | Enhanced Feedback Quality Panel (PRD 7.4) | ⬜ Not Started | — |
+| 3 | Reviewer Quality Score (PRD 7.5) | ⬜ Not Started | Depends on 7.4 |
 
 ---
 
-## Phase 1: Foundation & Cleanup — 🟢 Mostly Complete
+## Phase 1: Foundation & Cleanup — 🟢 Complete
 
 | # | Feature | PRD Ref | Status | Commit / Evidence |
 |---|---------|---------|--------|-------------------|
 | 1.1 | Terminology migration (PR → Feedback Request) | 7.2 | ✅ Done | `7bbc89d` + migration `20260302100000` |
 | 1.2 | Toast notification system (Sonner) | 7.9A | ✅ Done | `0c72795`, Toaster in layout.tsx, ToastFromParams bridge |
-| 1.3 | Active project limit UX | 7.9B | 🟡 Partial | Plan exists in `.agents/plans/active-project-limit-ux.md` — needs verification |
+| 1.3 | Active project limit UX | 7.9B | ✅ Done | Verified: 3-layer guard (listing page, new page gate, action fallback) |
 | 1.4 | Dark theme FormMessage | 7.9C | ✅ Done | `f885321` |
 | 1.5 | Account type selection at signup | 7.1 | ✅ Done | Migration `20260218000000`, signup form updated |
 | 1.6 | Profile edit save | 7.6 | ✅ Done | `6e61a87` (merged branch) |
@@ -68,6 +67,18 @@
 
 ---
 
+## GitHub Issues
+
+> Synced from [nicholasmartin/peerpull/issues](https://github.com/nicholasmartin/peerpull/issues) on 2026-03-03
+
+| # | Title | State | Severity | Notes |
+|---|-------|-------|----------|-------|
+| [#2](https://github.com/nicholasmartin/peerpull/issues/2) | Signup with existing email shows success message instead of error | Open | Medium | `signUpAction` missing `identities` length check — fix is a one-liner in `app/actions.ts` |
+| [#3](https://github.com/nicholasmartin/peerpull/issues/3) | Sidebar: allow expanding Feedback menu when user is not active | Open | Low | UX improvement — let non-active users see child nav items (locked), not hide entire menu |
+| [#4](https://github.com/nicholasmartin/peerpull/issues/4) | Redesign auth pages to match dark gold theme | Open (likely done) | Medium | Commit `f885321` applied dark/gold theme to auth pages — may need verification and issue closure |
+
+---
+
 ## Non-PRD / Infrastructure Work Done
 
 | Feature | Status | Commit / Evidence |
@@ -90,12 +101,14 @@
 
 ## Known Issues / Tech Debt
 
-| Issue | Severity | Notes |
-|-------|----------|-------|
-| `ignoreBuildErrors: true` in next.config | Medium | TS errors bypassed on build |
-| OAuth buttons are placeholders | Low | Google/GitHub login not functional |
-| No test framework | Medium | No vitest/jest — hackathon trade-off |
-| Untracked `types/` directory | Low | Needs investigation — should it be committed? |
+| Issue | Severity | Source | Notes |
+|-------|----------|--------|-------|
+| Duplicate email signup shows success | Medium | [GH #2](https://github.com/nicholasmartin/peerpull/issues/2) | `signUpAction` missing `identities` length check |
+| Sidebar Feedback menu hidden for non-active users | Low | [GH #3](https://github.com/nicholasmartin/peerpull/issues/3) | Should expand to show locked child items |
+| `ignoreBuildErrors: true` in next.config | Medium | — | TS errors bypassed on build |
+| OAuth buttons are placeholders | Low | — | Google/GitHub login not functional |
+| No test framework | Medium | — | No vitest/jest — hackathon trade-off |
+| Untracked `types/` directory | Low | — | Needs investigation — should it be committed? |
 
 ---
 
@@ -117,3 +130,4 @@
 - **Location:** Project root (`TRACKER.md`) — versioned in git
 - **Canonical source:** This file is the single source of truth for project progress
 - **PRD reference:** Features map to PRD sections (e.g., "PRD 7.3" = Section 7.3 in `.claude/PRD.md`)
+- **GitHub issues:** Synced from [nicholasmartin/peerpull](https://github.com/nicholasmartin/peerpull/issues)

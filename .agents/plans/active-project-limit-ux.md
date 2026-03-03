@@ -1,58 +1,69 @@
-# Active Project Limit UX Improvements
+# Feature: Active Project Limit UX (PRD 7.9B)
 
-## Context
+## Status: ✅ FULLY IMPLEMENTED — Verification Complete
 
-When a user already has an active project in the queue and tries to create another, the server action redirects to `/dashboard/request-feedback?error=You can only have 1 active project...` but:
-1. The listing page never reads `searchParams`, so the error is invisible (only shown in URL bar)
-2. The "New Request" button is always visible with no warning
-3. The `/new` form page has no pre-check — user fills the whole form before hitting the error
+All PRD 7.9B requirements have been implemented. This plan documents the verification results.
 
-## Changes
+---
 
-### 1. Show error/success messages on the listing page
+## Feature Description
 
-**File:** `app/(protected)/dashboard/request-feedback/page.tsx`
+Proactive UX guardrails preventing users from hitting server-side errors when they've reached the active project limit. Instead of letting users fill out the entire new-request form only to get a redirect error, the UI communicates the limit upfront at multiple checkpoints.
 
-- **Handled by the toast system (PRD 7.9):** The `<ToastFromParams />` bridge component in the dashboard layout automatically reads `error`/`success` query params from `encodedRedirect` and displays them as toasts. No per-page `searchParams` handling needed.
-- This means `submitFeedbackRequest` errors (insufficient points, limit reached) will automatically appear as toasts on redirect.
+## User Story
 
-### 2. Disable "New Request" button when limit is hit
+As a builder with active projects in the queue,
+I want to clearly see my current limit status before trying to create a new request,
+So that I don't waste time filling out a form that will be rejected.
 
-**File:** `app/(protected)/dashboard/request-feedback/page.tsx`
+---
 
-- Fetch `active_project_limit` from settings using `getSettings()` from `@/utils/supabase/settings`
-- Count active projects already in queue (status `open` with `queue_position IS NOT NULL`) — reuse the data already fetched
-- If at limit: replace the "New Request" link/button with a disabled button + tooltip text explaining the limit
-- Show a small info banner below the header: "You have 1/1 active projects in the queue."
+## VERIFICATION RESULTS
 
-### 3. Block the `/new` form page when limit is hit
+### PRD 7.9B Requirements vs Implementation
 
-**File:** `app/(protected)/dashboard/request-feedback/new/page.tsx`
+| Requirement | Status | Evidence |
+|-------------|--------|----------|
+| Fetch `active_project_limit` from settings server-side on listing page | ✅ | `request-feedback/page.tsx:17` — `getSettings()` |
+| Count active queued projects (`open` + `queue_position IS NOT NULL`) | ✅ | `request-feedback/page.tsx:52-54` — filters fetched data |
+| If at limit: disable "New Request" button | ✅ | `request-feedback/page.tsx:114-118` — disabled `<Button>` with title tooltip |
+| Show info text: "{n}/{limit} active projects in queue" | ✅ | `request-feedback/page.tsx:109-112` — `<Info>` icon + count text |
+| If under limit: show current count as subtle info text | ✅ | Same line — always visible regardless of limit status |
+| New request page: async server component | ✅ | `request-feedback/new/page.tsx:40` — `async function NewRequestPage()` |
+| Server-side check: fetch user, settings, active count | ✅ | `request-feedback/new/page.tsx:42-72` — full server-side gate |
+| If at limit: render "limit reached" card instead of form | ✅ | `request-feedback/new/page.tsx:75-93` — AlertCircle card with back link |
+| Server action fallback (double-check on submit) | ✅ | `actions.ts:226-236` — `submitFeedbackRequest` checks limit |
+| Error messages display via toast system | ✅ | `dashboard/layout.tsx:30-32` — `<ToastFromParams />` in dashboard layout |
 
-- Convert to async server component
-- Fetch user, settings, and active project count server-side
-- If at limit: instead of rendering the form, show a clear message card with:
-  - "Active project limit reached" heading
-  - Explanation that the limit is currently {n}
-  - Link back to the listing page
-- This prevents users from even seeing the form when they can't submit
+### Implementation Quality
 
-### 4. Style FormMessage for dark theme
+**Three layers of protection:**
+1. **Listing page** — disabled button + count indicator prevents navigation to form
+2. **New request page** — server-side gate blocks form rendering if at limit
+3. **Server action** — `submitFeedbackRequest` checks limit as final safeguard (handles direct URL access or race conditions)
 
-**File:** `components/form-message.tsx`
+**Consistent "active in queue" definition across all three layers:**
+- `status === "open"` AND `queue_position !== null`
+- This correctly excludes claimed projects (where `queue_position` is temporarily nulled)
 
-The current FormMessage uses light theme colors (`bg-green-100 text-green-800`, `bg-red-100 text-red-800`). Update to dark-theme-friendly styles that match the dashboard aesthetic. **Note:** With the toast system (PRD 7.9), FormMessage is retained only for inline auth page validation. Dashboard action feedback uses toasts instead.
+**Settings integration:**
+- Uses `getSettings()` from `utils/supabase/settings.ts` (typed, with defaults)
+- `active_project_limit` default: 1, admin-configurable via Queue Settings page
+- Pluralization handled correctly (`project` vs `projects`)
 
-## Files Modified
+### Files Involved
 
-- `app/(protected)/dashboard/request-feedback/page.tsx` — searchParams, settings check, conditional button
-- `app/(protected)/dashboard/request-feedback/new/page.tsx` — server-side limit gate
-- `components/form-message.tsx` — dark theme styling
+| File | Role |
+|------|------|
+| `app/(protected)/dashboard/request-feedback/page.tsx` | Listing page: count badge, disabled button |
+| `app/(protected)/dashboard/request-feedback/new/page.tsx` | New request page: server-side limit gate |
+| `app/actions.ts` (lines 226-236) | Server action: final limit check on submit |
+| `utils/supabase/settings.ts` | Settings helper: `active_project_limit` type + default |
+| `components/toast-from-params.tsx` | Toast bridge for `encodedRedirect` error messages |
+| `app/(protected)/dashboard/layout.tsx` | Dashboard layout: mounts `<ToastFromParams />` |
 
-## Verification
+---
 
-1. With an active project: visit `/dashboard/request-feedback` — "New Request" button should be disabled with limit info
-2. With an active project: navigate directly to `/dashboard/request-feedback/new` — should see limit-reached card, not the form
-3. With no active projects: both pages should work normally
-4. After a failed submit (if somehow reached): error message should display as a styled banner on the listing page
-5. `npm run build` passes
+## NO FURTHER IMPLEMENTATION NEEDED
+
+This feature is complete. The TRACKER should be updated from 🟡 Partial to ✅ Done.
