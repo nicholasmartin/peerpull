@@ -422,7 +422,6 @@ export async function updateProfile(formData: FormData) {
 
   const firstName = formData.get("first_name")?.toString()?.trim() || null;
   const lastName = formData.get("last_name")?.toString()?.trim() || null;
-  const bio = formData.get("bio")?.toString()?.trim() || null;
   const website = formData.get("website")?.toString()?.trim() || null;
   const expertise = formData.getAll("expertise").map(String).filter(Boolean);
   const avatarFile = formData.get("avatar") as File | null;
@@ -458,7 +457,6 @@ export async function updateProfile(formData: FormData) {
   const updateData: any = {
     first_name: firstName,
     last_name: lastName,
-    bio,
     website,
     expertise
   };

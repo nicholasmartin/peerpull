@@ -44,6 +44,11 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [errors, setErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
+    website?: string;
+  }>({});
 
   const toggleExpertise = (tag: string) => {
     setSelectedExpertise((prev) =>
@@ -80,10 +85,30 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
 
   const handleSaveProfile = () => {
     // Client-side validation
-    if (!firstName.trim() || !lastName.trim()) {
-      toast.error("Please enter your first and last name");
+    const newErrors: typeof errors = {};
+
+    if (!firstName.trim()) {
+      newErrors.firstName = "First name is required";
+    }
+
+    if (!lastName.trim()) {
+      newErrors.lastName = "Last name is required";
+    }
+
+    // Validate website URL if provided
+    if (website && website.trim()) {
+      const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      if (!urlPattern.test(website.trim())) {
+        newErrors.website = "Please enter a valid URL";
+      }
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
+
+    setErrors({});
 
     startTransition(async () => {
       const formData = new FormData();
@@ -188,9 +213,17 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
                 id="first_name"
                 type="text"
                 value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                  if (errors.firstName) {
+                    setErrors({ ...errors, firstName: undefined });
+                  }
+                }}
                 placeholder="First name"
               />
+              {errors.firstName && (
+                <p className="text-sm text-red-500 mt-1">{errors.firstName}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="last_name">Last Name</Label>
@@ -198,9 +231,17 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
                 id="last_name"
                 type="text"
                 value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                  if (errors.lastName) {
+                    setErrors({ ...errors, lastName: undefined });
+                  }
+                }}
                 placeholder="Last name"
               />
+              {errors.lastName && (
+                <p className="text-sm text-red-500 mt-1">{errors.lastName}</p>
+              )}
             </div>
           </div>
 
@@ -215,9 +256,17 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
               id="website"
               type="url"
               value={website}
-              onChange={(e) => setWebsite(e.target.value)}
+              onChange={(e) => {
+                setWebsite(e.target.value);
+                if (errors.website) {
+                  setErrors({ ...errors, website: undefined });
+                }
+              }}
               placeholder="https://yourproject.com"
             />
+            {errors.website && (
+              <p className="text-sm text-red-500 mt-1">{errors.website}</p>
+            )}
           </div>
         </CardContent>
       </Card>
