@@ -4,22 +4,8 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Profile } from "@/utils/supabase/profiles";
-import { completeOnboarding, updateProfileOnboarding } from "@/app/actions";
-import { CheckCircle2, ArrowRight, Globe, Sparkles, Users, Coins, Send } from "lucide-react";
-
-const EXPERTISE_OPTIONS = [
-  "SaaS",
-  "Mobile App",
-  "Web App",
-  "API/Backend",
-  "UI/UX Design",
-  "Marketing",
-  "DevTools",
-  "E-commerce",
-  "AI/ML",
-  "Fintech",
-  "Other",
-];
+import { submitOnboardingProject } from "@/app/actions";
+import { CheckCircle2, ArrowRight, Sparkles, Users, Coins, Send } from "lucide-react";
 
 interface OnboardingFlowProps {
   profile: Profile;
@@ -28,44 +14,30 @@ interface OnboardingFlowProps {
 export default function OnboardingFlow({ profile }: OnboardingFlowProps) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
-  const [firstName, setFirstName] = useState(profile.first_name || "");
-  const [lastName, setLastName] = useState(profile.last_name || "");
-  const [website, setWebsite] = useState(profile.website || "");
-  const [selectedExpertise, setSelectedExpertise] = useState<string[]>(
-    profile.expertise || []
-  );
+  const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
   const [isPending, startTransition] = useTransition();
 
   const steps = [
     { label: "Welcome", icon: Sparkles },
-    { label: "Profile", icon: Globe },
+    { label: "Your Project", icon: Send },
     { label: "Ready", icon: CheckCircle2 },
   ];
 
-  const toggleExpertise = (tag: string) => {
-    setSelectedExpertise((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  };
+  const handleSubmitProject = () => {
+    if (!title.trim() || !url.trim()) {
+      toast.error("Please fill in both fields");
+      return;
+    }
 
-  const handleSaveProfile = () => {
     startTransition(async () => {
       const formData = new FormData();
-      formData.append("first_name", firstName.trim());
-      formData.append("last_name", lastName.trim());
-      if (website) formData.append("website", website);
-      selectedExpertise.forEach((tag) => formData.append("expertise", tag));
+      formData.append("title", title.trim());
+      formData.append("url", url.trim());
 
-      const result = await updateProfileOnboarding(formData);
+      const result = await submitOnboardingProject(formData);
       if (result?.error) {
         toast.error(result.error);
-        return;
-      }
-
-      // Move to step 3 and complete onboarding
-      const completeResult = await completeOnboarding();
-      if (completeResult?.error) {
-        toast.error(completeResult.error);
         return;
       }
 
@@ -165,83 +137,43 @@ export default function OnboardingFlow({ profile }: OnboardingFlowProps) {
           </div>
         )}
 
-        {/* Step 2: Profile Setup */}
+        {/* Step 2: Submit Your Project */}
         {currentStep === 1 && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-xl font-semibold text-dark-text">Complete Your Profile</h2>
+              <h2 className="text-xl font-semibold text-dark-text">Submit Your Project</h2>
               <p className="mt-1 text-sm text-dark-text-muted">
-                Help other builders know who you are
+                Share what you&apos;re building to get video feedback from other founders
               </p>
             </div>
 
             <div className="space-y-5">
-              {/* Name */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="first_name" className="block text-sm font-medium text-dark-text-muted mb-1">
-                    First Name
-                  </label>
-                  <input
-                    id="first_name"
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First name"
-                    className="w-full rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm text-dark-text placeholder-dark-text-muted/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="last_name" className="block text-sm font-medium text-dark-text-muted mb-1">
-                    Last Name
-                  </label>
-                  <input
-                    id="last_name"
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Last name"
-                    className="w-full rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm text-dark-text placeholder-dark-text-muted/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                  />
-                </div>
-              </div>
-
-              {/* Website */}
               <div>
-                <label htmlFor="website" className="block text-sm font-medium text-dark-text-muted mb-1">
-                  Website or Project URL <span className="text-dark-text-muted">(optional)</span>
+                <label htmlFor="title" className="block text-sm font-medium text-dark-text-muted mb-1">
+                  Project Name
                 </label>
                 <input
-                  id="website"
-                  type="url"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
-                  placeholder="https://yourproject.com"
+                  id="title"
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="My Awesome Project"
                   className="w-full rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm text-dark-text placeholder-dark-text-muted/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
 
-              {/* Expertise */}
               <div>
-                <label className="block text-sm font-medium text-dark-text-muted mb-2">
-                  Your Expertise <span className="text-dark-text-muted">(select all that apply)</span>
+                <label htmlFor="url" className="block text-sm font-medium text-dark-text-muted mb-1">
+                  Project URL
                 </label>
-                <div className="flex flex-wrap gap-2">
-                  {EXPERTISE_OPTIONS.map((tag) => (
-                    <button
-                      key={tag}
-                      type="button"
-                      onClick={() => toggleExpertise(tag)}
-                      className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
-                        selectedExpertise.includes(tag)
-                          ? "bg-primary text-white"
-                          : "border border-dark-border bg-dark-surface text-dark-text-muted hover:border-dark-text-muted/50"
-                      }`}
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
+                <input
+                  id="url"
+                  type="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="https://yourproject.com"
+                  className="w-full rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm text-dark-text placeholder-dark-text-muted/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                />
               </div>
             </div>
 
@@ -253,11 +185,11 @@ export default function OnboardingFlow({ profile }: OnboardingFlowProps) {
                 Back
               </button>
               <button
-                onClick={handleSaveProfile}
+                onClick={handleSubmitProject}
                 disabled={isPending}
                 className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-primary-muted disabled:opacity-50 transition"
               >
-                {isPending ? "Saving..." : "Continue"}
+                {isPending ? "Submitting..." : "Submit Project"}
                 {!isPending && <ArrowRight className="h-4 w-4" />}
               </button>
             </div>

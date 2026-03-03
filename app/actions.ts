@@ -393,23 +393,55 @@ export async function approveReview(reviewId: string) {
 // Onboarding Actions
 // ============================================================
 
-export async function updateProfileOnboarding(formData: FormData) {
+export async function submitOnboardingProject(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
 
-  const firstName = formData.get("first_name")?.toString()?.trim() || null;
-  const lastName = formData.get("last_name")?.toString()?.trim() || null;
-  const website = formData.get("website")?.toString()?.trim() || null;
-  const expertise = formData.getAll("expertise").map(String).filter(Boolean);
-
-  const { error } = await supabase
+  // Verify user is in onboarding status
+  const { data: profile } = await supabase
     .from("profiles")
-    .update({ first_name: firstName, last_name: lastName, website, expertise })
+    .select("status")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile || profile.status !== 'onboarding') {
+    return { error: "Not in onboarding state" };
+  }
+
+  const title = formData.get("title")?.toString()?.trim();
+  const url = formData.get("url")?.toString()?.trim();
+
+  if (!title || !url) {
+    return { error: "Project name and URL are required" };
+  }
+
+  // Insert feedback request
+  const { data: pr, error: prError } = await supabase
+    .from("feedback_requests")
+    .insert({
+      user_id: user.id,
+      title,
+      url,
+    })
+    .select("id")
+    .single();
+
+  if (prError) {
+    console.error("Onboarding feedback request insert error:", prError);
+    return { error: "Failed to create feedback request" };
+  }
+
+  // Queue position is auto-assigned by the trg_auto_queue_position trigger on insert
+
+  // Transition status from onboarding to waitlisted
+  const { error: statusError } = await supabase
+    .from("profiles")
+    .update({ status: 'waitlisted' })
     .eq("id", user.id);
 
-  if (error) {
-    return { error: "Failed to update profile" };
+  if (statusError) {
+    return { error: "Failed to complete onboarding" };
   }
 
   return { success: true };
@@ -476,34 +508,6 @@ export async function updateProfile(formData: FormData) {
   }
 
   return encodedRedirect("success", "/dashboard/profile", "Profile updated successfully");
-}
-
-export async function completeOnboarding() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return redirect("/signin");
-
-  // Verify user is in onboarding status
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("status")
-    .eq("id", user.id)
-    .single();
-
-  if (!profile || profile.status !== 'onboarding') {
-    return { error: "Not in onboarding state" };
-  }
-
-  const { error } = await supabase
-    .from("profiles")
-    .update({ status: 'waitlisted' })
-    .eq("id", user.id);
-
-  if (error) {
-    return { error: "Failed to complete onboarding" };
-  }
-
-  return { success: true };
 }
 
 export async function rejectReview(reviewId: string) {
