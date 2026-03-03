@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-03
+> Last updated: 2026-03-03 (evening)
 
 ---
 
@@ -48,7 +48,7 @@
 |---|---------|---------|--------|-------------------|
 | 3.1 | Profile status field (onboarding/waitlisted/active) | 7.7 | ✅ Done | Migration `20260302200000` |
 | 3.2 | platform_launched system setting | 7.7 | ✅ Done | Migration `20260302200000` |
-| 3.3 | Onboarding flow (welcome → profile → confirm) | 7.7 | ✅ Done | `ad92f6e`, OnboardingFlow.tsx |
+| 3.3 | Onboarding flow (welcome → project submit → confirm) | 7.7 | ✅ Done | `ad92f6e`, refactored `0da38f5` — now creates feedback_request on onboarding |
 | 3.4 | Waitlisted dashboard state | 7.7 | ✅ Done | WaitlistBanner.tsx, nav gating |
 | 3.5 | Admin launch switch | 7.7 | ✅ Done | Admin settings page |
 
@@ -96,6 +96,7 @@
 | Windows dev .next lock workaround | ✅ Done | `16a56c2` |
 | Next.js CVE patch | ✅ Done | `33044c6` |
 | Trigger function search_path fix | ✅ Done | `1eda108` |
+| Fix auto_queue_position trigger (stale sequence ref) | ✅ Done | `0da38f5`, migration `20260303200000` |
 
 ---
 
