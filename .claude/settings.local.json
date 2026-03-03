@@ -93,7 +93,8 @@
       "WebFetch(domain:docs.slack.dev)",
       "Bash(npm show:*)",
       "Bash(supabase:*)",
-      "Bash(tasklist:*)"
+      "Bash(tasklist:*)",
+      "Bash(handle64.exe:*)"
     ],
     "deny": []
   },
