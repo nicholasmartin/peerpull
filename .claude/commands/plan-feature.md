@@ -16,6 +16,13 @@ Transform a feature request into a **comprehensive implementation plan** through
 
 ## Planning Process
 
+### Phase 0: Tracker Context
+
+- Read `TRACKER.md` at project root
+- Identify where the requested feature sits in the project roadmap (which phase, which item)
+- Check if there are dependencies on other features that aren't done yet
+- Note any related completed work that provides context
+
 ### Phase 1: Feature Understanding
 
 **Deep Feature Analysis:**
@@ -424,10 +431,18 @@ Execute every command to ensure zero regressions and 100% feature correctness.
 
 ## Report
 
-After creating the Plan, provide:
+After creating the Plan:
 
-- Summary of feature and approach
-- Full path to created Plan file
-- Complexity assessment
-- Key implementation risks or considerations
-- Estimated confidence score for one-pass success
+1. Update `TRACKER.md`:
+   - If the feature is a new item not yet tracked, add it to the appropriate phase
+   - Mark the feature as 🟡 (in progress / planned) since it now has an implementation plan
+   - Update the "Current Sprint" section if this is a priority item
+   - Update the "Last updated" date
+
+2. Provide:
+   - Summary of feature and approach
+   - Full path to created Plan file
+   - Tracker item reference (e.g., "This implements item 2.1 in TRACKER.md")
+   - Complexity assessment
+   - Key implementation risks or considerations
+   - Estimated confidence score for one-pass success

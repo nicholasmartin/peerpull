@@ -11,6 +11,12 @@ Read plan file: `$ARGUMENTS`
 
 ## Execution Instructions
 
+### 0. Check Tracker Context
+
+- Read `TRACKER.md` at project root
+- Identify which tracked feature(s) this plan implements
+- Note the current status of those features and any dependencies
+
 ### 1. Read and Understand
 
 - Read the ENTIRE plan carefully
@@ -88,9 +94,17 @@ Provide summary:
 # Output from each validation command
 ```
 
+### Tracker Update
+- Update `TRACKER.md` to reflect the features completed in this execution
+- Move items to ✅ Done with commit evidence (or 🟡 if partially complete)
+- Update the "Current Sprint" section with new priorities
+- Update the "Last updated" date
+- Note any new issues or tech debt discovered during execution in the "Known Issues" section
+
 ### Ready for Commit
 - Confirm all changes are complete
 - Confirm all validations pass
+- Confirm TRACKER.md is updated
 - Ready for `/commit` command
 
 ## Notes
