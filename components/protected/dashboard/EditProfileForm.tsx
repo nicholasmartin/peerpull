@@ -79,25 +79,23 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
   };
 
   const handleSaveProfile = () => {
+    // Client-side validation
+    if (!firstName.trim() || !lastName.trim()) {
+      toast.error("Please enter your first and last name");
+      return;
+    }
+
     startTransition(async () => {
       const formData = new FormData();
       formData.append("first_name", firstName.trim());
       formData.append("last_name", lastName.trim());
-      if (website) formData.append("website", website);
+      if (website) formData.append("website", website.trim());
       selectedExpertise.forEach((tag) => formData.append("expertise", tag));
       if (avatarFile) formData.append("avatar", avatarFile);
 
-      const result = await updateProfile(formData);
-
-      // The updateProfile action uses encodedRedirect, so if we get here,
-      // it means there was an error before the redirect
-      if (result?.error) {
-        toast.error(result.error);
-        return;
-      }
-
-      // Success - the action will handle the redirect
-      router.refresh();
+      // The updateProfile action uses encodedRedirect to handle success/error
+      // and will automatically redirect with appropriate toast message
+      await updateProfile(formData);
     });
   };
 
