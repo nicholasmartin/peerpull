@@ -3,6 +3,7 @@
 import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { getSettings } from "@/utils/supabase/settings";
+import { createNotification } from "@/utils/notifications";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -330,6 +331,24 @@ export async function submitReview(formData: FormData) {
     return { error: rpcError.message || "Failed to submit review" };
   }
 
+  // Notify the feedback request owner
+  const { data: notifData } = await supabase
+    .from("reviews")
+    .select("feedback_request_id, feedback_requests(user_id, title)")
+    .eq("id", reviewId)
+    .single();
+
+  if (notifData?.feedback_requests) {
+    const fr = notifData.feedback_requests as { user_id: string; title: string };
+    await createNotification({
+      userId: fr.user_id,
+      type: "review_received",
+      title: "New review received",
+      message: `Someone submitted a video review for "${fr.title}"`,
+      referenceId: reviewId,
+    });
+  }
+
   return redirect("/dashboard/submit-feedback");
 }
 
@@ -375,7 +394,7 @@ export async function approveReview(reviewId: string) {
 
   const { data: pr } = await supabase
     .from("feedback_requests")
-    .select("user_id")
+    .select("user_id, title")
     .eq("id", review.feedback_request_id)
     .single();
 
@@ -391,6 +410,14 @@ export async function approveReview(reviewId: string) {
     console.error("Failed to approve review:", updateError);
     return { error: "Failed to approve review" };
   }
+
+  await createNotification({
+    userId: review.reviewer_id,
+    type: "review_approved",
+    title: "Your review was approved!",
+    message: `Your review for "${pr.title}" was approved by the project owner`,
+    referenceId: reviewId,
+  });
 
   return { success: true };
 }
@@ -543,6 +570,24 @@ export async function rateReviewAction(
     return { error: error.message || "Failed to rate review" };
   }
 
+  // Get reviewer info for notification
+  const { data: reviewForNotif } = await supabase
+    .from("reviews")
+    .select("reviewer_id, feedback_requests(title)")
+    .eq("id", reviewId)
+    .single();
+
+  if (reviewForNotif) {
+    const title = (reviewForNotif.feedback_requests as { title: string } | null)?.title || "a project";
+    await createNotification({
+      userId: reviewForNotif.reviewer_id,
+      type: "review_rated",
+      title: "Your review was rated",
+      message: `The owner of "${title}" rated your review ${rating}/5`,
+      referenceId: reviewId,
+    });
+  }
+
   return { success: true };
 }
 
@@ -553,7 +598,7 @@ export async function rejectReview(reviewId: string) {
 
   const { data: review } = await supabase
     .from("reviews")
-    .select("id, feedback_request_id, status")
+    .select("id, reviewer_id, feedback_request_id, status")
     .eq("id", reviewId)
     .single();
 
@@ -562,7 +607,7 @@ export async function rejectReview(reviewId: string) {
 
   const { data: pr } = await supabase
     .from("feedback_requests")
-    .select("user_id")
+    .select("user_id, title")
     .eq("id", review.feedback_request_id)
     .single();
 
@@ -576,6 +621,80 @@ export async function rejectReview(reviewId: string) {
   if (updateError) {
     console.error("Failed to reject review:", updateError);
     return { error: "Failed to reject review" };
+  }
+
+  await createNotification({
+    userId: review.reviewer_id,
+    type: "review_rejected",
+    title: "Your review was not accepted",
+    message: `Your review for "${pr.title}" was not accepted by the project owner`,
+    referenceId: reviewId,
+  });
+
+  return { success: true };
+}
+
+// ============================================================
+// Notification Actions
+// ============================================================
+
+export async function markNotificationRead(notificationId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase
+    .from("notifications")
+    .update({ read: true })
+    .eq("id", notificationId)
+    .eq("user_id", user.id);
+
+  if (error) return { error: error.message };
+  return { success: true };
+}
+
+export async function markAllNotificationsRead() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase
+    .from("notifications")
+    .update({ read: true })
+    .eq("user_id", user.id)
+    .eq("read", false);
+
+  if (error) return { error: error.message };
+  return { success: true };
+}
+
+export async function updateNotificationPreferences(
+  preferences: { event_type: string; email_enabled: boolean }[]
+) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const validTypes = ["review_received", "review_approved", "review_rejected", "review_rated"];
+
+  for (const pref of preferences) {
+    if (!validTypes.includes(pref.event_type)) continue;
+
+    const { error } = await supabase
+      .from("notification_preferences")
+      .upsert(
+        {
+          user_id: user.id,
+          event_type: pref.event_type,
+          email_enabled: pref.email_enabled,
+          push_enabled: false,
+        },
+        { onConflict: "user_id,event_type" }
+      );
+
+    if (error) {
+      return { error: "Failed to save preferences" };
+    }
   }
 
   return { success: true };

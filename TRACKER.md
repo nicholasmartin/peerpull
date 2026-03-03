@@ -1,19 +1,18 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-04
+> Last updated: 2026-03-05
 
 ---
 
 ## Current Sprint
 
-**Focus:** Phases 1–3 complete. Phase 4 — Notifications & Polish is next.
+**Focus:** Phase 4 notifications implemented. End-to-end polish remaining.
 
 | Priority | Feature | Status | Blocker |
 |----------|---------|--------|---------|
-| 1 | Notifications table + RLS (PRD 7.8) | ⬜ Not Started | — |
-| 2 | In-app notification bell + dropdown (PRD 7.8) | ⬜ Not Started | Depends on 4.1 |
-| 3 | End-to-end user journey polish | ⬜ Not Started | — |
+| 1 | End-to-end user journey polish | ⬜ Not Started | — |
+| 2 | Close open GitHub issues (#2, #4) | ⬜ Not Started | — |
 
 ---
 
@@ -54,16 +53,18 @@
 | 3.4 | Waitlisted dashboard state | 7.7 | ✅ Done | WaitlistBanner.tsx, nav gating |
 | 3.5 | Admin launch switch | 7.7 | ✅ Done | Admin settings page |
 
-## Phase 4: Notifications & Polish — ⬜ Not Started
+## Phase 4: Notifications & Polish — 🟡 In Progress
+
+> **Plan:** `.agents/plans/phase-4-notifications.md` (13 tasks)
 
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
-| 4.1 | Notifications table + RLS | 7.8 | ⬜ Not Started | New migration needed |
-| 4.2 | Notification preferences table | 7.8 | ⬜ Not Started | New migration needed |
-| 4.3 | In-app notification bell + dropdown | 7.8 | ⬜ Not Started | AppHeader component |
-| 4.4 | Create notifications on review lifecycle events | 7.8 | ⬜ Not Started | Server actions update |
-| 4.5 | Email notifications (Mailgun) | 7.8 | ⬜ Not Started | External service integration |
-| 4.6 | Notification preferences in settings page | 7.8 | ⬜ Not Started | Settings page UI |
+| 4.1 | Notifications table + RLS | 7.8 | ✅ Done | Migration `20260305000000`, `create_notification` + `get_user_email` RPCs |
+| 4.2 | Notification preferences table | 7.8 | ✅ Done | Migration `20260305000000`, RLS with INSERT/UPDATE/SELECT |
+| 4.3 | In-app notification bell + dropdown | 7.8 | ✅ Done | NotificationDropdown.tsx rewritten with Realtime subscription |
+| 4.4 | Create notifications on review lifecycle events | 7.8 | ✅ Done | Wired into submitReview, approveReview, rejectReview, rateReviewAction |
+| 4.5 | Email notifications (Mailgun) | 7.8 | ✅ Done | `utils/mailgun.ts`, graceful skip if not configured |
+| 4.6 | Notification preferences in settings page | 7.8 | ✅ Done | 4 PRD events with email toggles, persists via server action |
 | 4.7 | Unified profile with all stats | 7.6 | ✅ Done | Completed in Phase 2 — `f9a2a5d`, ProfileStats.tsx + QualityScoreBadge.tsx |
 | 4.8 | End-to-end user journey polish | — | ⬜ Not Started | Final QA pass |
 
