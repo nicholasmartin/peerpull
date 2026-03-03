@@ -35,7 +35,7 @@ export function ReviewSession({
   minDuration: number;
   maxDuration: number;
 }) {
-  const recorder = useScreenRecorder();
+  const recorder = useScreenRecorder({ maxDuration });
   const router = useRouter();
   const [rating, setRating] = useState(0);
   const [strengths, setStrengths] = useState("");

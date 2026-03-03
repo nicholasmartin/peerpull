@@ -1,0 +1,25 @@
+{
+  "active": true,
+  "spec": "001-fix-critical-data-integrity-bugs",
+  "state": "complete",
+  "subtasks": {
+    "completed": 7,
+    "total": 7,
+    "in_progress": 0,
+    "failed": 0
+  },
+  "phase": {
+    "current": "Build Verification",
+    "id": null,
+    "total": 1
+  },
+  "workers": {
+    "active": 0,
+    "max": 1
+  },
+  "session": {
+    "number": 8,
+    "started_at": "2026-03-03T12:06:21.422154"
+  },
+  "last_update": "2026-03-03T12:21:02.869504"
+}
