@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 import { getUserProfile } from "@/utils/supabase/profiles";
-import { getSettings } from "@/utils/supabase/settings";
 import { redirect } from "next/navigation";
 import React, { Suspense } from "react";
 import DashboardShell from "@/components/protected/dashboard/layout/DashboardShell";
@@ -21,9 +20,8 @@ export default async function DashboardLayout({
     return redirect("/signin");
   }
 
-  // Fetch user profile and settings
+  // Fetch user profile
   const profile = await getUserProfile(user);
-  const settings = await getSettings();
 
   return (
     <>
@@ -33,8 +31,6 @@ export default async function DashboardLayout({
       <DashboardShell
         user={user}
         profile={profile}
-        userStatus={profile?.status}
-        platformLaunched={settings.platform_launched}
       >
         {children}
       </DashboardShell>
