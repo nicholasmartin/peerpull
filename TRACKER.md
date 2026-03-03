@@ -59,12 +59,12 @@
 
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
-| 4.1 | Notifications table + RLS | 7.8 | ✅ Done | Migration `20260305000000`, `create_notification` + `get_user_email` RPCs |
-| 4.2 | Notification preferences table | 7.8 | ✅ Done | Migration `20260305000000`, RLS with INSERT/UPDATE/SELECT |
-| 4.3 | In-app notification bell + dropdown | 7.8 | ✅ Done | NotificationDropdown.tsx rewritten with Realtime subscription |
-| 4.4 | Create notifications on review lifecycle events | 7.8 | ✅ Done | Wired into submitReview, approveReview, rejectReview, rateReviewAction |
-| 4.5 | Email notifications (Mailgun) | 7.8 | ✅ Done | `utils/mailgun.ts`, graceful skip if not configured |
-| 4.6 | Notification preferences in settings page | 7.8 | ✅ Done | 4 PRD events with email toggles, persists via server action |
+| 4.1 | Notifications table + RLS | 7.8 | ✅ Done | `461d375`, migration `20260305000000`, `create_notification` + `get_user_email` RPCs |
+| 4.2 | Notification preferences table | 7.8 | ✅ Done | `461d375`, migration `20260305000000`, RLS with INSERT/UPDATE/SELECT |
+| 4.3 | In-app notification bell + dropdown | 7.8 | ✅ Done | `461d375`, NotificationDropdown.tsx rewritten with Realtime subscription |
+| 4.4 | Create notifications on review lifecycle events | 7.8 | ✅ Done | `461d375`, wired into submitReview, approveReview, rejectReview, rateReviewAction |
+| 4.5 | Email notifications (Mailgun) | 7.8 | ✅ Done | `461d375`, `utils/mailgun.ts`, graceful skip if not configured |
+| 4.6 | Notification preferences in settings page | 7.8 | ✅ Done | `461d375`, 4 PRD events with email toggles, persists via server action |
 | 4.7 | Unified profile with all stats | 7.6 | ✅ Done | Completed in Phase 2 — `f9a2a5d`, ProfileStats.tsx + QualityScoreBadge.tsx |
 | 4.8 | End-to-end user journey polish | — | ⬜ Not Started | Final QA pass |
 
