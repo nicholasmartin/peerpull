@@ -7,12 +7,13 @@
 
 ## Current Sprint
 
-**Focus:** Phase 4 notifications implemented. End-to-end polish remaining.
+**Focus:** Phase 4 code complete — manual testing required before marking done.
 
 | Priority | Feature | Status | Blocker |
 |----------|---------|--------|---------|
-| 1 | End-to-end user journey polish | ⬜ Not Started | — |
-| 2 | Close open GitHub issues (#2, #4) | ⬜ Not Started | — |
+| 1 | Manual test Phase 4 notifications (4.1–4.6) | ⬜ Not Started | Needs 2 users for lifecycle tests |
+| 2 | End-to-end user journey polish (4.8) | ⬜ Not Started | After 4.1–4.6 verified |
+| 3 | Close open GitHub issues (#2, #4) | ⬜ Not Started | — |
 
 ---
 
