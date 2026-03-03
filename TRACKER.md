@@ -74,7 +74,7 @@
 | # | Title | State | Severity | Notes |
 |---|-------|-------|----------|-------|
 | [#2](https://github.com/nicholasmartin/peerpull/issues/2) | Signup with existing email shows success message instead of error | Open | Medium | `signUpAction` missing `identities` length check — fix is a one-liner in `app/actions.ts` |
-| [#3](https://github.com/nicholasmartin/peerpull/issues/3) | Sidebar: allow expanding Feedback menu when user is not active | Open | Low | UX improvement — let non-active users see child nav items (locked), not hide entire menu |
+| [#3](https://github.com/nicholasmartin/peerpull/issues/3) | Sidebar: allow expanding Feedback menu when user is not active | Fixed | Low | Resolved by removing lock gating entirely — `5a413a0` |
 | [#4](https://github.com/nicholasmartin/peerpull/issues/4) | Redesign auth pages to match dark gold theme | Open (likely done) | Medium | Commit `f885321` applied dark/gold theme to auth pages — may need verification and issue closure |
 
 ---
@@ -97,6 +97,7 @@
 | Next.js CVE patch | ✅ Done | `33044c6` |
 | Trigger function search_path fix | ✅ Done | `1eda108` |
 | Fix auto_queue_position trigger (stale sequence ref) | ✅ Done | `0da38f5`, migration `20260303200000` |
+| Remove sidebar lock gating + platform_launched prop threading | ✅ Done | `5a413a0` |
 
 ---
 
@@ -105,7 +106,7 @@
 | Issue | Severity | Source | Notes |
 |-------|----------|--------|-------|
 | Duplicate email signup shows success | Medium | [GH #2](https://github.com/nicholasmartin/peerpull/issues/2) | `signUpAction` missing `identities` length check |
-| Sidebar Feedback menu hidden for non-active users | Low | [GH #3](https://github.com/nicholasmartin/peerpull/issues/3) | Should expand to show locked child items |
+| ~~Sidebar Feedback menu hidden for non-active users~~ | ~~Low~~ | [GH #3](https://github.com/nicholasmartin/peerpull/issues/3) | Fixed — lock gating removed `5a413a0` |
 | `ignoreBuildErrors: true` in next.config | Medium | — | TS errors bypassed on build |
 | OAuth buttons are placeholders | Low | — | Google/GitHub login not functional |
 | No test framework | Medium | — | No vitest/jest — hackathon trade-off |
