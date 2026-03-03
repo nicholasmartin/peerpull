@@ -17,7 +17,7 @@ export type SystemSettings = {
 const DEFAULTS: SystemSettings = {
   signup_bonus_amount: 3,
   review_reward_amount: 1,
-  review_cost_amount: 1,
+  review_cost_amount: 2,
   first_review_bonus_amount: 2,
   referral_bonus_amount: 5,
   active_project_limit: 1,
