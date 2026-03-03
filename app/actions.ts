@@ -270,30 +270,19 @@ export async function submitReview(formData: FormData) {
   if (improvements && improvements.length < 50) return { error: "Improvements must be at least 50 characters" };
   if (videoDuration < settings.min_video_duration_seconds) return { error: `Video must be at least ${settings.min_video_duration_seconds} seconds` };
 
-  const { error } = await supabase
-    .from("reviews")
-    .update({
-      video_url: videoUrl,
-      video_duration: videoDuration,
-      rating,
-      strengths,
-      improvements,
-      status: "submitted",
-      submitted_at: new Date().toISOString(),
-    })
-    .eq("id", reviewId)
-    .eq("reviewer_id", user.id);
-
-  if (error) return { error: "Failed to submit review" };
-
-  // Award reviewer +1, charge owner -2, auto-re-queue if affordable
-  const { error: rpcError } = await supabase.rpc("complete_review_and_charge", {
-    p_reviewer_id: user.id,
+  // Atomically: update review fields, award reviewer points, charge owner, and re-queue if affordable
+  const { error: rpcError } = await supabase.rpc("submit_review_atomic", {
     p_review_id: reviewId,
+    p_reviewer_id: user.id,
+    p_video_url: videoUrl,
+    p_video_duration: videoDuration,
+    p_rating: rating,
+    p_strengths: strengths,
+    p_improvements: improvements,
   });
 
   if (rpcError) {
-    console.error("Failed to complete review and charge:", rpcError);
+    return { error: rpcError.message || "Failed to submit review" };
   }
 
   return redirect("/dashboard/submit-feedback");
