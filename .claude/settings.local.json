@@ -99,6 +99,6 @@
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
-    "supabase"
+    "shadcn"
   ]
 }

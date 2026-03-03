@@ -35,7 +35,7 @@ Based on the structure, identify and read:
 ### 4. Understand Current State
 
 Check recent activity:
-!`git log -5 --oneline`
+!`git log -10 --oneline`
 
 Check current branch and status:
 !`git status`
