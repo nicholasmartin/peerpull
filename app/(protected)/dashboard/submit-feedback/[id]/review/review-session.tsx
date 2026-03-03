@@ -28,11 +28,15 @@ interface FeedbackRequestData {
 export function ReviewSession({
   feedbackRequest,
   reviewId,
+  minDuration,
+  maxDuration,
 }: {
   feedbackRequest: FeedbackRequestData;
   reviewId: string;
+  minDuration: number;
+  maxDuration: number;
 }) {
-  const recorder = useScreenRecorder();
+  const recorder = useScreenRecorder({ maxDuration });
   const router = useRouter();
   const [rating, setRating] = useState(0);
   const [strengths, setStrengths] = useState("");
@@ -45,7 +49,7 @@ export function ReviewSession({
   }, [recorder.refreshMicList]);
 
   const showPreview = recorder.status === "stopped" && !!recorder.previewUrl;
-  const canSubmit = showPreview && recorder.duration >= 5 && rating >= 1;
+  const canSubmit = showPreview && recorder.duration >= minDuration && rating >= 1;
 
   async function handleSubmit() {
     if (!canSubmit) return;
@@ -203,7 +207,7 @@ export function ReviewSession({
                   {[
                     { title: "Open the project", desc: "click the button above to open it in a new tab" },
                     { title: "Start recording", desc: "click \"Start Recording\", then select the project's browser tab when prompted" },
-                    { title: "Narrate your review", desc: "explore the project and think out loud (minimum 60 seconds, max 5 minutes)" },
+                    { title: "Narrate your review", desc: `explore the project and think out loud (minimum ${minDuration} seconds, max ${Math.floor(maxDuration / 60)} minutes)` },
                     { title: "Stop & submit", desc: "click \"Stop Recording\", then rate and submit your feedback" },
                   ].map((step, i) => (
                     <li key={i} className="flex items-start gap-2 text-xs">
@@ -232,9 +236,9 @@ export function ReviewSession({
               />
             </div>
 
-            {recorder.duration < 5 && (
+            {recorder.duration < minDuration && (
               <div className="rounded-md border border-yellow-500/20 bg-yellow-500/10 p-3 text-yellow-400 text-sm">
-                Your recording is {recorder.duration}s — minimum 5 seconds required. Please re-record.
+                Your recording is {recorder.duration}s — minimum {minDuration} seconds required. Please re-record.
               </div>
             )}
 

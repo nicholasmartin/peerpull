@@ -9,9 +9,11 @@ export interface AudioDevice {
   label: string;
 }
 
-const MAX_DURATION = 300; // 5 minutes
-const MIN_DURATION = 5; // TODO: change back to 60 for production
-const WARNING_THRESHOLD = 270; // 4:30
+const DEFAULT_MAX_DURATION = 300; // 5 minutes
+
+export interface ScreenRecorderOptions {
+  maxDuration?: number;
+}
 
 function getSupportedMimeType(): string {
   const types = [
@@ -27,7 +29,9 @@ function getSupportedMimeType(): string {
   return "";
 }
 
-export function useScreenRecorder() {
+export function useScreenRecorder(options?: ScreenRecorderOptions) {
+  const maxDuration = options?.maxDuration ?? DEFAULT_MAX_DURATION;
+  const warningThreshold = maxDuration - 30;
   const [status, setStatus] = useState<RecordingStatus>("idle");
   const [duration, setDuration] = useState(0);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -171,8 +175,8 @@ export function useScreenRecorder() {
       timerRef.current = setInterval(() => {
         setDuration((prev) => {
           const next = prev + 1;
-          if (next >= WARNING_THRESHOLD) setWarning(true);
-          if (next >= MAX_DURATION) {
+          if (next >= warningThreshold) setWarning(true);
+          if (next >= maxDuration) {
             mediaRecorderRef.current?.stop();
           }
           return next;
@@ -188,7 +192,7 @@ export function useScreenRecorder() {
       }
       cleanup();
     }
-  }, [cleanup, selectedMic]);
+  }, [cleanup, selectedMic, maxDuration, warningThreshold]);
 
   const stopRecording = useCallback(() => {
     if (mediaRecorderRef.current?.state === "recording") {
@@ -233,6 +237,6 @@ export function useScreenRecorder() {
     resetRecording,
     downloadRecording,
     getBlob,
-    maxDuration: MAX_DURATION,
+    maxDuration,
   };
 }

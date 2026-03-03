@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { getSettings } from "@/utils/supabase/settings";
 import { redirect } from "next/navigation";
 import { ReviewSession } from "./review-session";
 
@@ -41,6 +42,8 @@ export default async function ReviewPage({ params }: Props) {
     return redirect("/dashboard/submit-feedback");
   }
 
+  const settings = await getSettings();
+
   return (
     <ReviewSession
       feedbackRequest={{
@@ -55,6 +58,8 @@ export default async function ReviewPage({ params }: Props) {
         founderName: founderProfile?.full_name || "Anonymous",
       }}
       reviewId={review.id}
+      minDuration={settings.min_video_duration_seconds}
+      maxDuration={settings.max_video_duration_seconds}
     />
   );
 }
