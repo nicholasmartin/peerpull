@@ -415,6 +415,69 @@ export async function updateProfileOnboarding(formData: FormData) {
   return { success: true };
 }
 
+export async function updateProfile(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return redirect("/signin");
+
+  const firstName = formData.get("first_name")?.toString()?.trim() || null;
+  const lastName = formData.get("last_name")?.toString()?.trim() || null;
+  const website = formData.get("website")?.toString()?.trim() || null;
+  const expertise = formData.getAll("expertise").map(String).filter(Boolean);
+  const avatarFile = formData.get("avatar") as File | null;
+
+  let avatarUrl: string | null = null;
+
+  // Handle avatar upload if provided
+  if (avatarFile && avatarFile.size > 0) {
+    const fileExt = avatarFile.name.split('.').pop();
+    const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+    const filePath = `avatars/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("avatars")
+      .upload(filePath, avatarFile, {
+        contentType: avatarFile.type,
+        upsert: false
+      });
+
+    if (uploadError) {
+      return encodedRedirect("error", "/dashboard/profile", "Failed to upload avatar");
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from("avatars")
+      .getPublicUrl(filePath);
+
+    avatarUrl = publicUrl;
+  }
+
+  // Build update object
+  const updateData: any = {
+    first_name: firstName,
+    last_name: lastName,
+    website,
+    expertise
+  };
+
+  // Only update avatar_url if a new avatar was uploaded
+  if (avatarUrl) {
+    updateData.avatar_url = avatarUrl;
+  }
+
+  const { error } = await supabase
+    .from("profiles")
+    .update(updateData)
+    .eq("id", user.id);
+
+  if (error) {
+    return encodedRedirect("error", "/dashboard/profile", "Failed to update profile");
+  }
+
+  return encodedRedirect("success", "/dashboard/profile", "Profile updated successfully");
+}
+
 export async function completeOnboarding() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

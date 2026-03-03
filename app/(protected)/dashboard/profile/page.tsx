@@ -1,11 +1,8 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   User,
   Mail,
@@ -14,6 +11,7 @@ import {
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getUserProfile } from "@/utils/supabase/profiles";
+import EditProfileForm from "@/components/protected/dashboard/EditProfileForm";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -143,52 +141,7 @@ export default async function ProfilePage() {
             </TabsContent>
 
             <TabsContent value="edit" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Basic Information</CardTitle>
-                  <CardDescription>Update your profile details</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
-                    <Input id="name" defaultValue={profile?.full_name || ""} />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" defaultValue={user.email || ""} disabled />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="website">Website</Label>
-                    <Input id="website" defaultValue={profile?.website || ""} />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Expertise</CardTitle>
-                  <CardDescription>Add your areas of expertise</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex flex-wrap gap-2">
-                    {expertise.map((skill: string, index: number) => (
-                      <Badge key={index} variant="secondary">{skill}</Badge>
-                    ))}
-                  </div>
-
-                  <div className="flex space-x-2">
-                    <Input placeholder="Add a skill (e.g., React, Growth Marketing)" />
-                    <Button variant="outline">Add</Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline">Cancel</Button>
-                <Button className="bg-primary hover:bg-primary-muted">Save Changes</Button>
-              </div>
+              <EditProfileForm profile={profile} userEmail={user.email || ""} />
             </TabsContent>
           </Tabs>
         </div>
