@@ -300,6 +300,9 @@ export async function submitReview(formData: FormData) {
   const improvements = formData.get("improvements")?.toString()?.trim() || null;
   const videoUrl = formData.get("video_url")?.toString() || "";
   const videoDuration = Number(formData.get("video_duration") || 0);
+  const signalFollow = formData.get("signal_follow") === "true";
+  const signalEngage = formData.get("signal_engage") === "true";
+  const signalInvest = formData.get("signal_invest") === "true";
 
   const settings = await getSettings();
 
@@ -318,6 +321,9 @@ export async function submitReview(formData: FormData) {
     p_rating: rating,
     p_strengths: strengths,
     p_improvements: improvements,
+    p_signal_follow: signalFollow,
+    p_signal_engage: signalEngage,
+    p_signal_invest: signalInvest,
   });
 
   if (rpcError) {
@@ -508,6 +514,36 @@ export async function updateProfile(formData: FormData) {
   }
 
   return encodedRedirect("success", "/dashboard/profile", "Profile updated successfully");
+}
+
+export async function rateReviewAction(
+  reviewId: string,
+  rating: number,
+  flags: string[],
+  feedback: string | null
+) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return redirect("/signin");
+
+  if (rating < 1 || rating > 5) return { error: "Rating must be between 1 and 5" };
+
+  const validFlags = ["low_effort", "spam", "irrelevant", "off_topic"];
+  const sanitizedFlags = flags.filter(f => validFlags.includes(f));
+
+  const { error } = await supabase.rpc("rate_review", {
+    p_review_id: reviewId,
+    p_rater_id: user.id,
+    p_builder_rating: rating,
+    p_builder_flags: sanitizedFlags,
+    p_builder_feedback: feedback?.trim() || null,
+  });
+
+  if (error) {
+    return { error: error.message || "Failed to rate review" };
+  }
+
+  return { success: true };
 }
 
 export async function rejectReview(reviewId: string) {

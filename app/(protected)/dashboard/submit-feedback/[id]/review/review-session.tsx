@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/utils/supabase/client";
 import { submitReview } from "@/app/actions";
 import { toast } from "sonner";
+import { ReviewerSignals } from "@/components/protected/dashboard/ReviewerSignals";
 
 interface FeedbackRequestData {
   id: string;
@@ -43,6 +44,9 @@ export function ReviewSession({
   const [improvements, setImprovements] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [signalFollow, setSignalFollow] = useState(false);
+  const [signalEngage, setSignalEngage] = useState(false);
+  const [signalInvest, setSignalInvest] = useState(false);
 
   useEffect(() => {
     recorder.refreshMicList();
@@ -93,6 +97,9 @@ export function ReviewSession({
       formData.set("improvements", improvements);
       formData.set("video_url", publicUrl);
       formData.set("video_duration", String(recorder.duration));
+      formData.set("signal_follow", signalFollow ? "true" : "false");
+      formData.set("signal_engage", signalEngage ? "true" : "false");
+      formData.set("signal_invest", signalInvest ? "true" : "false");
 
       const result = await submitReview(formData);
       if (result && "error" in result) {
@@ -315,6 +322,15 @@ export function ReviewSession({
                     className="min-h-[100px]"
                   />
                 </div>
+
+                <ReviewerSignals
+                  signalFollow={signalFollow}
+                  signalEngage={signalEngage}
+                  signalInvest={signalInvest}
+                  onSignalFollowChange={setSignalFollow}
+                  onSignalEngageChange={setSignalEngage}
+                  onSignalInvestChange={setSignalInvest}
+                />
 
                 {error && (
                   <div className="text-sm text-red-500">{error}</div>

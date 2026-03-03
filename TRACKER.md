@@ -1,19 +1,19 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-03 (evening)
+> Last updated: 2026-03-03 (late night)
 
 ---
 
 ## Current Sprint
 
-**Focus:** Phase 1 is complete. Moving to Phase 2 — Quality & Trust Engine.
+**Focus:** Phase 2 — Quality & Trust Engine complete. Moving to Phase 4 next.
 
 | Priority | Feature | Status | Blocker |
 |----------|---------|--------|---------|
-| 1 | Reviewer Action Signals (PRD 7.3) | ⬜ Not Started | — |
-| 2 | Enhanced Feedback Quality Panel (PRD 7.4) | ⬜ Not Started | — |
-| 3 | Reviewer Quality Score (PRD 7.5) | ⬜ Not Started | Depends on 7.4 |
+| 1 | Reviewer Action Signals (PRD 7.3) | ✅ Done | — |
+| 2 | Enhanced Feedback Quality Panel (PRD 7.4) | ✅ Done | — |
+| 3 | Reviewer Quality Score (PRD 7.5) | ✅ Done | — |
 
 ---
 
@@ -32,15 +32,17 @@
 | 1.9 | Dynamic video duration from settings | Roadmap | ✅ Done | `67b7a85`→`f48f94f` |
 | 1.10 | Avatar upload + storage bucket | Roadmap | ✅ Done | `94213f8`, migration `20260303100000` |
 
-## Phase 2: Quality & Trust Engine — ⬜ Not Started
+## Phase 2: Quality & Trust Engine — 🟢 Complete
+
+> **Plan:** `.agents/plans/phase-2-quality-trust-engine.md` (14 tasks, 4 migrations)
 
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
-| 2.1 | Reviewer action signals (follow/engage/invest) | 7.3 | ⬜ Not Started | Add signal columns to reviews, UI on review submit + detail page |
-| 2.2 | Enhanced feedback quality panel | 7.4 | ⬜ Not Started | Star rating, flags, text feedback on received reviews |
-| 2.3 | Reviewer quality score (Phase 1) | 7.5 | ⬜ Not Started | Depends on 2.2 — needs builder_rating data |
-| 2.4 | Quality score on unified profile | 7.5/7.6 | ⬜ Not Started | Depends on 2.3 |
-| 2.5 | Builder + reviewer stats on profile | 7.6 | ⬜ Not Started | Aggregation queries for profile page |
+| 2.1 | Reviewer action signals (follow/engage/invest) | 7.3 | ✅ Done | Migrations `20260304000000`–`000001`, ReviewerSignals.tsx, SignalBadges.tsx |
+| 2.2 | Enhanced feedback quality panel | 7.4 | ✅ Done | ReviewQualityPanel.tsx, rateReviewAction, rate_review RPC (`000003`) |
+| 2.3 | Reviewer quality score (Phase 1) | 7.5 | ✅ Done | recalculate_quality_score RPC (`000002`), triggered on rate |
+| 2.4 | Quality score on unified profile | 7.5/7.6 | ✅ Done | QualityScoreBadge.tsx on profile sidebar |
+| 2.5 | Builder + reviewer stats on profile | 7.6 | ✅ Done | ProfileStats.tsx with server-side aggregation queries |
 
 ## Phase 3: Waitlist & Onboarding — 🟢 Done
 

@@ -9,6 +9,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/utils/supabase/server";
 import { ReviewActions } from "./review-actions";
+import { SignalBadges } from "@/components/protected/dashboard/SignalBadges";
+import { ReviewQualityPanel } from "@/components/protected/dashboard/ReviewQualityPanel";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -30,10 +32,10 @@ export default async function FeedbackRequestDetailPage({ params }: Props) {
 
   const isOwner = pr.user_id === user.id;
 
-  // Get reviews
+  // Get reviews (including signal and quality columns)
   const { data: reviews } = await supabase
     .from("reviews")
-    .select("*")
+    .select("*, signal_follow, signal_engage, signal_invest, builder_rating, builder_flags, builder_feedback")
     .eq("feedback_request_id", id)
     .in("status", ["submitted", "approved", "rejected"])
     .order("submitted_at", { ascending: false });
@@ -194,6 +196,25 @@ export default async function FeedbackRequestDetailPage({ params }: Props) {
                           </div>
                         )}
                       </div>
+
+                      {/* Reviewer interest signals (only visible to project owner) */}
+                      {isOwner && (
+                        <SignalBadges
+                          signalFollow={review.signal_follow}
+                          signalEngage={review.signal_engage}
+                          signalInvest={review.signal_invest}
+                        />
+                      )}
+
+                      {/* Quality rating panel for project owner */}
+                      {isOwner && (
+                        <ReviewQualityPanel
+                          reviewId={review.id}
+                          existingRating={review.builder_rating}
+                          existingFlags={review.builder_flags}
+                          existingFeedback={review.builder_feedback}
+                        />
+                      )}
 
                       {/* Approve/Reject buttons for project owner */}
                       {isOwner && review.status === "submitted" && (

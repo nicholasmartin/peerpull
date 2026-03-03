@@ -132,6 +132,7 @@ export type Database = {
           is_admin: boolean | null
           last_name: string | null
           peer_points_balance: number | null
+          quality_score: number | null
           referral_code: string | null
           status: string
           updated_at: string
@@ -148,6 +149,7 @@ export type Database = {
           is_admin?: boolean | null
           last_name?: string | null
           peer_points_balance?: number | null
+          quality_score?: number | null
           referral_code?: string | null
           status?: string
           updated_at?: string
@@ -164,6 +166,7 @@ export type Database = {
           is_admin?: boolean | null
           last_name?: string | null
           peer_points_balance?: number | null
+          quality_score?: number | null
           referral_code?: string | null
           status?: string
           updated_at?: string
@@ -239,12 +242,18 @@ export type Database = {
       }
       reviews: {
         Row: {
+          builder_feedback: string | null
+          builder_flags: string[]
+          builder_rating: number | null
           created_at: string | null
           feedback_request_id: string
           id: string
           improvements: string | null
           rating: number | null
           reviewer_id: string
+          signal_engage: boolean
+          signal_follow: boolean
+          signal_invest: boolean
           status: string
           strengths: string | null
           submitted_at: string | null
@@ -252,12 +261,18 @@ export type Database = {
           video_url: string | null
         }
         Insert: {
+          builder_feedback?: string | null
+          builder_flags?: string[]
+          builder_rating?: number | null
           created_at?: string | null
           feedback_request_id: string
           id?: string
           improvements?: string | null
           rating?: number | null
           reviewer_id: string
+          signal_engage?: boolean
+          signal_follow?: boolean
+          signal_invest?: boolean
           status?: string
           strengths?: string | null
           submitted_at?: string | null
@@ -265,12 +280,18 @@ export type Database = {
           video_url?: string | null
         }
         Update: {
+          builder_feedback?: string | null
+          builder_flags?: string[]
+          builder_rating?: number | null
           created_at?: string | null
           feedback_request_id?: string
           id?: string
           improvements?: string | null
           rating?: number | null
           reviewer_id?: string
+          signal_engage?: boolean
+          signal_follow?: boolean
+          signal_invest?: boolean
           status?: string
           strengths?: string | null
           submitted_at?: string | null
@@ -356,12 +377,29 @@ export type Database = {
         Args: { p_code: string; p_new_user_id: string }
         Returns: undefined
       }
+      rate_review: {
+        Args: {
+          p_review_id: string
+          p_rater_id: string
+          p_builder_rating: number
+          p_builder_flags?: string[]
+          p_builder_feedback?: string | null
+        }
+        Returns: undefined
+      }
+      recalculate_quality_score: {
+        Args: { p_reviewer_id: string }
+        Returns: number | null
+      }
       submit_review_atomic: {
         Args: {
           p_improvements?: string
           p_rating: number
           p_review_id: string
           p_reviewer_id: string
+          p_signal_engage?: boolean
+          p_signal_follow?: boolean
+          p_signal_invest?: boolean
           p_strengths?: string
           p_video_duration: number
           p_video_url: string

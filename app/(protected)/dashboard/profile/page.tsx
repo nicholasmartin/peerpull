@@ -12,6 +12,8 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getUserProfile } from "@/utils/supabase/profiles";
 import EditProfileForm from "@/components/protected/dashboard/EditProfileForm";
+import { ProfileStats } from "@/components/protected/dashboard/ProfileStats";
+import { QualityScoreBadge } from "@/components/protected/dashboard/QualityScoreBadge";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -20,15 +22,49 @@ export default async function ProfilePage() {
 
   const profile = await getUserProfile(user);
 
-  const { count: prCount } = await supabase
+  // Builder stats — Step 1: get this user's feedback request IDs
+  const { data: myRequests } = await supabase
     .from("feedback_requests")
-    .select("*", { count: "exact", head: true })
+    .select("id")
     .eq("user_id", user.id);
 
-  const { count: reviewCount } = await supabase
+  const projectsSubmitted = myRequests?.length ?? 0;
+  const myRequestIds = myRequests?.map((r: any) => r.id) ?? [];
+
+  // Builder stats — Step 2: get reviews on those feedback requests
+  const { data: receivedReviews } = myRequestIds.length > 0
+    ? await supabase
+        .from("reviews")
+        .select("builder_rating, signal_follow, signal_engage, signal_invest, status")
+        .in("feedback_request_id", myRequestIds)
+    : { data: [] as any[] };
+
+  // Reviewer stats
+  const { data: givenReviews } = await supabase
     .from("reviews")
-    .select("*", { count: "exact", head: true })
-    .eq("reviewer_id", user.id);
+    .select("rating, status, builder_rating")
+    .eq("reviewer_id", user.id)
+    .in("status", ["submitted", "approved", "rejected"]);
+
+  // Compute aggregations
+  const reviewsReceived = receivedReviews?.length ?? 0;
+  const ratedReceivedReviews = receivedReviews?.filter((r: any) => r.builder_rating != null) ?? [];
+  const avgRatingReceived = ratedReceivedReviews.length > 0
+    ? ratedReceivedReviews.reduce((sum: number, r: any) => sum + r.builder_rating, 0) / ratedReceivedReviews.length
+    : null;
+  const signalsReceived = {
+    follow: receivedReviews?.filter((r: any) => r.signal_follow).length ?? 0,
+    engage: receivedReviews?.filter((r: any) => r.signal_engage).length ?? 0,
+    invest: receivedReviews?.filter((r: any) => r.signal_invest).length ?? 0,
+  };
+
+  const reviewsGiven = givenReviews?.length ?? 0;
+  const avgRatingGiven = reviewsGiven > 0
+    ? givenReviews!.reduce((sum: number, r: any) => sum + (r.rating ?? 0), 0) / reviewsGiven
+    : null;
+  const approvalRate = reviewsGiven > 0
+    ? givenReviews!.filter((r: any) => r.status === "approved").length / reviewsGiven
+    : null;
 
   const displayName = profile?.full_name || user.email || "User";
   const initials = displayName.charAt(0).toUpperCase();
@@ -57,19 +93,24 @@ export default async function ProfilePage() {
                   </a>
                 )}
 
-                <div className="w-full mt-6 grid grid-cols-2 gap-2">
+                <div className="w-full mt-6 grid grid-cols-3 gap-2">
                   <div className="flex flex-col items-center p-3 rounded-md border border-dark-border">
-                    <span className="text-lg font-semibold">{prCount || 0}</span>
-                    <span className="text-xs text-dark-text-muted">Feedback Requests</span>
+                    <span className="text-lg font-semibold">{projectsSubmitted}</span>
+                    <span className="text-xs text-dark-text-muted">Projects</span>
                   </div>
                   <div className="flex flex-col items-center p-3 rounded-md border border-dark-border">
-                    <span className="text-lg font-semibold">{reviewCount || 0}</span>
+                    <span className="text-lg font-semibold">{reviewsGiven}</span>
                     <span className="text-xs text-dark-text-muted">Reviews</span>
                   </div>
-                  <div className="flex flex-col items-center p-3 rounded-md border border-dark-border col-span-2">
+                  <div className="flex flex-col items-center p-3 rounded-md border border-dark-border">
                     <span className="text-lg font-semibold">{balance}</span>
-                    <span className="text-xs text-dark-text-muted">PeerPoints</span>
+                    <span className="text-xs text-dark-text-muted">Points</span>
                   </div>
+                </div>
+
+                {/* Quality Score */}
+                <div className="w-full mt-4 flex justify-center">
+                  <QualityScoreBadge score={profile?.quality_score ?? null} />
                 </div>
               </div>
             </CardContent>
@@ -98,6 +139,21 @@ export default async function ProfilePage() {
             </TabsList>
 
             <TabsContent value="profile" className="space-y-6">
+              <ProfileStats
+                builderStats={{
+                  projectsSubmitted,
+                  reviewsReceived,
+                  avgRatingReceived,
+                  signalsReceived,
+                }}
+                reviewerStats={{
+                  reviewsGiven,
+                  qualityScore: profile?.quality_score ?? null,
+                  avgRatingGiven,
+                  approvalRate,
+                }}
+              />
+
               <Card>
                 <CardHeader>
                   <CardTitle>Contact Information</CardTitle>
