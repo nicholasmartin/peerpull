@@ -38,11 +38,11 @@
 
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
-| 2.1 | Reviewer action signals (follow/engage/invest) | 7.3 | ✅ Done | Migrations `20260304000000`–`000001`, ReviewerSignals.tsx, SignalBadges.tsx |
-| 2.2 | Enhanced feedback quality panel | 7.4 | ✅ Done | ReviewQualityPanel.tsx, rateReviewAction, rate_review RPC (`000003`) |
-| 2.3 | Reviewer quality score (Phase 1) | 7.5 | ✅ Done | recalculate_quality_score RPC (`000002`), triggered on rate |
-| 2.4 | Quality score on unified profile | 7.5/7.6 | ✅ Done | QualityScoreBadge.tsx on profile sidebar |
-| 2.5 | Builder + reviewer stats on profile | 7.6 | ✅ Done | ProfileStats.tsx with server-side aggregation queries |
+| 2.1 | Reviewer action signals (follow/engage/invest) | 7.3 | ✅ Done | `f9a2a5d`, migrations `20260304000000`–`000001` |
+| 2.2 | Enhanced feedback quality panel | 7.4 | ✅ Done | `f9a2a5d`, ReviewQualityPanel.tsx, rate_review RPC |
+| 2.3 | Reviewer quality score (Phase 1) | 7.5 | ✅ Done | `f9a2a5d`, recalculate_quality_score RPC (`000002`) |
+| 2.4 | Quality score on unified profile | 7.5/7.6 | ✅ Done | `f9a2a5d`, QualityScoreBadge.tsx on profile sidebar |
+| 2.5 | Builder + reviewer stats on profile | 7.6 | ✅ Done | `f9a2a5d`, ProfileStats.tsx with server-side aggregation |
 
 ## Phase 3: Waitlist & Onboarding — 🟢 Done
 
