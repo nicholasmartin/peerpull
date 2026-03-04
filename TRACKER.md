@@ -17,6 +17,8 @@
 | 4 | Fix duplicate email signup (GH #2, #6) | ✅ Done | `a2fb4ff` |
 | 5 | Fix admin activate user — RLS bypass (GH #10) | ✅ Done | SECURITY DEFINER RPCs bypass RLS |
 | 6 | Clean up placeholder/dummy content (GH #8) | ✅ Done | `15eb1e5` |
+| 7 | Consistent loading indicators (GH #15) | ✅ Done | Pending commit |
+| 8 | Audit & unify theme system for dual light/dark (GH #11) | ✅ Done | Pending commit — CSS var foundation + visual bug fixes |
 
 ---
 
@@ -105,7 +107,9 @@
 | [#10](https://github.com/nicholasmartin/peerpull/issues/10) | Admin activate user silently fails — RLS blocks update | Closed | High | Fixed — SECURITY DEFINER RPCs |
 | [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | ✅ Done — `15eb1e5` |
 | [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Open | Low | ✅ Done — `f6431de` |
+| [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Open | Medium | ✅ Done — CSS var foundation, 14 visual bug fixes, ThemeProvider wired, pending commit |
 | [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
+| [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — pending commit |
 
 ---
 

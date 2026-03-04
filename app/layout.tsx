@@ -1,5 +1,8 @@
+import { Suspense } from "react";
 import { Inter, Montserrat } from "next/font/google";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { SidebarProvider } from "@/context/SidebarContext";
+import { NavigationProgressBar } from "@/components/ui/progress-bar";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -31,25 +34,30 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
       <body className="font-inter bg-dark-bg text-dark-text antialiased" suppressHydrationWarning>
-        <SidebarProvider>
-          {children}
-        </SidebarProvider>
-        <Toaster
-          theme="dark"
-          position="bottom-right"
-          richColors
-          closeButton
-          visibleToasts={3}
-          duration={5000}
-          toastOptions={{
-            classNames: {
-              toast: "!bg-[#1a1f2e] !border-[#2d3348]",
-              title: "!text-gray-100",
-              description: "!text-gray-400",
-              closeButton: "!bg-[#2d3348] !border-[#3d4458] !text-gray-400",
-            },
-          }}
-        />
+        <Suspense fallback={null}>
+          <NavigationProgressBar />
+        </Suspense>
+        <ThemeProvider>
+          <SidebarProvider>
+            {children}
+          </SidebarProvider>
+          <Toaster
+            theme="dark"
+            position="bottom-right"
+            richColors
+            closeButton
+            visibleToasts={3}
+            duration={5000}
+            toastOptions={{
+              classNames: {
+                toast: "!bg-dark-card !border-dark-border",
+                title: "!text-dark-text",
+                description: "!text-dark-text-muted",
+                closeButton: "!bg-dark-surface !border-dark-border !text-dark-text-muted",
+              },
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );

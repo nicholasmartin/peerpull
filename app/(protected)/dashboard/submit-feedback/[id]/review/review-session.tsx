@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/utils/supabase/client";
 import { submitReview } from "@/app/actions";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 import { ReviewerSignals } from "@/components/protected/dashboard/ReviewerSignals";
 
 interface FeedbackRequestData {
@@ -341,6 +342,7 @@ export function ReviewSession({
                   disabled={!canSubmit || submitting}
                   className="w-full bg-primary hover:bg-primary-muted"
                 >
+                  {submitting && <Spinner size="sm" />}
                   {submitting ? "Submitting Review..." : "Submit Review"}
                 </Button>
               </CardContent>

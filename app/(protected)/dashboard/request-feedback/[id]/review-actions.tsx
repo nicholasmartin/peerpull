@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { approveReview, rejectReview } from "@/app/actions";
 import { toast } from "sonner";
 
@@ -41,6 +42,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
         disabled={loading}
         className="bg-green-600 hover:bg-green-700 text-white"
       >
+        {loading && <Spinner size="sm" />}
         Approve
       </Button>
       <Button
@@ -49,6 +51,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
         variant="outline"
         className="text-red-400 border-red-500/20 hover:bg-red-500/10 hover:text-red-300"
       >
+        {loading && <Spinner size="sm" />}
         Reject
       </Button>
     </div>

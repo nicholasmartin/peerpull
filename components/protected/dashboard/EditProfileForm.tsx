@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Upload, User } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 const EXPERTISE_OPTIONS = [
   "SaaS",
@@ -316,6 +317,7 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
           onClick={handleSaveProfile}
           disabled={isPending}
         >
+          {isPending && <Spinner size="sm" />}
           {isPending ? "Saving..." : "Save Changes"}
         </Button>
       </div>

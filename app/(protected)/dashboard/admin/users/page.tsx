@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/client";
 import { injectPoints, injectPointsToAll, activateUser, activateAllWaitlisted } from "../actions";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 
 type UserRow = {
@@ -143,6 +144,7 @@ export default function AdminUsersPage() {
               disabled={submitting}
               className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-md hover:bg-primary-muted disabled:opacity-50 transition"
             >
+              {submitting && <Spinner size="sm" />}
               {submitting ? "Injecting..." : "Inject Points"}
             </button>
 
@@ -170,6 +172,7 @@ export default function AdminUsersPage() {
                 disabled={activating !== null}
                 className="px-3 py-1.5 text-xs font-medium bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 transition"
               >
+                {activating === "all" && <Spinner size="sm" />}
                 {activating === "all" ? "Activating..." : "Activate All Waitlisted"}
               </button>
             )}
@@ -243,6 +246,7 @@ export default function AdminUsersPage() {
                           disabled={activating !== null}
                           className="px-2 py-1 text-xs font-medium bg-green-600/20 text-green-400 rounded hover:bg-green-600/30 disabled:opacity-50 transition"
                         >
+                          {activating === u.id && <Spinner size="sm" />}
                           {activating === u.id ? "..." : "Activate"}
                         </button>
                       )}

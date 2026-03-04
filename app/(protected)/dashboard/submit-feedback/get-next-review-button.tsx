@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { getNextReview } from "@/app/actions";
 import { toast } from "sonner";
 
@@ -39,6 +40,7 @@ export function GetNextReviewButton() {
         onClick={handleClick}
         disabled={isPending}
       >
+        {isPending && <Spinner size="sm" />}
         {isPending ? "Finding a project..." : "Get Next Review"}
       </Button>
     </div>

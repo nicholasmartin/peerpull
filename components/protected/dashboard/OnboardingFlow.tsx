@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Profile } from "@/utils/supabase/profiles";
 import { submitOnboardingProject } from "@/app/actions";
 import { CheckCircle2, ArrowRight, Sparkles, Users, Coins, Send } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 interface OnboardingFlowProps {
   profile: Profile;
@@ -189,6 +190,7 @@ export default function OnboardingFlow({ profile }: OnboardingFlowProps) {
                 disabled={isPending}
                 className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-primary-muted disabled:opacity-50 transition"
               >
+                {isPending && <Spinner size="sm" />}
                 {isPending ? "Submitting..." : "Submit Project"}
                 {!isPending && <ArrowRight className="h-4 w-4" />}
               </button>

@@ -107,19 +107,19 @@ export default async function DashboardPage() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Link href="/dashboard/request-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 transition">
+        <Link href="/dashboard/request-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
           <span className="block text-sm font-semibold text-dark-text">Submit Feedback Request</span>
           <span className="text-xs text-dark-text-muted">Get feedback on your project</span>
         </Link>
-        <Link href="/dashboard/submit-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 transition">
+        <Link href="/dashboard/submit-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
           <span className="block text-sm font-semibold text-dark-text">Start Reviewing</span>
           <span className="text-xs text-dark-text-muted">Earn PeerPoints</span>
         </Link>
-        <Link href="/dashboard/request-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 transition">
+        <Link href="/dashboard/request-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
           <span className="block text-sm font-semibold text-dark-text">View Feedback</span>
           <span className="text-xs text-dark-text-muted">See your latest reviews</span>
         </Link>
-        <Link href="/dashboard/peerpoints" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 transition">
+        <Link href="/dashboard/peerpoints" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
           <span className="block text-sm font-semibold text-dark-text">PeerPoints</span>
           <span className="text-xs text-dark-text-muted">View balance & history</span>
         </Link>
