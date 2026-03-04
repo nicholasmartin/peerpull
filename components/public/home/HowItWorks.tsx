@@ -1,191 +1,70 @@
 "use client";
 
 import React from 'react';
-import Image from 'next/image';
-import { Montserrat } from "next/font/google";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export function HowItWorks() {
+  const steps = [
+    {
+      num: "01",
+      title: "Submit Your Feedback Request",
+      items: [
+        "Add your landing page URL",
+        "Specify what feedback you need most",
+        "Choose from our templates to get structured insights",
+      ],
+    },
+    {
+      num: "02",
+      title: "Review Other Projects",
+      items: [
+        "Browse available projects in your expertise areas",
+        "Provide thoughtful reviews using our guided frameworks",
+        "Each review takes about 1-2 minutes",
+      ],
+    },
+    {
+      num: "03",
+      title: "Earn PeerPoints",
+      items: [
+        "During beta, every review you give earns you one PeerPoint",
+        "Each PeerPoint gets you one review on your project",
+        "All feedback is vetted to ensure quality",
+      ],
+    },
+  ];
+
   return (
-    <section id="how-it-works" className="py-20 md:py-32 bg-dark-surface relative">
-      {/* Abstract geometric shapes for background */}
-      <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-        <div className="absolute top-[10%] right-[5%] w-[350px] h-[350px] rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary blur-3xl opacity-20"></div>
-        <div className="absolute bottom-[5%] left-[10%] w-[250px] h-[250px] rounded-full bg-gradient-to-r from-teal-accent to-blue-secondary blur-3xl opacity-20"></div>
-      </div>
-      
+    <section id="how-it-works" className="py-20 md:py-32 bg-dark-bg relative">
       <div className="container px-4 md:px-6 mx-auto relative z-10">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className={`${montserrat.className} text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-4`}>
-              <span className="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">How It Works</span>
+            <p className="text-blue-primary text-sm font-semibold tracking-widest uppercase mb-4">How It Works</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl text-dark-text">
+              Get Quality Feedback Super Early
             </h2>
-            <h3 className="text-xl font-medium text-dark-text-muted mb-6">The 2:1 Exchange That Powers PeerPull</h3>
+            <p className="text-dark-text-muted text-lg mt-4">From solo founders who get it.</p>
           </div>
-          
-          {/* Placeholder for diagram with dark mode styling */}
-          <div className="relative w-full h-64 md:h-96 mb-16 bg-glass-highlight backdrop-blur-sm rounded-xl flex items-center justify-center border border-glass-border shadow-xl overflow-hidden">
-            {/* Gradient decoration */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-r from-blue-primary/10 to-teal-accent/10 rounded-full blur-2xl"></div>
-            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-gradient-to-r from-teal-accent/10 to-blue-primary/10 rounded-full blur-2xl"></div>
-            
-            <div className="absolute inset-0 flex items-center justify-center p-8">
-              <div className="bg-dark-card/60 backdrop-blur-md p-8 rounded-lg border border-glass-border w-full max-w-2xl">
-                <div className="grid grid-cols-3 gap-6 relative">
-                  {/* Flow diagram with gradient arrows */}
-                  <div className="flex flex-col items-center text-center space-y-2">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary flex items-center justify-center text-dark-text text-lg font-medium">1</div>
-                    <p className="text-sm text-dark-text">Submit your project</p>
-                  </div>
-                  
-                  <div className="flex flex-col items-center text-center space-y-2">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary flex items-center justify-center text-dark-text text-lg font-medium">2</div>
-                    <p className="text-sm text-dark-text">Review two others</p>
-                  </div>
-                  
-                  <div className="flex flex-col items-center text-center space-y-2">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary flex items-center justify-center text-dark-text text-lg font-medium">3</div>
-                    <p className="text-sm text-dark-text">Get one review back</p>
-                  </div>
-                  
-                  {/* Connecting arrows */}
-                  <div className="absolute top-1/2 left-[27%] w-[12%] h-0.5 bg-gradient-to-r from-blue-primary to-teal-accent transform -translate-y-1/2"></div>
-                  <div className="absolute top-1/2 left-[60%] w-[12%] h-0.5 bg-gradient-to-r from-blue-primary to-teal-accent transform -translate-y-1/2"></div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+            {steps.map((step) => (
+              <div key={step.num} className="relative bg-dark-card rounded-lg border border-dark-border p-6 md:p-8 hover:border-dark-text-muted/20 transition-colors duration-300">
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="text-blue-primary font-semibold text-sm tracking-wider">{step.num}</span>
+                  <div className="h-px flex-1 bg-dark-border"></div>
                 </div>
-                
-                <p className="text-dark-text-muted text-center mt-6 text-sm">The 2:1 exchange ensures quality feedback for everyone</p>
+
+                <h4 className="text-lg font-semibold text-dark-text mb-5">{step.title}</h4>
+
+                <ul className="space-y-3">
+                  {step.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-3">
+                      <span className="mt-2 w-1 h-1 rounded-full bg-blue-primary/60 flex-shrink-0"></span>
+                      <p className="text-dark-text-muted text-sm">{item}</p>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14">
-            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
-              {/* Gradient accent line at top */}
-              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-blue-primary to-teal-accent"></div>
-              
-              {/* Background gradient */}
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-primary/5 to-teal-accent/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text font-medium text-lg shadow-lg">
-                  1
-                </div>
-                <h4 className="text-xl font-semibold bg-gradient-to-r from-blue-primary to-blue-secondary bg-clip-text text-transparent">Submit Your PullRequest</h4>
-              </div>
-              
-              <ul className="space-y-4 pl-16">
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Add your landing page URL</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Specify what feedback you need most</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Choose from our templates to get structured insights</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
-              {/* Gradient accent line at top */}
-              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-teal-accent to-blue-primary"></div>
-              
-              {/* Background gradient */}
-              <div className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-r from-teal-accent/5 to-blue-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-teal-accent to-blue-primary text-dark-text font-medium text-lg shadow-lg">
-                  2
-                </div>
-                <h4 className="text-xl font-semibold bg-gradient-to-r from-teal-accent to-blue-primary bg-clip-text text-transparent">Review Other Projects</h4>
-              </div>
-              
-              <ul className="space-y-4 pl-16">
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Browse available projects in your expertise areas</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Provide thoughtful reviews using our guided frameworks</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Each review takes about 10-15 minutes</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
-              {/* Gradient accent line at top */}
-              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-blue-primary to-teal-accent"></div>
-              
-              {/* Background gradient */}
-              <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-primary/5 to-teal-accent/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text font-medium text-lg shadow-lg">
-                  3
-                </div>
-                <h4 className="text-xl font-semibold bg-gradient-to-r from-blue-primary to-blue-secondary bg-clip-text text-transparent">Earn PeerPoints</h4>
-              </div>
-              
-              <ul className="space-y-4 pl-16">
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">For every two reviews you give, you earn one PeerPoint</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Each PeerPoint gets you one review on your project</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">All feedback is vetted to ensure quality</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-primary mr-2">•</span>
-                  <span className="text-dark-text">Average time to first PeerInsight: under 4 hours</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="relative bg-dark-card rounded-lg border border-glass-border p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm overflow-hidden group">
-              {/* Gradient accent line at top */}
-              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-teal-accent to-blue-primary"></div>
-              
-              {/* Background gradient */}
-              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-r from-teal-accent/5 to-blue-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-r from-teal-accent to-blue-primary text-dark-text font-medium text-lg shadow-lg">
-                  4
-                </div>
-                <h4 className="text-xl font-semibold bg-gradient-to-r from-teal-accent to-blue-primary bg-clip-text text-transparent">Build Better, Faster</h4>
-              </div>
-              
-              <ul className="space-y-4 pl-16">
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Identify blindspots before writing a line of code</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Avoid wasting time on features your users won't want</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-teal-accent mr-2">•</span>
-                  <span className="text-dark-text">Make data-driven decisions based on real founder insights</span>
-                </li>
-              </ul>
-            </div>
+            ))}
           </div>
         </div>
       </div>

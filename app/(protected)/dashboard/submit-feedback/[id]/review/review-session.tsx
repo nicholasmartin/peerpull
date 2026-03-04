@@ -1,0 +1,355 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useScreenRecorder } from "@/hooks/useScreenRecorder";
+import { RecorderControls } from "@/components/feedback/RecorderControls";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { createClient } from "@/utils/supabase/client";
+import { submitReview } from "@/app/actions";
+import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
+import { ReviewerSignals } from "@/components/protected/dashboard/ReviewerSignals";
+
+interface FeedbackRequestData {
+  id: string;
+  title: string;
+  url: string;
+  description: string;
+  stage: string;
+  categories: string[];
+  focusAreas: string[];
+  questions: string[];
+  founderName: string;
+}
+
+export function ReviewSession({
+  feedbackRequest,
+  reviewId,
+  minDuration,
+  maxDuration,
+}: {
+  feedbackRequest: FeedbackRequestData;
+  reviewId: string;
+  minDuration: number;
+  maxDuration: number;
+}) {
+  const recorder = useScreenRecorder({ maxDuration });
+  const router = useRouter();
+  const [rating, setRating] = useState(0);
+  const [strengths, setStrengths] = useState("");
+  const [improvements, setImprovements] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [signalFollow, setSignalFollow] = useState(false);
+  const [signalEngage, setSignalEngage] = useState(false);
+  const [signalInvest, setSignalInvest] = useState(false);
+
+  useEffect(() => {
+    recorder.refreshMicList();
+  }, [recorder.refreshMicList]);
+
+  const showPreview = recorder.status === "stopped" && !!recorder.previewUrl;
+  const canSubmit = showPreview && recorder.duration >= minDuration && rating >= 1;
+
+  async function handleSubmit() {
+    if (!canSubmit) return;
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      // Upload video to Supabase Storage
+      const blob = recorder.getBlob();
+      if (!blob) {
+        setError("No recording found");
+        setSubmitting(false);
+        return;
+      }
+
+      const supabase = createClient();
+      const fileName = `${reviewId}-${Date.now()}.webm`;
+      const filePath = `reviews/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("review-videos")
+        .upload(filePath, blob, { contentType: "video/webm" });
+
+      if (uploadError) {
+        const msg = "Failed to upload video: " + uploadError.message;
+        setError(msg);
+        toast.error(msg);
+        setSubmitting(false);
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from("review-videos")
+        .getPublicUrl(filePath);
+
+      // Submit via server action
+      const formData = new FormData();
+      formData.set("review_id", reviewId);
+      formData.set("rating", String(rating));
+      formData.set("strengths", strengths);
+      formData.set("improvements", improvements);
+      formData.set("video_url", publicUrl);
+      formData.set("video_duration", String(recorder.duration));
+      formData.set("signal_follow", signalFollow ? "true" : "false");
+      formData.set("signal_engage", signalEngage ? "true" : "false");
+      formData.set("signal_invest", signalInvest ? "true" : "false");
+
+      const result = await submitReview(formData);
+      if (result && "error" in result) {
+        setError(result.error);
+        toast.error(result.error);
+        setSubmitting(false);
+      }
+    } catch {
+      // redirect throws, which is expected on success
+    }
+  }
+
+  return (
+    <div className="flex flex-col h-[calc(100vh-4rem)]">
+      {/* Project info bar */}
+      <div className="shrink-0 border-b border-dark-border bg-dark-surface px-4 py-3 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3 min-w-0">
+          {feedbackRequest.stage && (
+            <Badge variant="secondary" className="capitalize shrink-0">{feedbackRequest.stage}</Badge>
+          )}
+          <h1 className="text-sm font-semibold truncate">{feedbackRequest.title}</h1>
+          <span className="text-xs text-dark-text-muted hidden sm:inline">—</span>
+          <p className="text-xs text-dark-text-muted truncate hidden sm:block">{feedbackRequest.description}</p>
+        </div>
+        <span className="text-xs text-dark-text-muted shrink-0">by {feedbackRequest.founderName}</span>
+      </div>
+
+      {/* Recorder controls */}
+      <div className="shrink-0 border-b border-dark-border bg-dark-bg/95 backdrop-blur-sm px-4 py-3">
+        <RecorderControls recorder={recorder} />
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 min-h-0 flex flex-col overflow-auto">
+        {!showPreview ? (
+          /* Review briefing panel */
+          <div className="flex-1 min-h-0 overflow-auto p-6">
+            <div className="max-w-2xl mx-auto space-y-6">
+              <h2 className="text-lg font-semibold flex items-center gap-2">
+                <span>📋</span> Review Briefing
+              </h2>
+
+              {/* Description */}
+              {feedbackRequest.description && (
+                <div className="space-y-1">
+                  <h3 className="text-sm font-medium text-dark-text">Description</h3>
+                  <p className="text-sm text-dark-text-muted">{feedbackRequest.description}</p>
+                </div>
+              )}
+
+              {/* Focus Areas & Categories */}
+              <div className="grid grid-cols-2 gap-4">
+                {feedbackRequest.focusAreas.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-dark-text">Focus Areas</h3>
+                    <ul className="space-y-1">
+                      {feedbackRequest.focusAreas.map((area, i) => (
+                        <li key={i} className="text-sm text-dark-text-muted flex items-center gap-1.5">
+                          <span className="text-dark-text-muted/50">•</span> {area}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {feedbackRequest.categories.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-dark-text">Categories</h3>
+                    <ul className="space-y-1">
+                      {feedbackRequest.categories.map((cat, i) => (
+                        <li key={i} className="text-sm text-dark-text-muted flex items-center gap-1.5">
+                          <span className="text-dark-text-muted/50">•</span> {cat}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* Questions */}
+              {feedbackRequest.questions.length > 0 && (
+                <div className="space-y-2">
+                  <h3 className="text-sm font-medium text-dark-text">Questions to Address</h3>
+                  <ol className="list-decimal list-inside space-y-1">
+                    {feedbackRequest.questions.map((q, i) => (
+                      <li key={i} className="text-sm text-dark-text-muted">{q}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              {/* Open Site button */}
+              {feedbackRequest.url ? (
+                <div className="rounded-md border border-dark-border bg-dark-surface p-4 text-center space-y-2">
+                  <Button
+                    onClick={() => window.open(feedbackRequest.url, "_blank")}
+                    className="bg-primary hover:bg-primary-muted gap-2"
+                  >
+                    <span>🔗</span> Open Site in New Tab
+                  </Button>
+                  <p className="text-xs text-dark-text-muted">{feedbackRequest.url}</p>
+                </div>
+              ) : (
+                <div className="rounded-md border border-dark-border bg-dark-surface p-4 text-center">
+                  <p className="text-sm text-dark-text-muted">No project URL provided</p>
+                </div>
+              )}
+
+              {/* Step-by-step instructions */}
+              <div className="rounded-md border border-dark-border bg-dark-surface p-4 space-y-2">
+                <h3 className="text-xs font-semibold text-dark-text-muted uppercase tracking-wide">How to record your review</h3>
+                <ol className="space-y-1.5">
+                  {[
+                    { title: "Open the project", desc: "click the button above to open it in a new tab" },
+                    { title: "Start recording", desc: "click \"Start Recording\", then select the project's browser tab when prompted" },
+                    { title: "Narrate your review", desc: `explore the project and think out loud (minimum ${minDuration} seconds, max ${Math.floor(maxDuration / 60)} minutes)` },
+                    { title: "Stop & submit", desc: "click \"Stop Recording\", then rate and submit your feedback" },
+                  ].map((step, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-[10px] font-bold text-primary mt-0.5">
+                        {i + 1}
+                      </span>
+                      <span className="text-dark-text-muted">
+                        <strong className="text-dark-text">{step.title}</strong> &mdash; {step.desc}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Post-recording: video preview + review form */
+          <div className="flex-1 p-6 space-y-6 overflow-auto">
+            {/* Video preview */}
+            <div className="flex justify-center bg-black rounded-md p-4">
+              <video
+                src={recorder.previewUrl!}
+                controls
+                autoPlay
+                className="max-w-full max-h-[400px] rounded-md"
+              />
+            </div>
+
+            {recorder.duration < minDuration && (
+              <div className="rounded-md border border-yellow-500/20 bg-yellow-500/10 p-3 text-yellow-400 text-sm">
+                Your recording is {recorder.duration}s — minimum {minDuration} seconds required. Please re-record.
+              </div>
+            )}
+
+            {/* Questions to address */}
+            {feedbackRequest.questions.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Questions to Address</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-dark-text-muted">
+                    {feedbackRequest.questions.map((q, i) => (
+                      <li key={i}>{q}</li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Review form */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Your Review</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Rating */}
+                <div className="space-y-2">
+                  <Label>Rating <span className="text-red-500">*</span></Label>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setRating(star)}
+                        className="focus:outline-none"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className={`h-8 w-8 ${star <= rating ? "text-yellow-400" : "text-dark-text-muted/50"}`}
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Strengths */}
+                <div className="space-y-2">
+                  <Label htmlFor="strengths">
+                    Strengths <span className="text-xs text-dark-text-muted">({strengths.length}/50 min)</span>
+                  </Label>
+                  <Textarea
+                    id="strengths"
+                    value={strengths}
+                    onChange={(e) => setStrengths(e.target.value)}
+                    placeholder="What does this project do well? What stood out positively?"
+                    className="min-h-[100px]"
+                  />
+                </div>
+
+                {/* Improvements */}
+                <div className="space-y-2">
+                  <Label htmlFor="improvements">
+                    Areas for Improvement <span className="text-xs text-dark-text-muted">({improvements.length}/50 min)</span>
+                  </Label>
+                  <Textarea
+                    id="improvements"
+                    value={improvements}
+                    onChange={(e) => setImprovements(e.target.value)}
+                    placeholder="What could be improved? What specific changes would you suggest?"
+                    className="min-h-[100px]"
+                  />
+                </div>
+
+                <ReviewerSignals
+                  signalFollow={signalFollow}
+                  signalEngage={signalEngage}
+                  signalInvest={signalInvest}
+                  onSignalFollowChange={setSignalFollow}
+                  onSignalEngageChange={setSignalEngage}
+                  onSignalInvestChange={setSignalInvest}
+                />
+
+                {error && (
+                  <div className="text-sm text-red-500">{error}</div>
+                )}
+
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!canSubmit || submitting}
+                  className="w-full bg-primary hover:bg-primary-muted"
+                >
+                  {submitting && <Spinner size="sm" />}
+                  {submitting ? "Submitting Review..." : "Submit Review"}
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

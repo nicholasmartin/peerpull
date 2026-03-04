@@ -13,6 +13,35 @@ export async function GET(request: Request) {
   if (code) {
     const supabase = await createClient();
     await supabase.auth.exchangeCodeForSession(code);
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      // Redeem referral code if passed through OAuth redirect chain
+      const ref = requestUrl.searchParams.get("ref")?.trim().toLowerCase();
+      if (ref) {
+        const { error: refError } = await supabase.rpc("redeem_referral", {
+          p_code: ref,
+          p_new_user_id: user.id,
+        });
+        if (refError) {
+          console.error("OAuth referral redemption failed:", refError.message);
+        }
+      }
+
+      // Check if this is a new user in onboarding status
+      if (!redirectTo) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("status")
+          .eq("id", user.id)
+          .single();
+
+        if (profile?.status === 'onboarding') {
+          return NextResponse.redirect(`${origin}/dashboard/onboarding`);
+        }
+      }
+    }
   }
 
   if (redirectTo) {

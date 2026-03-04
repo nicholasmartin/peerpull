@@ -3,53 +3,127 @@
 @tailwind utilities;
 
 @layer base {
+  /* Theme CSS custom properties — light (default) and dark values */
+  /* Format: space-separated RGB channels for Tailwind opacity modifier support */
+  :root {
+    --color-bg: 255 255 255;          /* #ffffff */
+    --color-card: 249 250 251;        /* #f9fafb (gray-50) */
+    --color-surface: 243 244 246;     /* #f3f4f6 (gray-100) */
+    --color-border: 229 231 235;      /* #e5e7eb (gray-200) */
+    --color-text: 17 24 39;           /* #111827 (gray-900) */
+    --color-text-muted: 107 114 128;  /* #6b7280 (gray-500) */
+  }
+
+  .dark {
+    --color-bg: 10 10 11;             /* #0a0a0b */
+    --color-card: 20 20 22;           /* #141416 */
+    --color-surface: 28 28 31;        /* #1c1c1f */
+    --color-border: 39 39 42;         /* #27272a */
+    --color-text: 250 250 250;        /* #fafafa */
+    --color-text-muted: 113 113 122;  /* #71717a */
+  }
+
   body {
     @apply bg-dark-bg font-normal text-base text-dark-text;
   }
-  
+
+  /* Offset anchors for sticky header */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   /* Use Montserrat for headings */
   h1, h2, h3, h4, h5, h6 {
     @apply font-montserrat;
   }
-  
-  /* Custom scrollbar for dark theme */
+
+  /* Custom scrollbar — uses CSS vars directly for theme responsiveness */
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
-  
+
   ::-webkit-scrollbar-track {
-    @apply bg-dark-bg;
+    background: rgb(var(--color-bg));
   }
-  
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-dark-border rounded-full;
+    background: rgb(var(--color-border));
+    border-radius: 0.25rem;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-dark-border/80;
+    background: rgb(var(--color-text-muted));
   }
+}
+
+/* Smooth accordion animation for native <details> elements */
+details > :not(summary) {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+details[open] > :not(summary) {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+details > :not(summary) > * {
+  min-height: 0;
+}
+
+/* Hero ambient light animations */
+@keyframes hero-glow-1 {
+  0%, 100% { left: 25%; top: 30%; }
+  25% { left: 65%; top: 25%; }
+  50% { left: 70%; top: 40%; }
+  75% { left: 30%; top: 35%; }
+}
+
+@keyframes hero-glow-2 {
+  0%, 100% { left: 65%; top: 45%; }
+  33% { left: 25%; top: 35%; }
+  66% { left: 60%; top: 50%; }
+}
+
+.hero-glow-1 {
+  animation: hero-glow-1 10s ease-in-out infinite;
+}
+
+.hero-glow-2 {
+  animation: hero-glow-2 14s ease-in-out infinite;
+}
+
+/* Line grid for hero background */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
 }
 
 @layer components {
   /* Sidebar Menu Item Styles */
   .menu-item {
-    @apply flex items-center gap-2.5 py-2.5 px-6 rounded-md text-sm font-medium duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-meta-4;
+    @apply flex items-center gap-2.5 py-2 px-4 rounded-md text-sm font-medium duration-200 ease-in-out hover:bg-dark-surface;
   }
 
   .menu-item-active {
-    @apply text-blue-500 bg-gray-100 dark:bg-meta-4;
+    @apply text-dark-text bg-dark-surface;
   }
 
   .menu-item-inactive {
-    @apply text-gray-600 dark:text-gray-400;
+    @apply text-dark-text-muted;
   }
 
   .menu-item-icon-active {
-    @apply text-blue-500;
+    @apply text-primary;
   }
 
   .menu-item-icon-inactive {
-    @apply text-gray-600 dark:text-gray-400;
+    @apply text-dark-text-muted;
   }
 
   .menu-item-text {
@@ -58,26 +132,26 @@
 
   /* Dropdown Menu Styles */
   .menu-dropdown-item {
-    @apply flex items-center gap-2 py-2 px-4 text-sm font-medium rounded-md duration-300 ease-in-out text-gray-600 hover:text-blue-500 dark:text-gray-400 dark:hover:text-white;
+    @apply flex items-center gap-2 py-2 px-4 text-sm font-medium rounded-md duration-200 ease-in-out text-dark-text-muted hover:text-dark-text;
   }
 
   .menu-dropdown-item-active {
-    @apply text-blue-500 dark:text-white;
+    @apply text-dark-text;
   }
 
   .menu-dropdown-item-inactive {
-    @apply text-gray-600 dark:text-gray-400;
+    @apply text-dark-text-muted;
   }
 
   .menu-dropdown-badge {
-    @apply py-0.5 px-1.5 rounded-md text-xs font-medium;
+    @apply py-0.5 px-1.5 rounded text-xs font-medium;
   }
 
   .menu-dropdown-badge-active {
-    @apply bg-blue-500 text-white;
+    @apply bg-primary text-white;
   }
 
   .menu-dropdown-badge-inactive {
-    @apply bg-gray-100 text-gray-600 dark:bg-meta-4 dark:text-gray-300;
+    @apply bg-dark-surface text-dark-text-muted;
   }
 }

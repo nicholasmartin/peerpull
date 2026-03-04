@@ -1,176 +1,100 @@
 "use client";
 
 import React from 'react';
-import { Montserrat } from "next/font/google";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  display: "swap",
-});
+const XCircleIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m15 9-6 6"></path>
+    <path d="m9 9 6 6"></path>
+  </svg>
+);
 
-// Icon component for problem list items
 const CheckCircleIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-    <path d="m9 12 2 2 4-4"></path>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 6 9 17l-5-5"></path>
   </svg>
 );
 
 export function Problem() {
   return (
-    <section id="problem-solution" className="py-20 md:py-32 bg-dark-bg relative">
-      {/* Abstract geometric shapes for background */}
-      <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-        <div className="absolute top-[30%] left-[5%] w-[400px] h-[400px] rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary blur-3xl opacity-10"></div>
-        <div className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] rounded-full bg-gradient-to-r from-teal-accent to-blue-primary blur-3xl opacity-10"></div>
-      </div>
-      
+    <section id="problem-solution" className="py-20 md:py-32 bg-dark-surface relative">
       <div className="container px-4 md:px-6 mx-auto relative z-10">
-        <div className="text-center mb-12">
-          <h2 className={`${montserrat.className} text-3xl font-bold md:text-4xl lg:text-5xl mb-4`}>
-            <span className="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">The Problem & Solution</span>
+        <div className="text-center mb-14">
+          <p className="text-blue-primary text-sm font-semibold tracking-widest uppercase mb-4">Why PeerPull</p>
+          <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl text-dark-text">
+            Good feedback is hard to get when you need it most
           </h2>
-          <p className="text-dark-text-muted max-w-2xl mx-auto text-lg">Most technical founders spend weeks building the wrong thing because they lack objective feedback at crucial early stages.</p>
+          <p className="text-dark-text-muted max-w-2xl mx-auto text-lg mt-4">The early days are when feedback matters most — and when it's hardest to find.</p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {/* Problem Column */}
-          <div className="relative bg-dark-card p-8 rounded-lg border border-glass-border shadow-lg backdrop-blur-sm overflow-hidden">
-            {/* Subtle gradient highlight */}
-            <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-blue-primary to-teal-accent"></div>
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-primary/5 to-teal-accent/5 rounded-full blur-3xl"></div>
-            
-            <div className="text-center mb-8">
-              <h2 className={`${montserrat.className} text-3xl font-bold md:text-4xl mb-3 text-dark-text`}>The Problem</h2>
-              <h3 className="text-xl font-medium text-dark-text-muted mb-4 bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">Building Without Direction</h3>
+          <div className="relative bg-dark-card p-8 rounded-lg border border-dark-border overflow-hidden flex flex-col">
+            <div className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-red-500/60 via-red-500/20 to-transparent"></div>
+
+            <div className="mb-8">
+              <h3 className="text-2xl font-bold text-dark-text mb-2">The Reality</h3>
+              <p className="text-red-400/80 font-medium">Every Builder Faces This</p>
             </div>
-            
-            <div className="mx-auto">
-              <p className="text-lg mb-6 text-dark-text">
-                As a solo founder, you face challenges that funded startups don't:
+
+            <ul className="space-y-4 flex-1">
+              {[
+                { bold: "Friends and family sugarcoat it", rest: "— they don't want to hurt your feelings, so you get \"looks great!\" instead of what you need to hear" },
+                { bold: "Professional feedback is expensive", rest: "— UX audits, consultants, and agencies are built for funded teams, not bootstrapped builders" },
+                { bold: "Online communities are hit-or-miss", rest: "— you post in a forum and get silence, generic advice, or feedback from people who've never shipped anything" },
+                { bold: "You're too close to your own product", rest: "— after weeks of building, you can't see what a fresh pair of eyes would catch in minutes" },
+                { bold: "The window closes fast", rest: "— every day without honest feedback is a day you might be heading in the wrong direction" },
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <div className="text-red-400/70 mt-0.5 flex-shrink-0">
+                    <XCircleIcon />
+                  </div>
+                  <span className="text-dark-text-muted"><strong className="text-dark-text">{item.bold}</strong> {item.rest}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 p-5 rounded-lg border border-dark-border bg-dark-surface">
+              <p className="text-dark-text-muted text-center">
+                You don't need more opinions. You need <span className="text-blue-primary font-medium">honest feedback from people who get it.</span>
               </p>
-              
-              <ul className="space-y-5 my-8">
-                <li className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
-                    <CheckCircleIcon />
-                  </div>
-                  <span className="text-dark-text"><strong className="text-blue-primary">No co-founders</strong> to bounce ideas off or spot your blindspots</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
-                    <CheckCircleIcon />
-                  </div>
-                  <span className="text-dark-text"><strong className="text-blue-primary">Limited budget</strong> for user research or professional feedback</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
-                    <CheckCircleIcon />
-                  </div>
-                  <span className="text-dark-text"><strong className="text-blue-primary">No investor board</strong> providing guidance and accountability</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
-                    <CheckCircleIcon />
-                  </div>
-                  <span className="text-dark-text"><strong className="text-blue-primary">Limited network</strong> of other technical founders who understand your challenges</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
-                    <CheckCircleIcon />
-                  </div>
-                  <span className="text-dark-text"><strong className="text-blue-primary">Uncertain validation</strong> if your landing page or MVP is on the right track</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
-                    <CheckCircleIcon />
-                  </div>
-                  <span className="text-dark-text"><strong className="text-blue-primary">Echo chambers</strong> of friends and family who won't give harsh truths</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="bg-gradient-to-r from-blue-primary to-blue-secondary text-dark-text rounded-full p-1.5 mt-0.5">
-                    <CheckCircleIcon />
-                  </div>
-                  <span className="text-dark-text"><strong className="text-blue-primary">Wasted dev time</strong> building features no one will use</span>
-                </li>
-              </ul>
-            
-              <div className="mt-8 p-0.5 rounded-lg bg-gradient-to-r from-blue-primary to-teal-accent">
-                <div className="bg-dark-surface rounded-md p-5">
-                  <p className="text-lg font-medium text-dark-text">
-                    Most technical founders spend weeks building the <span className="text-blue-primary">wrong thing</span> because they lacked <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">objective feedback</span> at the crucial early stage.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
+
           {/* Solution Column */}
-          <div className="relative bg-dark-card p-8 rounded-lg border border-glass-border shadow-lg backdrop-blur-sm overflow-hidden">
-            {/* Subtle gradient highlight */}
-            <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-teal-accent to-blue-primary"></div>
-            <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-r from-teal-accent/5 to-blue-primary/5 rounded-full blur-3xl"></div>
-            
-            <div className="text-center mb-8">
-              <h2 className={`${montserrat.className} text-3xl font-bold md:text-4xl mb-3 text-dark-text`}>The Solution</h2>
-              <h3 className="text-xl font-medium bg-gradient-to-r from-teal-accent to-blue-primary bg-clip-text text-transparent mb-4">Pull Insights From Peers Who Get It</h3>
+          <div className="relative bg-dark-card p-8 rounded-lg border border-dark-border overflow-hidden flex flex-col">
+            <div className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-blue-primary/60 via-blue-primary/20 to-transparent"></div>
+
+            <div className="mb-8">
+              <h3 className="text-2xl font-bold text-dark-text mb-2">PeerPull Fixes This</h3>
+              <p className="text-blue-primary font-medium">Built by Builders, for Builders</p>
             </div>
-            
-            <div className="mx-auto">
-              <p className="text-lg mb-8 text-dark-text">
-                PeerPull connects you with other technical founders who understand what you're building.
-              </p>
-              
-              <div className="bg-glass-highlight backdrop-blur-md p-6 rounded-xl border border-glass-border shadow-xl relative overflow-hidden">
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-r from-blue-primary/10 to-teal-accent/10 rounded-full blur-2xl"></div>
-                <h4 className="text-xl font-semibold mb-6 text-dark-text relative z-10">Here's how it works:</h4>
-                
-                <ol className="space-y-6 relative z-10">
-                  <li className="flex items-start gap-4">
-                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-primary to-teal-accent text-white font-medium text-sm shadow-lg">
-                      1
-                    </div>
-                    <div>
-                      <p className="font-medium text-dark-text">Submit your landing page or startup concept as a PullRequest</p>
-                    </div>
-                  </li>
-                  
-                  <li className="flex items-start gap-4">
-                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-primary to-teal-accent text-white font-medium text-sm shadow-lg">
-                      2
-                    </div>
-                    <div>
-                      <p className="font-medium text-dark-text">Give quality feedback to two other founders</p>
-                    </div>
-                  </li>
-                  
-                  <li className="flex items-start gap-4">
-                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-primary to-teal-accent text-white font-medium text-sm shadow-lg">
-                      3
-                    </div>
-                    <div>
-                      <p className="font-medium text-dark-text">Receive one thoughtful review in return—usually within hours</p>
-                    </div>
-                  </li>
-                  
-                  <li className="flex items-start gap-4">
-                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-primary to-teal-accent text-white font-medium text-sm shadow-lg">
-                      4
-                    </div>
-                    <div>
-                      <p className="font-medium text-dark-text">Iterate with confidence, knowing real founders have validated your direction</p>
-                    </div>
-                  </li>
-                </ol>
-              </div>
-              
-              <p className="text-lg font-medium mt-8 text-center">
-                <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent">It's that simple.</span> <span className="text-dark-text-muted">No marketing fluff, no generic advice—just targeted, technical feedback from people who speak your language.</span>
+
+            <ul className="space-y-4 flex-1">
+              {[
+                { bold: "Feedback from real builders", rest: "— every reviewer on PeerPull is a founder or maker who understands what you're going through" },
+                { bold: "Fast turnaround", rest: "— submit your product and get a detailed video review back, typically within minutes" },
+                { bold: "Guaranteed quality", rest: "— reviewers earn credits by giving thoughtful feedback, so low-effort reviews don't survive" },
+                { bold: "Zero cost", rest: "— give a review, get a review. No subscriptions, no invoices, no catch" },
+                { bold: "Built for the early days", rest: "— when you need a second opinion most, not after you've already launched and it's too late to pivot" },
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <div className="text-blue-primary mt-0.5 flex-shrink-0">
+                    <CheckCircleIcon />
+                  </div>
+                  <span className="text-dark-text-muted"><strong className="text-dark-text">{item.bold}</strong> {item.rest}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 p-5 rounded-lg border border-dark-border bg-dark-surface">
+              <p className="text-dark-text-muted text-center">
+                Built by builders, for builders. <span className="text-blue-primary font-medium">Finally, feedback you can actually trust.</span>
               </p>
             </div>
           </div>
         </div>
       </div>
-      
     </section>
   );
 }

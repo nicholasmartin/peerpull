@@ -8,6 +8,12 @@ export type Profile = {
   full_name: string;
   avatar_url: string | null;
   website: string | null;
+  expertise: string[];
+  peer_points_balance: number;
+  is_admin: boolean;
+  referral_code: string | null;
+  invited_by: string | null;
+  status: 'onboarding' | 'waitlisted' | 'active';
   created_at: string;
   updated_at: string;
 };

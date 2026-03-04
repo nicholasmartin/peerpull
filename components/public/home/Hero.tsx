@@ -1,90 +1,108 @@
 "use client";
 
 import Link from 'next/link';
-import Button from "@/components/ui/button/Button";
-import { Montserrat } from "next/font/google";
+import { useState, useEffect } from 'react';
+import type { SiteSettings } from "@/app/(public)/page";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  display: "swap",
-});
+function useCountdown(targetDate: Date) {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-export function Hero() {
+  useEffect(() => {
+    function calc() {
+      const now = Date.now();
+      const diff = targetDate.getTime() - now;
+      if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      return {
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60),
+      };
+    }
+
+    setTimeLeft(calc());
+    const interval = setInterval(() => setTimeLeft(calc()), 1_000);
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  return timeLeft;
+}
+
+// March 9 2026 04:00 SGT (UTC+8) = March 8 20:00 UTC
+const LAUNCH_DATE = new Date("2026-03-09T04:00:00+08:00");
+
+export function Hero({ settings }: { settings: SiteSettings }) {
+  const exchangeLabel =
+    settings.reviewReward === settings.reviewCost
+      ? `${settings.reviewReward}:${settings.reviewCost} Exchange Ratio`
+      : `Earn ${settings.reviewReward} Per Review`;
+
+  const { days, hours, minutes, seconds } = useCountdown(LAUNCH_DATE);
+  const isExpired = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
+
   return (
-    <section id="hero" className="relative py-20 md:py-32 bg-dark-bg overflow-hidden">
-      {/* Abstract geometric shapes */}
-      <div className="absolute inset-0 overflow-hidden opacity-20">
-        <div className="absolute -top-[300px] -left-[300px] w-[600px] h-[600px] rounded-full bg-gradient-to-r from-blue-primary to-teal-accent blur-3xl opacity-20"></div>
-        <div className="absolute top-[10%] right-[5%] w-[300px] h-[300px] rounded-full bg-gradient-to-r from-blue-secondary to-blue-primary blur-3xl opacity-20"></div>
-        <div className="absolute bottom-[5%] left-[10%] w-[400px] h-[400px] rounded-full bg-gradient-to-r from-teal-accent to-blue-secondary blur-3xl opacity-30"></div>
+    <section id="hero" className="relative min-h-[90vh] md:min-h-screen flex items-center pt-16 md:pt-0 bg-dark-bg overflow-hidden">
+      {/* Subtle grid overlay */}
+      <div className="absolute inset-0 hero-grid pointer-events-none"></div>
+
+      {/* Animated ambient lights — drift slowly behind the heading */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="hero-glow-1 absolute w-[700px] h-[400px] -ml-[350px] -mt-[200px] rounded-full bg-blue-primary/20 blur-[120px]"></div>
+        <div className="hero-glow-2 absolute w-[500px] h-[350px] -ml-[250px] -mt-[175px] rounded-full bg-teal-accent/15 blur-[100px]"></div>
       </div>
-      
+
       <div className="container px-4 md:px-6 mx-auto relative z-10">
-        <div className="flex flex-col items-center gap-4 md:gap-8 text-center max-w-4xl mx-auto">
-          <div className="space-y-5 md:space-y-6">
-            <div className="inline-flex items-center px-4 py-2 rounded-md bg-glass-highlight backdrop-blur-sm border border-glass-border mb-2">
-              <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent font-medium">2:1 Exchange Ratio</span>
-              <div className="w-1.5 h-1.5 rounded-full bg-dark-text-muted mx-2"></div>
-              <span className="text-dark-text-muted">Give 2 reviews, get 1 back</span>
-            </div>
-            
-            <h1 className={`${montserrat.className} text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl`}>
-              <span className="bg-gradient-to-r from-gradient-start via-blue-secondary to-gradient-end bg-clip-text text-transparent">Valuable Feedback</span>
-              <span className="text-dark-text"> on Your Startup Idea</span>
+        <div className="flex flex-col items-center gap-6 md:gap-10 text-center max-w-5xl mx-auto">
+          <div className="space-y-6 md:space-y-8">
+            <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.95]">
+              <span className="text-blue-primary">Real Feedback</span>
+              <br />
+              <span className="text-dark-text">From Real Builders</span>
             </h1>
-            
-            <p className="text-lg md:text-xl lg:text-2xl text-dark-text-muted max-w-3xl mx-auto">
-              Submit your landing page or MVP for targeted feedback from other technical founders who understand your challenges.
+
+            <p className="text-xl md:text-2xl text-dark-text max-w-2xl mx-auto leading-relaxed">
+              PeerPull is a peer exchange platform where builders trade honest feedback. <span className="text-blue-primary font-medium">Give a review, get a review.</span>
             </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <span className="inline-flex items-center px-5 py-2 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">{exchangeLabel}</span>
+              <span className="inline-flex items-center px-5 py-2 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">{settings.signupBonus} Free Credits at Signup</span>
+              <span className="inline-flex items-center px-5 py-2 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">Earn {settings.referralBonus} Credits Per Referral</span>
+            </div>
           </div>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mt-8 sm:mt-10 w-full sm:w-auto">
-            <Link href="/signup" className="w-full sm:w-auto">
-              <Button 
-                size="md" 
-                className="text-base font-medium px-6 py-3.5 md:px-8 md:py-4 bg-gradient-to-r from-blue-primary to-blue-secondary hover:from-blue-primary/90 hover:to-blue-secondary/90 transition-all text-white shadow-lg shadow-blue-primary/20 w-full sm:w-auto"
-              >
-                Get Early Access
-              </Button>
-            </Link>
-            <Button 
-              size="md" 
-              variant="outline" 
-              className="text-base font-medium px-6 py-3.5 md:px-8 md:py-4 border-glass-border text-dark-text hover:bg-glass-highlight hover:border-glass-border/80 backdrop-blur-sm transition-all w-full sm:w-auto mt-3 sm:mt-0"
-              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              See How It Works
-            </Button>
-          </div>
-          
-          <div className="mt-10 md:mt-14 max-w-2xl mx-auto">
-            <div className="relative">
-              {/* Glassmorphism card */}
-              <div className="bg-dark-card/30 backdrop-blur-md p-6 md:p-8 rounded-lg border border-glass-border shadow-xl relative overflow-hidden">
-                {/* Subtle gradient highlight */}
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-r from-blue-primary/10 to-teal-accent/10 rounded-full blur-2xl"></div>
-                
-                <div className="relative z-10">
-                  <svg className="w-8 h-8 text-blue-primary/30 mb-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-10zm-10 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
-                  <p className="text-base md:text-lg font-light tracking-wide text-dark-text leading-relaxed">
-                    I avoided months of wasted development after just <span className="bg-gradient-to-r from-blue-primary to-teal-accent bg-clip-text text-transparent font-medium">three pieces of feedback</span> from fellow founders.
-                  </p>
-                  <div className="flex items-center mt-4 md:mt-6">
-                    <div className="flex-shrink-0 mr-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-primary to-blue-secondary flex items-center justify-center text-white font-medium">
-                        AK
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-dark-text">Alex K.</p>
-                      <p className="text-sm text-dark-text-muted">SaaSFounder</p>
-                    </div>
-                  </div>
-                </div>
+
+          {!isExpired && (
+            <div className="flex items-center gap-6 mt-2">
+              <div className="text-center">
+                <span className="block text-3xl md:text-4xl font-bold text-blue-primary tabular-nums">{String(days).padStart(2, "0")}</span>
+                <span className="text-xs uppercase tracking-widest text-dark-text-muted">Days</span>
+              </div>
+              <span className="text-dark-border text-2xl font-light">:</span>
+              <div className="text-center">
+                <span className="block text-3xl md:text-4xl font-bold text-blue-primary tabular-nums">{String(hours).padStart(2, "0")}</span>
+                <span className="text-xs uppercase tracking-widest text-dark-text-muted">Hours</span>
+              </div>
+              <span className="text-dark-border text-2xl font-light">:</span>
+              <div className="text-center">
+                <span className="block text-3xl md:text-4xl font-bold text-blue-primary tabular-nums">{String(minutes).padStart(2, "0")}</span>
+                <span className="text-xs uppercase tracking-widest text-dark-text-muted">Min</span>
+              </div>
+              <span className="text-dark-border text-2xl font-light">:</span>
+              <div className="text-center">
+                <span className="block text-3xl md:text-4xl font-bold text-blue-primary tabular-nums">{String(seconds).padStart(2, "0")}</span>
+                <span className="text-xs uppercase tracking-widest text-dark-text-muted">Sec</span>
               </div>
             </div>
+          )}
+
+          <div className="flex items-center justify-center mt-4 sm:mt-6">
+            <Link
+              href="/signup"
+              className="group relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-primary to-teal-accent px-12 py-4 text-lg font-semibold text-dark-bg shadow-[0_0_20px_rgba(212,168,83,0.3)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,168,83,0.5)] overflow-hidden"
+            >
+              <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full"></span>
+              <span className="relative">Join the private beta launch</span>
+            </Link>
           </div>
         </div>
       </div>

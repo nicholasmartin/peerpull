@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
+
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/context/SidebarContext";
 
@@ -18,6 +18,8 @@ import UserCircleIcon from "@/components/icons/user-circle.svg";
 import AlertIcon from "@/components/icons/alert.svg";
 import ChatIcon from "@/components/icons/chat.svg";
 import PlusIcon from "@/components/icons/plus.svg";
+import PaperPlaneIcon from "@/components/icons/paper-plane.svg";
+import BoltIcon from "@/components/icons/bolt.svg";
 
 type NavItem = {
   name: string;
@@ -35,17 +37,12 @@ const navItems: NavItem[] = [
   },
   {
     icon: <BoxCubeIcon />,
-    name: "My PullRequests",
-    path: "/dashboard/pull-requests",
+    name: "Feedback",
+    path: "/dashboard/request-feedback",
     subItems: [
-      { name: "All", path: "/dashboard/pull-requests" },
-      { name: "New PullRequest", path: "/dashboard/pull-requests/new", new: true }
+      { name: "Request Feedback", path: "/dashboard/request-feedback" },
+      { name: "Submit Feedback", path: "/dashboard/submit-feedback" }
     ]
-  },
-  {
-    icon: <CheckIcon />,
-    name: "Review Queue",
-    path: "/dashboard/review-queue"
   },
   {
     icon: <DollarLineIcon />,
@@ -63,9 +60,20 @@ const navItems: NavItem[] = [
     path: "/dashboard/profile",
   },
   {
+    icon: <PaperPlaneIcon />,
+    name: "Invite Builders",
+    path: "/dashboard/invite",
+  },
+  {
     icon: <TableIcon />,
     name: "Settings",
-    path: "/dashboard/settings"
+    path: "/dashboard/settings",
+    subItems: [
+      { name: "Account", path: "/dashboard/settings" },
+      { name: "Security", path: "/dashboard/settings/security" },
+      { name: "Notifications", path: "/dashboard/settings/notifications" },
+      { name: "Appearance", path: "/dashboard/settings/appearance" },
+    ],
   },
 ];
 
@@ -76,21 +84,42 @@ const secondaryNavItems: NavItem[] = [
     name: "Help & Support",
     path: "/dashboard/help",
   },
-  {
-    icon: <PlusIcon />,
-    name: "Invite Founders",
-    path: "/dashboard/invite",
-  },
 ];
 
 
-const AppSidebar: React.FC = () => {
+const hiddenWhenNotActive = new Set([
+  "/dashboard/community",
+  "/dashboard/settings",
+  "/dashboard/help",
+]);
+
+const AppSidebar: React.FC<{
+  isAdmin?: boolean;
+  isUserActive?: boolean;
+}> = ({ isAdmin, isUserActive = true }) => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
 
-  const renderMenuItems = (navItems: NavItem[]) => (
+  const dynamicSecondaryNavItems: NavItem[] = [
+    ...(isAdmin ? [{
+      icon: <BoltIcon />,
+      name: "Admin",
+      path: "/dashboard/admin",
+    }] : []),
+    ...secondaryNavItems,
+  ];
+
+  const filteredNavItems = isUserActive
+    ? navItems
+    : navItems.filter(item => !hiddenWhenNotActive.has(item.path ?? ''));
+
+  const filteredSecondaryNavItems = isUserActive
+    ? dynamicSecondaryNavItems
+    : dynamicSecondaryNavItems.filter(item => !hiddenWhenNotActive.has(item.path ?? ''));
+
+  const renderMenuItems = (items: NavItem[]) => (
     <ul className="flex flex-col gap-4">
-      {navItems.map((nav, index) => (
+      {items.map((nav, index) => (
         <li key={nav.name}>
           {nav.subItems ? (
             <button
@@ -267,7 +296,7 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-[#182B49] text-white h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-700 
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-dark-card text-dark-text h-screen transition-all duration-300 ease-in-out z-50 border-r border-dark-border
         ${
           isExpanded || isMobileOpen
             ? "w-[290px]"
@@ -285,31 +314,12 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link href="/">
-          {isExpanded || isHovered || isMobileOpen ? (
-            <>
-              <Image
-                className="dark:hidden"
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-              <Image
-                className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-            </>
-          ) : (
-            <Image
-              src="/images/logo/logo-icon.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-            />
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="bg-blue-primary rounded-md w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <span className="font-montserrat text-dark-bg font-bold text-base">P</span>
+          </div>
+          {(isExpanded || isHovered || isMobileOpen) && (
+            <span className="font-montserrat text-lg font-bold text-dark-text">PeerPull</span>
           )}
         </Link>
       </div>
@@ -318,7 +328,7 @@ const AppSidebar: React.FC = () => {
           <div className="flex flex-col gap-4">
             <div>
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-dark-text-muted ${
                   !isExpanded && !isHovered
                     ? "lg:justify-center"
                     : "justify-start"
@@ -330,13 +340,13 @@ const AppSidebar: React.FC = () => {
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(navItems)}
+              {renderMenuItems(filteredNavItems)}
             </div>
             
             {/* Secondary Navigation Items */}
             <div className="mt-auto">
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-dark-text-muted ${
                   !isExpanded && !isHovered
                     ? "lg:justify-center"
                     : "justify-start"
@@ -348,7 +358,7 @@ const AppSidebar: React.FC = () => {
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(secondaryNavItems)}
+              {renderMenuItems(filteredSecondaryNavItems)}
             </div>
           </div>
         </nav>

@@ -1,6 +1,7 @@
 import { Inter, Montserrat } from "next/font/google";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { SidebarProvider } from "@/context/SidebarContext";
-import Script from "next/script";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -10,8 +11,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "PeerPull - Get Valuable Feedback Early!",
-  description: "Valueable Feedback Exchange For Startup Founders to Validate Ideas Early.",
+  title: "PeerPull - Real feedback from Real Builders.",
+  description: "PeerPull is a peer exchange platform where builders trade honest feedback. Give a review, get a review. ",
 };
 
 const inter = Inter({
@@ -20,32 +21,38 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// This script will be inlined in the HTML and run immediately
-const darkModeScript = `
-  (function() {
-    try {
-      // Always use dark mode for the entire application
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } catch (e) {}
-  })();
-`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${montserrat.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${montserrat.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <Script id="dark-mode-script" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: darkModeScript }} />
       </head>
-      <body className="font-inter bg-dark-bg text-dark-text antialiased">
-        <SidebarProvider>
-          {children}
-        </SidebarProvider>
+      <body className="font-inter bg-dark-bg text-dark-text antialiased" suppressHydrationWarning>
+        <ThemeProvider>
+          <SidebarProvider>
+            {children}
+          </SidebarProvider>
+          <Toaster
+            theme="dark"
+            position="bottom-right"
+            richColors
+            closeButton
+            visibleToasts={3}
+            duration={5000}
+            toastOptions={{
+              classNames: {
+                toast: "!bg-dark-card !border-dark-border",
+                title: "!text-dark-text",
+                description: "!text-dark-text-muted",
+                closeButton: "!bg-dark-surface !border-dark-border !text-dark-text-muted",
+              },
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );

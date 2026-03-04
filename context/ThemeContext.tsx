@@ -44,14 +44,9 @@ const themeScript = (isProtected: boolean) => {
             document.documentElement.classList.remove('dark');
           }
         } else {
-          // No stored theme, use route-based default
-          if (isProtectedRoute) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-          }
+          // No stored theme — default to dark
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
         }
       } catch (e) {
         console.error('Error in theme script:', e);
@@ -67,7 +62,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   defaultTheme,
   isProtected = false,
 }) => {
-  const [theme, setTheme] = useState<ThemeType>(defaultTheme || (isProtected ? "dark" : "light"));
+  const [theme, setTheme] = useState<ThemeType>(defaultTheme || "dark");
   const [mounted, setMounted] = useState(false);
 
   // Only after mounting, we can use client-side code
@@ -77,12 +72,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   const toggleTheme = (newTheme?: ThemeType) => {
     if (!mounted) return;
-    
-    // If no theme specified, cycle through light -> dark -> system
+
+    // If no theme specified, toggle between light and dark
     if (!newTheme) {
-      if (theme === "light") newTheme = "dark";
-      else if (theme === "dark") newTheme = "system";
-      else newTheme = "light";
+      newTheme = theme === "dark" ? "light" : "dark";
     }
     
     setTheme(newTheme);

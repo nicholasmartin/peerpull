@@ -20,20 +20,23 @@ export function JoinWaitlist() {
               <p className="text-lg text-prussian-blue/80 max-w-xl mx-auto">
                 Join PeerPull today and connect with experienced founders who can help validate your ideas and accelerate your startup journey.
               </p>
-              
-              <div className="mt-8">
+
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/signup">
                   <Button
                     size="md"
                     className="px-8 py-4 text-lg font-medium bg-fire-brick hover:bg-barn-red text-papaya-whip border-none shadow-md"
                   >
-                    Create Your Account
+                    Join the Beta
                   </Button>
                 </Link>
+                <Link href="/signup" className="text-prussian-blue/70 hover:text-prussian-blue underline text-sm font-medium">
+                  Have a referral code?
+                </Link>
               </div>
-              
+
               <p className="text-center text-sm text-prussian-blue mt-6 italic font-medium">
-                Early members get priority access and additional PeerPoints
+                Beta members get 3 free credits and a 1:1 exchange ratio
               </p>
             </div>
           </div>
