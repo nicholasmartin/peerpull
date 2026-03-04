@@ -41,6 +41,14 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect("error", "/signup", error.message);
   }
 
+  if (data?.user?.identities?.length === 0) {
+    return encodedRedirect(
+      "error",
+      "/signup",
+      "An account with this email already exists. Please sign in instead.",
+    );
+  }
+
   // Redeem referral code if provided
   if (referralCode && data.user) {
     const { error: refError } = await supabase.rpc("redeem_referral", {
@@ -52,11 +60,7 @@ export const signUpAction = async (formData: FormData) => {
     }
   }
 
-  return encodedRedirect(
-    "success",
-    "/signup",
-    "Thanks for signing up! Please check your email for a verification link.",
-  );
+  return redirect(`/signup/verify-email?email=${encodeURIComponent(email)}`);
 };
 
 export const signInAction = async (formData: FormData) => {
