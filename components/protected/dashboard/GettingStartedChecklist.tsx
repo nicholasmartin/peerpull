@@ -41,18 +41,18 @@ export function GettingStartedChecklist({
     {
       key: "submit",
       label: "Submit your project",
-      description: "Get your project in the review queue",
+      description: "Get your project in the feedback queue",
       complete: hasSubmittedProject,
     },
     {
       key: "review",
-      label: "Review another founder's project",
+      label: "Give feedback on another founder's project",
       description: "Earn PeerPoints by giving feedback",
       complete: hasReviewedProject,
     },
     {
       key: "received",
-      label: "Get your first review",
+      label: "Get your first feedback",
       description: "A peer will record video feedback on your project",
       complete: hasReceivedReview,
     },
@@ -162,7 +162,7 @@ export function GettingStartedChecklist({
                       href="/dashboard/submit-feedback"
                       className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition"
                     >
-                      Start Reviewing <ArrowRight className="h-4 w-4" />
+                      Start Giving Feedback <ArrowRight className="h-4 w-4" />
                     </Link>
                   )}
                 </div>

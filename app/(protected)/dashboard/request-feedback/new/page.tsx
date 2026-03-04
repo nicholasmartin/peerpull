@@ -106,7 +106,7 @@ export default async function NewRequestPage() {
         <CardHeader>
           <CardTitle className="text-xl">New Request for Feedback</CardTitle>
           <p className="text-sm text-gray-400">
-            Requires at least <span className="font-semibold text-yellow-400">2 PeerPoints</span> (charged when a reviewer completes their review, not upfront)
+            Requires at least <span className="font-semibold text-yellow-400">2 PeerPoints</span> (charged when someone gives you feedback, not upfront)
           </p>
         </CardHeader>
         <CardContent>
@@ -150,7 +150,7 @@ export default async function NewRequestPage() {
                 name="description"
                 rows={4}
                 className="w-full rounded-md border border-gray-600 bg-gray-900 px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Tell reviewers what your project does and what kind of feedback you're looking for..."
+                placeholder="Tell others what your project does and what feedback you're looking for..."
               />
             </div>
 
@@ -212,7 +212,7 @@ export default async function NewRequestPage() {
             {/* Specific Questions */}
             <div className="space-y-3">
               <span className="block text-sm font-medium text-gray-300">
-                Specific Questions for Reviewers
+                Specific Questions for Feedback Givers
               </span>
               {[1, 2, 3].map((n) => (
                 <input

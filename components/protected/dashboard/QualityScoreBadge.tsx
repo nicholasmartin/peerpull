@@ -8,7 +8,7 @@ export function QualityScoreBadge({ score, ratedCount }: QualityScoreBadgeProps)
     return (
       <div className="text-center">
         <span className="text-sm text-gray-500">No score yet</span>
-        <p className="text-xs text-gray-600 mt-0.5">Complete 3+ reviews to earn a quality score</p>
+        <p className="text-xs text-gray-600 mt-0.5">Give 3+ feedback to earn a quality score</p>
       </div>
     );
   }

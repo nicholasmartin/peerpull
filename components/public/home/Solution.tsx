@@ -38,7 +38,7 @@ export function Solution() {
                 <li className="flex items-start gap-4">
                   <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-emerald-600 text-papaya-whip font-medium text-sm shadow-md">3</div>
                   <div>
-                    <p className="font-medium text-papaya-whip">Receive one thoughtful review in return—usually within hours</p>
+                    <p className="font-medium text-papaya-whip">Receive thoughtful feedback in return—usually within hours</p>
                   </div>
                 </li>
                 

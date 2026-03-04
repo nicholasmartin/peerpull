@@ -15,19 +15,19 @@ export function HowItWorks() {
     },
     {
       num: "02",
-      title: "Review Other Projects",
+      title: "Give Feedback on Projects",
       items: [
         "Browse available projects in your expertise areas",
-        "Provide thoughtful reviews using our guided frameworks",
-        "Each review takes about 1-2 minutes",
+        "Provide thoughtful feedback using our guided frameworks",
+        "Each feedback session takes about 1-2 minutes",
       ],
     },
     {
       num: "03",
       title: "Earn PeerPoints",
       items: [
-        "During beta, every review you give earns you one PeerPoint",
-        "Each PeerPoint gets you one review on your project",
+        "During beta, every feedback you give earns you one PeerPoint",
+        "Each PeerPoint gets you one feedback on your project",
         "All feedback is vetted to ensure quality",
       ],
     },

@@ -41,7 +41,7 @@ const navItems: NavItem[] = [
     path: "/dashboard/request-feedback",
     subItems: [
       { name: "Request Feedback", path: "/dashboard/request-feedback" },
-      { name: "Submit Feedback", path: "/dashboard/submit-feedback" }
+      { name: "Give Feedback", path: "/dashboard/submit-feedback" }
     ]
   },
   {

@@ -22,28 +22,28 @@ export default function HelpSupportPage() {
   const faqs = [
     {
       id: "faq-1",
-      question: "How does the PeerPull review process work?",
-      answer: "When you submit a Feedback Request, it enters our review queue where other founders can claim it for review. Each Feedback Request requires 3 reviews to be considered complete. Reviewers provide structured feedback on your project, focusing on the areas you've specified. Once all reviews are in, you'll receive a notification and can view the detailed feedback."
+      question: "How does the PeerPull feedback process work?",
+      answer: "When you submit a Feedback Request, it enters our feedback queue where other founders can claim it. Each Feedback Request requires 3 pieces of feedback to be considered complete. Feedback givers provide structured insights on your project, focusing on the areas you've specified. Once all feedback is in, you'll receive a notification and can view the details."
     },
     {
       id: "faq-2",
       question: "What are PeerPoints and how do I earn them?",
-      answer: "PeerPoints are our platform's currency that enables the feedback exchange. You earn PeerPoints by reviewing other founders' projects (2 points per review). You spend PeerPoints when submitting your own projects for review (1 point per submission). You can also earn bonus points for high-quality reviews and by inviting other founders to join the platform."
+      answer: "PeerPoints are our platform's currency that enables the feedback exchange. You earn PeerPoints by giving feedback on other founders' projects (2 points per feedback). You spend PeerPoints when submitting your own projects for feedback (1 point per submission). You can also earn bonus points for high-quality feedback and by inviting other founders to join the platform."
     },
     {
       id: "faq-3",
-      question: "How do I get matched with the right reviewers?",
+      question: "How do I get matched with the right feedback givers?",
       answer: "Our matching algorithm considers several factors: the expertise areas you've specified for your project, the categories you've selected, and the specific feedback focus areas. We prioritize matching you with founders who have relevant experience in your industry or with similar technical challenges."
     },
     {
       id: "faq-4",
-      question: "What types of projects can I submit for review?",
+      question: "What types of projects can I submit for feedback?",
       answer: "You can submit various types of projects including landing pages, MVPs, prototypes, business models, marketing strategies, and feature ideas. The platform is designed to support early-stage founders across different stages of product development."
     },
     {
       id: "faq-5",
-      question: "How can I provide effective feedback as a reviewer?",
-      answer: "Good feedback is specific, actionable, and balanced. Focus on the areas the founder has requested feedback on, provide concrete examples, suggest alternatives when pointing out issues, and balance constructive criticism with positive observations. Use the structured review format to organize your thoughts."
+      question: "How can I provide effective feedback?",
+      answer: "Good feedback is specific, actionable, and balanced. Focus on the areas the founder has requested feedback on, provide concrete examples, suggest alternatives when pointing out issues, and balance constructive criticism with positive observations. Use the structured feedback format to organize your thoughts."
     }
   ];
   
@@ -57,7 +57,7 @@ export default function HelpSupportPage() {
     },
     {
       id: 2,
-      title: "How to Write Effective Reviews",
+      title: "How to Give Effective Feedback",
       description: "Learn how to provide valuable feedback that helps other founders improve their projects",
       icon: <FileText className="h-8 w-8 text-primary" />,
       type: "Article"
@@ -145,7 +145,7 @@ export default function HelpSupportPage() {
                   <ul className="space-y-1 text-sm text-dark-text-muted">
                     <li className="hover:text-primary hover:underline cursor-pointer">Creating your profile</li>
                     <li className="hover:text-primary hover:underline cursor-pointer">Submitting your first Feedback Request</li>
-                    <li className="hover:text-primary hover:underline cursor-pointer">Claiming reviews</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Claiming projects</li>
                   </ul>
                 </div>
                 
@@ -159,10 +159,10 @@ export default function HelpSupportPage() {
                 </div>
                 
                 <div className="flex flex-col space-y-2 rounded-md border border-dark-border p-4">
-                  <h3 className="font-medium">Reviews</h3>
+                  <h3 className="font-medium">Feedback</h3>
                   <ul className="space-y-1 text-sm text-dark-text-muted">
-                    <li className="hover:text-primary hover:underline cursor-pointer">Writing effective reviews</li>
-                    <li className="hover:text-primary hover:underline cursor-pointer">Review etiquette</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Writing effective feedback</li>
+                    <li className="hover:text-primary hover:underline cursor-pointer">Feedback etiquette</li>
                     <li className="hover:text-primary hover:underline cursor-pointer">Responding to feedback</li>
                   </ul>
                 </div>

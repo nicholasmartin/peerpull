@@ -32,7 +32,7 @@ export function SignalBadges({ signalFollow, signalEngage, signalInvest }: Signa
           </span>
         )}
       </div>
-      <p className="text-xs text-gray-500">Reviewer interest signals — only you can see these</p>
+      <p className="text-xs text-gray-500">Interest signals from feedback givers — only you can see these</p>
     </div>
   );
 }

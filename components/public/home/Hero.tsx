@@ -35,7 +35,7 @@ export function Hero({ settings }: { settings: SiteSettings }) {
   const exchangeLabel =
     settings.reviewReward === settings.reviewCost
       ? `${settings.reviewReward}:${settings.reviewCost} Exchange Ratio`
-      : `Earn ${settings.reviewReward} Per Review`;
+      : `Earn ${settings.reviewReward} Per Feedback`;
 
   const { days, hours, minutes, seconds } = useCountdown(LAUNCH_DATE);
   const isExpired = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
@@ -61,7 +61,7 @@ export function Hero({ settings }: { settings: SiteSettings }) {
             </h1>
 
             <p className="text-xl md:text-2xl text-dark-text max-w-2xl mx-auto leading-relaxed">
-              PeerPull is a peer exchange platform where builders trade honest feedback. <span className="text-blue-primary font-medium">Give a review, get a review.</span>
+              PeerPull is a peer exchange platform where builders trade honest feedback. <span className="text-blue-primary font-medium">Give feedback, get feedback.</span>
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">

@@ -27,7 +27,7 @@ export default async function ReviewQueuePage() {
           <Lock className="h-12 w-12 text-dark-text-muted mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-dark-text mb-3">Coming Soon</h2>
           <p className="text-dark-text-muted mb-6">
-            The review queue will be available when the platform launches. While you wait, complete your profile and invite other founders!
+            The feedback queue will be available when the platform launches. While you wait, complete your profile and invite other founders!
           </p>
           <Link href="/dashboard">
             <Button className="bg-primary hover:bg-primary-muted">Back to Dashboard</Button>
@@ -55,11 +55,11 @@ export default async function ReviewQueuePage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold">Submit Feedback</h1>
+      <h1 className="text-xl font-semibold">Give Feedback</h1>
 
       <Tabs defaultValue="get-review" className="w-full">
         <TabsList className="grid w-full grid-cols-3 mb-6">
-          <TabsTrigger value="get-review">Get a Review</TabsTrigger>
+          <TabsTrigger value="get-review">Get Next Project</TabsTrigger>
           <TabsTrigger value="assigned">My In-Progress ({myReviews?.length || 0})</TabsTrigger>
           <TabsTrigger value="completed">Completed ({completedReviews?.length || 0})</TabsTrigger>
         </TabsList>
@@ -67,18 +67,18 @@ export default async function ReviewQueuePage() {
         <TabsContent value="get-review" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">How Reviewing Works</CardTitle>
-              <CardDescription>Follow these steps to complete a review and earn PeerPoints</CardDescription>
+              <CardTitle className="text-lg">How Giving Feedback Works</CardTitle>
+              <CardDescription>Follow these steps to give feedback and earn PeerPoints</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <ol className="space-y-3">
                 {[
-                  { title: "Click \"Get Next Review\"", desc: "You'll be assigned the next project in the queue" },
-                  { title: "Read the briefing", desc: "Review the project details, focus areas, and questions to address" },
+                  { title: "Click \"Get Next Project\"", desc: "You'll be assigned the next project in the queue" },
+                  { title: "Read the briefing", desc: "Read the project details, focus areas, and questions to address" },
                   { title: "Open the project", desc: "Click \"Open Site in New Tab\" to load their project" },
                   { title: "Allow screen recording", desc: "When prompted, select the browser tab with the project (not your whole screen)" },
-                  { title: "Allow microphone (optional)", desc: "Narrate your thoughts as you review for richer feedback" },
-                  { title: "Record your review", desc: "Navigate the project while sharing your honest feedback aloud (1\u20135 minutes)" },
+                  { title: "Allow microphone (optional)", desc: "Narrate your thoughts as you explore for richer feedback" },
+                  { title: "Record your feedback", desc: "Navigate the project while sharing your honest feedback aloud (1\u20135 minutes)" },
                   { title: "Stop recording & submit", desc: "Rate the project, add written notes, and submit" },
                 ].map((step, i) => (
                   <li key={i} className="flex gap-3">
@@ -95,7 +95,7 @@ export default async function ReviewQueuePage() {
 
               <div className="flex flex-col sm:flex-row gap-3 pt-2 border-t border-dark-border">
                 <div className="flex-1 rounded-md bg-dark-surface px-3 py-2 text-sm text-dark-text-muted">
-                  <strong>Earn:</strong> 1 PeerPoint per review (+2 bonus on your first!)
+                  <strong>Earn:</strong> 1 PeerPoint per feedback given (+2 bonus on your first!)
                 </div>
                 <div className="flex-1 rounded-md bg-dark-surface px-3 py-2 text-sm text-dark-text-muted">
                   <strong>Tip:</strong> Think out loud &mdash; founders get the most value from hearing your raw reactions
@@ -127,7 +127,7 @@ export default async function ReviewQueuePage() {
                       href={`/dashboard/submit-feedback/${review.feedback_request_id}/review`}
                       className="inline-flex items-center justify-center w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted"
                     >
-                      Continue Review
+                      Continue
                     </Link>
                   </CardContent>
                 </Card>
@@ -136,9 +136,9 @@ export default async function ReviewQueuePage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <CheckCircle2 className="h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-dark-text">No assigned reviews</h3>
+              <h3 className="text-lg font-medium text-dark-text">No assigned projects</h3>
               <p className="mt-2 text-sm text-dark-text-muted">
-                Click &quot;Get a Review&quot; to get assigned the next project in the queue.
+                Click &quot;Get Next Project&quot; to get assigned the next project in the queue.
               </p>
             </div>
           )}
@@ -189,9 +189,9 @@ export default async function ReviewQueuePage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <AlertCircle className="h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-dark-text">No completed reviews</h3>
+              <h3 className="text-lg font-medium text-dark-text">No completed feedback</h3>
               <p className="mt-2 text-sm text-dark-text-muted">
-                Complete your first review to see it here.
+                Give your first feedback to see it here.
               </p>
             </div>
           )}

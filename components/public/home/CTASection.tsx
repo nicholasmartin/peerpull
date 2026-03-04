@@ -8,16 +8,16 @@ export function CTASection({ settings }: { settings: SiteSettings }) {
   const exchangeLabel =
     settings.reviewReward === settings.reviewCost
       ? `${settings.reviewReward}:${settings.reviewCost} Exchange — Limited Time`
-      : `Earn ${settings.reviewReward} Per Review`;
+      : `Earn ${settings.reviewReward} Per Feedback`;
 
   const perks = [
     {
       title: exchangeLabel,
-      description: `During beta, give just ${settings.reviewCost === 1 ? "one review" : `${settings.reviewCost} reviews`} to get one back. This generous ratio won't last forever — lock it in now.`,
+      description: `During beta, give just ${settings.reviewCost === 1 ? "one feedback" : `${settings.reviewCost} feedback`} to get one back. This generous ratio won't last forever — lock it in now.`,
     },
     {
       title: `${settings.signupBonus} Free Credits on Signup`,
-      description: "Start reviewing and getting feedback immediately. No earning required to submit your first project.",
+      description: "Start giving and getting feedback immediately. No earning required to submit your first project.",
     },
     {
       title: "Earn More Through Referrals",

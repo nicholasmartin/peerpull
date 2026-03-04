@@ -47,7 +47,7 @@ export default async function FeedbackRequestDetailPage({ params }: Props) {
     : { data: [] };
   const reviewerMap = Object.fromEntries((reviewerProfiles || []).map((p: any) => [p.id, p.full_name]));
 
-  const statusLabel = pr.status === "open" ? "Open" : pr.status === "in_review" ? "In Review" : pr.status === "completed" ? "Completed" : "Closed";
+  const statusLabel = pr.status === "open" ? "Open" : pr.status === "in_review" ? "In Progress" : pr.status === "completed" ? "Completed" : "Closed";
   const dotColor = pr.status === "open" ? "bg-yellow-500" : pr.status === "completed" ? "bg-green-500" : "bg-primary";
 
   return (
@@ -228,7 +228,7 @@ export default async function FeedbackRequestDetailPage({ params }: Props) {
                   <MessageSquare className="h-12 w-12 text-dark-text-muted mb-4" />
                   <h3 className="text-lg font-medium text-dark-text">No feedback yet</h3>
                   <p className="mt-2 text-sm text-dark-text-muted">
-                    Feedback will appear here once reviewers submit their reviews.
+                    Feedback will appear here once other builders submit their feedback.
                   </p>
                 </div>
               )}
@@ -240,7 +240,7 @@ export default async function FeedbackRequestDetailPage({ params }: Props) {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Review Summary</CardTitle>
+              <CardTitle>Feedback Summary</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-4 text-center">

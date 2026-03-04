@@ -225,7 +225,7 @@ export async function submitFeedbackRequest(formData: FormData) {
     .single();
 
   if (!profile || profile.peer_points_balance < settings.review_cost_amount) {
-    return encodedRedirect("error", "/dashboard/request-feedback", `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to submit a Feedback Request. Review other projects to earn points!`);
+    return encodedRedirect("error", "/dashboard/request-feedback", `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to submit a Feedback Request. Give feedback on other projects to earn points!`);
   }
 
   // Check active project limit
@@ -281,7 +281,7 @@ export async function getNextReview(): Promise<{ error: string } | { pr_id: stri
 
   if (error) {
     console.error("getNextReview error:", error);
-    return { error: "Failed to get next review" };
+    return { error: "Failed to get next project" };
   }
 
   if (!data || data.length === 0) {
@@ -332,7 +332,7 @@ export async function submitReview(formData: FormData) {
   });
 
   if (rpcError) {
-    return { error: rpcError.message || "Failed to submit review" };
+    return { error: rpcError.message || "Failed to submit feedback" };
   }
 
   // Notify the feedback request owner
@@ -347,8 +347,8 @@ export async function submitReview(formData: FormData) {
     await createNotification({
       userId: fr.user_id,
       type: "review_received",
-      title: "New review received",
-      message: `Someone submitted a video review for "${fr.title}"`,
+      title: "New feedback received",
+      message: `Someone submitted video feedback for "${fr.title}"`,
       referenceId: reviewId,
     });
   }
@@ -393,8 +393,8 @@ export async function approveReview(reviewId: string) {
     .eq("id", reviewId)
     .single();
 
-  if (!review) return { error: "Review not found" };
-  if (review.status !== "submitted") return { error: "Review is not in submitted state" };
+  if (!review) return { error: "Feedback not found" };
+  if (review.status !== "submitted") return { error: "Feedback is not in submitted state" };
 
   const { data: pr } = await supabase
     .from("feedback_requests")
@@ -402,7 +402,7 @@ export async function approveReview(reviewId: string) {
     .eq("id", review.feedback_request_id)
     .single();
 
-  if (!pr || pr.user_id !== user.id) return { error: "Only the project owner can approve reviews" };
+  if (!pr || pr.user_id !== user.id) return { error: "Only the project owner can approve feedback" };
 
   // Approve
   const { error: updateError } = await supabase
@@ -411,15 +411,15 @@ export async function approveReview(reviewId: string) {
     .eq("id", reviewId);
 
   if (updateError) {
-    console.error("Failed to approve review:", updateError);
-    return { error: "Failed to approve review" };
+    console.error("Failed to approve feedback:", updateError);
+    return { error: "Failed to approve feedback" };
   }
 
   await createNotification({
     userId: review.reviewer_id,
     type: "review_approved",
-    title: "Your review was approved!",
-    message: `Your review for "${pr.title}" was approved by the project owner`,
+    title: "Your feedback was approved!",
+    message: `Your feedback for "${pr.title}" was approved by the project owner`,
     referenceId: reviewId,
   });
 
@@ -571,7 +571,7 @@ export async function rateReviewAction(
   });
 
   if (error) {
-    return { error: error.message || "Failed to rate review" };
+    return { error: error.message || "Failed to rate feedback" };
   }
 
   // Get reviewer info for notification
@@ -586,8 +586,8 @@ export async function rateReviewAction(
     await createNotification({
       userId: reviewForNotif.reviewer_id,
       type: "review_rated",
-      title: "Your review was rated",
-      message: `The owner of "${title}" rated your review ${rating}/5`,
+      title: "Your feedback was rated",
+      message: `The owner of "${title}" rated your feedback ${rating}/5`,
       referenceId: reviewId,
     });
   }
@@ -606,8 +606,8 @@ export async function rejectReview(reviewId: string) {
     .eq("id", reviewId)
     .single();
 
-  if (!review) return { error: "Review not found" };
-  if (review.status !== "submitted") return { error: "Review is not in submitted state" };
+  if (!review) return { error: "Feedback not found" };
+  if (review.status !== "submitted") return { error: "Feedback is not in submitted state" };
 
   const { data: pr } = await supabase
     .from("feedback_requests")
@@ -615,7 +615,7 @@ export async function rejectReview(reviewId: string) {
     .eq("id", review.feedback_request_id)
     .single();
 
-  if (!pr || pr.user_id !== user.id) return { error: "Only the project owner can reject reviews" };
+  if (!pr || pr.user_id !== user.id) return { error: "Only the project owner can reject feedback" };
 
   const { error: updateError } = await supabase
     .from("reviews")
@@ -623,15 +623,15 @@ export async function rejectReview(reviewId: string) {
     .eq("id", reviewId);
 
   if (updateError) {
-    console.error("Failed to reject review:", updateError);
-    return { error: "Failed to reject review" };
+    console.error("Failed to reject feedback:", updateError);
+    return { error: "Failed to reject feedback" };
   }
 
   await createNotification({
     userId: review.reviewer_id,
     type: "review_rejected",
-    title: "Your review was not accepted",
-    message: `Your review for "${pr.title}" was not accepted by the project owner`,
+    title: "Your feedback was not accepted",
+    message: `Your feedback for "${pr.title}" was not accepted by the project owner`,
     referenceId: reviewId,
   });
 

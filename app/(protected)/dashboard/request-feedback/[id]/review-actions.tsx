@@ -17,7 +17,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
     if (result && "error" in result) {
       toast.error(result.error);
     } else {
-      toast.success("Review approved");
+      toast.success("Feedback approved");
     }
     router.refresh();
     setLoading(false);
@@ -29,7 +29,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
     if (result && "error" in result) {
       toast.error(result.error);
     } else {
-      toast.success("Review rejected");
+      toast.success("Feedback rejected");
     }
     router.refresh();
     setLoading(false);

@@ -48,8 +48,8 @@ export function ProfileStats({ builderStats, reviewerStats }: ProfileStatsProps)
         <h3 className="text-sm font-semibold text-white">As a Builder</h3>
         <div className="divide-y divide-dark-border">
           <StatRow label="Projects Submitted" value={builderStats.projectsSubmitted} />
-          <StatRow label="Reviews Received" value={builderStats.reviewsReceived} />
-          <StatRow label="Avg Rating Received" value={formatRating(builderStats.avgRatingReceived)} />
+          <StatRow label="Feedback Received" value={builderStats.reviewsReceived} />
+          <StatRow label="Avg Project Rating" value={formatRating(builderStats.avgRatingReceived)} />
           <div className="flex items-center justify-between py-1.5">
             <span className="text-sm text-gray-400">Interest Signals</span>
             <span className="text-sm text-white">
@@ -69,14 +69,14 @@ export function ProfileStats({ builderStats, reviewerStats }: ProfileStatsProps)
 
       {/* Reviewer stats */}
       <div className="rounded-xl border border-dark-border bg-dark-card p-5 space-y-3">
-        <h3 className="text-sm font-semibold text-white">As a Reviewer</h3>
+        <h3 className="text-sm font-semibold text-white">As a Feedback Giver</h3>
         <div className="divide-y divide-dark-border">
-          <StatRow label="Reviews Given" value={reviewerStats.reviewsGiven} />
+          <StatRow label="Feedback Given" value={reviewerStats.reviewsGiven} />
           <div className="flex items-center justify-between py-1.5">
             <span className="text-sm text-gray-400">Quality Score</span>
             <QualityScoreBadge score={reviewerStats.qualityScore} />
           </div>
-          <StatRow label="Avg Rating Given" value={formatRating(reviewerStats.avgRatingGiven)} />
+          <StatRow label="Avg Feedback Rating" value={formatRating(reviewerStats.avgRatingGiven)} />
           <StatRow label="Approval Rate" value={formatPercent(reviewerStats.approvalRate)} />
         </div>
       </div>

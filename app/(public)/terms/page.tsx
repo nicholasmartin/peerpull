@@ -36,9 +36,9 @@ export default function TermsPage() {
             </h2>
             <p>
               PeerPull is a peer-to-peer feedback exchange platform. Users submit products or
-              projects for review and provide video feedback to other users. The platform uses
+              projects for feedback and provide video feedback to other users. The platform uses
               a credit system (PeerPoints) to facilitate fair exchanges: you earn points by
-              giving reviews and spend points to receive feedback.
+              giving feedback and spend points to receive feedback.
             </p>
           </section>
 
@@ -60,7 +60,7 @@ export default function TermsPage() {
             </h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>PeerPoints have no monetary value and cannot be exchanged for cash.</li>
-              <li>Points are earned by completing video reviews that meet our quality guidelines.</li>
+              <li>Points are earned by completing video feedback that meets our quality guidelines.</li>
               <li>Points are spent when submitting a product for feedback.</li>
               <li>We reserve the right to adjust point balances, rewards, and costs to maintain platform health.</li>
               <li>Abuse of the referral system or point economy may result in account suspension.</li>
@@ -72,8 +72,8 @@ export default function TermsPage() {
               5. Content Guidelines
             </h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Video reviews must be constructive, honest, and relevant to the product being reviewed.</li>
-              <li>Do not include offensive, abusive, or discriminatory content in reviews.</li>
+              <li>Video feedback must be constructive, honest, and relevant to the product being reviewed.</li>
+              <li>Do not include offensive, abusive, or discriminatory content in feedback.</li>
               <li>Do not submit products that contain illegal content or violate third-party rights.</li>
               <li>You retain ownership of content you create, but grant PeerPull a license to host and display it within the platform.</li>
             </ul>
@@ -81,10 +81,10 @@ export default function TermsPage() {
 
           <section>
             <h2 className={`${montserrat.className} text-xl font-semibold text-dark-text mb-3`}>
-              6. Review Quality
+              6. Feedback Quality
             </h2>
             <p>
-              Reviews that are low-effort, off-topic, or do not meet minimum duration requirements
+              Feedback that is low-effort, off-topic, or does not meet minimum duration requirements
               may be rejected. Repeated low-quality submissions may affect your quality score and
               ability to earn points.
             </p>
@@ -95,8 +95,8 @@ export default function TermsPage() {
               7. Prohibited Conduct
             </h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Manipulating the review queue or PeerPoints system.</li>
-              <li>Harassing other users through reviews or any other means.</li>
+              <li>Manipulating the feedback queue or PeerPoints system.</li>
+              <li>Harassing other users through feedback or any other means.</li>
               <li>Using automated tools or bots to interact with the platform.</li>
               <li>Attempting to access other users&apos; data or accounts.</li>
             </ul>

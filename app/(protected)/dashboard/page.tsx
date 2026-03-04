@@ -93,7 +93,7 @@ export default async function DashboardPage() {
               <h1 className="text-xl font-semibold text-dark-text">Welcome back, {firstName}!</h1>
               <p className="mt-1 text-sm text-dark-text-muted">
                 You have <strong className="text-dark-text">{balance} PeerPoints</strong> available
-                {availableCount ? ` and ${availableCount} projects waiting for review.` : "."}
+                {availableCount ? ` and ${availableCount} projects waiting for feedback.` : "."}
               </p>
             </div>
             <div className="hidden md:block">
@@ -112,12 +112,12 @@ export default async function DashboardPage() {
           <span className="text-xs text-dark-text-muted">Get feedback on your project</span>
         </Link>
         <Link href="/dashboard/submit-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
-          <span className="block text-sm font-semibold text-dark-text">Start Reviewing</span>
+          <span className="block text-sm font-semibold text-dark-text">Give Feedback</span>
           <span className="text-xs text-dark-text-muted">Earn PeerPoints</span>
         </Link>
         <Link href="/dashboard/request-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
           <span className="block text-sm font-semibold text-dark-text">View Feedback</span>
-          <span className="text-xs text-dark-text-muted">See your latest reviews</span>
+          <span className="text-xs text-dark-text-muted">See your latest feedback</span>
         </Link>
         <Link href="/dashboard/peerpoints" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
           <span className="block text-sm font-semibold text-dark-text">PeerPoints</span>
@@ -141,7 +141,7 @@ export default async function DashboardPage() {
             </div>
             <div className="rounded-md border border-dark-border bg-dark-card p-4 text-center">
               <div className="text-2xl font-semibold tabular-nums text-dark-text">{reviewCount || 0}</div>
-              <div className="text-xs text-dark-text-muted">Reviews Given</div>
+              <div className="text-xs text-dark-text-muted">Feedback Given</div>
             </div>
           </div>
 
@@ -206,21 +206,21 @@ export default async function DashboardPage() {
                 {balance >= 2 ? "Ready to submit a Feedback Request!" : `Need ${2 - balance} more to submit`}
               </p>
               <Link href="/dashboard/submit-feedback" className="mt-3 inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted transition">
-                {balance >= 2 ? "Submit Feedback Request" : "Earn Points by Reviewing"}
+                {balance >= 2 ? "Submit Feedback Request" : "Earn Points by Giving Feedback"}
               </Link>
             </div>
           </div>
 
           {/* Available Reviews */}
           <div className="rounded-md border border-dark-border bg-dark-card p-6">
-            <h2 className="text-sm font-medium text-dark-text-muted uppercase tracking-wider mb-4">Available Reviews</h2>
+            <h2 className="text-sm font-medium text-dark-text-muted uppercase tracking-wider mb-4">Available Projects</h2>
             <p className="text-dark-text-muted text-sm">
               {availableCount
                 ? `${availableCount} project${availableCount === 1 ? "" : "s"} waiting for your feedback`
-                : "No projects available for review right now"}
+                : "No projects available for feedback right now"}
             </p>
             <Link href="/dashboard/submit-feedback" className="mt-4 block w-full rounded-md border border-dark-border py-2 text-center text-sm font-medium text-dark-text hover:bg-dark-surface transition">
-              Browse Review Queue
+              Browse Feedback Queue
             </Link>
           </div>
         </div>

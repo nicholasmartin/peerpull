@@ -43,7 +43,7 @@ export default async function FeedbackRequestsPage() {
     }[status] || "bg-dark-text-muted";
     const label = {
       open: "Open",
-      in_review: "In Review",
+      in_review: "In Progress",
       completed: "Completed",
       closed: "Closed",
     }[status] || status;
@@ -60,7 +60,7 @@ export default async function FeedbackRequestsPage() {
       <PlusCircle className="h-12 w-12 text-dark-text-muted mx-auto mb-4" />
       <h3 className="text-lg font-medium text-dark-text">No projects yet</h3>
       <p className="mt-2 text-sm text-dark-text-muted max-w-sm mx-auto">
-        1 PeerPoint per review received, not upfront &mdash; you start with 3.
+        1 PeerPoint per feedback received, not upfront &mdash; you start with 3.
       </p>
       <Link href="/dashboard/request-feedback/new">
         <Button className="mt-4 bg-primary hover:bg-primary-muted">
@@ -76,7 +76,7 @@ export default async function FeedbackRequestsPage() {
       <PlusCircle className="h-12 w-12 text-dark-text-muted mx-auto mb-4" />
       <h3 className="text-lg font-medium text-dark-text">No completed projects yet</h3>
       <p className="mt-2 text-sm text-dark-text-muted max-w-sm mx-auto">
-        Once your projects have been reviewed, they&apos;ll appear here.
+        Once your projects have received feedback, they&apos;ll appear here.
       </p>
     </div>
   );
@@ -136,7 +136,7 @@ export default async function FeedbackRequestsPage() {
                         </td>
                         <td className="px-4 py-4 text-dark-text-muted">{new Date(pr.created_at).toLocaleDateString()}</td>
                         <td className="px-4 py-4">{getStatusBadge(pr.status)}</td>
-                        <td className="px-4 py-4 text-dark-text-muted">{pr.reviews?.length || 0} reviews</td>
+                        <td className="px-4 py-4 text-dark-text-muted">{pr.reviews?.length || 0} feedback</td>
                         <td className="px-4 py-4">
                           <Link href={`/dashboard/request-feedback/${pr.id}`}>
                             <Button variant="outline" size="sm">
@@ -179,7 +179,7 @@ export default async function FeedbackRequestsPage() {
                         </td>
                         <td className="px-4 py-4 text-dark-text-muted">{new Date(pr.created_at).toLocaleDateString()}</td>
                         <td className="px-4 py-4">{getStatusBadge(pr.status)}</td>
-                        <td className="px-4 py-4 text-dark-text-muted">{pr.reviews?.length || 0} reviews</td>
+                        <td className="px-4 py-4 text-dark-text-muted">{pr.reviews?.length || 0} feedback</td>
                         <td className="px-4 py-4">
                           <Link href={`/dashboard/request-feedback/${pr.id}`}>
                             <Button variant="outline" size="sm">

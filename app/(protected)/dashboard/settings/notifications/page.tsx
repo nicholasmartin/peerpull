@@ -13,10 +13,10 @@ import { updateNotificationPreferences } from "@/app/actions";
 import { toast } from "sonner";
 
 const NOTIFICATION_EVENTS = [
-  { key: "review_received", label: "New Review Received", description: "When someone submits a review on your Feedback Request" },
-  { key: "review_approved", label: "Review Approved", description: "When a project owner approves your review" },
-  { key: "review_rejected", label: "Review Not Accepted", description: "When a project owner does not accept your review" },
-  { key: "review_rated", label: "Review Rated", description: "When a project owner rates your review" },
+  { key: "review_received", label: "New Feedback Received", description: "When someone submits feedback on your Feedback Request" },
+  { key: "review_approved", label: "Feedback Approved", description: "When a project owner approves your feedback" },
+  { key: "review_rejected", label: "Feedback Not Accepted", description: "When a project owner does not accept your feedback" },
+  { key: "review_rated", label: "Feedback Rated", description: "When a project owner rates your feedback" },
 ];
 
 export default function SettingsNotificationsPage() {

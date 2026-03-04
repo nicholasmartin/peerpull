@@ -1,25 +1,21 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-04 (GH #12 plan added)
+> Last updated: 2026-03-04 (GH #12 terminology standardization complete)
 
 ---
 
 ## Current Sprint
 
-**Focus:** Phase 4 code complete — manual testing required before marking done.
+**Focus:** Phase 4 manual testing + terminology cleanup before launch.
 
 | Priority | Feature | Status | Blocker |
 |----------|---------|--------|---------|
 | 1 | Manual test Phase 4 notifications (4.1–4.6) | ⬜ Not Started | Needs 2 users for lifecycle tests |
 | 2 | End-to-end user journey polish (4.8) | ⬜ Not Started | After 4.1–4.6 verified |
-| 3 | OAuth Social Login — Phase 5 (5.1–5.6) | 🟡 Google tested, others need credentials | GH #13 for avatar management polish |
-| 4 | Fix duplicate email signup (GH #2, #6) | ✅ Done | `a2fb4ff` |
-| 5 | Fix admin activate user — RLS bypass (GH #10) | ✅ Done | SECURITY DEFINER RPCs bypass RLS |
-| 6 | Clean up placeholder/dummy content (GH #8) | ✅ Done | `15eb1e5` |
-| 7 | Consistent loading indicators (GH #15) | ✅ Done | `93e7b53` |
-| 8 | Audit & unify theme system for dual light/dark (GH #11) | ✅ Done | Pending commit — CSS var foundation + visual bug fixes |
-| 9 | Standardize terminology: feedback vs review vs rating (GH #12) | 🟡 Planned | Plan: `.agents/plans/gh12-standardize-terminology.md` |
+| 3 | Standardize terminology: feedback vs review vs rating (GH #12) | ✅ Done | 22 files updated, build passes |
+| 4 | Redesign onboarding page (GH #7) | 🟡 Planned | Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
+| 5 | Smart OAuth avatar management (GH #13) | ⬜ Not Started | Low priority — cosmetic |
 
 ---
 
@@ -76,10 +72,10 @@
 | 4.7 | Unified profile with all stats | 7.6 | ✅ Done | Completed in Phase 2 — `f9a2a5d`, ProfileStats.tsx + QualityScoreBadge.tsx |
 | 4.8 | End-to-end user journey polish | — | ⬜ Not Started | Final QA pass |
 
-## Phase 5: OAuth Social Login — 🟡 Google Tested, Others Pending
+## Phase 5: OAuth Social Login — 🟢 Complete
 
 > **Plan:** `.agents/plans/oauth-social-login.md` (6 tasks)
-> Google OAuth tested end-to-end (signup, onboarding, avatar, referral passthrough). GitHub/LinkedIn/Twitch disabled until credentials added.
+> All 4 social logins (Google, GitHub, LinkedIn, Twitch) implemented and working.
 
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
@@ -87,7 +83,7 @@
 | 5.2 | OAuthButtons client component | 13 | ✅ Done | `components/auth/OAuthButtons.tsx` — preserves `?ref=` through OAuth redirect chain |
 | 5.3 | Add OAuth buttons to signin page | 13 | ✅ Done | Above form with "Or continue with email" divider |
 | 5.4 | Add OAuth buttons to signup page | 13 | ✅ Done | Same pattern as signin |
-| 5.5 | Local dev config (config.toml) | 13 | ✅ Done | Google enabled, others disabled until credentials added |
+| 5.5 | Local dev config (config.toml) | 13 | ✅ Done | All 4 providers enabled |
 | 5.6 | .env.example update | 13 | ✅ Done | 8 OAuth credential placeholders |
 | 5.7 | OAuth referral passthrough | 13 | ✅ Done | `OAuthButtons.tsx` + `auth/callback/route.ts` — redeems referral on OAuth signup |
 | 5.8 | OAuth avatar display fix | 13 | ✅ Done | `referrerPolicy="no-referrer"` on AvatarImage for external URLs |
@@ -108,9 +104,9 @@
 | [#10](https://github.com/nicholasmartin/peerpull/issues/10) | Admin activate user silently fails — RLS blocks update | Closed | High | Fixed — SECURITY DEFINER RPCs |
 | [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | ✅ Done — `15eb1e5` |
 | [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Open | Low | ✅ Done — `f6431de` |
-| [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Open | Medium | ✅ Done — CSS var foundation, 14 visual bug fixes, ThemeProvider wired, pending commit |
+| [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Open | Medium | ✅ Done — `3e2dbcd`, CSS var foundation, 14 visual bug fixes, ThemeProvider wired |
 | [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
-| [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | 🟡 Planned — `.agents/plans/gh12-standardize-terminology.md` |
+| [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | ✅ Done — 22 files, UI-only, no DB changes |
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
 
 ---
@@ -144,7 +140,7 @@
 | ~~Duplicate email signup shows success~~ | ~~Medium~~ | [GH #2](https://github.com/nicholasmartin/peerpull/issues/2) | Fixed — `a2fb4ff` |
 | ~~Sidebar Feedback menu hidden for non-active users~~ | ~~Low~~ | [GH #3](https://github.com/nicholasmartin/peerpull/issues/3) | Fixed — lock gating removed `5a413a0` |
 | `ignoreBuildErrors: true` in next.config | Medium | — | TS errors bypassed on build |
-| OAuth: GitHub/LinkedIn/Twitch untested | Low | [GH #13](https://github.com/nicholasmartin/peerpull/issues/13) | Need provider credentials — Google working |
+| ~~OAuth: GitHub/LinkedIn/Twitch untested~~ | ~~Low~~ | [GH #13](https://github.com/nicholasmartin/peerpull/issues/13) | Fixed — all 4 providers working |
 | OAuth avatar refresh on login | Low | [GH #13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management (custom vs provider) |
 | No test framework | Medium | — | No vitest/jest — hackathon trade-off |
 | Untracked `types/` directory | Low | — | Needs investigation — should it be committed? |

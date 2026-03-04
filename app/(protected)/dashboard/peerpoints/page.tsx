@@ -100,10 +100,10 @@ export default async function PeerPointsPage() {
                           </div>
                           <div className="font-medium text-dark-text">
                             {{
-                              earned_review: "Review approved",
+                              earned_review: "Feedback approved",
                               spent_submission: "Feedback Request submitted",
                               signup_bonus: "Welcome bonus",
-                              first_review_bonus: "First review bonus",
+                              first_review_bonus: "First feedback bonus",
                               referral_bonus: "Referral bonus",
                               admin_injection: "Bonus points",
                             }[t.type as string] || t.type}
@@ -126,7 +126,7 @@ export default async function PeerPointsPage() {
           </div>
         ) : (
           <div className="text-center py-12 text-dark-text-muted">
-            <p>No transactions yet. Review projects to earn PeerPoints!</p>
+            <p>No transactions yet. Give feedback to earn PeerPoints!</p>
           </div>
         )}
       </div>
@@ -136,7 +136,7 @@ export default async function PeerPointsPage() {
           <CardTitle>How PeerPoints Work</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-dark-text-muted">
-          <p><strong className="text-dark-text">Earn points:</strong> Review other founders' projects to earn PeerPoints. You also get a bonus for your first review!</p>
+          <p><strong className="text-dark-text">Earn points:</strong> Give feedback on other founders' projects to earn PeerPoints. You also get a bonus for your first feedback!</p>
           <p><strong className="text-dark-text">Spend points:</strong> Submit a Feedback Request to get video feedback on your project.</p>
           <p><strong className="text-dark-text">Get started:</strong> New users start with bonus PeerPoints. Invite friends to earn even more!</p>
         </CardContent>

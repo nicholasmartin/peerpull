@@ -9,7 +9,7 @@ import { rateReviewAction } from "@/app/actions";
 import { toast } from "sonner";
 
 const FLAG_OPTIONS = [
-  { value: "low_effort", label: "Low effort review" },
+  { value: "low_effort", label: "Low effort feedback" },
   { value: "spam", label: "Spam or fake" },
   { value: "irrelevant", label: "Irrelevant to my project" },
   { value: "off_topic", label: "Off-topic / didn't address questions" },
@@ -46,7 +46,7 @@ export function ReviewQualityPanel({
 
   async function handleSubmit() {
     if (rating < 1 || rating > 5) {
-      toast.error("Please select a star rating");
+      toast.error("Please select a rating");
       return;
     }
 
@@ -56,7 +56,7 @@ export function ReviewQualityPanel({
     if (result && "error" in result) {
       toast.error(result.error);
     } else {
-      toast.success("Review rated!");
+      toast.success("Feedback rated!");
       setIsReadOnly(true);
       router.refresh();
     }
@@ -68,7 +68,7 @@ export function ReviewQualityPanel({
   return (
     <div className="rounded-xl border border-dark-border bg-dark-surface p-4 space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-semibold text-white">Rate this Review</h4>
+        <h4 className="text-sm font-semibold text-white">Rate this Feedback</h4>
         {isReadOnly && (
           <button
             onClick={() => setIsReadOnly(false)}
@@ -128,11 +128,11 @@ export function ReviewQualityPanel({
       {/* Text feedback */}
       {!isReadOnly && (
         <div className="space-y-1">
-          <p className="text-xs text-gray-400">Feedback to reviewer (optional)</p>
+          <p className="text-xs text-gray-400">Note to feedback giver (optional)</p>
           <Textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Any specific feedback for the reviewer..."
+            placeholder="Any specific notes for the person who gave feedback..."
             className="min-h-[60px] text-sm"
           />
         </div>
@@ -160,7 +160,7 @@ export function ReviewQualityPanel({
           size="sm"
           className="bg-primary hover:bg-primary-muted"
         >
-          {isSubmitting ? "Rating..." : hasExisting ? "Update Rating" : "Rate Review"}
+          {isSubmitting ? "Rating..." : hasExisting ? "Update Rating" : "Rate Feedback"}
         </Button>
       )}
     </div>

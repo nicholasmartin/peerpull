@@ -12,7 +12,7 @@ const montserrat = Montserrat({
 
 export const metadata = {
   title: "PeerPull - Real feedback from Real Builders.",
-  description: "PeerPull is a peer exchange platform where builders trade honest feedback. Give a review, get a review. ",
+  description: "PeerPull is a peer exchange platform where builders trade honest feedback. Give feedback, get feedback.",
 };
 
 const inter = Inter({

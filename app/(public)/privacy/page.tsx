@@ -28,7 +28,7 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li><strong className="text-dark-text">Account information:</strong> Name, email address, and password when you create an account.</li>
               <li><strong className="text-dark-text">Profile information:</strong> Avatar, expertise areas, and bio that you choose to provide.</li>
-              <li><strong className="text-dark-text">Content:</strong> Video reviews you record, feedback requests you submit, and any associated text or URLs.</li>
+              <li><strong className="text-dark-text">Content:</strong> Video feedback you record, feedback requests you submit, and any associated text or URLs.</li>
               <li><strong className="text-dark-text">Usage data:</strong> Pages visited, features used, and interactions within the platform.</li>
               <li><strong className="text-dark-text">OAuth data:</strong> If you sign in via Google or another provider, we receive your name, email, and profile picture from that provider.</li>
             </ul>
@@ -40,8 +40,8 @@ export default function PrivacyPage() {
             </h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>To provide, operate, and maintain the PeerPull platform.</li>
-              <li>To manage your account, PeerPoints balance, and review queue position.</li>
-              <li>To send notifications about review activity (configurable in your settings).</li>
+              <li>To manage your account, PeerPoints balance, and feedback queue position.</li>
+              <li>To send notifications about feedback activity (configurable in your settings).</li>
               <li>To improve the platform and develop new features.</li>
               <li>To prevent fraud and enforce our terms of service.</li>
             </ul>
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
             </h2>
             <p>
               Your data is stored securely using Supabase infrastructure. We use row-level security
-              policies to ensure users can only access their own data. Video reviews are stored in
+              policies to ensure users can only access their own data. Video feedback is stored in
               secure cloud storage. We use cookie-based authentication with no client-side token storage.
             </p>
           </section>
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="mb-3">We do not sell your personal information. We may share data in the following limited circumstances:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong className="text-dark-text">With other users:</strong> Your profile name, avatar, and video reviews are visible to the users you are exchanging feedback with.</li>
+              <li><strong className="text-dark-text">With other users:</strong> Your profile name, avatar, and video feedback are visible to the users you are exchanging feedback with.</li>
               <li><strong className="text-dark-text">Service providers:</strong> We use third-party services (e.g., email delivery, cloud hosting) that process data on our behalf.</li>
               <li><strong className="text-dark-text">Legal requirements:</strong> We may disclose data if required by law or to protect our rights.</li>
             </ul>

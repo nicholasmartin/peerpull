@@ -23,7 +23,7 @@ export function WaitlistBanner({ profile }: WaitlistBannerProps) {
             </h1>
             <p className="mt-2 text-sm text-dark-text-muted max-w-lg">
               We&apos;re preparing PeerPull for launch. Once we go live, you&apos;ll be able to
-              submit your projects for feedback and start reviewing other builders&apos; work.
+              submit your projects for feedback and start giving feedback on other builders&apos; work.
             </p>
           </div>
         </div>

@@ -140,7 +140,7 @@ export function ReviewSession({
           <div className="flex-1 min-h-0 overflow-auto p-6">
             <div className="max-w-2xl mx-auto space-y-6">
               <h2 className="text-lg font-semibold flex items-center gap-2">
-                <span>📋</span> Review Briefing
+                <span>📋</span> Project Briefing
               </h2>
 
               {/* Description */}
@@ -210,12 +210,12 @@ export function ReviewSession({
 
               {/* Step-by-step instructions */}
               <div className="rounded-md border border-dark-border bg-dark-surface p-4 space-y-2">
-                <h3 className="text-xs font-semibold text-dark-text-muted uppercase tracking-wide">How to record your review</h3>
+                <h3 className="text-xs font-semibold text-dark-text-muted uppercase tracking-wide">How to record your feedback</h3>
                 <ol className="space-y-1.5">
                   {[
                     { title: "Open the project", desc: "click the button above to open it in a new tab" },
                     { title: "Start recording", desc: "click \"Start Recording\", then select the project's browser tab when prompted" },
-                    { title: "Narrate your review", desc: `explore the project and think out loud (minimum ${minDuration} seconds, max ${Math.floor(maxDuration / 60)} minutes)` },
+                    { title: "Narrate your feedback", desc: `explore the project and think out loud (minimum ${minDuration} seconds, max ${Math.floor(maxDuration / 60)} minutes)` },
                     { title: "Stop & submit", desc: "click \"Stop Recording\", then rate and submit your feedback" },
                   ].map((step, i) => (
                     <li key={i} className="flex items-start gap-2 text-xs">
@@ -269,12 +269,12 @@ export function ReviewSession({
             {/* Review form */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Your Review</CardTitle>
+                <CardTitle className="text-base">Your Feedback</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Rating */}
                 <div className="space-y-2">
-                  <Label>Rating <span className="text-red-500">*</span></Label>
+                  <Label>Project Rating <span className="text-red-500">*</span></Label>
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
@@ -343,7 +343,7 @@ export function ReviewSession({
                   className="w-full bg-primary hover:bg-primary-muted"
                 >
                   {submitting && <Spinner size="sm" />}
-                  {submitting ? "Submitting Review..." : "Submit Review"}
+                  {submitting ? "Submitting Feedback..." : "Submit Feedback"}
                 </Button>
               </CardContent>
             </Card>

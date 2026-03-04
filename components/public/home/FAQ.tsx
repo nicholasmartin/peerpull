@@ -38,8 +38,8 @@ const Accordion = ({ items }: AccordionProps) => {
 export function FAQ({ settings }: { settings: SiteSettings }) {
   const exchangeRatio =
     settings.reviewReward === settings.reviewCost
-      ? `a ${settings.reviewReward}:${settings.reviewCost} exchange ratio (give ${settings.reviewCost} review, get ${settings.reviewReward} back)`
-      : `${settings.reviewReward} points per review given`;
+      ? `a ${settings.reviewReward}:${settings.reviewCost} exchange ratio (give ${settings.reviewCost} feedback, get ${settings.reviewReward} back)`
+      : `${settings.reviewReward} points per feedback given`;
 
   return (
     <section id="faq" className="py-20 md:py-32 bg-dark-surface relative">
@@ -60,11 +60,11 @@ export function FAQ({ settings }: { settings: SiteSettings }) {
               },
               {
                 question: "What are the beta perks?",
-                answer: `Beta members enjoy ${exchangeRatio}, ${settings.signupBonus} free credits at signup, and a +${settings.firstReviewBonus} credit bonus for your first review. Plus, refer a friend and you both earn bonus credits. These perks are time-limited and will adjust as we grow.`
+                answer: `Beta members enjoy ${exchangeRatio}, ${settings.signupBonus} free credits at signup, and a +${settings.firstReviewBonus} credit bonus for your first feedback. Plus, refer a friend and you both earn bonus credits. These perks are time-limited and will adjust as we grow.`
               },
               {
                 question: "How do you ensure quality feedback?",
-                answer: "All reviews must be approved by recipients before the reviewer earns PeerPoints. Our templates also guide reviewers to provide specific, actionable insights rather than generic comments. This approval mechanism works the same during beta."
+                answer: "All feedback must be approved by recipients before the giver earns PeerPoints. Our templates also guide feedback givers to provide specific, actionable insights rather than generic comments. This approval mechanism works the same during beta."
               },
               {
                 question: "What if I don't have a landing page yet?",

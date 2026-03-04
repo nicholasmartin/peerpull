@@ -72,10 +72,10 @@ export function Problem() {
 
             <ul className="space-y-4 flex-1">
               {[
-                { bold: "Feedback from real builders", rest: "— every reviewer on PeerPull is a founder or maker who understands what you're going through" },
-                { bold: "Fast turnaround", rest: "— submit your product and get a detailed video review back, typically within minutes" },
-                { bold: "Guaranteed quality", rest: "— reviewers earn credits by giving thoughtful feedback, so low-effort reviews don't survive" },
-                { bold: "Zero cost", rest: "— give a review, get a review. No subscriptions, no invoices, no catch" },
+                { bold: "Feedback from real builders", rest: "— every feedback giver on PeerPull is a founder or maker who understands what you're going through" },
+                { bold: "Fast turnaround", rest: "— submit your product and get detailed video feedback back, typically within minutes" },
+                { bold: "Guaranteed quality", rest: "— feedback givers earn credits by being thorough, so low-effort feedback doesn't survive" },
+                { bold: "Zero cost", rest: "— give feedback, get feedback. No subscriptions, no invoices, no catch" },
                 { bold: "Built for the early days", rest: "— when you need a second opinion most, not after you've already launched and it's too late to pivot" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">

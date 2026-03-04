@@ -29,11 +29,11 @@ export function GetNextReviewButton() {
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
       <h3 className="text-lg font-medium text-dark-text">
-        Ready to review?
+        Ready to give feedback?
       </h3>
       <p className="text-sm text-dark-text-muted max-w-md">
         Click the button below to get assigned the next project in the queue.
-        You&apos;ll earn <span className="font-semibold text-green-400">+1 PeerPoint</span> for each completed review.
+        You&apos;ll earn <span className="font-semibold text-green-400">+1 PeerPoint</span> for each feedback you give.
       </p>
       <Button
         className="bg-primary hover:bg-primary-muted px-8 py-3 text-base"
@@ -41,7 +41,7 @@ export function GetNextReviewButton() {
         disabled={isPending}
       >
         {isPending && <Spinner size="sm" />}
-        {isPending ? "Finding a project..." : "Get Next Review"}
+        {isPending ? "Finding a project..." : "Get Next Project"}
       </Button>
     </div>
   );

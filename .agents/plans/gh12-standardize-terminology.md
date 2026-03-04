@@ -72,6 +72,9 @@ Apply this vocabulary to all UI labels, headings, button text, toast messages, d
 **Server Actions & Notifications:**
 - `app/actions.ts` — Error messages, notification titles/messages (lines 228, 284, 335, 350-351, 396-422, 560-590, 609-634)
 
+**Settings:**
+- `app/(protected)/dashboard/settings/notifications/page.tsx` (lines 15-20) — NOTIFICATION_EVENTS labels and descriptions use "Review" terms
+
 **Onboarding & Waitlist:**
 - `components/protected/dashboard/OnboardingFlow.tsx` (lines 117-119) — "Review others" card
 - `components/protected/dashboard/GettingStartedChecklist.tsx` (lines 44-56, 165) — Step labels/descriptions
@@ -414,7 +417,21 @@ IMPORTANT: Execute every task in order, top to bottom. Each task is atomic and i
 
 ---
 
-### Task 18: UPDATE Landing Page Files
+### Task 18: UPDATE `app/(protected)/dashboard/settings/notifications/page.tsx`
+
+**Changes (update NOTIFICATION_EVENTS display labels and descriptions — do NOT change `key` values):**
+- Line 16: `label: "New Review Received"` → `label: "New Feedback Received"`, `description: "When someone submits a review on your Feedback Request"` → `description: "When someone submits feedback on your Feedback Request"`
+- Line 17: `label: "Review Approved"` → `label: "Feedback Approved"`, `description: "When a project owner approves your review"` → `description: "When a project owner approves your feedback"`
+- Line 18: `label: "Review Not Accepted"` → `label: "Feedback Not Accepted"`, `description: "When a project owner does not accept your review"` → `description: "When a project owner does not accept your feedback"`
+- Line 19: `label: "Review Rated"` → `label: "Feedback Rated"`, `description: "When a project owner rates your review"` → `description: "When a project owner rates your feedback"`
+
+**DO NOT CHANGE:** The `key` values (`review_received`, `review_approved`, etc.) — these are DB enum values.
+
+**VALIDATE:** `grep -n "review" app/(protected)/dashboard/settings/notifications/page.tsx` — only `key` values and code identifiers should remain.
+
+---
+
+### Task 19: UPDATE Landing Page Files
 
 **`components/public/home/HowItWorks.tsx`:**
 - Line 18: `"Review Other Projects"` → `"Give Feedback on Projects"`
@@ -449,13 +466,13 @@ IMPORTANT: Execute every task in order, top to bottom. Each task is atomic and i
 - Line 20-21: `"Start reviewing and getting feedback immediately"` → `"Start giving and getting feedback immediately"`
 
 **`app/layout.tsx`:**
-- Line 17: `"Give a review, get a review."` → `"Give feedback, get feedback."`
+- Line 15: `"Give a review, get a review."` → `"Give feedback, get feedback."`
 
 **VALIDATE:** `grep -rn '".*[Rr]eview' components/public/home/ app/layout.tsx` — verify only code variable names remain.
 
 ---
 
-### Task 19: Final Validation Sweep
+### Task 20: Final Validation Sweep
 
 Run a comprehensive grep across the entire codebase for remaining user-facing "review" strings:
 
@@ -532,6 +549,7 @@ Navigate through all affected pages and verify terminology is consistent.
 - [ ] All toast messages use "feedback" not "review"
 - [ ] All notification title/message strings use "feedback" not "review"
 - [ ] Transaction type labels on PeerPoints page use "feedback" not "review"
+- [ ] Notification preference labels/descriptions on settings page use "feedback" not "review"
 - [ ] Landing page copy updated consistently
 - [ ] Meta description updated
 - [ ] No database changes made
@@ -543,7 +561,7 @@ Navigate through all affected pages and verify terminology is consistent.
 
 ## COMPLETION CHECKLIST
 
-- [ ] All 19 tasks completed in order
+- [ ] All 20 tasks completed in order
 - [ ] Each task validation passed
 - [ ] Full grep audit shows no remaining user-facing "review" strings in dashboard
 - [ ] Build succeeds

@@ -114,9 +114,9 @@ export default function OnboardingFlow({ profile }: OnboardingFlowProps) {
               </div>
               <div className="rounded-md border border-dark-border bg-dark-surface p-4">
                 <Users className="h-5 w-5 text-primary mb-2" />
-                <h3 className="text-sm font-medium text-dark-text">Review others</h3>
+                <h3 className="text-sm font-medium text-dark-text">Give feedback</h3>
                 <p className="text-xs text-dark-text-muted mt-1">
-                  Give honest video reviews to earn PeerPoints
+                  Give honest video feedback to earn PeerPoints
                 </p>
               </div>
               <div className="rounded-md border border-dark-border bg-dark-surface p-4">
