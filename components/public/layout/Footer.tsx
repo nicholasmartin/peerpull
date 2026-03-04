@@ -22,10 +22,10 @@ export function Footer() {
         </div>
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-8">
-          <Link href="#" className="text-sm text-dark-text-muted hover:text-dark-text transition-colors duration-200">
+          <Link href="/terms" className="text-sm text-dark-text-muted hover:text-dark-text transition-colors duration-200">
             Terms
           </Link>
-          <Link href="#" className="text-sm text-dark-text-muted hover:text-dark-text transition-colors duration-200">
+          <Link href="/privacy" className="text-sm text-dark-text-muted hover:text-dark-text transition-colors duration-200">
             Privacy
           </Link>
           <Link href="#" className="text-sm text-dark-text-muted hover:text-dark-text transition-colors duration-200">
