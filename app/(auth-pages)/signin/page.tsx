@@ -3,6 +3,7 @@ import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
+import OAuthButtons from "@/components/auth/OAuthButtons";
 import Link from "next/link";
 import React from "react";
 
@@ -20,6 +21,20 @@ export default async function Signin(props: { searchParams: Promise<Message> }) 
         </p>
       </div>
       <div>
+        <OAuthButtons />
+
+        {/* Divider */}
+        <div className="relative my-5">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-dark-border"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 text-dark-text-muted bg-dark-card">
+              Or continue with email
+            </span>
+          </div>
+        </div>
+
         <form>
           <div className="space-y-5">
             {/* Email */}

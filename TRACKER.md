@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-07
+> Last updated: 2026-03-08
 
 ---
 
@@ -13,7 +13,7 @@
 |----------|---------|--------|---------|
 | 1 | Manual test Phase 4 notifications (4.1–4.6) | ⬜ Not Started | Needs 2 users for lifecycle tests |
 | 2 | End-to-end user journey polish (4.8) | ⬜ Not Started | After 4.1–4.6 verified |
-| 3 | OAuth Social Login — Phase 5 (5.1–5.6) | 🟡 Coded, untested | Needs provider credentials in Supabase Dashboard |
+| 3 | OAuth Social Login — Phase 5 (5.1–5.6) | 🟡 Google tested, others need credentials | GH #13 for avatar management polish |
 | 4 | Fix duplicate email signup (GH #2, #6) | ✅ Done | `a2fb4ff` |
 | 5 | Fix admin activate user — RLS bypass (GH #10) | ✅ Done | SECURITY DEFINER RPCs bypass RLS |
 
@@ -72,19 +72,21 @@
 | 4.7 | Unified profile with all stats | 7.6 | ✅ Done | Completed in Phase 2 — `f9a2a5d`, ProfileStats.tsx + QualityScoreBadge.tsx |
 | 4.8 | End-to-end user journey polish | — | ⬜ Not Started | Final QA pass |
 
-## Phase 5: OAuth Social Login — 🟡 Coded, Untested
+## Phase 5: OAuth Social Login — 🟡 Google Tested, Others Pending
 
 > **Plan:** `.agents/plans/oauth-social-login.md` (6 tasks)
-> **⚠️ Code complete but NOT yet tested.** Requires provider credentials configured in Supabase Dashboard before OAuth flows can be tested end-to-end.
+> Google OAuth tested end-to-end (signup, onboarding, avatar, referral passthrough). GitHub/LinkedIn/Twitch disabled until credentials added.
 
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
-| 5.1 | Update `handle_new_user()` trigger for OAuth metadata | 13 | 🟡 Coded, untested | Migration `20260306000000`, parses `full_name`/`given_name`/`family_name` + `picture` |
-| 5.2 | OAuthButtons client component | 13 | 🟡 Coded, untested | `components/auth/OAuthButtons.tsx` — Google, GitHub, LinkedIn, Twitch with dark gold theme |
-| 5.3 | Add OAuth buttons to signin page | 13 | 🟡 Coded, untested | Above form with "Or continue with email" divider |
-| 5.4 | Add OAuth buttons to signup page | 13 | 🟡 Coded, untested | Same pattern as signin |
-| 5.5 | Local dev config (config.toml) | 13 | ✅ Done | 4 providers in `[auth.external.*]` sections |
+| 5.1 | Update `handle_new_user()` trigger for OAuth metadata | 13 | ✅ Done | Migrations `20260306000000` + `000001` (fix), parses OAuth name/avatar + signup bonus/referral/onboarding |
+| 5.2 | OAuthButtons client component | 13 | ✅ Done | `components/auth/OAuthButtons.tsx` — preserves `?ref=` through OAuth redirect chain |
+| 5.3 | Add OAuth buttons to signin page | 13 | ✅ Done | Above form with "Or continue with email" divider |
+| 5.4 | Add OAuth buttons to signup page | 13 | ✅ Done | Same pattern as signin |
+| 5.5 | Local dev config (config.toml) | 13 | ✅ Done | Google enabled, others disabled until credentials added |
 | 5.6 | .env.example update | 13 | ✅ Done | 8 OAuth credential placeholders |
+| 5.7 | OAuth referral passthrough | 13 | ✅ Done | `OAuthButtons.tsx` + `auth/callback/route.ts` — redeems referral on OAuth signup |
+| 5.8 | OAuth avatar display fix | 13 | ✅ Done | `referrerPolicy="no-referrer"` on AvatarImage for external URLs |
 
 ---
 
@@ -101,6 +103,7 @@
 | [#7](https://github.com/nicholasmartin/peerpull/issues/7) | Redesign onboarding page — update logos, copy, and visual polish | Open | Medium | 🟡 Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
 | [#10](https://github.com/nicholasmartin/peerpull/issues/10) | Admin activate user silently fails — RLS blocks update | Closed | High | Fixed — SECURITY DEFINER RPCs |
 | [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | 🟡 Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
+| [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
 
 ---
 
@@ -133,7 +136,8 @@
 | ~~Duplicate email signup shows success~~ | ~~Medium~~ | [GH #2](https://github.com/nicholasmartin/peerpull/issues/2) | Fixed — `a2fb4ff` |
 | ~~Sidebar Feedback menu hidden for non-active users~~ | ~~Low~~ | [GH #3](https://github.com/nicholasmartin/peerpull/issues/3) | Fixed — lock gating removed `5a413a0` |
 | `ignoreBuildErrors: true` in next.config | Medium | — | TS errors bypassed on build |
-| OAuth buttons coded but untested | Low | — | Phase 5 coded — needs provider credentials for testing |
+| OAuth: GitHub/LinkedIn/Twitch untested | Low | [GH #13](https://github.com/nicholasmartin/peerpull/issues/13) | Need provider credentials — Google working |
+| OAuth avatar refresh on login | Low | [GH #13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management (custom vs provider) |
 | No test framework | Medium | — | No vitest/jest — hackathon trade-off |
 | Untracked `types/` directory | Low | — | Needs investigation — should it be committed? |
 

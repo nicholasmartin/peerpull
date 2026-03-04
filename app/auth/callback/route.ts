@@ -14,10 +14,23 @@ export async function GET(request: Request) {
     const supabase = await createClient();
     await supabase.auth.exchangeCodeForSession(code);
 
-    // Check if this is a new user in onboarding status
-    if (!redirectTo) {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      // Redeem referral code if passed through OAuth redirect chain
+      const ref = requestUrl.searchParams.get("ref")?.trim().toLowerCase();
+      if (ref) {
+        const { error: refError } = await supabase.rpc("redeem_referral", {
+          p_code: ref,
+          p_new_user_id: user.id,
+        });
+        if (refError) {
+          console.error("OAuth referral redemption failed:", refError.message);
+        }
+      }
+
+      // Check if this is a new user in onboarding status
+      if (!redirectTo) {
         const { data: profile } = await supabase
           .from("profiles")
           .select("status")
