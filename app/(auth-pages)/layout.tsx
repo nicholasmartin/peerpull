@@ -9,7 +9,7 @@ export default async function AuthLayout({
 }) {
   return (
     <ThemeProvider isProtected={false}>
-      <div className="relative flex min-h-screen flex-col bg-dark-bg">
+      <div className="dark relative flex min-h-screen flex-col bg-dark-bg">
         {/* Subtle background glow */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute left-1/2 top-0 -translate-x-1/2 h-[500px] w-[800px] rounded-full bg-blue-primary/5 blur-[120px]" />

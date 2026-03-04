@@ -1,8 +1,6 @@
-import { Suspense } from "react";
 import { Inter, Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { SidebarProvider } from "@/context/SidebarContext";
-import { NavigationProgressBar } from "@/components/ui/progress-bar";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -34,9 +32,6 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
       <body className="font-inter bg-dark-bg text-dark-text antialiased" suppressHydrationWarning>
-        <Suspense fallback={null}>
-          <NavigationProgressBar />
-        </Suspense>
         <ThemeProvider>
           <SidebarProvider>
             {children}

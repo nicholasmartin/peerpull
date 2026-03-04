@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-04
+> Last updated: 2026-03-04 (GH #12 plan added)
 
 ---
 
@@ -19,6 +19,7 @@
 | 6 | Clean up placeholder/dummy content (GH #8) | ✅ Done | `15eb1e5` |
 | 7 | Consistent loading indicators (GH #15) | ✅ Done | `93e7b53` |
 | 8 | Audit & unify theme system for dual light/dark (GH #11) | ✅ Done | Pending commit — CSS var foundation + visual bug fixes |
+| 9 | Standardize terminology: feedback vs review vs rating (GH #12) | 🟡 Planned | Plan: `.agents/plans/gh12-standardize-terminology.md` |
 
 ---
 
@@ -109,6 +110,7 @@
 | [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Open | Low | ✅ Done — `f6431de` |
 | [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Open | Medium | ✅ Done — CSS var foundation, 14 visual bug fixes, ThemeProvider wired, pending commit |
 | [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
+| [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | 🟡 Planned — `.agents/plans/gh12-standardize-terminology.md` |
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
 
 ---

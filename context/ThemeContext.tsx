@@ -72,12 +72,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   const toggleTheme = (newTheme?: ThemeType) => {
     if (!mounted) return;
-    
-    // If no theme specified, cycle through light -> dark -> system
+
+    // If no theme specified, toggle between light and dark
     if (!newTheme) {
-      if (theme === "light") newTheme = "dark";
-      else if (theme === "dark") newTheme = "system";
-      else newTheme = "light";
+      newTheme = theme === "dark" ? "light" : "dark";
     }
     
     setTheme(newTheme);

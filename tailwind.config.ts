@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config = {
-  // Using dark mode by default - no toggle needed
+  // Theme toggling via .dark class on <html> — managed by ThemeContext
   darkMode: 'class',
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -41,13 +41,14 @@ const config = {
         success: "#219653",
         danger: "#D34053",
         warning: "#FFA70B",
-        // Dark theme palette
-        "dark-bg": "#0a0a0b",
-        "dark-card": "#141416",
-        "dark-surface": "#1c1c1f",
-        "dark-border": "#27272a",
-        "dark-text": "#fafafa",
-        "dark-text-muted": "#71717a",
+        // Theme-aware tokens — values swap via CSS custom properties in globals.css
+        // Names kept as dark-* for zero-diff in components (they're semantic, not literal)
+        "dark-bg": "rgb(var(--color-bg) / <alpha-value>)",
+        "dark-card": "rgb(var(--color-card) / <alpha-value>)",
+        "dark-surface": "rgb(var(--color-surface) / <alpha-value>)",
+        "dark-border": "rgb(var(--color-border) / <alpha-value>)",
+        "dark-text": "rgb(var(--color-text) / <alpha-value>)",
+        "dark-text-muted": "rgb(var(--color-text-muted) / <alpha-value>)",
         // Public page tokens (warm gold palette)
         "blue-primary": "#d4a853",
         "blue-secondary": "#c49b38",
@@ -62,13 +63,13 @@ const config = {
           muted: "#b8912e",
           subtle: "rgba(212,168,83,0.08)",
         },
-        background: "#0a0a0b",
-        foreground: "#fafafa",
+        background: "rgb(var(--color-bg) / <alpha-value>)",
+        foreground: "rgb(var(--color-text) / <alpha-value>)",
         muted: {
-          DEFAULT: "#1c1c1f",
-          foreground: "#71717a",
+          DEFAULT: "rgb(var(--color-surface) / <alpha-value>)",
+          foreground: "rgb(var(--color-text-muted) / <alpha-value>)",
         },
-        border: "#27272a",
+        border: "rgb(var(--color-border) / <alpha-value>)",
       },
       borderRadius: {},
       keyframes: {
