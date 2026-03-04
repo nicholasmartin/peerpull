@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-05
+> Last updated: 2026-03-04
 
 ---
 
@@ -13,7 +13,8 @@
 |----------|---------|--------|---------|
 | 1 | Manual test Phase 4 notifications (4.1–4.6) | ⬜ Not Started | Needs 2 users for lifecycle tests |
 | 2 | End-to-end user journey polish (4.8) | ⬜ Not Started | After 4.1–4.6 verified |
-| 3 | Close open GitHub issues (#2, #4) | ⬜ Not Started | — |
+| 3 | OAuth Social Login — Phase 5 (5.1–5.6) | 🟡 Planned | Needs provider console setup first |
+| 4 | Fix duplicate email signup (GH #2, #6) | ✅ Done | `a2fb4ff` |
 
 ---
 
@@ -70,6 +71,20 @@
 | 4.7 | Unified profile with all stats | 7.6 | ✅ Done | Completed in Phase 2 — `f9a2a5d`, ProfileStats.tsx + QualityScoreBadge.tsx |
 | 4.8 | End-to-end user journey polish | — | ⬜ Not Started | Final QA pass |
 
+## Phase 5: OAuth Social Login — 🟡 Planned
+
+> **Plan:** `.agents/plans/oauth-social-login.md` (6 tasks)
+> **Requires manual provider setup** in Google Cloud Console, GitHub Developer Settings, LinkedIn Developer, and Twitch Developer Console before implementation can be tested.
+
+| # | Feature | PRD Ref | Status | Notes |
+|---|---------|---------|--------|-------|
+| 5.1 | Update `handle_new_user()` trigger for OAuth metadata | 13 | ⬜ Not Started | Migration to parse `full_name`/`given_name`/`family_name` + `picture` |
+| 5.2 | OAuthButtons client component | 13 | ⬜ Not Started | Google, GitHub, LinkedIn, Twitch buttons with dark gold theme |
+| 5.3 | Add OAuth buttons to signin page | 13 | ⬜ Not Started | Above form with "Or continue with email" divider |
+| 5.4 | Add OAuth buttons to signup page | 13 | ⬜ Not Started | Same pattern as signin |
+| 5.5 | Local dev config (config.toml) | 13 | ⬜ Not Started | 4 providers in `[auth.external.*]` sections |
+| 5.6 | .env.example update | 13 | ⬜ Not Started | 8 OAuth credential placeholders |
+
 ---
 
 ## GitHub Issues
@@ -78,9 +93,9 @@
 
 | # | Title | State | Severity | Notes |
 |---|-------|-------|----------|-------|
-| [#2](https://github.com/nicholasmartin/peerpull/issues/2) | Signup with existing email shows success message instead of error | Open | Medium | `signUpAction` missing `identities` length check — fix is a one-liner in `app/actions.ts` |
-| [#3](https://github.com/nicholasmartin/peerpull/issues/3) | Sidebar: allow expanding Feedback menu when user is not active | Fixed | Low | Resolved by removing lock gating entirely — `5a413a0` |
-| [#4](https://github.com/nicholasmartin/peerpull/issues/4) | Redesign auth pages to match dark gold theme | Open (likely done) | Medium | Commit `f885321` applied dark/gold theme to auth pages — may need verification and issue closure |
+| [#2](https://github.com/nicholasmartin/peerpull/issues/2) | Signup with existing email shows success message instead of error | Fixed | Medium | `identities` length check + verify-email page — `a2fb4ff` |
+| [#3](https://github.com/nicholasmartin/peerpull/issues/3) | Sidebar: allow expanding Feedback menu when user is not active | Closed | Low | Resolved by removing lock gating entirely — `5a413a0` |
+| [#4](https://github.com/nicholasmartin/peerpull/issues/4) | Redesign auth pages to match dark gold theme | Closed | Medium | Verified and closed — commit `f885321` applied dark/gold theme to all auth pages |
 
 ---
 
@@ -110,10 +125,10 @@
 
 | Issue | Severity | Source | Notes |
 |-------|----------|--------|-------|
-| Duplicate email signup shows success | Medium | [GH #2](https://github.com/nicholasmartin/peerpull/issues/2) | `signUpAction` missing `identities` length check |
+| ~~Duplicate email signup shows success~~ | ~~Medium~~ | [GH #2](https://github.com/nicholasmartin/peerpull/issues/2) | Fixed — `a2fb4ff` |
 | ~~Sidebar Feedback menu hidden for non-active users~~ | ~~Low~~ | [GH #3](https://github.com/nicholasmartin/peerpull/issues/3) | Fixed — lock gating removed `5a413a0` |
 | `ignoreBuildErrors: true` in next.config | Medium | — | TS errors bypassed on build |
-| OAuth buttons are placeholders | Low | — | Google/GitHub login not functional |
+| OAuth buttons are placeholders | Low | — | Plan created: `.agents/plans/oauth-social-login.md` — Phase 5 |
 | No test framework | Medium | — | No vitest/jest — hackathon trade-off |
 | Untracked `types/` directory | Low | — | Needs investigation — should it be committed? |
 
