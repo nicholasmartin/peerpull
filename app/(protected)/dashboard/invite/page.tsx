@@ -150,7 +150,7 @@ export default function InviteFoundersPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-xl font-semibold">Invite Founders</h1>
+        <h1 className="text-xl font-semibold">Invite Builders</h1>
         <div className="text-dark-text-muted">Loading...</div>
       </div>
     );
@@ -158,13 +158,13 @@ export default function InviteFoundersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold">Invite Founders</h1>
+      <h1 className="text-xl font-semibold">Invite Builders</h1>
 
       <Card>
         <CardHeader>
           <CardTitle>Invite & Earn PeerPoints</CardTitle>
           <CardDescription>
-            Invite other founders to join PeerPull and earn {referralBonus} PeerPoints for each successful referral
+            Invite other builders to join PeerPull and earn {referralBonus} PeerPoints for each successful referral
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -248,9 +248,9 @@ export default function InviteFoundersPage() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-subtle text-primary">
                   <Users className="h-6 w-6" />
                 </div>
-                <h3 className="mt-4 font-medium">Invite Founders</h3>
+                <h3 className="mt-4 font-medium">Invite Builders</h3>
                 <p className="mt-2 text-sm text-dark-text-muted">
-                  Share your referral link with other founders
+                  Share your referral link with other builders
                 </p>
               </CardContent>
             </Card>

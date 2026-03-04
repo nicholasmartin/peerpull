@@ -18,6 +18,7 @@ import UserCircleIcon from "@/components/icons/user-circle.svg";
 import AlertIcon from "@/components/icons/alert.svg";
 import ChatIcon from "@/components/icons/chat.svg";
 import PlusIcon from "@/components/icons/plus.svg";
+import PaperPlaneIcon from "@/components/icons/paper-plane.svg";
 import BoltIcon from "@/components/icons/bolt.svg";
 
 type NavItem = {
@@ -59,6 +60,11 @@ const navItems: NavItem[] = [
     path: "/dashboard/profile",
   },
   {
+    icon: <PaperPlaneIcon />,
+    name: "Invite Builders",
+    path: "/dashboard/invite",
+  },
+  {
     icon: <TableIcon />,
     name: "Settings",
     path: "/dashboard/settings"
@@ -72,17 +78,19 @@ const secondaryNavItems: NavItem[] = [
     name: "Help & Support",
     path: "/dashboard/help",
   },
-  {
-    icon: <PlusIcon />,
-    name: "Invite Founders",
-    path: "/dashboard/invite",
-  },
 ];
 
 
+const hiddenWhenNotActive = new Set([
+  "/dashboard/community",
+  "/dashboard/settings",
+  "/dashboard/help",
+]);
+
 const AppSidebar: React.FC<{
   isAdmin?: boolean;
-}> = ({ isAdmin }) => {
+  isUserActive?: boolean;
+}> = ({ isAdmin, isUserActive = true }) => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
 
@@ -94,6 +102,14 @@ const AppSidebar: React.FC<{
     }] : []),
     ...secondaryNavItems,
   ];
+
+  const filteredNavItems = isUserActive
+    ? navItems
+    : navItems.filter(item => !hiddenWhenNotActive.has(item.path ?? ''));
+
+  const filteredSecondaryNavItems = isUserActive
+    ? dynamicSecondaryNavItems
+    : dynamicSecondaryNavItems.filter(item => !hiddenWhenNotActive.has(item.path ?? ''));
 
   const renderMenuItems = (items: NavItem[]) => (
     <ul className="flex flex-col gap-4">
@@ -337,7 +353,7 @@ const AppSidebar: React.FC<{
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(navItems)}
+              {renderMenuItems(filteredNavItems)}
             </div>
             
             {/* Secondary Navigation Items */}
@@ -355,7 +371,7 @@ const AppSidebar: React.FC<{
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(dynamicSecondaryNavItems)}
+              {renderMenuItems(filteredSecondaryNavItems)}
             </div>
           </div>
         </nav>

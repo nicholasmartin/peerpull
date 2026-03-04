@@ -12,16 +12,18 @@ export default function DashboardShell({
   children,
   user,
   profile,
+  isActive,
 }: {
   children: React.ReactNode;
   user: User;
   profile: Profile | null;
+  isActive: boolean;
 }) {
   return (
     <ThemeProvider isProtected={true}>
       <div className="min-h-screen xl:flex">
         {/* Sidebar and Backdrop */}
-        <AppSidebar isAdmin={profile?.is_admin} />
+        <AppSidebar isAdmin={profile?.is_admin} isUserActive={isActive} />
         <Backdrop />
         
         {/* Main Content Area */}

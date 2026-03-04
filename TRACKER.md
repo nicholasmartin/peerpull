@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-08
+> Last updated: 2026-03-04
 
 ---
 
@@ -16,6 +16,7 @@
 | 3 | OAuth Social Login — Phase 5 (5.1–5.6) | 🟡 Google tested, others need credentials | GH #13 for avatar management polish |
 | 4 | Fix duplicate email signup (GH #2, #6) | ✅ Done | `a2fb4ff` |
 | 5 | Fix admin activate user — RLS bypass (GH #10) | ✅ Done | SECURITY DEFINER RPCs bypass RLS |
+| 6 | Clean up placeholder/dummy content (GH #8) | 🟡 Plan ready | `.agents/plans/gh8-cleanup-placeholder-content.md` |
 
 ---
 
@@ -102,7 +103,8 @@
 | [#6](https://github.com/nicholasmartin/peerpull/issues/6) | Redirect to email verification page after signup | Closed | Medium | Dedicated verify-email page — `a2fb4ff` |
 | [#7](https://github.com/nicholasmartin/peerpull/issues/7) | Redesign onboarding page — update logos, copy, and visual polish | Open | Medium | 🟡 Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
 | [#10](https://github.com/nicholasmartin/peerpull/issues/10) | Admin activate user silently fails — RLS blocks update | Closed | High | Fixed — SECURITY DEFINER RPCs |
-| [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | 🟡 Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
+| [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | 🟡 Plan: `.agents/plans/gh8-cleanup-placeholder-content.md` |
+| [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Open | Low | ✅ Done — hides Community, Settings, Help for non-active users |
 | [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
 
 ---

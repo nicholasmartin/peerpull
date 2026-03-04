@@ -67,7 +67,7 @@ export function WaitlistBanner({ profile }: WaitlistBannerProps) {
           >
             <Send className="h-5 w-5 text-primary mb-3" />
             <h3 className="text-sm font-medium text-dark-text group-hover:text-primary transition">
-              Invite founders
+              Invite builders
             </h3>
             <p className="mt-1 text-xs text-dark-text-muted">
               Share your referral link and earn bonus points
