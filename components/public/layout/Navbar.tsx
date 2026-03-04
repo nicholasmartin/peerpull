@@ -84,14 +84,16 @@ export function Navbar({ user }: NavbarProps) {
   }, [isMenuOpen]);
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('#')) {
+    const anchorId = href.startsWith('/#') ? href.substring(2) : href.startsWith('#') ? href.substring(1) : null;
+    if (anchorId && window.location.pathname === '/') {
       e.preventDefault();
       setIsMenuOpen(false);
-
-      const element = document.getElementById(href.substring(1));
+      const element = document.getElementById(anchorId);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
+    } else {
+      setIsMenuOpen(false);
     }
   };
 
@@ -109,9 +111,9 @@ export function Navbar({ user }: NavbarProps) {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6">
-          <NavLink href="#problem-solution">Why PeerPull</NavLink>
-          <NavLink href="#how-it-works">How it Works</NavLink>
-          <NavLink href="#faq">FAQ</NavLink>
+          <NavLink href="/#problem-solution">Why PeerPull</NavLink>
+          <NavLink href="/#how-it-works">How it Works</NavLink>
+          <NavLink href="/#faq">FAQ</NavLink>
         </nav>
 
         <div className="flex items-center gap-4">
@@ -167,9 +169,9 @@ export function Navbar({ user }: NavbarProps) {
         <div className="container py-6 px-4">
           <nav className="flex flex-col space-y-1">
             {[
-              { href: "#problem-solution", label: "Why PeerPull" },
-              { href: "#how-it-works", label: "How it Works" },
-              { href: "#faq", label: "FAQ" },
+              { href: "/#problem-solution", label: "Why PeerPull" },
+              { href: "/#how-it-works", label: "How it Works" },
+              { href: "/#faq", label: "FAQ" },
             ].map((link) => (
               <Link
                 key={link.href}
