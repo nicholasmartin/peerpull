@@ -16,7 +16,7 @@
 | 3 | OAuth Social Login — Phase 5 (5.1–5.6) | 🟡 Google tested, others need credentials | GH #13 for avatar management polish |
 | 4 | Fix duplicate email signup (GH #2, #6) | ✅ Done | `a2fb4ff` |
 | 5 | Fix admin activate user — RLS bypass (GH #10) | ✅ Done | SECURITY DEFINER RPCs bypass RLS |
-| 6 | Clean up placeholder/dummy content (GH #8) | ✅ Done | See commit below |
+| 6 | Clean up placeholder/dummy content (GH #8) | ✅ Done | `15eb1e5` |
 
 ---
 
@@ -103,7 +103,7 @@
 | [#6](https://github.com/nicholasmartin/peerpull/issues/6) | Redirect to email verification page after signup | Closed | Medium | Dedicated verify-email page — `a2fb4ff` |
 | [#7](https://github.com/nicholasmartin/peerpull/issues/7) | Redesign onboarding page — update logos, copy, and visual polish | Open | Medium | 🟡 Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
 | [#10](https://github.com/nicholasmartin/peerpull/issues/10) | Admin activate user silently fails — RLS blocks update | Closed | High | Fixed — SECURITY DEFINER RPCs |
-| [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | ✅ Done — cleanup commit |
+| [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | ✅ Done — `15eb1e5` |
 | [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Open | Low | ✅ Done — `f6431de` |
 | [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
 
