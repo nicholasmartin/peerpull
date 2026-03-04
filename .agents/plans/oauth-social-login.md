@@ -57,7 +57,7 @@ These are step-by-step instructions for the user to configure each provider. The
    - `http://localhost:3000` (dev)
    - `https://yourdomain.com` (prod)
 9. **Authorized redirect URIs:**
-   - `https://<your-project-ref>.supabase.co/auth/v1/callback`
+   - `https://fquqlbbcfibvnllwhbjv.supabase.co/auth/v1/callback`
    - `http://localhost:54321/auth/v1/callback` (local Supabase CLI)
 10. Click **Create** → copy **Client ID** and **Client Secret**
 
@@ -73,7 +73,7 @@ These are step-by-step instructions for the user to configure each provider. The
 2. Fill in:
    - **Application name:** `PeerPull`
    - **Homepage URL:** `https://yourdomain.com` (or `http://localhost:3000`)
-   - **Authorization callback URL:** `https://<your-project-ref>.supabase.co/auth/v1/callback`
+   - **Authorization callback URL:** `https://fquqlbbcfibvnllwhbjv.supabase.co/auth/v1/callback`
 3. Click **Register application**
 4. Copy the **Client ID**
 5. Click **Generate a new client secret** → copy immediately (shown once)
@@ -96,7 +96,7 @@ These are step-by-step instructions for the user to configure each provider. The
    - This may require approval (usually instant for OIDC)
 5. Go to **Auth** tab:
    - Verify scopes include: `openid`, `profile`, `email`
-   - Under **Authorized redirect URLs**, add: `https://<your-project-ref>.supabase.co/auth/v1/callback`
+   - Under **Authorized redirect URLs**, add: `https://fquqlbbcfibvnllwhbjv.supabase.co/auth/v1/callback`
 6. Copy **Client ID** and **Client Secret** from the Auth tab
 
 **Supabase Dashboard:**
@@ -110,7 +110,7 @@ These are step-by-step instructions for the user to configure each provider. The
 1. Go to **https://dev.twitch.tv/console** → click **Register Your Application**
 2. Fill in:
    - **Name:** `PeerPull`
-   - **OAuth Redirect URLs:** `https://<your-project-ref>.supabase.co/auth/v1/callback`
+   - **OAuth Redirect URLs:** `https://fquqlbbcfibvnllwhbjv.supabase.co/auth/v1/callback`
    - **Category:** Website Integration
    - **Client Type:** Confidential
 3. Complete CAPTCHA → click **Create**
