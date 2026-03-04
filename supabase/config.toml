@@ -232,7 +232,7 @@ secret = "env(GOOGLE_CLIENT_SECRET)"
 skip_nonce_check = true
 
 [auth.external.github]
-enabled = false
+enabled = true
 client_id = "env(GITHUB_CLIENT_ID)"
 secret = "env(GITHUB_CLIENT_SECRET)"
 
