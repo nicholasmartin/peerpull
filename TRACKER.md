@@ -13,7 +13,7 @@
 |----------|---------|--------|---------|
 | 1 | Manual test Phase 4 notifications (4.1–4.6) | ⬜ Not Started | Needs 2 users for lifecycle tests |
 | 2 | End-to-end user journey polish (4.8) | ⬜ Not Started | After 4.1–4.6 verified |
-| 3 | Standardize terminology: feedback vs review vs rating (GH #12) | ✅ Done | 22 files updated, build passes |
+| 3 | Standardize terminology: feedback vs review vs rating (GH #12) | ✅ Done | `551820a` — 31 files, build passes |
 | 4 | Redesign onboarding page (GH #7) | 🟡 Planned | Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
 | 5 | Smart OAuth avatar management (GH #13) | ⬜ Not Started | Low priority — cosmetic |
 
@@ -106,7 +106,7 @@
 | [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Open | Low | ✅ Done — `f6431de` |
 | [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Open | Medium | ✅ Done — `3e2dbcd`, CSS var foundation, 14 visual bug fixes, ThemeProvider wired |
 | [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
-| [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | ✅ Done — 22 files, UI-only, no DB changes |
+| [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | ✅ Done — `551820a`, 31 files, UI-only, no DB changes |
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
 
 ---
