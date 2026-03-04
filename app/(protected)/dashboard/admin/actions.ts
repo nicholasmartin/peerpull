@@ -57,31 +57,30 @@ export async function injectPoints(targetUserId: string, amount: number, reason:
 }
 
 export async function activateUser(userId: string) {
-  const { supabase } = await requireAdmin();
+  const { supabase, user } = await requireAdmin();
 
-  const { error } = await supabase
-    .from("profiles")
-    .update({ status: 'active' })
-    .eq("id", userId);
+  const { error } = await supabase.rpc("admin_activate_user", {
+    p_admin_id: user.id,
+    p_user_id: userId,
+  });
 
-  if (error) return { error: "Failed to activate user" };
+  if (error) return { error: error.message };
 
   revalidatePath("/dashboard/admin/users");
   return { success: true };
 }
 
 export async function activateAllWaitlisted() {
-  const { supabase } = await requireAdmin();
+  const { supabase, user } = await requireAdmin();
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .update({ status: 'active' })
-    .in("status", ["waitlisted", "onboarding"]);
+  const { data, error } = await supabase.rpc("admin_activate_all_waitlisted", {
+    p_admin_id: user.id,
+  });
 
-  if (error) return { error: "Failed to activate users" };
+  if (error) return { error: error.message };
 
   revalidatePath("/dashboard/admin/users");
-  return { success: true };
+  return { success: true, count: data };
 }
 
 export async function injectPointsToAll(amount: number, reason: string) {

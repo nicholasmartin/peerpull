@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-04
+> Last updated: 2026-03-07
 
 ---
 
@@ -13,8 +13,9 @@
 |----------|---------|--------|---------|
 | 1 | Manual test Phase 4 notifications (4.1–4.6) | ⬜ Not Started | Needs 2 users for lifecycle tests |
 | 2 | End-to-end user journey polish (4.8) | ⬜ Not Started | After 4.1–4.6 verified |
-| 3 | OAuth Social Login — Phase 5 (5.1–5.6) | 🟡 Planned | Needs provider console setup first |
+| 3 | OAuth Social Login — Phase 5 (5.1–5.6) | 🟡 Coded, untested | Needs provider credentials in Supabase Dashboard |
 | 4 | Fix duplicate email signup (GH #2, #6) | ✅ Done | `a2fb4ff` |
+| 5 | Fix admin activate user — RLS bypass (GH #10) | ✅ Done | SECURITY DEFINER RPCs bypass RLS |
 
 ---
 
@@ -71,19 +72,19 @@
 | 4.7 | Unified profile with all stats | 7.6 | ✅ Done | Completed in Phase 2 — `f9a2a5d`, ProfileStats.tsx + QualityScoreBadge.tsx |
 | 4.8 | End-to-end user journey polish | — | ⬜ Not Started | Final QA pass |
 
-## Phase 5: OAuth Social Login — 🟡 Planned
+## Phase 5: OAuth Social Login — 🟡 Coded, Untested
 
 > **Plan:** `.agents/plans/oauth-social-login.md` (6 tasks)
-> **Requires manual provider setup** in Google Cloud Console, GitHub Developer Settings, LinkedIn Developer, and Twitch Developer Console before implementation can be tested.
+> **⚠️ Code complete but NOT yet tested.** Requires provider credentials configured in Supabase Dashboard before OAuth flows can be tested end-to-end.
 
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
-| 5.1 | Update `handle_new_user()` trigger for OAuth metadata | 13 | ⬜ Not Started | Migration to parse `full_name`/`given_name`/`family_name` + `picture` |
-| 5.2 | OAuthButtons client component | 13 | ⬜ Not Started | Google, GitHub, LinkedIn, Twitch buttons with dark gold theme |
-| 5.3 | Add OAuth buttons to signin page | 13 | ⬜ Not Started | Above form with "Or continue with email" divider |
-| 5.4 | Add OAuth buttons to signup page | 13 | ⬜ Not Started | Same pattern as signin |
-| 5.5 | Local dev config (config.toml) | 13 | ⬜ Not Started | 4 providers in `[auth.external.*]` sections |
-| 5.6 | .env.example update | 13 | ⬜ Not Started | 8 OAuth credential placeholders |
+| 5.1 | Update `handle_new_user()` trigger for OAuth metadata | 13 | 🟡 Coded, untested | Migration `20260306000000`, parses `full_name`/`given_name`/`family_name` + `picture` |
+| 5.2 | OAuthButtons client component | 13 | 🟡 Coded, untested | `components/auth/OAuthButtons.tsx` — Google, GitHub, LinkedIn, Twitch with dark gold theme |
+| 5.3 | Add OAuth buttons to signin page | 13 | 🟡 Coded, untested | Above form with "Or continue with email" divider |
+| 5.4 | Add OAuth buttons to signup page | 13 | 🟡 Coded, untested | Same pattern as signin |
+| 5.5 | Local dev config (config.toml) | 13 | ✅ Done | 4 providers in `[auth.external.*]` sections |
+| 5.6 | .env.example update | 13 | ✅ Done | 8 OAuth credential placeholders |
 
 ---
 
@@ -93,9 +94,13 @@
 
 | # | Title | State | Severity | Notes |
 |---|-------|-------|----------|-------|
-| [#2](https://github.com/nicholasmartin/peerpull/issues/2) | Signup with existing email shows success message instead of error | Fixed | Medium | `identities` length check + verify-email page — `a2fb4ff` |
+| [#2](https://github.com/nicholasmartin/peerpull/issues/2) | Signup with existing email shows success message instead of error | Closed | Medium | `identities` length check + verify-email page — `a2fb4ff` |
 | [#3](https://github.com/nicholasmartin/peerpull/issues/3) | Sidebar: allow expanding Feedback menu when user is not active | Closed | Low | Resolved by removing lock gating entirely — `5a413a0` |
 | [#4](https://github.com/nicholasmartin/peerpull/issues/4) | Redesign auth pages to match dark gold theme | Closed | Medium | Verified and closed — commit `f885321` applied dark/gold theme to all auth pages |
+| [#6](https://github.com/nicholasmartin/peerpull/issues/6) | Redirect to email verification page after signup | Closed | Medium | Dedicated verify-email page — `a2fb4ff` |
+| [#7](https://github.com/nicholasmartin/peerpull/issues/7) | Redesign onboarding page — update logos, copy, and visual polish | Open | Medium | 🟡 Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
+| [#10](https://github.com/nicholasmartin/peerpull/issues/10) | Admin activate user silently fails — RLS blocks update | Closed | High | Fixed — SECURITY DEFINER RPCs |
+| [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | 🟡 Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
 
 ---
 
@@ -128,7 +133,7 @@
 | ~~Duplicate email signup shows success~~ | ~~Medium~~ | [GH #2](https://github.com/nicholasmartin/peerpull/issues/2) | Fixed — `a2fb4ff` |
 | ~~Sidebar Feedback menu hidden for non-active users~~ | ~~Low~~ | [GH #3](https://github.com/nicholasmartin/peerpull/issues/3) | Fixed — lock gating removed `5a413a0` |
 | `ignoreBuildErrors: true` in next.config | Medium | — | TS errors bypassed on build |
-| OAuth buttons are placeholders | Low | — | Plan created: `.agents/plans/oauth-social-login.md` — Phase 5 |
+| OAuth buttons coded but untested | Low | — | Phase 5 coded — needs provider credentials for testing |
 | No test framework | Medium | — | No vitest/jest — hackathon trade-off |
 | Untracked `types/` directory | Low | — | Needs investigation — should it be committed? |
 
