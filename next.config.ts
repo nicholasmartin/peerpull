@@ -2,6 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   distDir: process.env.NODE_ENV === 'development' ? '.next-dev' : '.next',
+  images: {
+    remotePatterns: [
+      { hostname: "lh3.googleusercontent.com" },       // Google OAuth avatars
+      { hostname: "avatars.githubusercontent.com" },    // GitHub OAuth avatars
+      { hostname: "media.licdn.com" },                  // LinkedIn OAuth avatars
+      { hostname: "static-cdn.jtvnw.net" },             // Twitch OAuth avatars
+      { hostname: "**.supabase.co" },                    // Supabase Storage avatars
+    ],
+  },
   // Ignore TypeScript errors during build
   typescript: {
     // !! WARN !!

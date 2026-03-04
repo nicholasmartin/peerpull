@@ -232,46 +232,6 @@ export default function HelpSupportPage() {
                 ))}
               </div>
               
-              <div className="mt-6">
-                <h3 className="font-medium mb-4">Video Tutorials</h3>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  <div className="overflow-hidden rounded-md border border-dark-border">
-                    <div className="aspect-w-16 aspect-h-9 bg-dark-surface flex items-center justify-center">
-                      <Video className="h-10 w-10 text-dark-text-muted" />
-                    </div>
-                    <div className="p-3">
-                      <h4 className="font-medium">Getting Started with PeerPull</h4>
-                      <p className="text-xs text-dark-text-muted mt-1">
-                        5:32 • 2.5k views
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="overflow-hidden rounded-md border border-dark-border">
-                    <div className="aspect-w-16 aspect-h-9 bg-dark-surface flex items-center justify-center">
-                      <Video className="h-10 w-10 text-dark-text-muted" />
-                    </div>
-                    <div className="p-3">
-                      <h4 className="font-medium">How to Write Effective Reviews</h4>
-                      <p className="text-xs text-dark-text-muted mt-1">
-                        7:15 • 1.8k views
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="overflow-hidden rounded-md border border-dark-border">
-                    <div className="aspect-w-16 aspect-h-9 bg-dark-surface flex items-center justify-center">
-                      <Video className="h-10 w-10 text-dark-text-muted" />
-                    </div>
-                    <div className="p-3">
-                      <h4 className="font-medium">Maximizing Your PeerPoints</h4>
-                      <p className="text-xs text-dark-text-muted mt-1">
-                        6:48 • 1.2k views
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -353,7 +313,7 @@ export default function HelpSupportPage() {
                     />
                     <label htmlFor="terms" className="text-sm text-dark-text-muted">
                       I agree to the{" "}
-                      <a href="#" className="text-primary hover:underline ">
+                      <a href="/privacy" className="text-primary hover:underline">
                         privacy policy
                       </a>
                     </label>

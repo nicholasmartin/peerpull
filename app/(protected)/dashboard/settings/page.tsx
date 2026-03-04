@@ -16,9 +16,7 @@ import { toast } from "sonner";
 import {
   Bell,
   Lock,
-  CreditCard,
   User,
-  Shield,
   Mail,
   Globe,
   Moon,
@@ -271,13 +269,6 @@ export default function SettingsPage() {
                 <Globe className="mr-2 h-4 w-4" />
                 Appearance
               </TabsTrigger>
-              <TabsTrigger 
-                value="billing" 
-                className="justify-start px-4 py-2 h-auto data-[state=active]:bg-dark-surface"
-              >
-                <CreditCard className="mr-2 h-4 w-4" />
-                Billing
-              </TabsTrigger>
             </TabsList>
           </div>
           
@@ -422,7 +413,7 @@ export default function SettingsPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-dark-text-muted">
-                    Session management coming soon
+                    You are currently signed in on this device.
                   </p>
                 </CardContent>
               </Card>
@@ -518,122 +509,6 @@ export default function SettingsPage() {
               </Card>
             </TabsContent>
             
-            <TabsContent value="billing" className="space-y-6 mt-0">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Current Plan</CardTitle>
-                  <CardDescription>
-                    You are currently on the Free Plan
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="rounded-md border border-dark-border p-4">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="font-medium text-lg">Free Plan</h3>
-                        <p className="text-sm text-dark-text-muted">
-                          Basic features for early-stage founders
-                        </p>
-                      </div>
-                      <Badge>Current Plan</Badge>
-                    </div>
-                    
-                    <Separator className="my-4" />
-                    
-                    <div className="space-y-2">
-                      <div className="flex items-center">
-                        <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Up to 3 Feedback Requests per month</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Basic review tools</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Community access</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="rounded-md border border-dark-border p-4">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="font-medium text-lg">Pro Plan</h3>
-                        <p className="text-sm text-dark-text-muted">
-                          Advanced features for growing startups
-                        </p>
-                      </div>
-                      <div className="text-lg font-bold">
-                        $29<span className="text-sm font-normal text-dark-text-muted">/month</span>
-                      </div>
-                    </div>
-                    
-                    <Separator className="my-4" />
-                    
-                    <div className="space-y-2">
-                      <div className="flex items-center">
-                        <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Unlimited Feedback Requests</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Priority review queue</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Expert reviewer matching</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Shield className="h-4 w-4 mr-2 text-green-500" />
-                        <span className="text-sm">Advanced analytics</span>
-                      </div>
-                    </div>
-                    
-                    <Button className="w-full mt-4 bg-primary hover:bg-primary-muted">
-                      Upgrade to Pro
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle>Payment Method</CardTitle>
-                  <CardDescription>
-                    Add a payment method to upgrade to a paid plan
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between p-4 rounded-md border border-dark-border">
-                    <div className="flex items-center space-x-4">
-                      <CreditCard className="h-6 w-6 text-dark-text-muted" />
-                      <div>
-                        <p className="font-medium">Add Payment Method</p>
-                        <p className="text-sm text-dark-text-muted">
-                          Add a credit card or PayPal account
-                        </p>
-                      </div>
-                    </div>
-                    <Button variant="outline">Add Method</Button>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle>Billing History</CardTitle>
-                  <CardDescription>
-                    View your past invoices and payment history
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-6 text-dark-text-muted">
-                    <p>No billing history available</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
           </div>
         </div>
       </Tabs>
