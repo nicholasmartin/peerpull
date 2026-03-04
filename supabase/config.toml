@@ -237,7 +237,7 @@ client_id = "env(GITHUB_CLIENT_ID)"
 secret = "env(GITHUB_CLIENT_SECRET)"
 
 [auth.external.linkedin_oidc]
-enabled = false
+enabled = true
 client_id = "env(LINKEDIN_CLIENT_ID)"
 secret = "env(LINKEDIN_CLIENT_SECRET)"
 
