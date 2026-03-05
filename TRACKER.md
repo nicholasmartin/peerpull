@@ -17,7 +17,7 @@
 | 4 | Redesign onboarding page (GH #7) | ✅ Done | `d6e0fcd` — standalone `/onboarding` route, 2-step branded flow |
 | 5 | Smart OAuth avatar management (GH #13) | ⬜ Not Started | Low priority — cosmetic |
 | 6 | React Email templates for notifications (GH #14) | ✅ Done | `a1c23b1` — 8 email files + pipeline wired, needs manual testing |
-| 7 | Notification deep links (GH #17) | ✅ Done | `link_url` column + 4 call sites wired, build passes, needs migration push |
+| 7 | Notification deep links (GH #17) | ✅ Done | `8b9ff1e` — `link_url` column + 4 call sites wired, needs `supabase db push` |
 
 ---
 
@@ -112,7 +112,7 @@
 | [#14](https://github.com/nicholasmartin/peerpull/issues/14) | Use React Email for templated notification emails | Open | Medium | ✅ Done — `a1c23b1`, needs manual testing with Mailgun |
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
 | [#16](https://github.com/nicholasmartin/peerpull/issues/16) | Add user-configurable text size preference | Open | Low | ✅ Done — `8b9ff1e`, TextSizeContext + appearance page wired |
-| [#17](https://github.com/nicholasmartin/peerpull/issues/17) | Notification deep links to detail pages | Open | Medium | ✅ Done, needs `supabase db push` for migration |
+| [#17](https://github.com/nicholasmartin/peerpull/issues/17) | Notification deep links to detail pages | Open | Medium | ✅ Done — `8b9ff1e`, needs `supabase db push` for migration |
 
 ---
 
