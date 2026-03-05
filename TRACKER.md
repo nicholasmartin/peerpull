@@ -111,7 +111,7 @@
 | [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | ✅ Done — `551820a`, 31 files, UI-only, no DB changes |
 | [#14](https://github.com/nicholasmartin/peerpull/issues/14) | Use React Email for templated notification emails | Open | Medium | ✅ Done — `a1c23b1`, needs manual testing with Mailgun |
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
-| [#16](https://github.com/nicholasmartin/peerpull/issues/16) | Add user-configurable text size preference | Open | Low | ✅ Done — TextSizeContext + appearance page wired, needs manual testing |
+| [#16](https://github.com/nicholasmartin/peerpull/issues/16) | Add user-configurable text size preference | Open | Low | ✅ Done — `8b9ff1e`, TextSizeContext + appearance page wired |
 | [#17](https://github.com/nicholasmartin/peerpull/issues/17) | Notification deep links to detail pages | Open | Medium | ✅ Done, needs `supabase db push` for migration |
 
 ---
