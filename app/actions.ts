@@ -350,6 +350,7 @@ export async function submitReview(formData: FormData) {
       title: "New feedback received",
       message: `Someone submitted video feedback for "${fr.title}"`,
       referenceId: reviewId,
+      productTitle: fr.title,
     });
   }
 
@@ -421,6 +422,7 @@ export async function approveReview(reviewId: string) {
     title: "Your feedback was approved!",
     message: `Your feedback for "${pr.title}" was approved by the project owner`,
     referenceId: reviewId,
+    productTitle: pr.title,
   });
 
   return { success: true };
@@ -589,6 +591,8 @@ export async function rateReviewAction(
       title: "Your feedback was rated",
       message: `The owner of "${title}" rated your feedback ${rating}/5`,
       referenceId: reviewId,
+      productTitle: title,
+      rating,
     });
   }
 
@@ -633,6 +637,7 @@ export async function rejectReview(reviewId: string) {
     title: "Your feedback was not accepted",
     message: `Your feedback for "${pr.title}" was not accepted by the project owner`,
     referenceId: reviewId,
+    productTitle: pr.title,
   });
 
   return { success: true };

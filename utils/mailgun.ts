@@ -2,6 +2,7 @@ interface SendEmailParams {
   to: string;
   subject: string;
   text: string;
+  html?: string;
 }
 
 const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
@@ -20,6 +21,9 @@ export async function sendNotificationEmail(params: SendEmailParams): Promise<vo
     formData.append("to", params.to);
     formData.append("subject", params.subject);
     formData.append("text", params.text);
+    if (params.html) {
+      formData.append("html", params.html);
+    }
 
     const response = await fetch(
       `https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`,

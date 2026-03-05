@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-04 (GH #12 terminology standardization complete)
+> Last updated: 2026-03-05 (GH #7 onboarding redesign complete)
 
 ---
 
@@ -14,8 +14,9 @@
 | 1 | Manual test Phase 4 notifications (4.1–4.6) | ⬜ Not Started | Needs 2 users for lifecycle tests |
 | 2 | End-to-end user journey polish (4.8) | ⬜ Not Started | After 4.1–4.6 verified |
 | 3 | Standardize terminology: feedback vs review vs rating (GH #12) | ✅ Done | `551820a` — 31 files, build passes |
-| 4 | Redesign onboarding page (GH #7) | 🟡 Planned | Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
+| 4 | Redesign onboarding page (GH #7) | ✅ Done | Standalone `/onboarding` route, 2-step branded flow |
 | 5 | Smart OAuth avatar management (GH #13) | ⬜ Not Started | Low priority — cosmetic |
+| 6 | React Email templates for notifications (GH #14) | ✅ Done | 8 email files + pipeline wired, build passes |
 
 ---
 
@@ -100,13 +101,14 @@
 | [#3](https://github.com/nicholasmartin/peerpull/issues/3) | Sidebar: allow expanding Feedback menu when user is not active | Closed | Low | Resolved by removing lock gating entirely — `5a413a0` |
 | [#4](https://github.com/nicholasmartin/peerpull/issues/4) | Redesign auth pages to match dark gold theme | Closed | Medium | Verified and closed — commit `f885321` applied dark/gold theme to all auth pages |
 | [#6](https://github.com/nicholasmartin/peerpull/issues/6) | Redirect to email verification page after signup | Closed | Medium | Dedicated verify-email page — `a2fb4ff` |
-| [#7](https://github.com/nicholasmartin/peerpull/issues/7) | Redesign onboarding page — update logos, copy, and visual polish | Open | Medium | 🟡 Plan: `.agents/plans/session-2-cleanup-onboarding.md` |
+| [#7](https://github.com/nicholasmartin/peerpull/issues/7) | Redesign onboarding page — update logos, copy, and visual polish | Open | Medium | ✅ Done — standalone `/onboarding` route, 2-step branded flow, no dashboard shell |
 | [#10](https://github.com/nicholasmartin/peerpull/issues/10) | Admin activate user silently fails — RLS blocks update | Closed | High | Fixed — SECURITY DEFINER RPCs |
 | [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | ✅ Done — `15eb1e5` |
 | [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Open | Low | ✅ Done — `f6431de` |
 | [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Open | Medium | ✅ Done — `3e2dbcd`, CSS var foundation, 14 visual bug fixes, ThemeProvider wired |
 | [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
 | [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | ✅ Done — `551820a`, 31 files, UI-only, no DB changes |
+| [#14](https://github.com/nicholasmartin/peerpull/issues/14) | Use React Email for templated notification emails | Open | Medium | ✅ Done — 4 templates + shared components, Mailgun HTML support |
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
 
 ---
