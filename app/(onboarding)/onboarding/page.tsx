@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { getUserProfile } from "@/utils/supabase/profiles";
+import { getSettings } from "@/utils/supabase/settings";
 import { redirect } from "next/navigation";
 import OnboardingFlow from "@/components/protected/dashboard/OnboardingFlow";
 
@@ -10,14 +11,19 @@ export default async function OnboardingPage() {
 
   const profile = await getUserProfile(user);
 
-  // If user is not in onboarding, send them to the dashboard
   if (!profile || profile.status !== "onboarding") {
     return redirect("/dashboard");
   }
 
+  const settings = await getSettings();
+
   return (
-    <div className="flex min-h-[60vh] items-center justify-center py-8">
-      <OnboardingFlow profile={profile} />
+    <div className="w-full max-w-2xl px-4">
+      <OnboardingFlow
+        profile={profile}
+        signupBonus={settings.signup_bonus_amount}
+        referralBonus={settings.referral_bonus_amount}
+      />
     </div>
   );
 }

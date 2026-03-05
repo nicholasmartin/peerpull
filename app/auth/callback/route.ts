@@ -38,7 +38,7 @@ export async function GET(request: Request) {
           .single();
 
         if (profile?.status === 'onboarding') {
-          return NextResponse.redirect(`${origin}/dashboard/onboarding`);
+          return NextResponse.redirect(`${origin}/onboarding`);
         }
       }
     }
