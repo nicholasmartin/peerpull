@@ -12,6 +12,7 @@ interface Notification {
   title: string;
   message: string | null;
   reference_id: string | null;
+  link_url: string | null;
   read: boolean;
   created_at: string;
 }
@@ -44,11 +45,6 @@ function getNotificationIcon(type: string) {
     default:
       return <MessageSquare className="h-4 w-4 text-dark-text-muted" />;
   }
-}
-
-function getNotificationRoute(type: string): string {
-  if (type === "review_received") return "/dashboard/request-feedback";
-  return "/dashboard/submit-feedback";
 }
 
 export default function NotificationDropdown({ userId }: { userId: string }) {
@@ -116,7 +112,7 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
       setUnreadCount((prev) => Math.max(0, prev - 1));
     }
     closeDropdown();
-    router.push(getNotificationRoute(notification.type));
+    router.push(notification.link_url || "/dashboard");
   }
 
   async function handleMarkAllRead() {

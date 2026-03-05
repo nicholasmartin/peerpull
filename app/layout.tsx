@@ -1,5 +1,6 @@
 import { Inter, Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { TextSizeProvider } from "@/context/TextSizeContext";
 import { SidebarProvider } from "@/context/SidebarContext";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -33,9 +34,11 @@ export default function RootLayout({
       </head>
       <body className="font-inter bg-dark-bg text-dark-text antialiased" suppressHydrationWarning>
         <ThemeProvider>
-          <SidebarProvider>
-            {children}
-          </SidebarProvider>
+          <TextSizeProvider>
+            <SidebarProvider>
+              {children}
+            </SidebarProvider>
+          </TextSizeProvider>
           <Toaster
             theme="dark"
             position="bottom-right"

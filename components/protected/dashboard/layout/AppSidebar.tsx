@@ -61,7 +61,7 @@ const navItems: NavItem[] = [
   },
   {
     icon: <PaperPlaneIcon />,
-    name: "Invite Builders",
+    name: "Earn Peer Points",
     path: "/dashboard/invite",
   },
   {

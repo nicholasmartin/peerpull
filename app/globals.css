@@ -23,6 +23,11 @@
     --color-text-muted: 113 113 122;  /* #71717a */
   }
 
+  /* Text size preference — adjusts root font-size so all rem values scale */
+  html[data-text-size="sm"] { font-size: 14px; }
+  /* md = 16px (browser default, no override needed) */
+  html[data-text-size="lg"] { font-size: 18px; }
+
   body {
     @apply bg-dark-bg font-normal text-base text-dark-text;
   }

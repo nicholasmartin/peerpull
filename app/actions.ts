@@ -351,6 +351,7 @@ export async function submitReview(formData: FormData) {
       message: `Someone submitted video feedback for "${fr.title}"`,
       referenceId: reviewId,
       productTitle: fr.title,
+      linkUrl: `/dashboard/request-feedback/${notifData.feedback_request_id}`,
     });
   }
 
@@ -423,6 +424,7 @@ export async function approveReview(reviewId: string) {
     message: `Your feedback for "${pr.title}" was approved by the project owner`,
     referenceId: reviewId,
     productTitle: pr.title,
+    linkUrl: `/dashboard/request-feedback/${review.feedback_request_id}`,
   });
 
   return { success: true };
@@ -579,7 +581,7 @@ export async function rateReviewAction(
   // Get reviewer info for notification
   const { data: reviewForNotif } = await supabase
     .from("reviews")
-    .select("reviewer_id, feedback_requests(title)")
+    .select("reviewer_id, feedback_request_id, feedback_requests(title)")
     .eq("id", reviewId)
     .single();
 
@@ -593,6 +595,7 @@ export async function rateReviewAction(
       referenceId: reviewId,
       productTitle: title,
       rating,
+      linkUrl: `/dashboard/request-feedback/${reviewForNotif.feedback_request_id}`,
     });
   }
 
@@ -638,6 +641,7 @@ export async function rejectReview(reviewId: string) {
     message: `Your feedback for "${pr.title}" was not accepted by the project owner`,
     referenceId: reviewId,
     productTitle: pr.title,
+    linkUrl: `/dashboard/submit-feedback`,
   });
 
   return { success: true };

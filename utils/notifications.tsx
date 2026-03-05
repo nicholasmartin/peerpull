@@ -20,6 +20,7 @@ interface CreateNotificationParams {
   referenceId?: string;
   productTitle?: string;
   rating?: number;
+  linkUrl?: string;
 }
 
 export async function createNotification(params: CreateNotificationParams): Promise<void> {
@@ -33,6 +34,7 @@ export async function createNotification(params: CreateNotificationParams): Prom
       p_title: params.title,
       p_message: params.message || null,
       p_reference_id: params.referenceId || null,
+      p_link_url: params.linkUrl || null,
     });
 
     if (rpcError) {
