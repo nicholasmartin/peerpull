@@ -16,7 +16,7 @@
 | 3 | Standardize terminology: feedback vs review vs rating (GH #12) | ✅ Done | `551820a` — 31 files, build passes |
 | 4 | Redesign onboarding page (GH #7) | ✅ Done | Standalone `/onboarding` route, 2-step branded flow |
 | 5 | Smart OAuth avatar management (GH #13) | ⬜ Not Started | Low priority — cosmetic |
-| 6 | React Email templates for notifications (GH #14) | ✅ Done | 8 email files + pipeline wired, build passes |
+| 6 | React Email templates for notifications (GH #14) | ✅ Done | `a1c23b1` — 8 email files + pipeline wired, needs manual testing |
 
 ---
 
@@ -108,7 +108,7 @@
 | [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Open | Medium | ✅ Done — `3e2dbcd`, CSS var foundation, 14 visual bug fixes, ThemeProvider wired |
 | [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
 | [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | ✅ Done — `551820a`, 31 files, UI-only, no DB changes |
-| [#14](https://github.com/nicholasmartin/peerpull/issues/14) | Use React Email for templated notification emails | Open | Medium | ✅ Done — 4 templates + shared components, Mailgun HTML support |
+| [#14](https://github.com/nicholasmartin/peerpull/issues/14) | Use React Email for templated notification emails | Open | Medium | ✅ Done — `a1c23b1`, needs manual testing with Mailgun |
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
 
 ---
