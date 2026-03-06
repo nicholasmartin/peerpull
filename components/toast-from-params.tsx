@@ -1,30 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { FLASH_COOKIE_NAME } from "@/lib/constants";
 
-export function ToastFromParams() {
-  const searchParams = useSearchParams();
-
+export function FlashToast({ flash }: { flash: { type: "error" | "success"; message: string } | null }) {
   useEffect(() => {
-    const error = searchParams.get("error");
-    const success = searchParams.get("success");
+    if (!flash) return;
 
-    if (error) {
-      toast.error(error, { duration: 8000 });
-      const url = new URL(window.location.href);
-      url.searchParams.delete("error");
-      window.history.replaceState({}, "", url.toString());
-    }
+    document.cookie = `${FLASH_COOKIE_NAME}=; path=/; max-age=0`;
 
-    if (success) {
-      toast.success(success);
-      const url = new URL(window.location.href);
-      url.searchParams.delete("success");
-      window.history.replaceState({}, "", url.toString());
+    if (flash.type === "error") {
+      toast.error(flash.message, { duration: 8000 });
+    } else {
+      toast.success(flash.message);
     }
-  }, [searchParams]);
+  }, [flash]);
 
   return null;
 }

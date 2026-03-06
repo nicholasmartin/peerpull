@@ -1,14 +1,13 @@
 import { forgotPasswordAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
+import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { getFlashMessage } from "@/utils/utils";
 
-export default async function ForgotPassword(props: {
-  searchParams: Promise<Message>;
-}) {
-  const searchParams = await props.searchParams;
+export default async function ForgotPassword() {
+  const flash = await getFlashMessage();
   return (
     <div className="flex flex-col w-full">
       <div className="mb-5 sm:mb-8 text-center">
@@ -37,7 +36,7 @@ export default async function ForgotPassword(props: {
             >
               Send Reset Link
             </SubmitButton>
-            <FormMessage message={searchParams} />
+            <FormMessage flash={flash} />
           </div>
         </div>
       </form>

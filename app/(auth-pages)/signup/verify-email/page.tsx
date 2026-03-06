@@ -1,11 +1,16 @@
 import { Mail } from "lucide-react";
 
+function isValidEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 254;
+}
+
 export default async function VerifyEmailPage({
   searchParams,
 }: {
   searchParams: Promise<{ email?: string }>;
 }) {
   const { email } = await searchParams;
+  const safeEmail = email && isValidEmail(email) ? email : null;
 
   return (
     <div className="flex flex-col items-center text-center gap-4">
@@ -19,8 +24,8 @@ export default async function VerifyEmailPage({
 
       <p className="text-dark-text-muted">
         We sent a verification link to{" "}
-        {email ? (
-          <span className="font-semibold text-dark-text">{email}</span>
+        {safeEmail ? (
+          <span className="font-semibold text-dark-text">{safeEmail}</span>
         ) : (
           "your email address"
         )}

@@ -1,25 +1,19 @@
 import { signUpAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
+import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import OAuthButtons from "@/components/auth/OAuthButtons";
 import Link from "next/link";
 import React from "react";
+import { getFlashMessage } from "@/utils/utils";
 
 export default async function Signup(props: {
-  searchParams: Promise<Message & { ref?: string }>;
+  searchParams: Promise<{ ref?: string }>;
 }) {
   const searchParams = await props.searchParams;
-  const referralCode = ("ref" in searchParams ? (searchParams as any).ref : "") || "";
-
-  if ("message" in searchParams) {
-    return (
-      <div className="w-full flex-1 flex items-center justify-center gap-2 p-4">
-        <FormMessage message={searchParams} />
-      </div>
-    );
-  }
+  const referralCode = searchParams.ref || "";
+  const flash = await getFlashMessage();
 
   const inputClasses = "border-dark-border bg-dark-surface text-dark-text placeholder:text-dark-text-muted/50 focus:border-blue-primary focus:ring-blue-primary/20";
 
@@ -141,7 +135,7 @@ export default async function Signup(props: {
               <SubmitButton pendingText="Signing up..." formAction={signUpAction} className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-dark-bg transition rounded-lg bg-blue-primary shadow-sm hover:bg-blue-secondary shadow-blue-primary/20">
                 Create Account
               </SubmitButton>
-              <FormMessage message={searchParams} />
+              <FormMessage flash={flash} />
             </div>
           </div>
         </form>

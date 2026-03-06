@@ -1,14 +1,15 @@
 import { signInAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
+import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import OAuthButtons from "@/components/auth/OAuthButtons";
 import Link from "next/link";
 import React from "react";
+import { getFlashMessage } from "@/utils/utils";
 
-export default async function Signin(props: { searchParams: Promise<Message> }) {
-  const searchParams = await props.searchParams;
+export default async function Signin() {
+  const flash = await getFlashMessage();
 
   return (
     <div className="flex flex-col w-full">
@@ -92,7 +93,7 @@ export default async function Signin(props: { searchParams: Promise<Message> }) 
               <SubmitButton pendingText="Signing in..." formAction={signInAction} className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-dark-bg transition rounded-lg bg-blue-primary shadow-sm hover:bg-blue-secondary shadow-blue-primary/20">
                 Sign In
               </SubmitButton>
-              <FormMessage message={searchParams} />
+              <FormMessage flash={flash} />
             </div>
           </div>
         </form>

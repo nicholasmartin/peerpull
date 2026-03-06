@@ -24,6 +24,15 @@ export const signUpAction = async (formData: FormData) => {
     );
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return encodedRedirect(
+      "error",
+      "/signup",
+      "Please enter a valid email address",
+    );
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -66,6 +75,12 @@ export const signUpAction = async (formData: FormData) => {
 export const signInAction = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailRegex.test(email)) {
+    return encodedRedirect("error", "/signin", "Please enter a valid email address");
+  }
+
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
