@@ -150,7 +150,7 @@ export default function InviteFoundersPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-xl font-semibold">Earn Peer Points</h1>
+        <h1 className="text-xl font-semibold">Earn PeerPoints</h1>
         <div className="text-dark-text-muted">Loading...</div>
       </div>
     );
@@ -158,7 +158,7 @@ export default function InviteFoundersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold">Earn Peer Points</h1>
+      <h1 className="text-xl font-semibold">Earn PeerPoints</h1>
 
       <Card>
         <CardHeader>

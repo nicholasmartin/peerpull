@@ -61,7 +61,7 @@ const navItems: NavItem[] = [
   },
   {
     icon: <PaperPlaneIcon />,
-    name: "Earn Peer Points",
+    name: "Earn PeerPoints",
     path: "/dashboard/invite",
   },
   {
@@ -124,7 +124,7 @@ const AppSidebar: React.FC<{
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index)}
-              className={`menu-item group  ${
+              className={`menu-item group w-full ${
                 openSubmenu?.index === index
                   ? "menu-item-active"
                   : "menu-item-inactive"
