@@ -53,17 +53,9 @@ export default async function Signin() {
             </div>
             {/* Password */}
             <div>
-              <div className="flex justify-between items-center">
-                <Label className="text-dark-text-muted">
-                  Password<span className="text-error-500">*</span>
-                </Label>
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-blue-primary hover:text-teal-accent transition-colors"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+              <Label className="text-dark-text-muted">
+                Password<span className="text-error-500">*</span>
+              </Label>
               <div className="relative">
                 <Input
                   type="password"
@@ -72,6 +64,15 @@ export default async function Signin() {
                   placeholder="Your password"
                   className="border-dark-border bg-dark-surface text-dark-text placeholder:text-dark-text-muted/50 focus:border-blue-primary focus:ring-blue-primary/20"
                 />
+              </div>
+              <div className="mt-1.5 text-right">
+                <Link
+                  href="/forgot-password"
+                  tabIndex={-1}
+                  className="text-sm text-blue-primary hover:text-teal-accent transition-colors"
+                >
+                  Forgot password?
+                </Link>
               </div>
             </div>
 
