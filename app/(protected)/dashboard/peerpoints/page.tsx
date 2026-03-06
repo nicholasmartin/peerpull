@@ -2,7 +2,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Coins, ArrowUpRight, ArrowDownRight, Award } from "lucide-react";
+import { Coins, ArrowUpRight, ArrowDownRight, Award, ChevronDown } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function PeerPointsPage() {
@@ -30,6 +30,18 @@ export default async function PeerPointsPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-semibold">PeerPoints</h1>
+
+      <details className="group rounded-lg border border-dark-border bg-dark-card">
+        <summary className="flex cursor-pointer items-center justify-between px-6 py-4 list-none [&::-webkit-details-marker]:hidden">
+          <h2 className="text-lg font-semibold">How PeerPoints Work</h2>
+          <ChevronDown className="h-5 w-5 text-dark-text-muted transition-transform group-open:rotate-180" />
+        </summary>
+        <div className="px-6 pb-4 space-y-3 text-sm text-dark-text-muted">
+          <p><strong className="text-dark-text">Earn points:</strong> Give feedback on other founders' projects to earn PeerPoints. You also get a bonus for your first feedback!</p>
+          <p><strong className="text-dark-text">Spend points:</strong> Submit a Feedback Request to get video feedback on your project.</p>
+          <p><strong className="text-dark-text">Get started:</strong> New users start with bonus PeerPoints. Invite friends to earn even more!</p>
+        </div>
+      </details>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <Card>
@@ -130,17 +142,6 @@ export default async function PeerPointsPage() {
           </div>
         )}
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>How PeerPoints Work</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 text-sm text-dark-text-muted">
-          <p><strong className="text-dark-text">Earn points:</strong> Give feedback on other founders' projects to earn PeerPoints. You also get a bonus for your first feedback!</p>
-          <p><strong className="text-dark-text">Spend points:</strong> Submit a Feedback Request to get video feedback on your project.</p>
-          <p><strong className="text-dark-text">Get started:</strong> New users start with bonus PeerPoints. Invite friends to earn even more!</p>
-        </CardContent>
-      </Card>
     </div>
   );
 }
