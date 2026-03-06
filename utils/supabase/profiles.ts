@@ -13,6 +13,8 @@ export type Profile = {
   is_admin: boolean;
   referral_code: string | null;
   invited_by: string | null;
+  email_public: boolean;
+  quality_score: number | null;
   status: 'onboarding' | 'waitlisted' | 'active';
   created_at: string;
   updated_at: string;

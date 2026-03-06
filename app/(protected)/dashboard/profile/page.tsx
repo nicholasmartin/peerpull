@@ -1,17 +1,20 @@
 import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   User,
   Mail,
-  Award
+  Award,
+  Pencil,
+  Globe,
+  LockKeyhole
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getUserProfile } from "@/utils/supabase/profiles";
-import EditProfileForm from "@/components/protected/dashboard/EditProfileForm";
 import { ProfileStats } from "@/components/protected/dashboard/ProfileStats";
 import { QualityScoreBadge } from "@/components/protected/dashboard/QualityScoreBadge";
 
@@ -22,7 +25,7 @@ export default async function ProfilePage() {
 
   const profile = await getUserProfile(user);
 
-  // Builder stats — Step 1: get this user's feedback request IDs
+  // Builder stats
   const { data: myRequests } = await supabase
     .from("feedback_requests")
     .select("id")
@@ -31,7 +34,6 @@ export default async function ProfilePage() {
   const projectsSubmitted = myRequests?.length ?? 0;
   const myRequestIds = myRequests?.map((r: any) => r.id) ?? [];
 
-  // Builder stats — Step 2: get reviews on those feedback requests
   const { data: receivedReviews } = myRequestIds.length > 0
     ? await supabase
         .from("reviews")
@@ -70,12 +72,22 @@ export default async function ProfilePage() {
   const initials = displayName.charAt(0).toUpperCase();
   const balance = profile?.peer_points_balance || 0;
   const expertise = profile?.expertise || [];
+  const emailPublic = profile?.email_public ?? false;
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold">My Profile</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-semibold">My Profile</h1>
+        <Link href="/dashboard/profile/edit">
+          <Button variant="outline" size="sm">
+            <Pencil className="h-4 w-4 mr-2" />
+            Edit Profile
+          </Button>
+        </Link>
+      </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {/* Left sidebar */}
         <div className="md:col-span-1 space-y-6">
           <Card>
             <CardContent className="pt-6">
@@ -108,7 +120,6 @@ export default async function ProfilePage() {
                   </div>
                 </div>
 
-                {/* Quality Score */}
                 <div className="w-full mt-4 flex justify-center">
                   <QualityScoreBadge score={profile?.quality_score ?? null} />
                 </div>
@@ -128,78 +139,73 @@ export default async function ProfilePage() {
               </div>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Activity</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col items-center justify-center py-8 text-dark-text-muted">
+                <User className="mb-3 h-10 w-10 text-dark-text-muted" />
+                <p className="text-sm">No recent activity</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
+        {/* Right content */}
         <div className="md:col-span-2 space-y-6">
-          <Tabs defaultValue="profile" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6">
-              <TabsTrigger value="profile">Profile Information</TabsTrigger>
-              <TabsTrigger value="activity">Recent Activity</TabsTrigger>
-              <TabsTrigger value="edit">Edit Profile</TabsTrigger>
-            </TabsList>
+          <ProfileStats
+            builderStats={{
+              projectsSubmitted,
+              reviewsReceived,
+              avgRatingReceived,
+              signalsReceived,
+            }}
+            reviewerStats={{
+              reviewsGiven,
+              qualityScore: profile?.quality_score ?? null,
+              avgRatingGiven,
+              approvalRate,
+            }}
+          />
 
-            <TabsContent value="profile" className="space-y-6">
-              <ProfileStats
-                builderStats={{
-                  projectsSubmitted,
-                  reviewsReceived,
-                  avgRatingReceived,
-                  signalsReceived,
-                }}
-                reviewerStats={{
-                  reviewsGiven,
-                  qualityScore: profile?.quality_score ?? null,
-                  avgRatingGiven,
-                  approvalRate,
-                }}
-              />
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Contact Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-dark-text-muted" />
+          <Card>
+            <CardHeader>
+              <CardTitle>Contact Information</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <Mail className="h-5 w-5 text-dark-text-muted" />
+                {emailPublic ? (
+                  <>
                     <span>{user.email}</span>
-                  </div>
-                </CardContent>
-              </Card>
+                    <Globe className="h-4 w-4 text-dark-text-muted" title="Visible to others" />
+                  </>
+                ) : (
+                  <>
+                    <span className="text-dark-text-muted">Email hidden</span>
+                    <LockKeyhole className="h-4 w-4 text-dark-text-muted" title="Only visible to you" />
+                  </>
+                )}
+              </div>
+            </CardContent>
+          </Card>
 
-              {expertise.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Expertise</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {expertise.map((skill: string, index: number) => (
-                        <Badge key={index} variant="secondary">{skill}</Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </TabsContent>
-
-            <TabsContent value="activity" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Activity</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col items-center justify-center py-8 text-dark-text-muted">
-                    <User className="mb-3 h-10 w-10 text-dark-text-muted" />
-                    <p className="text-sm">No recent activity</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="edit" className="space-y-6">
-              <EditProfileForm profile={profile} userEmail={user.email || ""} />
-            </TabsContent>
-          </Tabs>
+          {expertise.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Expertise</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {expertise.map((skill: string, index: number) => (
+                    <Badge key={index} className="bg-primary/20 text-primary border-primary/30">{skill}</Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

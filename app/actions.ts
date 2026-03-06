@@ -501,6 +501,7 @@ export async function updateProfile(formData: FormData) {
   const lastName = formData.get("last_name")?.toString()?.trim() || null;
   const website = formData.get("website")?.toString()?.trim() || null;
   const expertise = formData.getAll("expertise").map(String).filter(Boolean);
+  const emailPublic = formData.get("email_public") === "true";
   const avatarFile = formData.get("avatar") as File | null;
 
   let avatarUrl: string | null = null;
@@ -519,7 +520,7 @@ export async function updateProfile(formData: FormData) {
       });
 
     if (uploadError) {
-      return encodedRedirect("error", "/dashboard/profile", "Failed to upload avatar");
+      return encodedRedirect("error", "/dashboard/profile/edit", "Failed to upload avatar");
     }
 
     // Get public URL
@@ -535,7 +536,8 @@ export async function updateProfile(formData: FormData) {
     first_name: firstName,
     last_name: lastName,
     website,
-    expertise
+    expertise,
+    email_public: emailPublic
   };
 
   // Only update avatar_url if a new avatar was uploaded
@@ -549,7 +551,7 @@ export async function updateProfile(formData: FormData) {
     .eq("id", user.id);
 
   if (error) {
-    return encodedRedirect("error", "/dashboard/profile", "Failed to update profile");
+    return encodedRedirect("error", "/dashboard/profile/edit", "Failed to update profile");
   }
 
   return encodedRedirect("success", "/dashboard/profile", "Profile updated successfully");

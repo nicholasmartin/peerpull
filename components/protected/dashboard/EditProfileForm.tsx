@@ -7,11 +7,11 @@ import { Profile } from "@/utils/supabase/profiles";
 import { updateProfile } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Upload, User } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Upload, User, Plus, X } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 
 const EXPERTISE_OPTIONS = [
@@ -25,7 +25,21 @@ const EXPERTISE_OPTIONS = [
   "E-commerce",
   "AI/ML",
   "Fintech",
-  "Other",
+  "Growth Hacking",
+  "Data Analytics",
+  "Cloud/Infrastructure",
+  "Cybersecurity",
+  "Blockchain/Web3",
+  "SEO/Content",
+  "Community Building",
+  "Product Management",
+  "Open Source",
+  "No-Code/Low-Code",
+  "Hardware/IoT",
+  "EdTech",
+  "HealthTech",
+  "Gaming",
+  "Social Media",
 ];
 
 interface EditProfileFormProps {
@@ -39,9 +53,11 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
   const [firstName, setFirstName] = useState(profile.first_name || "");
   const [lastName, setLastName] = useState(profile.last_name || "");
   const [website, setWebsite] = useState(profile.website || "");
+  const [emailPublic, setEmailPublic] = useState(profile.email_public ?? false);
   const [selectedExpertise, setSelectedExpertise] = useState<string[]>(
     profile.expertise || []
   );
+  const [customExpertise, setCustomExpertise] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -57,24 +73,35 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
     );
   };
 
+  const addCustomExpertise = () => {
+    const trimmed = customExpertise.trim();
+    if (!trimmed) return;
+    if (selectedExpertise.includes(trimmed)) {
+      toast.error("That expertise is already added");
+      return;
+    }
+    setSelectedExpertise((prev) => [...prev, trimmed]);
+    setCustomExpertise("");
+  };
+
+  const removeExpertise = (tag: string) => {
+    setSelectedExpertise((prev) => prev.filter((t) => t !== tag));
+  };
+
   const handleAvatarSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Validate file type
       if (!file.type.startsWith("image/")) {
         toast.error("Please select an image file");
         return;
       }
 
-      // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         toast.error("Image size must be less than 5MB");
         return;
       }
 
       setAvatarFile(file);
-
-      // Create preview URL
       const previewUrl = URL.createObjectURL(file);
       setAvatarPreview(previewUrl);
     }
@@ -85,7 +112,6 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
   };
 
   const handleSaveProfile = () => {
-    // Client-side validation
     const newErrors: typeof errors = {};
 
     if (!firstName.trim()) {
@@ -96,7 +122,6 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
       newErrors.lastName = "Last name is required";
     }
 
-    // Validate website URL if provided
     if (website && website.trim()) {
       const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
       if (!urlPattern.test(website.trim())) {
@@ -116,32 +141,20 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
       formData.append("first_name", firstName.trim());
       formData.append("last_name", lastName.trim());
       if (website) formData.append("website", website.trim());
+      formData.append("email_public", emailPublic ? "true" : "false");
       selectedExpertise.forEach((tag) => formData.append("expertise", tag));
       if (avatarFile) formData.append("avatar", avatarFile);
 
-      // The updateProfile action uses encodedRedirect to handle success/error
-      // and will automatically redirect with appropriate toast message
       await updateProfile(formData);
     });
   };
 
   const handleCancel = () => {
-    // Reset form to original values
-    setFirstName(profile.first_name || "");
-    setLastName(profile.last_name || "");
-    setWebsite(profile.website || "");
-    setSelectedExpertise(profile.expertise || []);
-
-    // Reset avatar
-    setAvatarFile(null);
-    if (avatarPreview) {
-      URL.revokeObjectURL(avatarPreview);
-      setAvatarPreview(null);
-    }
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    router.push("/dashboard/profile");
   };
+
+  // Custom tags are those not in the predefined options
+  const customTags = selectedExpertise.filter((t) => !EXPERTISE_OPTIONS.includes(t));
 
   return (
     <div className="space-y-6">
@@ -152,7 +165,6 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
         </CardHeader>
         <CardContent>
           <div className="flex flex-col sm:flex-row items-center gap-6">
-            {/* Current/Preview Avatar */}
             <div className="flex flex-col items-center gap-2">
               <Avatar className="h-24 w-24">
                 <AvatarImage
@@ -168,7 +180,6 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
               )}
             </div>
 
-            {/* Upload Controls */}
             <div className="flex-1 space-y-3">
               <div className="flex flex-col gap-2">
                 <Input
@@ -251,6 +262,18 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
             <Input id="email" type="email" value={userEmail} disabled />
           </div>
 
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label htmlFor="email_public">Show email on profile</Label>
+              <p className="text-xs text-dark-text-muted">Allow others to see your email address</p>
+            </div>
+            <Switch
+              id="email_public"
+              checked={emailPublic}
+              onCheckedChange={setEmailPublic}
+            />
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="website">Website</Label>
             <Input
@@ -275,7 +298,7 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
       <Card>
         <CardHeader>
           <CardTitle>Expertise</CardTitle>
-          <CardDescription>Select your areas of expertise</CardDescription>
+          <CardDescription>Select your areas of expertise or add your own</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex flex-wrap gap-2">
@@ -295,15 +318,59 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
             ))}
           </div>
 
-          {selectedExpertise.length > 0 && (
+          <div className="flex gap-2">
+            <Input
+              type="text"
+              value={customExpertise}
+              onChange={(e) => setCustomExpertise(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  addCustomExpertise();
+                }
+              }}
+              placeholder="Add custom expertise..."
+              className="flex-1"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={addCustomExpertise}
+              disabled={!customExpertise.trim()}
+              className="shrink-0"
+            >
+              <Plus className="h-4 w-4 mr-1" />
+              Add
+            </Button>
+          </div>
+
+          {customTags.length > 0 && (
             <div>
-              <p className="text-sm text-dark-text-muted mb-2">Selected:</p>
+              <p className="text-xs text-dark-text-muted mb-2">Custom tags:</p>
               <div className="flex flex-wrap gap-2">
-                {selectedExpertise.map((skill: string, index: number) => (
-                  <Badge key={index} variant="secondary">{skill}</Badge>
+                {customTags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1 rounded-full bg-primary text-white px-3 py-1.5 text-xs font-medium"
+                  >
+                    {tag}
+                    <button
+                      type="button"
+                      onClick={() => removeExpertise(tag)}
+                      className="hover:text-white/70"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </span>
                 ))}
               </div>
             </div>
+          )}
+
+          {selectedExpertise.length > 0 && (
+            <p className="text-xs text-dark-text-muted">
+              {selectedExpertise.length} selected
+            </p>
           )}
         </CardContent>
       </Card>
