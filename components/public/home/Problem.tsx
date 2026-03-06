@@ -74,7 +74,7 @@ export function Problem() {
               {[
                 { bold: "Feedback from real builders", rest: "— every feedback giver on PeerPull is a founder or maker who understands what you're going through" },
                 { bold: "Fast turnaround", rest: "— submit your product and get detailed video feedback back, typically within minutes" },
-                { bold: "Guaranteed quality", rest: "— feedback givers earn credits by being thorough, so low-effort feedback doesn't survive" },
+                { bold: "Guaranteed quality", rest: "— feedback givers earn PeerPoints by being thorough, so low-effort feedback doesn't survive" },
                 { bold: "Zero cost", rest: "— give feedback, get feedback. No subscriptions, no invoices, no catch" },
                 { bold: "Built for the early days", rest: "— when you need a second opinion most, not after you've already launched and it's too late to pivot" },
               ].map((item, i) => (

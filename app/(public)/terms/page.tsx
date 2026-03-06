@@ -37,7 +37,7 @@ export default function TermsPage() {
             <p>
               PeerPull is a peer-to-peer feedback exchange platform. Users submit products or
               projects for feedback and provide video feedback to other users. The platform uses
-              a credit system (PeerPoints) to facilitate fair exchanges: you earn points by
+              a points system (PeerPoints) to facilitate fair exchanges: you earn PeerPoints by
               giving feedback and spend points to receive feedback.
             </p>
           </section>
@@ -56,7 +56,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className={`${montserrat.className} text-xl font-semibold text-dark-text mb-3`}>
-              4. PeerPoints & Credits
+              4. PeerPoints
             </h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>PeerPoints have no monetary value and cannot be exchanged for cash.</li>

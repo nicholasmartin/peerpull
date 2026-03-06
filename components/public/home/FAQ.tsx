@@ -56,11 +56,11 @@ export function FAQ({ settings }: { settings: SiteSettings }) {
             items={[
               {
                 question: "How do I get access to the beta?",
-                answer: `PeerPull is currently in closed beta and available by invite only. Request an invite from our homepage or get one from an existing member. Existing members earn ${settings.referralBonus} bonus credits for every friend they invite.`
+                answer: `PeerPull is currently in closed beta and available by invite only. Request an invite from our homepage or get one from an existing member. Existing members earn ${settings.referralBonus} bonus PeerPoints for every friend they invite.`
               },
               {
                 question: "What are the beta perks?",
-                answer: `Beta members enjoy ${exchangeRatio}, ${settings.signupBonus} free credits at signup, and a +${settings.firstReviewBonus} credit bonus for your first feedback. Plus, refer a friend and you both earn bonus credits. These perks are time-limited and will adjust as we grow.`
+                answer: `Beta members enjoy ${exchangeRatio}, ${settings.signupBonus} free PeerPoints at signup, and a +${settings.firstReviewBonus} PeerPoint bonus for your first feedback. Plus, refer a friend and you both earn bonus PeerPoints. These perks are time-limited and will adjust as we grow.`
               },
               {
                 question: "How do you ensure quality feedback?",

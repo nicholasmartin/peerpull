@@ -16,12 +16,12 @@ export function CTASection({ settings }: { settings: SiteSettings }) {
       description: `During beta, give just ${settings.reviewCost === 1 ? "one feedback" : `${settings.reviewCost} feedback`} to get one back. This generous ratio won't last forever — lock it in now.`,
     },
     {
-      title: `${settings.signupBonus} Free Credits on Signup`,
+      title: `${settings.signupBonus} Free PeerPoints on Signup`,
       description: "Start giving and getting feedback immediately. No earning required to submit your first project.",
     },
     {
       title: "Earn More Through Referrals",
-      description: `Invite fellow founders and earn ${settings.referralBonus} credits per referral. Build your feedback balance before the ratio changes.`,
+      description: `Invite fellow founders and earn ${settings.referralBonus} PeerPoints per referral. Build your feedback balance before the ratio changes.`,
     },
   ];
 

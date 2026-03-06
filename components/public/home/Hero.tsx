@@ -52,10 +52,10 @@ export function Hero({ settings }: { settings: SiteSettings }) {
                 {exchangeLabel}
               </span>
               <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">
-                {settings.signupBonus} Free Credits at Signup
+                {settings.signupBonus} Free PeerPoints at Signup
               </span>
               <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">
-                Earn {settings.referralBonus} Credits Per Referral
+                Earn {settings.referralBonus} PeerPoints Per Referral
               </span>
             </div>
           </div>
