@@ -452,18 +452,22 @@ export async function submitOnboardingProject(formData: FormData) {
 
   const title = formData.get("title")?.toString()?.trim();
   const url = formData.get("url")?.toString()?.trim();
+  const mode = formData.get("mode")?.toString() || "live";
 
   if (!title || !url) {
     return { error: "Project name and URL are required" };
   }
 
-  // Insert feedback request
+  const isDraft = mode === "draft";
+
+  // Insert feedback request (draft skips the queue trigger since status != 'open')
   const { data: pr, error: prError } = await supabase
     .from("feedback_requests")
     .insert({
       user_id: user.id,
       title,
       url,
+      status: isDraft ? "draft" : "open",
     })
     .select("id")
     .single();
@@ -473,7 +477,7 @@ export async function submitOnboardingProject(formData: FormData) {
     return { error: "Failed to create feedback request" };
   }
 
-  // Queue position is auto-assigned by the trg_auto_queue_position trigger on insert
+  // For live projects, queue position is auto-assigned by the trg_auto_queue_position trigger on insert
 
   // Transition status from onboarding to waitlisted
   const { error: statusError } = await supabase

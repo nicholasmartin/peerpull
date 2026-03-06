@@ -22,7 +22,7 @@ export default async function FeedbackRequestsPage() {
     .order("created_at", { ascending: false });
 
   const activeFeedbackRequests = (feedbackRequests || []).filter(
-    (fr: any) => fr.status === "open" || fr.status === "in_review"
+    (fr: any) => fr.status === "open" || fr.status === "in_review" || fr.status === "draft"
   );
   const completedFeedbackRequests = (feedbackRequests || []).filter(
     (fr: any) => fr.status === "completed" || fr.status === "closed"
@@ -36,12 +36,14 @@ export default async function FeedbackRequestsPage() {
 
   const getStatusBadge = (status: string) => {
     const color = {
+      draft: "bg-dark-text-muted/60",
       open: "bg-yellow-500",
       in_review: "bg-green-500",
       completed: "bg-primary",
       closed: "bg-dark-text-muted",
     }[status] || "bg-dark-text-muted";
     const label = {
+      draft: "Draft",
       open: "Open",
       in_review: "In Progress",
       completed: "Completed",
