@@ -18,7 +18,7 @@
 | 5 | Smart OAuth avatar management (GH #13) | ⬜ Not Started | Low priority — cosmetic |
 | 6 | React Email templates for notifications (GH #14) | ✅ Done | `a1c23b1` — 8 email files + pipeline wired, needs manual testing |
 | 7 | Notification deep links (GH #17) | ✅ Done | `8b9ff1e` — `link_url` column + 4 call sites wired, needs `supabase db push` |
-| 8 | Profile page improvements (GH #20) | ✅ Done | Email privacy, expanded expertise, badge styling, tab-free layout, dedicated edit page |
+| 8 | Profile page improvements (GH #20) | ✅ Done | `33cb400` — email privacy, expanded expertise, badge styling, tab-free layout, dedicated edit page |
 
 ---
 
@@ -115,7 +115,7 @@
 | [#16](https://github.com/nicholasmartin/peerpull/issues/16) | Add user-configurable text size preference | Open | Low | ✅ Done — `8b9ff1e`, TextSizeContext + appearance page wired |
 | [#17](https://github.com/nicholasmartin/peerpull/issues/17) | Notification deep links to detail pages | Open | Medium | ✅ Done — `8b9ff1e`, needs `supabase db push` for migration |
 | [#19](https://github.com/nicholasmartin/peerpull/issues/19) | Public-facing user profiles | Open | Medium | Future feature request |
-| [#20](https://github.com/nicholasmartin/peerpull/issues/20) | Profile page improvements (email privacy, expertise, layout) | Open | Medium | ✅ Done — needs `supabase db push` for migration |
+| [#20](https://github.com/nicholasmartin/peerpull/issues/20) | Profile page improvements (email privacy, expertise, layout) | Open | Medium | ✅ Done — `33cb400`, needs `supabase db push` for migration |
 
 ---
 
