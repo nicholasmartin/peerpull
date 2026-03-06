@@ -8,7 +8,8 @@ import {
   CheckCircle2,
   Copy,
   Check,
-  Pencil
+  Pencil,
+  Info
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { changeReferralCode } from "@/app/actions";
@@ -260,9 +261,9 @@ export default function InviteFoundersPage() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10 text-green-400">
                   <CheckCircle2 className="h-6 w-6" />
                 </div>
-                <h3 className="mt-4 font-medium">They Join</h3>
+                <h3 className="mt-4 font-medium">They Activate</h3>
                 <p className="mt-2 text-sm text-dark-text-muted">
-                  They sign up using your referral link or code
+                  They verify their email and complete onboarding
                 </p>
               </CardContent>
             </Card>
@@ -274,7 +275,7 @@ export default function InviteFoundersPage() {
                 </div>
                 <h3 className="mt-4 font-medium">Earn Rewards</h3>
                 <p className="mt-2 text-sm text-dark-text-muted">
-                  Get {referralBonus} PeerPoints for each successful referral
+                  You earn {referralBonus} PeerPoints once they activate
                 </p>
               </CardContent>
             </Card>
@@ -297,9 +298,9 @@ export default function InviteFoundersPage() {
             </div>
             <div className="rounded-md border border-dark-border p-4 text-center">
               <div className="text-2xl font-semibold tabular-nums text-dark-text">
-                {referrals.filter(r => r.status === "signed_up").length}
+                {referrals.filter(r => r.status === "activated").length}
               </div>
-              <div className="text-sm text-dark-text-muted">Signed Up</div>
+              <div className="text-sm text-dark-text-muted">Activated</div>
             </div>
             <div className="rounded-md border border-dark-border p-4 text-center">
               <div className="text-2xl font-semibold tabular-nums text-primary">{totalBonus}</div>
@@ -329,16 +330,26 @@ export default function InviteFoundersPage() {
                   {referrals.map((r) => (
                     <tr key={r.id} className="border-b border-dark-border/50">
                       <td className="px-4 py-3 text-dark-text">
-                        {r.invitee?.first_name} {r.invitee?.last_name}
+                        {r.invitee
+                          ? (`${r.invitee.first_name} ${r.invitee.last_name}`.trim() || "Unknown")
+                          : <span className="text-dark-text-muted italic">Deleted user</span>
+                        }
                       </td>
                       <td className="px-4 py-3">
-                        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-400">
-                          <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                          {r.status}
-                        </span>
+                        {r.status === "activated" ? (
+                          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-400">
+                            <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                            Activated
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-400">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            Registered
+                          </span>
+                        )}
                       </td>
                       <td className="px-4 py-3 text-primary font-medium">
-                        +{r.bonus_awarded}
+                        {r.bonus_awarded > 0 ? `+${r.bonus_awarded}` : <span className="text-dark-text-muted">Pending</span>}
                       </td>
                       <td className="px-4 py-3 text-dark-text-muted">
                         {new Date(r.created_at).toLocaleDateString()}
@@ -351,6 +362,25 @@ export default function InviteFoundersPage() {
           </CardContent>
         </Card>
       )}
+
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex items-start gap-2">
+            <Info className="h-4 w-4 text-dark-text-muted mt-0.5 shrink-0" />
+            <div className="space-y-2 text-sm text-dark-text-muted">
+              <p className="font-medium text-dark-text">Referral Status Legend</p>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
+                <span><strong className="text-amber-400">Registered</strong> — Invitee has signed up but hasn&apos;t verified their email or completed onboarding yet. No bonus awarded.</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-green-400 shrink-0" />
+                <span><strong className="text-green-400">Activated</strong> — Invitee has verified their email and completed onboarding. Your referral bonus has been awarded.</span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <AlertDialog open={showConfirm} onOpenChange={setShowConfirm}>
         <AlertDialogContent>

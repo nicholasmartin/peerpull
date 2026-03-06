@@ -504,6 +504,15 @@ export async function submitOnboardingProject(formData: FormData) {
     return { error: "Failed to complete onboarding" };
   }
 
+  // Award deferred signup bonus (and referral bonus to inviter if referred).
+  // These are deferred from account creation to prevent abuse with unverified emails.
+  const { error: bonusError } = await supabase.rpc("award_activation_bonuses", {
+    p_user_id: user.id,
+  });
+  if (bonusError) {
+    console.error("Failed to award activation bonuses:", bonusError.message);
+  }
+
   return { success: true };
 }
 
