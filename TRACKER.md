@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-06 (GH #20 profile page improvements implemented)
+> Last updated: 2026-03-06 (Deferred signup/referral bonuses to prevent abuse)
 
 ---
 
@@ -138,6 +138,7 @@
 | Trigger function search_path fix | ✅ Done | `1eda108` |
 | Fix auto_queue_position trigger (stale sequence ref) | ✅ Done | `0da38f5`, migration `20260303200000` |
 | Remove sidebar lock gating + platform_launched prop threading | ✅ Done | `5a413a0` |
+| Defer signup/referral bonuses until account activation | ✅ Done | `e92098a`, migration `20260311000000` |
 
 ---
 
@@ -150,6 +151,7 @@
 | `ignoreBuildErrors: true` in next.config | Medium | — | TS errors bypassed on build |
 | ~~OAuth: GitHub/LinkedIn/Twitch untested~~ | ~~Low~~ | [GH #13](https://github.com/nicholasmartin/peerpull/issues/13) | Fixed — all 4 providers working |
 | OAuth avatar refresh on login | Low | [GH #13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management (custom vs provider) |
+| ~~Signup/referral bonus before email verification~~ | ~~High~~ | User report | Fixed — bonuses deferred to activation `e92098a` |
 | No test framework | Medium | — | No vitest/jest — hackathon trade-off |
 | Untracked `types/` directory | Low | — | Needs investigation — should it be committed? |
 
