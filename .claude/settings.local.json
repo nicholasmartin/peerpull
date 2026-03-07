@@ -94,7 +94,8 @@
       "Bash(npm show:*)",
       "Bash(supabase:*)",
       "Bash(tasklist:*)",
-      "Bash(handle64.exe:*)"
+      "Bash(handle64.exe:*)",
+      "Bash(nvm:*)"
     ],
     "deny": []
   },
