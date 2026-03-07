@@ -51,3 +51,4 @@ next-env.d.ts
 .worktrees/
 .security-key
 logs/security/
+.env.local
