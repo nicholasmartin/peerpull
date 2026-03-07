@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { getNextReview } from "@/app/actions";
 import { toast } from "sonner";
+import posthog from "posthog-js";
 
 export function GetNextReviewButton() {
   const [isPending, startTransition] = useTransition();
@@ -21,6 +22,9 @@ export function GetNextReviewButton() {
           toast.error(result.error);
         }
       } else if (result && "pr_id" in result) {
+        posthog.capture("review_started", {
+          feedback_request_id: result.pr_id,
+        });
         router.push(`/dashboard/submit-feedback/${result.pr_id}/review`);
       }
     });

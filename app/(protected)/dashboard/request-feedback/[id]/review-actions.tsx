@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { approveReview, rejectReview } from "@/app/actions";
 import { toast } from "sonner";
+import posthog from "posthog-js";
 
 export function ReviewActions({ reviewId }: { reviewId: string }) {
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
       toast.error(result.error);
     } else {
       toast.success("Feedback approved");
+      posthog.capture("review_approved", { review_id: reviewId });
     }
     router.refresh();
     setLoading(false);
@@ -30,6 +32,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
       toast.error(result.error);
     } else {
       toast.success("Feedback rejected");
+      posthog.capture("review_rejected", { review_id: reviewId });
     }
     router.refresh();
     setLoading(false);

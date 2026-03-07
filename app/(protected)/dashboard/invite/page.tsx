@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import posthog from "posthog-js";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Gift,
@@ -91,6 +92,7 @@ export default function InviteFoundersPage() {
     await navigator.clipboard.writeText(text);
     setCopied(type);
     setTimeout(() => setCopied(null), 2000);
+    posthog.capture("referral_link_copied", { copy_type: type });
   };
 
   const totalBonus = referrals.reduce((sum, r) => sum + (r.bonus_awarded || 0), 0);
@@ -141,6 +143,7 @@ export default function InviteFoundersPage() {
       return;
     }
     toast.success("Referral code updated!");
+    posthog.capture("referral_code_changed", { new_code: newCode });
     setReferralCode(newCode);
     setIsEditing(false);
     setNewCode("");

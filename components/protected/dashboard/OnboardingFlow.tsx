@@ -8,6 +8,7 @@ import { submitOnboardingProject } from "@/app/actions";
 import { Check, Zap, FileText } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import Image from "next/image";
+import posthog from "posthog-js";
 
 interface OnboardingFlowProps {
   profile: Profile;
@@ -42,6 +43,16 @@ export default function OnboardingFlow({ profile, signupBonus, referralBonus }: 
         toast.error(result.error);
         return;
       }
+
+      posthog.identify(profile.id, {
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+      });
+      posthog.capture("onboarding_project_submitted", {
+        mode,
+        project_title: title.trim(),
+        has_url: !!url.trim(),
+      });
 
       setStep(1);
     });

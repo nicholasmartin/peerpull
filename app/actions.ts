@@ -4,6 +4,7 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { getSettings } from "@/utils/supabase/settings";
 import { createNotification } from "@/utils/notifications";
+import { getPostHogClient } from "@/lib/posthog-server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -69,6 +70,28 @@ export const signUpAction = async (formData: FormData) => {
     }
   }
 
+  if (data.user) {
+    const posthog = getPostHogClient();
+    posthog.capture({
+      distinctId: data.user.id,
+      event: "sign_up",
+      properties: {
+        email,
+        first_name: firstname,
+        last_name: lastname,
+        used_referral_code: !!referralCode,
+      },
+    });
+    posthog.identify({
+      distinctId: data.user.id,
+      properties: {
+        email,
+        first_name: firstname,
+        last_name: lastname,
+      },
+    });
+  }
+
   return redirect(`/signup/verify-email?email=${encodeURIComponent(email)}`);
 };
 
@@ -83,13 +106,26 @@ export const signInAction = async (formData: FormData) => {
 
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data: signInData, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) {
     return encodedRedirect("error", "/signin", error.message);
+  }
+
+  if (signInData.user) {
+    const posthog = getPostHogClient();
+    posthog.capture({
+      distinctId: signInData.user.id,
+      event: "sign_in",
+      properties: { email },
+    });
+    posthog.identify({
+      distinctId: signInData.user.id,
+      properties: { email },
+    });
   }
 
   return redirect("/dashboard");
@@ -278,6 +314,22 @@ export async function submitFeedbackRequest(formData: FormData) {
   // Assign queue position (points charged on review completion, not upfront)
   await supabase.rpc("assign_queue_position", { p_pr_id: pr.id });
 
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: user.id,
+    event: "feedback_request_submitted",
+    properties: {
+      feedback_request_id: pr.id,
+      title,
+      stage,
+      categories,
+      focus_areas: focusAreas,
+      has_url: !!url,
+      has_description: !!description,
+      question_count: questions.length,
+    },
+  });
+
   const redirectTo = formData.get("redirectTo")?.toString() || "/dashboard/request-feedback";
   return encodedRedirect("success", redirectTo, "Feedback Request created and added to queue!");
 }
@@ -369,6 +421,23 @@ export async function submitReview(formData: FormData) {
       linkUrl: `/dashboard/request-feedback/${notifData.feedback_request_id}`,
     });
   }
+
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: user.id,
+    event: "review_submitted",
+    properties: {
+      review_id: reviewId,
+      feedback_request_id: notifData?.feedback_request_id,
+      rating,
+      video_duration_seconds: videoDuration,
+      has_strengths: !!(strengths && strengths.length > 0),
+      has_improvements: !!(improvements && improvements.length > 0),
+      signal_follow: signalFollow,
+      signal_engage: signalEngage,
+      signal_invest: signalInvest,
+    },
+  });
 
   return redirect("/dashboard/submit-feedback");
 }
