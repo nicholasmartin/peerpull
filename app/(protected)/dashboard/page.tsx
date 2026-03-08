@@ -13,11 +13,6 @@ export default async function DashboardPage() {
 
   const profile = await getUserProfile(user);
 
-  // Redirect onboarding users to the onboarding flow
-  if (profile?.status === 'onboarding') {
-    return redirect("/onboarding");
-  }
-
   // Show waitlist dashboard for non-active users
   const settings = await getSettings();
   const isActive = profile?.status === 'active' || settings.platform_launched;

@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-06 (Deferred signup/referral bonuses to prevent abuse)
+> Last updated: 2026-03-08 (Tier 1 security fixes: GH #23 onboarding bypass + GH #22 identity linking guard)
 
 ---
 
@@ -114,8 +114,14 @@
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
 | [#16](https://github.com/nicholasmartin/peerpull/issues/16) | Add user-configurable text size preference | Open | Low | ✅ Done — `8b9ff1e`, TextSizeContext + appearance page wired |
 | [#17](https://github.com/nicholasmartin/peerpull/issues/17) | Notification deep links to detail pages | Open | Medium | ✅ Done — `8b9ff1e`, needs `supabase db push` for migration |
+| [#18](https://github.com/nicholasmartin/peerpull/issues/18) | Allow users to edit feedback requests after creation | Open | Medium | 🟡 Planned — `.agents/plans/gh18-edit-feedback-requests.md` |
 | [#19](https://github.com/nicholasmartin/peerpull/issues/19) | Public-facing user profiles | Open | Medium | Future feature request |
 | [#20](https://github.com/nicholasmartin/peerpull/issues/20) | Profile page improvements (email privacy, expertise, layout) | Open | Medium | ✅ Done — `33cb400`, needs `supabase db push` for migration |
+| [#21](https://github.com/nicholasmartin/peerpull/issues/21) | Inline field-level validation on auth forms | Open | Low | UX polish, not blocking |
+| [#22](https://github.com/nicholasmartin/peerpull/issues/22) | Handle identity linking for social + email login | Open | High | ✅ Done — `ON CONFLICT` guard in `handle_new_user()`, migration pushed |
+| [#23](https://github.com/nicholasmartin/peerpull/issues/23) | Enforce onboarding bypass on dashboard sub-routes | Open | High | ✅ Done — onboarding redirect moved to dashboard layout |
+| [#24](https://github.com/nicholasmartin/peerpull/issues/24) | Persist referral code across all public pages | Open | Medium | Cookie-based persistence needed |
+| [#25](https://github.com/nicholasmartin/peerpull/issues/25) | Cross-browser screen recording (Firefox/Safari) | Open | Medium | Firefox users blocked from core loop |
 
 ---
 

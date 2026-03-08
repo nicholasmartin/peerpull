@@ -28,6 +28,11 @@ export default async function DashboardLayout({
   const flash = await getFlashMessage();
   const isActive = profile?.status === 'active' || settings.platform_launched;
 
+  // Redirect onboarding users to complete onboarding
+  if (profile?.status === 'onboarding') {
+    return redirect("/onboarding");
+  }
+
   return (
     <>
       <FlashToast flash={flash} />
