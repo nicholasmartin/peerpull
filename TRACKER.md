@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-08 (GH #25: Chrome mic permission handling)
+> Last updated: 2026-03-08 (Fix: double-claim bug in review queue)
 
 ---
 
@@ -146,6 +146,7 @@
 | Fix auto_queue_position trigger (stale sequence ref) | ✅ Done | `0da38f5`, migration `20260303200000` |
 | Remove sidebar lock gating + platform_launched prop threading | ✅ Done | `5a413a0` |
 | Defer signup/referral bonuses until account activation | ✅ Done | `e92098a`, migration `20260311000000` |
+| Fix double-claim bug: reviewers could claim multiple projects | ✅ Done | `76d5507`, migration `20260312000000`, needs `supabase db push` |
 
 ---
 
