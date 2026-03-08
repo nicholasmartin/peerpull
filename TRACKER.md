@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-08 (Streamlined feedback submission flow implemented)
+> Last updated: 2026-03-08 (GH #27 + Helpful/Unhelpful status rename)
 
 ---
 
@@ -124,7 +124,7 @@
 | [#24](https://github.com/nicholasmartin/peerpull/issues/24) | Persist referral code across all public pages | Open | Medium | ✅ Done — `db2ecf8`, middleware cookie (90-day TTL), signup/OAuth/callback all read cookie fallback, invite link now uses homepage |
 | [#25](https://github.com/nicholasmartin/peerpull/issues/25) | Cross-browser screen recording: Chrome permission errors, Safari/Firefox compatibility | Open | Medium | 🟡 Chrome mic permission fix done (`ec8d132`), Safari/Firefox compatibility remaining |
 | [#26](https://github.com/nicholasmartin/peerpull/issues/26) | Theme toggle requires extra click (state desync) | Open | Medium | ✅ Done — synced ThemeContext from localStorage, removed "system" dead code, appearance page uses context |
-| [#27](https://github.com/nicholasmartin/peerpull/issues/27) | Completed feedback rows not clickable, no detail view for reviewers | Open | Medium | ✅ Done — clickable rows + `/dashboard/feedback/[id]` detail page, build passes |
+| [#27](https://github.com/nicholasmartin/peerpull/issues/27) | Completed feedback rows not clickable, no detail view for reviewers | Open | Medium | ✅ Done — `345aa29`, clickable rows + `/dashboard/feedback/[id]` detail page, Helpful/Unhelpful rename |
 
 ---
 
