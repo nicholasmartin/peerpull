@@ -4,10 +4,12 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, MessageSquare } from "lucide-react";
+import { ArrowLeft, MessageSquare, Pencil } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/utils/supabase/server";
+import { closeFeedbackRequest } from "@/app/actions";
+import { CloseProjectButton } from "@/components/protected/dashboard/CloseProjectButton";
 import { ReviewActions } from "./review-actions";
 import { SignalBadges } from "@/components/protected/dashboard/SignalBadges";
 import { ReviewQualityPanel } from "@/components/protected/dashboard/ReviewQualityPanel";
@@ -47,8 +49,8 @@ export default async function FeedbackRequestDetailPage({ params }: Props) {
     : { data: [] };
   const reviewerMap = Object.fromEntries((reviewerProfiles || []).map((p: any) => [p.id, p.full_name]));
 
-  const statusLabel = pr.status === "open" ? "Open" : pr.status === "in_review" ? "In Progress" : pr.status === "completed" ? "Completed" : "Closed";
-  const dotColor = pr.status === "open" ? "bg-yellow-500" : pr.status === "completed" ? "bg-green-500" : "bg-primary";
+  const statusLabel = pr.status === "draft" ? "Draft" : pr.status === "open" ? "Live" : pr.status === "in_review" ? "In Review" : pr.status === "completed" ? "Completed" : "Closed";
+  const dotColor = pr.status === "open" ? "bg-green-500" : pr.status === "in_review" ? "bg-blue-500" : pr.status === "completed" ? "bg-primary" : pr.status === "draft" ? "bg-dark-text-muted/60" : "bg-dark-text-muted";
 
   return (
     <div className="space-y-6">
@@ -64,6 +66,17 @@ export default async function FeedbackRequestDetailPage({ params }: Props) {
             <span>{new Date(pr.created_at).toLocaleDateString()}</span>
           </div>
         </div>
+        {isOwner && ["draft", "open", "in_review"].includes(pr.status) && (
+          <Link href={`/dashboard/request-feedback/${pr.id}/edit`}>
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+              <Pencil className="h-3.5 w-3.5" />
+              Edit
+            </Button>
+          </Link>
+        )}
+        {isOwner && ["draft", "open"].includes(pr.status) && (
+          <CloseProjectButton projectId={pr.id} action={closeFeedbackRequest} />
+        )}
         <span className="inline-flex items-center gap-1.5 text-xs text-dark-text-muted">
           <span className={`inline-block h-1.5 w-1.5 rounded-full ${dotColor}`} />
           {statusLabel}

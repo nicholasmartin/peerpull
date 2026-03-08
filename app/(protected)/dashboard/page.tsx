@@ -63,11 +63,12 @@ export default async function DashboardPage() {
   const isNewUser = !hasSubmittedProject || !hasReviewedProject || !hasReceivedReview;
 
   const statusDot = (status: string) => {
-    const color = status === "open" ? "bg-yellow-500" : status === "completed" ? "bg-green-500" : "bg-primary";
+    const color = status === "open" ? "bg-green-500" : status === "in_review" ? "bg-blue-500" : status === "completed" ? "bg-primary" : status === "draft" ? "bg-dark-text-muted/60" : "bg-dark-text-muted";
+    const label = status === "open" ? "Live" : status === "in_review" ? "In Review" : status === "draft" ? "Draft" : status === "completed" ? "Completed" : "Closed";
     return (
       <span className="inline-flex items-center gap-1.5 text-xs text-dark-text-muted">
         <span className={`inline-block h-1.5 w-1.5 rounded-full ${color}`} />
-        {status}
+        {label}
       </span>
     );
   };

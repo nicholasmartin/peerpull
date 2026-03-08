@@ -2,7 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Info } from "lucide-react";
+import { PlusCircle, Info, Pencil } from "lucide-react";
+import { closeFeedbackRequest } from "@/app/actions";
+import { CloseProjectButton } from "@/components/protected/dashboard/CloseProjectButton";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getSettings } from "@/utils/supabase/settings";
@@ -37,15 +39,15 @@ export default async function FeedbackRequestsPage() {
   const getStatusBadge = (status: string) => {
     const color = {
       draft: "bg-dark-text-muted/60",
-      open: "bg-yellow-500",
-      in_review: "bg-green-500",
+      open: "bg-green-500",
+      in_review: "bg-blue-500",
       completed: "bg-primary",
       closed: "bg-dark-text-muted",
     }[status] || "bg-dark-text-muted";
     const label = {
       draft: "Draft",
-      open: "Open",
-      in_review: "In Progress",
+      open: "Live",
+      in_review: "In Review",
       completed: "Completed",
       closed: "Closed",
     }[status] || status;
@@ -125,7 +127,7 @@ export default async function FeedbackRequestsPage() {
                       <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Date Submitted</th>
                       <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Status</th>
                       <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Feedback</th>
-                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Actions</th>
+                      <th className="px-4 py-3 text-right text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -136,15 +138,26 @@ export default async function FeedbackRequestsPage() {
                             {pr.title}
                           </Link>
                         </td>
-                        <td className="px-4 py-4 text-dark-text-muted">{new Date(pr.created_at).toLocaleDateString()}</td>
-                        <td className="px-4 py-4">{getStatusBadge(pr.status)}</td>
-                        <td className="px-4 py-4 text-dark-text-muted">{pr.reviews?.length || 0} feedback</td>
+                        <td className="px-4 py-4 text-dark-text-muted whitespace-nowrap">{new Date(pr.created_at).toLocaleDateString()}</td>
+                        <td className="px-4 py-4 whitespace-nowrap">{getStatusBadge(pr.status)}</td>
+                        <td className="px-4 py-4 text-dark-text-muted whitespace-nowrap">{pr.reviews?.length || 0} feedback</td>
                         <td className="px-4 py-4">
-                          <Link href={`/dashboard/request-feedback/${pr.id}`}>
-                            <Button variant="outline" size="sm">
-                              View
-                            </Button>
-                          </Link>
+                          <div className="flex items-center justify-end gap-2">
+                            <Link href={`/dashboard/request-feedback/${pr.id}`}>
+                              <Button variant="outline" size="sm">
+                                View
+                              </Button>
+                            </Link>
+                            <Link href={`/dashboard/request-feedback/${pr.id}/edit`}>
+                              <Button variant="outline" size="sm">
+                                <Pencil className="h-3.5 w-3.5 mr-1" />
+                                Edit
+                              </Button>
+                            </Link>
+                            {["draft", "open"].includes(pr.status) && (
+                              <CloseProjectButton projectId={pr.id} action={closeFeedbackRequest} />
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -168,7 +181,7 @@ export default async function FeedbackRequestsPage() {
                       <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Date Submitted</th>
                       <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Status</th>
                       <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Feedback</th>
-                      <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Actions</th>
+                      <th className="px-4 py-3 text-right text-[11px] uppercase tracking-wider font-medium text-dark-text-muted">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -179,10 +192,10 @@ export default async function FeedbackRequestsPage() {
                             {pr.title}
                           </Link>
                         </td>
-                        <td className="px-4 py-4 text-dark-text-muted">{new Date(pr.created_at).toLocaleDateString()}</td>
-                        <td className="px-4 py-4">{getStatusBadge(pr.status)}</td>
-                        <td className="px-4 py-4 text-dark-text-muted">{pr.reviews?.length || 0} feedback</td>
-                        <td className="px-4 py-4">
+                        <td className="px-4 py-4 text-dark-text-muted whitespace-nowrap">{new Date(pr.created_at).toLocaleDateString()}</td>
+                        <td className="px-4 py-4 whitespace-nowrap">{getStatusBadge(pr.status)}</td>
+                        <td className="px-4 py-4 text-dark-text-muted whitespace-nowrap">{pr.reviews?.length || 0} feedback</td>
+                        <td className="px-4 py-4 text-right">
                           <Link href={`/dashboard/request-feedback/${pr.id}`}>
                             <Button variant="outline" size="sm">
                               View Feedback

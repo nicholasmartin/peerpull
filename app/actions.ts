@@ -334,6 +334,202 @@ export async function submitFeedbackRequest(formData: FormData) {
   return encodedRedirect("success", redirectTo, "Feedback Request created and added to queue!");
 }
 
+export async function updateFeedbackRequest(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return redirect("/signin");
+
+  const id = formData.get("id")?.toString();
+  if (!id) return encodedRedirect("error", "/dashboard/request-feedback", "Missing feedback request ID");
+
+  // Fetch existing record
+  const { data: existing } = await supabase
+    .from("feedback_requests")
+    .select("id, user_id, status")
+    .eq("id", id)
+    .single();
+
+  if (!existing) return encodedRedirect("error", "/dashboard/request-feedback", "Feedback request not found");
+
+  // Ownership check (defense-in-depth, RLS also enforces)
+  if (existing.user_id !== user.id) {
+    return encodedRedirect("error", "/dashboard/request-feedback", "You can only edit your own feedback requests");
+  }
+
+  // Status-based editability
+  const editableStatuses = ["draft", "open", "in_review"];
+  if (!editableStatuses.includes(existing.status)) {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}`, "Completed or closed requests cannot be edited");
+  }
+
+  // Extract form fields
+  const title = formData.get("title")?.toString();
+  const url = formData.get("url")?.toString() || null;
+  const description = formData.get("description")?.toString() || null;
+  const stage = formData.get("stage")?.toString() || null;
+  const categories = formData.getAll("categories").map(String).filter(Boolean);
+  const focusAreas = formData.getAll("focus_areas").map(String).filter(Boolean);
+  const questions = [
+    formData.get("question1")?.toString(),
+    formData.get("question2")?.toString(),
+    formData.get("question3")?.toString(),
+  ].filter(Boolean) as string[];
+
+  if (!title) {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, "Project name is required");
+  }
+
+  // Build update payload based on status
+  let updatePayload: Record<string, any>;
+  if (existing.status === "in_review") {
+    // Limited editing: only description, focus areas, questions
+    updatePayload = { description, focus_areas: focusAreas, questions };
+  } else {
+    // Full editing for draft and open
+    updatePayload = { title, url, description, stage, categories, focus_areas: focusAreas, questions };
+  }
+
+  const { error } = await supabase
+    .from("feedback_requests")
+    .update(updatePayload)
+    .eq("id", id);
+
+  if (error) {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, "Failed to update feedback request");
+  }
+
+  // PostHog tracking
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: user.id,
+    event: "feedback_request_updated",
+    properties: {
+      feedback_request_id: id,
+      status: existing.status,
+      fields_updated: Object.keys(updatePayload),
+    },
+  });
+
+  return encodedRedirect("success", `/dashboard/request-feedback/${id}`, "Feedback request updated");
+}
+
+export async function publishDraftFeedbackRequest(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return redirect("/signin");
+
+  const activeCheck = await requireActiveUser(supabase, user.id);
+  if (activeCheck.error) {
+    return encodedRedirect("error", "/dashboard", activeCheck.error);
+  }
+
+  const id = formData.get("id")?.toString();
+  if (!id) return encodedRedirect("error", "/dashboard/request-feedback", "Missing feedback request ID");
+
+  // Fetch existing record
+  const { data: existing } = await supabase
+    .from("feedback_requests")
+    .select("id, user_id, status, title")
+    .eq("id", id)
+    .single();
+
+  if (!existing || existing.user_id !== user.id) {
+    return encodedRedirect("error", "/dashboard/request-feedback", "Feedback request not found");
+  }
+
+  if (existing.status !== "draft") {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}`, "Only draft requests can be published");
+  }
+
+  // Same checks as submitFeedbackRequest: points and project limit
+  const settings = await getSettings();
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("peer_points_balance")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile || profile.peer_points_balance < settings.review_cost_amount) {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to publish. Give feedback to earn points!`);
+  }
+
+  const { count: activeCount } = await supabase
+    .from("feedback_requests")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("status", "open")
+    .not("queue_position", "is", null);
+
+  if ((activeCount ?? 0) >= settings.active_project_limit) {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, `You can only have ${settings.active_project_limit} active project${settings.active_project_limit !== 1 ? "s" : ""} in the queue at a time.`);
+  }
+
+  // Update status to open
+  const { error: updateError } = await supabase
+    .from("feedback_requests")
+    .update({ status: "open" })
+    .eq("id", id);
+
+  if (updateError) {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, "Failed to publish feedback request");
+  }
+
+  // Assign queue position
+  await supabase.rpc("assign_queue_position", { p_pr_id: id });
+
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: user.id,
+    event: "feedback_request_published",
+    properties: { feedback_request_id: id, title: existing.title },
+  });
+
+  return encodedRedirect("success", `/dashboard/request-feedback/${id}`, "Feedback request published and added to queue!");
+}
+
+export async function closeFeedbackRequest(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return redirect("/signin");
+
+  const id = formData.get("id")?.toString();
+  if (!id) return encodedRedirect("error", "/dashboard/request-feedback", "Missing feedback request ID");
+
+  const { data: existing } = await supabase
+    .from("feedback_requests")
+    .select("id, user_id, status, title")
+    .eq("id", id)
+    .single();
+
+  if (!existing || existing.user_id !== user.id) {
+    return encodedRedirect("error", "/dashboard/request-feedback", "Feedback request not found");
+  }
+
+  const closableStatuses = ["draft", "open"];
+  if (!closableStatuses.includes(existing.status)) {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}`, "Only draft or live requests can be closed");
+  }
+
+  const { error } = await supabase
+    .from("feedback_requests")
+    .update({ status: "closed", queue_position: null })
+    .eq("id", id);
+
+  if (error) {
+    return encodedRedirect("error", `/dashboard/request-feedback/${id}`, "Failed to close feedback request");
+  }
+
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: user.id,
+    event: "feedback_request_closed",
+    properties: { feedback_request_id: id, title: existing.title, previous_status: existing.status },
+  });
+
+  return encodedRedirect("success", "/dashboard/request-feedback", "Feedback request closed");
+}
+
 export async function getNextReview(): Promise<{ error: string } | { pr_id: string } | undefined> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
