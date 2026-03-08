@@ -114,7 +114,7 @@
 | [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
 | [#16](https://github.com/nicholasmartin/peerpull/issues/16) | Add user-configurable text size preference | Open | Low | ✅ Done — `8b9ff1e`, TextSizeContext + appearance page wired |
 | [#17](https://github.com/nicholasmartin/peerpull/issues/17) | Notification deep links to detail pages | Open | Medium | ✅ Done — `8b9ff1e`, needs `supabase db push` for migration |
-| [#18](https://github.com/nicholasmartin/peerpull/issues/18) | Allow users to edit feedback requests after creation | Open | Medium | ✅ Done — edit page, shared form, update/publish actions, draft redirect |
+| [#18](https://github.com/nicholasmartin/peerpull/issues/18) | Allow users to edit feedback requests after creation | Open | Medium | ✅ Done — `7b382fd`, edit/close/publish actions, shared form, confirmation modal, Live status rename |
 | [#19](https://github.com/nicholasmartin/peerpull/issues/19) | Public-facing user profiles | Open | Medium | Future feature request |
 | [#20](https://github.com/nicholasmartin/peerpull/issues/20) | Profile page improvements (email privacy, expertise, layout) | Open | Medium | ✅ Done — `33cb400`, needs `supabase db push` for migration |
 | [#21](https://github.com/nicholasmartin/peerpull/issues/21) | Inline field-level validation on auth forms | Open | Low | UX polish, not blocking |
