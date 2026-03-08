@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-08 (GH #27 + Helpful/Unhelpful status rename)
+> Last updated: 2026-03-08 (Streamlined feedback flow + celebration page)
 
 ---
 
@@ -19,7 +19,7 @@
 | 6 | React Email templates for notifications (GH #14) | ✅ Done | `a1c23b1` — 8 email files + pipeline wired, needs manual testing |
 | 7 | Notification deep links (GH #17) | ✅ Done | `8b9ff1e` — `link_url` column + 4 call sites wired, needs `supabase db push` |
 | 8 | Profile page improvements (GH #20) | ✅ Done | `33cb400` — email privacy, expanded expertise, badge styling, tab-free layout, dedicated edit page |
-| 9 | Streamlined feedback submission flow | ✅ Done | Single-page flow: mic readiness check, inline briefing, combined open+record, recording dashboard with countdown, tab title updates. Build passes. |
+| 9 | Streamlined feedback submission flow | ✅ Done | `c2ac2af` — single-page state machine, 3-step briefing, tab-close detection, celebration page, upload progress, GH #28 for resilient upload |
 
 ---
 
@@ -125,6 +125,7 @@
 | [#25](https://github.com/nicholasmartin/peerpull/issues/25) | Cross-browser screen recording: Chrome permission errors, Safari/Firefox compatibility | Open | Medium | 🟡 Chrome mic permission fix done (`ec8d132`), Safari/Firefox compatibility remaining |
 | [#26](https://github.com/nicholasmartin/peerpull/issues/26) | Theme toggle requires extra click (state desync) | Open | Medium | ✅ Done — synced ThemeContext from localStorage, removed "system" dead code, appearance page uses context |
 | [#27](https://github.com/nicholasmartin/peerpull/issues/27) | Completed feedback rows not clickable, no detail view for reviewers | Open | Medium | ✅ Done — `345aa29`, clickable rows + `/dashboard/feedback/[id]` detail page, Helpful/Unhelpful rename |
+| [#28](https://github.com/nicholasmartin/peerpull/issues/28) | Upload video to storage immediately after recording stops | Open | Medium | 🟡 Planned — prevents data loss on page refresh during submit step |
 
 ---
 
@@ -150,7 +151,8 @@
 | Defer signup/referral bonuses until account activation | ✅ Done | `e92098a`, migration `20260311000000` |
 | Fix double-claim bug: reviewers could claim multiple projects | ✅ Done | `76d5507`, migration `20260312000000`, needs `supabase db push` |
 | Sidebar nav restructure: Projects + Feedback top-level menus | ✅ Done | `c348750`, old routes converted to redirects for backward compat |
-| Streamlined feedback submission: single-page flow | ✅ Done | 5 new components, state machine, tab title countdown, mic readiness gate |
+| Streamlined feedback submission: single-page flow | ✅ Done | `c2ac2af` — 5 new components, state machine, tab title countdown, mic readiness gate, celebration page |
+| [#28](https://github.com/nicholasmartin/peerpull/issues/28) | Upload video to storage immediately after recording | 🟡 Planned | GH issue created, prevents data loss on page refresh |
 
 ---
 
