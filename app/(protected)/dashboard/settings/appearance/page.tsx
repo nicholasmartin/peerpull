@@ -10,20 +10,13 @@ import { useTextSize } from "@/context/TextSizeContext";
 import { Moon, Sun } from "lucide-react";
 
 export default function SettingsAppearancePage() {
-  const { toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const { setTextSize } = useTextSize();
-  const [selectedTheme, setSelectedTheme] = useState<"light" | "dark">("dark");
   const [selectedSize, setSelectedSize] = useState<"sm" | "md" | "lg">("md");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "light") {
-      setSelectedTheme("light");
-    } else {
-      setSelectedTheme("dark");
-    }
     const storedSize = localStorage.getItem("textSize");
     if (storedSize === "sm" || storedSize === "md" || storedSize === "lg") {
       setSelectedSize(storedSize);
@@ -38,16 +31,7 @@ export default function SettingsAppearancePage() {
 
   const applyTheme = (newTheme: "light" | "dark") => {
     if (!mounted) return;
-
-    setSelectedTheme(newTheme);
-
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
+    toggleTheme(newTheme);
   };
 
   return (
@@ -68,7 +52,7 @@ export default function SettingsAppearancePage() {
               className="flex flex-col items-center space-y-2 cursor-pointer"
               onClick={() => applyTheme("light")}
             >
-              <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "light" ? "border-primary" : "border-dark-border"} bg-white`}>
+              <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${theme === "light" ? "border-primary" : "border-dark-border"} bg-white`}>
                 <Sun className="h-6 w-6 text-gray-800" />
               </div>
               <Label className="text-sm font-normal">Light</Label>
@@ -79,7 +63,7 @@ export default function SettingsAppearancePage() {
               className="flex flex-col items-center space-y-2 cursor-pointer"
               onClick={() => applyTheme("dark")}
             >
-              <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${selectedTheme === "dark" ? "border-primary" : "border-dark-border"} bg-[#0a0a0b]`}>
+              <div className={`flex h-20 w-full items-center justify-center rounded-md border-2 ${theme === "dark" ? "border-primary" : "border-dark-border"} bg-[#0a0a0b]`}>
                 <Moon className="h-6 w-6 text-white" />
               </div>
               <Label className="text-sm font-normal">Dark</Label>
