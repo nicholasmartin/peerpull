@@ -7,6 +7,11 @@ import { toast } from "sonner";
 
 type Provider = "google" | "github" | "linkedin_oidc" | "twitch";
 
+function getCookie(name: string): string | null {
+  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+  return match ? decodeURIComponent(match[2]) : null;
+}
+
 const providers: { id: Provider; label: string; icon: React.ReactNode }[] = [
   {
     id: "google",
@@ -58,9 +63,9 @@ export default function OAuthButtons() {
     setLoading(provider);
     const supabase = createClient();
 
-    // Preserve referral code through the OAuth redirect chain
+    // Preserve referral code through the OAuth redirect chain (URL param > cookie)
     const currentUrl = new URL(window.location.href);
-    const ref = currentUrl.searchParams.get("ref");
+    const ref = currentUrl.searchParams.get("ref") || getCookie("referral_code");
     const callbackUrl = new URL("/auth/callback", window.location.origin);
     if (ref) {
       callbackUrl.searchParams.set("ref", ref);

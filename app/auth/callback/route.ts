@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -9,6 +10,7 @@ export async function GET(request: Request) {
   const code = requestUrl.searchParams.get("code");
   const origin = requestUrl.origin;
   const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString();
+  const cookieStore = await cookies();
 
   if (code) {
     const supabase = await createClient();
@@ -17,8 +19,9 @@ export async function GET(request: Request) {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
-      // Redeem referral code if passed through OAuth redirect chain
-      const ref = requestUrl.searchParams.get("ref")?.trim().toLowerCase();
+      // Redeem referral code (URL param > cookie fallback)
+      const ref = requestUrl.searchParams.get("ref")?.trim().toLowerCase()
+        || cookieStore.get("referral_code")?.value?.trim().toLowerCase();
       if (ref) {
         const { error: refError } = await supabase.rpc("redeem_referral", {
           p_code: ref,
@@ -26,6 +29,8 @@ export async function GET(request: Request) {
         });
         if (refError) {
           console.error("OAuth referral redemption failed:", refError.message);
+        } else {
+          cookieStore.delete("referral_code");
         }
       }
 

@@ -5,6 +5,20 @@ export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
   // Feel free to remove once you have Supabase connected.
   try {
+    // Capture referral code from any page's ?ref= param
+    const refParam = request.nextUrl.searchParams.get("ref")?.trim().toLowerCase();
+    const attachReferralCookie = (res: NextResponse) => {
+      if (refParam) {
+        res.cookies.set("referral_code", refParam, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 90, // 90 days
+          httpOnly: false,
+          sameSite: "lax",
+        });
+      }
+      return res;
+    };
+
     // Create an unmodified response
     let response = NextResponse.next({
       request: {
@@ -44,7 +58,7 @@ export const updateSession = async (request: NextRequest) => {
          request.nextUrl.pathname.startsWith("/reset-password") ||
          request.nextUrl.pathname.startsWith("/onboarding")) &&
         user.error) {
-      return NextResponse.redirect(new URL("/signin", request.url));
+      return attachReferralCookie(NextResponse.redirect(new URL("/signin", request.url)));
     }
 
     if (!user.error && (
@@ -53,10 +67,10 @@ export const updateSession = async (request: NextRequest) => {
       request.nextUrl.pathname.startsWith("/signup") ||
       request.nextUrl.pathname.startsWith("/forgot-password")
     )) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return attachReferralCookie(NextResponse.redirect(new URL("/dashboard", request.url)));
     }
 
-    return response;
+    return attachReferralCookie(response);
   } catch (e) {
     // If you are here, a Supabase client could not be created!
     // This is likely because you have not set up environment variables.

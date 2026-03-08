@@ -6,13 +6,15 @@ import Label from "@/components/form/Label";
 import OAuthButtons from "@/components/auth/OAuthButtons";
 import Link from "next/link";
 import React from "react";
+import { cookies } from "next/headers";
 import { getFlashMessage } from "@/utils/utils";
 
 export default async function Signup(props: {
   searchParams: Promise<{ ref?: string }>;
 }) {
   const searchParams = await props.searchParams;
-  const referralCode = searchParams.ref || "";
+  const cookieStore = await cookies();
+  const referralCode = searchParams.ref || cookieStore.get("referral_code")?.value || "";
   const flash = await getFlashMessage();
 
   const inputClasses = "border-dark-border bg-dark-surface text-dark-text placeholder:text-dark-text-muted/50 focus:border-blue-primary focus:ring-blue-primary/20";

@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import { getSettings } from "@/utils/supabase/settings";
 import { createNotification } from "@/utils/notifications";
 import { getPostHogClient } from "@/lib/posthog-server";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const signUpAction = async (formData: FormData) => {
@@ -67,6 +67,9 @@ export const signUpAction = async (formData: FormData) => {
     });
     if (refError) {
       console.error("Referral redemption failed:", refError.message);
+    } else {
+      const cookieStore = await cookies();
+      cookieStore.delete("referral_code");
     }
   }
 

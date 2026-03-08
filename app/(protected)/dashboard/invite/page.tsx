@@ -85,7 +85,7 @@ export default function InviteFoundersPage() {
   }, []);
 
   const referralLink = referralCode
-    ? `${typeof window !== "undefined" ? window.location.origin : ""}/signup?ref=${referralCode}`
+    ? `${typeof window !== "undefined" ? window.location.origin : ""}/?ref=${referralCode}`
     : "";
 
   const handleCopy = async (text: string, type: "link" | "code") => {
