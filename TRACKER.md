@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-08 (Sidebar nav restructure: Projects + Feedback menus)
+> Last updated: 2026-03-08 (Streamlined feedback submission flow implemented)
 
 ---
 
@@ -19,6 +19,7 @@
 | 6 | React Email templates for notifications (GH #14) | ✅ Done | `a1c23b1` — 8 email files + pipeline wired, needs manual testing |
 | 7 | Notification deep links (GH #17) | ✅ Done | `8b9ff1e` — `link_url` column + 4 call sites wired, needs `supabase db push` |
 | 8 | Profile page improvements (GH #20) | ✅ Done | `33cb400` — email privacy, expanded expertise, badge styling, tab-free layout, dedicated edit page |
+| 9 | Streamlined feedback submission flow | ✅ Done | Single-page flow: mic readiness check, inline briefing, combined open+record, recording dashboard with countdown, tab title updates. Build passes. |
 
 ---
 
@@ -123,6 +124,7 @@
 | [#24](https://github.com/nicholasmartin/peerpull/issues/24) | Persist referral code across all public pages | Open | Medium | ✅ Done — `db2ecf8`, middleware cookie (90-day TTL), signup/OAuth/callback all read cookie fallback, invite link now uses homepage |
 | [#25](https://github.com/nicholasmartin/peerpull/issues/25) | Cross-browser screen recording: Chrome permission errors, Safari/Firefox compatibility | Open | Medium | 🟡 Chrome mic permission fix done (`ec8d132`), Safari/Firefox compatibility remaining |
 | [#26](https://github.com/nicholasmartin/peerpull/issues/26) | Theme toggle requires extra click (state desync) | Open | Medium | ✅ Done — synced ThemeContext from localStorage, removed "system" dead code, appearance page uses context |
+| [#27](https://github.com/nicholasmartin/peerpull/issues/27) | Completed feedback rows not clickable, no detail view for reviewers | Open | Medium | ✅ Done — clickable rows + `/dashboard/feedback/[id]` detail page, build passes |
 
 ---
 
@@ -148,6 +150,7 @@
 | Defer signup/referral bonuses until account activation | ✅ Done | `e92098a`, migration `20260311000000` |
 | Fix double-claim bug: reviewers could claim multiple projects | ✅ Done | `76d5507`, migration `20260312000000`, needs `supabase db push` |
 | Sidebar nav restructure: Projects + Feedback top-level menus | ✅ Done | `c348750`, old routes converted to redirects for backward compat |
+| Streamlined feedback submission: single-page flow | ✅ Done | 5 new components, state machine, tab title countdown, mic readiness gate |
 
 ---
 

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { AlertCircle } from "lucide-react";
@@ -34,26 +35,28 @@ export default async function FeedbackCompletedPage() {
               </thead>
               <tbody>
                 {completedReviews.map((review: any) => (
-                  <tr key={review.id} className="border-b border-dark-border/50">
-                    <td className="px-4 py-4 font-medium">{review.feedback_requests?.title}</td>
+                  <tr key={review.id} className="border-b border-dark-border/50 hover:bg-dark-surface/50 transition-colors">
+                    <td className="px-4 py-4 font-medium">
+                      <Link href={`/dashboard/feedback/${review.id}`} className="text-primary hover:underline">
+                        {review.feedback_requests?.title}
+                      </Link>
+                    </td>
                     <td className="px-4 py-4">
                       <Badge variant="outline" className={
                         review.status === "approved"
                           ? "bg-dark-surface text-green-400"
                           : review.status === "rejected"
-                          ? "bg-dark-surface text-red-400"
+                          ? "bg-dark-surface text-gray-400"
                           : "bg-dark-surface text-yellow-400"
                       }>
-                        {review.status === "approved" ? "Approved" : review.status === "rejected" ? "Rejected" : "Submitted"}
+                        {review.status === "approved" ? "Helpful" : review.status === "rejected" ? "Unhelpful" : "Submitted"}
                       </Badge>
                     </td>
                     <td className="px-4 py-4 text-dark-text-muted">
                       {review.submitted_at ? new Date(review.submitted_at).toLocaleDateString() : "-"}
                     </td>
                     <td className="px-4 py-4">
-                      <span className={review.status === "approved" ? "font-medium text-green-400" : "text-gray-400"}>
-                        {review.status === "approved" ? "+1" : "0"}
-                      </span>
+                      <span className="font-medium text-green-400">+1</span>
                     </td>
                   </tr>
                 ))}

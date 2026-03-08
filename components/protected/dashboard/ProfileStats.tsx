@@ -77,7 +77,7 @@ export function ProfileStats({ builderStats, reviewerStats }: ProfileStatsProps)
             <QualityScoreBadge score={reviewerStats.qualityScore} />
           </div>
           <StatRow label="Avg Feedback Rating" value={formatRating(reviewerStats.avgRatingGiven)} />
-          <StatRow label="Approval Rate" value={formatPercent(reviewerStats.approvalRate)} />
+          <StatRow label="Helpful Rate" value={formatPercent(reviewerStats.approvalRate)} />
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ export default function ReviewRejectedEmail({
             lineHeight: "1.3",
           }}
         >
-          Feedback Not Accepted
+          Feedback Update
         </Text>
         <Text
           style={{
@@ -38,8 +38,8 @@ export default function ReviewRejectedEmail({
             margin: "0 0 40px 0",
           }}
         >
-          Your video feedback for &ldquo;{productTitle}&rdquo; was not accepted
-          by the project owner. Don&apos;t be discouraged &mdash; you can
+          Your video feedback for &ldquo;{productTitle}&rdquo; was marked as
+          unhelpful by the project owner. Don&apos;t be discouraged. You can
           continue providing feedback on other projects to earn PeerPoints.
         </Text>
         <Section style={{ textAlign: "center" as const }}>

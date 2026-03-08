@@ -533,7 +533,7 @@ export async function closeFeedbackRequest(formData: FormData) {
   return encodedRedirect("success", "/dashboard/projects/list", "Feedback request closed");
 }
 
-export async function getNextReview(): Promise<{ error: string } | { pr_id: string } | undefined> {
+export async function getNextReview(): Promise<{ error: string } | { pr_id: string; review_id: string } | undefined> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return redirect("/signin");
@@ -544,14 +544,14 @@ export async function getNextReview(): Promise<{ error: string } | { pr_id: stri
   // Defense-in-depth: check for existing in-progress review before calling RPC
   const { data: existingReview } = await supabase
     .from("reviews")
-    .select("feedback_request_id")
+    .select("id, feedback_request_id")
     .eq("reviewer_id", user.id)
     .eq("status", "in_progress")
     .limit(1)
     .single();
 
   if (existingReview) {
-    return { pr_id: existingReview.feedback_request_id };
+    return { pr_id: existingReview.feedback_request_id, review_id: existingReview.id };
   }
 
   const { data, error } = await supabase.rpc("get_next_review", {
@@ -567,7 +567,7 @@ export async function getNextReview(): Promise<{ error: string } | { pr_id: stri
     return { error: "No projects available in the queue right now. Check back soon!" };
   }
 
-  return { pr_id: data[0].pr_id };
+  return { pr_id: data[0].pr_id, review_id: data[0].review_id };
 }
 
 export async function submitReview(formData: FormData) {
@@ -716,8 +716,8 @@ export async function approveReview(reviewId: string) {
   await createNotification({
     userId: review.reviewer_id,
     type: "review_approved",
-    title: "Your feedback was approved!",
-    message: `Your feedback for "${pr.title}" was approved by the project owner`,
+    title: "Your feedback was marked helpful!",
+    message: `Your feedback for "${pr.title}" was marked as helpful by the project owner`,
     referenceId: reviewId,
     productTitle: pr.title,
     linkUrl: `/dashboard/projects/list/${review.feedback_request_id}`,
@@ -948,8 +948,8 @@ export async function rejectReview(reviewId: string) {
   await createNotification({
     userId: review.reviewer_id,
     type: "review_rejected",
-    title: "Your feedback was not accepted",
-    message: `Your feedback for "${pr.title}" was not accepted by the project owner`,
+    title: "Feedback update",
+    message: `Your feedback for "${pr.title}" was marked as unhelpful by the project owner`,
     referenceId: reviewId,
     productTitle: pr.title,
     linkUrl: `/dashboard/feedback/submit`,

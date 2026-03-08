@@ -14,8 +14,8 @@ import { toast } from "sonner";
 
 const NOTIFICATION_EVENTS = [
   { key: "review_received", label: "New Feedback Received", description: "When someone submits feedback on your Feedback Request" },
-  { key: "review_approved", label: "Feedback Approved", description: "When a project owner approves your feedback" },
-  { key: "review_rejected", label: "Feedback Not Accepted", description: "When a project owner does not accept your feedback" },
+  { key: "review_approved", label: "Feedback Marked Helpful", description: "When a project owner marks your feedback as helpful" },
+  { key: "review_rejected", label: "Feedback Marked Unhelpful", description: "When a project owner marks your feedback as unhelpful" },
   { key: "review_rated", label: "Feedback Rated", description: "When a project owner rates your feedback" },
 ];
 

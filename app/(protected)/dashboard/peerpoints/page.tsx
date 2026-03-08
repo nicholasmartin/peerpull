@@ -112,7 +112,7 @@ export default async function PeerPointsPage() {
                           </div>
                           <div className="font-medium text-dark-text">
                             {{
-                              earned_review: "Feedback approved",
+                              earned_review: "Feedback submitted",
                               spent_submission: "Feedback Request submitted",
                               signup_bonus: "Welcome bonus",
                               first_review_bonus: "First feedback bonus",

@@ -39,7 +39,7 @@ function getNotificationIcon(type: string) {
     case "review_approved":
       return <CheckCircle className="h-4 w-4 text-green-400" />;
     case "review_rejected":
-      return <XCircle className="h-4 w-4 text-red-400" />;
+      return <XCircle className="h-4 w-4 text-gray-400" />;
     case "review_rated":
       return <Star className="h-4 w-4 text-yellow-400" />;
     default:

@@ -173,9 +173,9 @@ export default async function ProjectDetailPage({ params }: Props) {
                               <span className="inline-flex items-center gap-1.5 text-xs text-dark-text-muted">
                                 <span className={`inline-block h-1.5 w-1.5 rounded-full ${
                                   review.status === "approved" ? "bg-green-500" :
-                                  review.status === "rejected" ? "bg-red-500" : "bg-yellow-500"
+                                  review.status === "rejected" ? "bg-gray-400" : "bg-yellow-500"
                                 }`} />
-                                {review.status}
+                                {review.status === "approved" ? "Helpful" : review.status === "rejected" ? "Unhelpful" : "Submitted"}
                               </span>
                             </div>
                           </div>
@@ -254,7 +254,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                   <div className="text-2xl font-bold text-green-400">
                     {reviews?.filter((r: any) => r.status === "approved").length || 0}
                   </div>
-                  <div className="text-xs text-dark-text-muted">Approved</div>
+                  <div className="text-xs text-dark-text-muted">Helpful</div>
                 </div>
                 <div className="rounded-md border p-3">
                   <div className="text-2xl font-bold text-yellow-400">

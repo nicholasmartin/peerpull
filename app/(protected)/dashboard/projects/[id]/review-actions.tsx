@@ -18,7 +18,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
     if (result && "error" in result) {
       toast.error(result.error);
     } else {
-      toast.success("Feedback approved");
+      toast.success("Feedback marked as helpful");
       posthog.capture("review_approved", { review_id: reviewId });
     }
     router.refresh();
@@ -31,7 +31,7 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
     if (result && "error" in result) {
       toast.error(result.error);
     } else {
-      toast.success("Feedback rejected");
+      toast.success("Feedback marked as unhelpful");
       posthog.capture("review_rejected", { review_id: reviewId });
     }
     router.refresh();
@@ -46,16 +46,16 @@ export function ReviewActions({ reviewId }: { reviewId: string }) {
         className="bg-green-600 hover:bg-green-700 text-white"
       >
         {loading && <Spinner size="sm" />}
-        Approve
+        Helpful
       </Button>
       <Button
         onClick={handleReject}
         disabled={loading}
         variant="outline"
-        className="text-red-400 border-red-500/20 hover:bg-red-500/10 hover:text-red-300"
+        className="text-gray-400 border-gray-500/20 hover:bg-gray-500/10 hover:text-gray-300"
       >
         {loading && <Spinner size="sm" />}
-        Reject
+        Unhelpful
       </Button>
     </div>
   );

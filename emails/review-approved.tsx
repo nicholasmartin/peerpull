@@ -15,7 +15,7 @@ export default function ReviewApprovedEmail({
 }: ReviewApprovedEmailProps) {
   return (
     <EmailLayout
-      preview={`Your feedback for "${productTitle}" was approved!`}
+      preview={`Your feedback for "${productTitle}" was marked helpful!`}
       email={recipientEmail}
     >
       <Section style={{ padding: "48px 0 40px 0" }}>
@@ -28,7 +28,7 @@ export default function ReviewApprovedEmail({
             lineHeight: "1.3",
           }}
         >
-          Feedback Approved!
+          Feedback Marked Helpful!
         </Text>
         <Text
           style={{
@@ -39,8 +39,7 @@ export default function ReviewApprovedEmail({
           }}
         >
           Great news! Your video feedback for &ldquo;{productTitle}&rdquo; was
-          approved by the project owner. PeerPoints have been credited to your
-          account.
+          marked as helpful by the project owner.
         </Text>
         <Section style={{ textAlign: "center" as const }}>
           <EmailButton href={dashboardUrl}>View Your PeerPoints</EmailButton>
