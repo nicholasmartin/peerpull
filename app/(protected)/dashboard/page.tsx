@@ -42,13 +42,6 @@ export default async function DashboardPage() {
     .eq("feedback_requests.user_id", user.id)
     .in("status", ["submitted", "approved"]);
 
-  // Available PRs to review
-  const { count: availableCount } = await supabase
-    .from("feedback_requests")
-    .select("*", { count: "exact", head: true })
-    .eq("status", "open")
-    .neq("user_id", user.id);
-
   // My recent PRs
   const { data: recentPRs } = await supabase
     .from("feedback_requests")
@@ -88,8 +81,7 @@ export default async function DashboardPage() {
             <div>
               <h1 className="text-xl font-semibold text-dark-text">Welcome back, {firstName}!</h1>
               <p className="mt-1 text-sm text-dark-text-muted">
-                You have <strong className="text-dark-text">{balance} PeerPoints</strong> available
-                {availableCount ? ` and ${availableCount} projects waiting for feedback.` : "."}
+                You have <strong className="text-dark-text">{balance} PeerPoints</strong> available.
               </p>
             </div>
             <div className="hidden md:block">
@@ -207,18 +199,6 @@ export default async function DashboardPage() {
             </div>
           </div>
 
-          {/* Available Reviews */}
-          <div className="rounded-md border border-dark-border bg-dark-card p-6">
-            <h2 className="text-sm font-medium text-dark-text-muted uppercase tracking-wider mb-4">Available Projects</h2>
-            <p className="text-dark-text-muted text-sm">
-              {availableCount
-                ? `${availableCount} project${availableCount === 1 ? "" : "s"} waiting for your feedback`
-                : "No projects available for feedback right now"}
-            </p>
-            <Link href="/dashboard/feedback/submit" className="mt-4 block w-full rounded-md border border-dark-border py-2 text-center text-sm font-medium text-dark-text hover:bg-dark-surface transition">
-              Browse Feedback Queue
-            </Link>
-          </div>
         </div>
       </div>
     </div>
