@@ -22,9 +22,9 @@ export function Problem() {
         <div className="text-center mb-14">
           <p className="text-blue-primary text-sm font-semibold tracking-widest uppercase mb-4">Why PeerPull</p>
           <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl text-dark-text">
-            Good feedback is hard to get when you need it most
+            You need to see how people actually use your product
           </h2>
-          <p className="text-dark-text-muted max-w-2xl mx-auto text-lg mt-4">The early days are when feedback matters most — and when it's hardest to find.</p>
+          <p className="text-dark-text-muted max-w-2xl mx-auto text-lg mt-4">Text feedback misses the hesitations, confusion, and "aha" moments that only a video walkthrough can capture.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
@@ -42,7 +42,7 @@ export function Problem() {
                 { bold: "Friends and family sugarcoat it", rest: "— they don't want to hurt your feelings, so you get \"looks great!\" instead of what you need to hear" },
                 { bold: "Professional feedback is expensive", rest: "— UX audits, consultants, and agencies are built for funded teams, not bootstrapped builders" },
                 { bold: "Online communities are hit-or-miss", rest: "— you post in a forum and get silence, generic advice, or feedback from people who've never shipped anything" },
-                { bold: "You're too close to your own product", rest: "— after weeks of building, you can't see what a fresh pair of eyes would catch in minutes" },
+                { bold: "Text feedback hides the real story", rest: "— someone writes \"the signup flow is confusing\" but you can't see where they hesitated, what they misread, or where they almost gave up" },
                 { bold: "The window closes fast", rest: "— every day without honest feedback is a day you might be heading in the wrong direction" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
@@ -56,7 +56,7 @@ export function Problem() {
 
             <div className="mt-8 p-5 rounded-lg border border-dark-border bg-dark-surface">
               <p className="text-dark-text-muted text-center">
-                You don't need more opinions. You need <span className="text-blue-primary font-medium">honest feedback from people who get it.</span>
+                You don't need more opinions. You need to <span className="text-blue-primary font-medium">watch someone actually use your product.</span>
               </p>
             </div>
           </div>
@@ -72,11 +72,11 @@ export function Problem() {
 
             <ul className="space-y-4 flex-1">
               {[
-                { bold: "Feedback from real builders", rest: "— every feedback giver on PeerPull is a founder or maker who understands what you're going through" },
-                { bold: "Fast turnaround", rest: "— submit your product and get detailed video feedback back, typically within minutes" },
-                { bold: "Guaranteed quality", rest: "— feedback givers earn PeerPoints by being thorough, so low-effort feedback doesn't survive" },
-                { bold: "Zero cost", rest: "— give feedback, get feedback. No subscriptions, no invoices, no catch" },
-                { bold: "Built for the early days", rest: "— when you need a second opinion most, not after you've already launched and it's too late to pivot" },
+                { bold: "Video walkthroughs, not text comments", rest: "— watch a real founder navigate your product, thinking out loud as they go. See exactly where they get stuck, confused, or excited" },
+                { bold: "Think-aloud narration reveals the invisible", rest: "— the pause before clicking, the squint at confusing copy, the \"oh wait, what does this do?\" moments that text feedback can never capture" },
+                { bold: "From builders who get it", rest: "— every reviewer is a founder or maker who has shipped products and understands the challenges you face" },
+                { bold: "Credit-based exchange, zero cost", rest: "— record a video review for someone else, earn the right to receive one back. No subscriptions, no invoices" },
+                { bold: "Fast turnaround", rest: "— submit your product and get a recorded walkthrough back, typically within minutes" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <div className="text-blue-primary mt-0.5 flex-shrink-0">
@@ -89,7 +89,7 @@ export function Problem() {
 
             <div className="mt-8 p-5 rounded-lg border border-dark-border bg-dark-surface">
               <p className="text-dark-text-muted text-center">
-                Built by builders, for builders. <span className="text-blue-primary font-medium">Finally, feedback you can actually trust.</span>
+                One video walkthrough is worth a thousand text comments. <span className="text-blue-primary font-medium">See your product through fresh eyes.</span>
               </p>
             </div>
           </div>

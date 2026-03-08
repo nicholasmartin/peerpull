@@ -12,16 +12,16 @@ export function CTASection({ settings }: { settings: SiteSettings }) {
 
   const perks = [
     {
-      title: exchangeLabel,
-      description: `During beta, give just ${settings.reviewCost === 1 ? "one feedback" : `${settings.reviewCost} feedback`} to get one back. This generous ratio won't last forever — lock it in now.`,
+      title: "Real Video Walkthroughs",
+      description: "Every review is a screen recording with think-aloud narration. See your product through a builder's eyes, not just read their notes.",
     },
     {
       title: `${settings.signupBonus} Free PeerPoints on Signup`,
-      description: "Start giving and getting feedback immediately. No earning required to submit your first project.",
+      description: `Record a video review for another builder, earn PeerPoints, then spend them to get a video walkthrough of your own project.`,
     },
     {
       title: "Earn More Through Referrals",
-      description: `Invite fellow founders and earn ${settings.referralBonus} PeerPoints per referral. Build your feedback balance before the ratio changes.`,
+      description: `Invite fellow founders and earn ${settings.referralBonus} PeerPoints per referral. Build your balance and get more video reviews faster.`,
     },
   ];
 

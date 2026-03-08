@@ -34,28 +34,30 @@ export function Hero({ settings }: { settings: SiteSettings }) {
         <div className="flex flex-col items-center gap-5 md:gap-8 text-center max-w-5xl mx-auto">
           <div className="space-y-4 md:space-y-5">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95]">
-              <span className="text-blue-primary">Real Feedback</span>
+              <span className="text-blue-primary">Video Feedback</span>
               <br />
               <span className="text-dark-text">From Real Builders</span>
             </h1>
 
             <p className="text-lg md:text-xl text-dark-text max-w-2xl mx-auto leading-relaxed">
-              PeerPull is a peer exchange platform where builders trade honest
-              feedback.{" "}
+              Watch real founders navigate your product and think out loud.{" "}
               <span className="text-blue-primary font-medium">
-                Give feedback, get feedback.
+                Not text. Not AI. Real screen recordings from people who get it.
               </span>
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-2">
               <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">
+                Screen Recorded Walkthroughs
+              </span>
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">
+                Think-Aloud Narration
+              </span>
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">
                 {exchangeLabel}
               </span>
               <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">
                 {settings.signupBonus} Free PeerPoints at Signup
-              </span>
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-primary/30 bg-blue-primary/10 text-sm font-medium text-dark-text">
-                Earn {settings.referralBonus} PeerPoints Per Referral
               </span>
             </div>
           </div>

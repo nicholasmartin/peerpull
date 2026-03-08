@@ -6,29 +6,29 @@ export function HowItWorks() {
   const steps = [
     {
       num: "01",
-      title: "Submit Your Feedback Request",
+      title: "Submit Your Project",
       items: [
-        "Add your landing page URL",
-        "Specify what feedback you need most",
-        "Choose from our templates to get structured insights",
+        "Add your landing page or product URL",
+        "Tell reviewers what to focus on",
+        "Your project enters the queue for video review",
       ],
     },
     {
       num: "02",
-      title: "Give Feedback on Projects",
+      title: "Record a Video Review",
       items: [
-        "Browse available projects in your expertise areas",
-        "Provide thoughtful feedback using our guided frameworks",
-        "Each feedback session takes about 1-2 minutes",
+        "Open another builder's project in our built-in screen recorder",
+        "Navigate their product and narrate your thoughts out loud",
+        "Each recording takes 1 to 5 minutes of real, unscripted reactions",
       ],
     },
     {
       num: "03",
-      title: "Earn PeerPoints",
+      title: "Get Your Video Back",
       items: [
-        "During beta, every feedback you give earns you one PeerPoint",
-        "Each PeerPoint gets you one feedback on your project",
-        "All feedback is vetted to ensure quality",
+        "Every review you record earns you a PeerPoint",
+        "Spend PeerPoints to receive video walkthroughs of your own project",
+        "Watch exactly where reviewers get stuck, confused, or impressed",
       ],
     },
   ];
@@ -40,9 +40,9 @@ export function HowItWorks() {
           <div className="text-center mb-16">
             <p className="text-blue-primary text-sm font-semibold tracking-widest uppercase mb-4">How It Works</p>
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl text-dark-text">
-              Get Quality Feedback Super Early
+              Record a Review, Receive a Review
             </h2>
-            <p className="text-dark-text-muted text-lg mt-4">From solo founders who get it.</p>
+            <p className="text-dark-text-muted text-lg mt-4">Screen recordings with think-aloud narration from founders who get it.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">

@@ -55,28 +55,32 @@ export function FAQ({ settings }: { settings: SiteSettings }) {
           <Accordion
             items={[
               {
+                question: "Why video reviews instead of text feedback?",
+                answer: "Text feedback tells you what someone thought after the fact. Video captures what they experienced in real time. You see the hesitation before a click, the confusion at unclear copy, the moment they try to find navigation and can't. These think-aloud recordings reveal usability issues and first impressions that no written comment can replicate."
+              },
+              {
+                question: "How does the video recording work?",
+                answer: "PeerPull has a built-in screen recorder right in the browser. When you review someone's project, you open their URL, hit record, and narrate your thoughts as you navigate. No software to install, no uploads from external tools. The recording is saved and delivered directly to the project owner."
+              },
+              {
                 question: "How do I get access to the beta?",
                 answer: `PeerPull is currently in closed beta and available by invite only. Request an invite from our homepage or get one from an existing member. Existing members earn ${settings.referralBonus} bonus PeerPoints for every friend they invite.`
               },
               {
                 question: "What are the beta perks?",
-                answer: `Beta members enjoy ${exchangeRatio}, ${settings.signupBonus} free PeerPoints at signup, and a +${settings.firstReviewBonus} PeerPoint bonus for your first feedback. Plus, refer a friend and you both earn bonus PeerPoints. These perks are time-limited and will adjust as we grow.`
+                answer: `Beta members enjoy ${exchangeRatio}, ${settings.signupBonus} free PeerPoints at signup, and a +${settings.firstReviewBonus} PeerPoint bonus for your first video review. Plus, refer a friend and you both earn bonus PeerPoints. These perks are time-limited and will adjust as we grow.`
               },
               {
-                question: "How do you ensure quality feedback?",
-                answer: "All feedback must be approved by recipients before the giver earns PeerPoints. Our templates also guide feedback givers to provide specific, actionable insights rather than generic comments. This approval mechanism works the same during beta."
+                question: "How do you ensure quality reviews?",
+                answer: "All video reviews must be approved by recipients before the reviewer earns PeerPoints. Videos have a minimum recording length to prevent rushed, low-effort walkthroughs. And because every reviewer is also a builder with their own projects on the line, there's a natural incentive to give the kind of feedback you'd want to receive."
+              },
+              {
+                question: "How long are the video reviews?",
+                answer: "Reviews typically run 1 to 5 minutes. That's enough time to navigate the key flows, react naturally, and share meaningful observations without dragging on. Think of it as a quick, honest first impression from someone who builds products for a living."
               },
               {
                 question: "What if I don't have a landing page yet?",
-                answer: "You can still submit a concept document, pitch deck, or even a detailed description of your idea as a Feedback Request. The key is having something concrete for others to evaluate."
-              },
-              {
-                question: "How technical should the feedback be?",
-                answer: "Our community is primarily solo founders, so the feedback tends to be practical and implementation-focused. However, you can specify if you want feedback on specific aspects like market fit, UX, or technical architecture."
-              },
-              {
-                question: "What if I'm an experienced founder without a current project?",
-                answer: "We welcome experienced founders to join as PeerPros! You'll get special recognition and can bank PeerPoints for future projects."
+                answer: "You can submit any URL: a prototype, a Figma link, a pitch deck, or a staging environment. The key is having something a reviewer can interact with on screen and narrate their reactions to."
               },
               {
                 question: "Is my idea protected?",
