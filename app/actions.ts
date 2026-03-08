@@ -538,6 +538,19 @@ export async function getNextReview(): Promise<{ error: string } | { pr_id: stri
   const activeCheck = await requireActiveUser(supabase, user.id);
   if (activeCheck.error) return { error: activeCheck.error };
 
+  // Defense-in-depth: check for existing in-progress review before calling RPC
+  const { data: existingReview } = await supabase
+    .from("reviews")
+    .select("feedback_request_id")
+    .eq("reviewer_id", user.id)
+    .eq("status", "in_progress")
+    .limit(1)
+    .single();
+
+  if (existingReview) {
+    return { pr_id: existingReview.feedback_request_id };
+  }
+
   const { data, error } = await supabase.rpc("get_next_review", {
     p_reviewer_id: user.id,
   });
