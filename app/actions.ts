@@ -592,8 +592,6 @@ export async function submitReview(formData: FormData) {
 
   if (!reviewId) return { error: "Review ID is required" };
   if (rating < 1 || rating > 5) return { error: "Please select a star rating (1-5)" };
-  if (strengths && strengths.length < 50) return { error: "Strengths must be at least 50 characters" };
-  if (improvements && improvements.length < 50) return { error: "Improvements must be at least 50 characters" };
   if (videoDuration < settings.min_video_duration_seconds) return { error: `Video must be at least ${settings.min_video_duration_seconds} seconds` };
 
   // Atomically: update review fields, award reviewer points, charge owner, and re-queue if affordable
@@ -651,7 +649,7 @@ export async function submitReview(formData: FormData) {
     },
   });
 
-  return redirect("/dashboard/feedback/submit");
+  return redirect("/dashboard/feedback/submitted");
 }
 
 export async function changeReferralCode(newCode: string) {

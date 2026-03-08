@@ -11,7 +11,7 @@ function formatTime(seconds: number): string {
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
-function MicWarningBanner({ micStatus, onRetry }: { micStatus: "denied" | "unavailable"; onRetry: () => void }) {
+export function MicWarningBanner({ micStatus, onRetry }: { micStatus: "denied" | "unavailable"; onRetry: () => void }) {
   const isDenied = micStatus === "denied";
   return (
     <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 mb-3">

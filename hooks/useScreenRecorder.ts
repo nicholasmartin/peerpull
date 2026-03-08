@@ -95,7 +95,7 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
   // Cleanup on unmount
   useEffect(() => cleanup, [cleanup]);
 
-  const startRecording = useCallback(async () => {
+  const startRecording = useCallback(async (): Promise<boolean> => {
     setError(null);
     setWarning(false);
     chunksRef.current = [];
@@ -117,7 +117,7 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
         setError(
           "Please select a browser tab, not a window or screen. This ensures the best recording quality.",
         );
-        return;
+        return false;
       }
 
       let micStream: MediaStream | null = null;
@@ -141,7 +141,7 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
         setError(
           "Microphone access is required for PeerPull feedback recordings. Please allow microphone access in your browser settings and try again.",
         );
-        return;
+        return false;
       }
 
       // Merge audio tracks
@@ -209,6 +209,8 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
           return next;
         });
       }, 1000);
+
+      return true;
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : "Failed to start recording";
@@ -218,6 +220,7 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
         setError(message);
       }
       cleanup();
+      return false;
     }
   }, [cleanup, selectedMic, maxDuration, warningThreshold]);
 
