@@ -93,8 +93,8 @@ export default async function DashboardPage() {
               </p>
             </div>
             <div className="hidden md:block">
-              <Link href="/dashboard/request-feedback" className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted transition">
-                Submit New Feedback Request
+              <Link href="/dashboard/projects/list" className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted transition">
+                Submit New Project
               </Link>
             </div>
           </div>
@@ -103,16 +103,16 @@ export default async function DashboardPage() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Link href="/dashboard/request-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
-          <span className="block text-sm font-semibold text-dark-text">Submit Feedback Request</span>
+        <Link href="/dashboard/projects/list" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
+          <span className="block text-sm font-semibold text-dark-text">My Projects</span>
           <span className="text-xs text-dark-text-muted">Get feedback on your project</span>
         </Link>
-        <Link href="/dashboard/submit-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
+        <Link href="/dashboard/feedback/submit" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
           <span className="block text-sm font-semibold text-dark-text">Give Feedback</span>
           <span className="text-xs text-dark-text-muted">Earn PeerPoints</span>
         </Link>
-        <Link href="/dashboard/request-feedback" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
-          <span className="block text-sm font-semibold text-dark-text">View Feedback</span>
+        <Link href="/dashboard/projects/list" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
+          <span className="block text-sm font-semibold text-dark-text">View Projects</span>
           <span className="text-xs text-dark-text-muted">See your latest feedback</span>
         </Link>
         <Link href="/dashboard/peerpoints" className="rounded-md border border-dark-border bg-dark-card p-4 text-center hover:border-dark-text-muted/30 active:opacity-70 active:scale-[0.98] transition-all">
@@ -145,7 +145,7 @@ export default async function DashboardPage() {
           <div className="rounded-md border border-dark-border bg-dark-card p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-medium text-dark-text-muted uppercase tracking-wider">Feedback Requests</h2>
-              <Link href="/dashboard/request-feedback" className="text-sm font-medium text-primary hover:text-primary/80">
+              <Link href="/dashboard/projects/list" className="text-sm font-medium text-primary hover:text-primary/80">
                 View all →
               </Link>
             </div>
@@ -163,7 +163,7 @@ export default async function DashboardPage() {
                     {recentPRs.map((pr: any) => (
                       <tr key={pr.id} className="border-b border-dark-border/50">
                         <td className="py-3">
-                          <Link href={`/dashboard/request-feedback/${pr.id}`} className="text-sm font-medium text-primary hover:text-primary/80">
+                          <Link href={`/dashboard/projects/${pr.id}`} className="text-sm font-medium text-primary hover:text-primary/80">
                             {pr.title}
                           </Link>
                         </td>
@@ -201,7 +201,7 @@ export default async function DashboardPage() {
               <p className="text-sm text-dark-text-muted">
                 {balance >= 2 ? "Ready to submit a Feedback Request!" : `Need ${2 - balance} more to submit`}
               </p>
-              <Link href="/dashboard/submit-feedback" className="mt-3 inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted transition">
+              <Link href="/dashboard/feedback/submit" className="mt-3 inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-muted transition">
                 {balance >= 2 ? "Submit Feedback Request" : "Earn Points by Giving Feedback"}
               </Link>
             </div>
@@ -215,7 +215,7 @@ export default async function DashboardPage() {
                 ? `${availableCount} project${availableCount === 1 ? "" : "s"} waiting for your feedback`
                 : "No projects available for feedback right now"}
             </p>
-            <Link href="/dashboard/submit-feedback" className="mt-4 block w-full rounded-md border border-dark-border py-2 text-center text-sm font-medium text-dark-text hover:bg-dark-surface transition">
+            <Link href="/dashboard/feedback/submit" className="mt-4 block w-full rounded-md border border-dark-border py-2 text-center text-sm font-medium text-dark-text hover:bg-dark-surface transition">
               Browse Feedback Queue
             </Link>
           </div>

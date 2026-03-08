@@ -4,7 +4,7 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default async function LegacyDraftPage({ params }: Props) {
+export default async function DraftProjectPage({ params }: Props) {
   const { id } = await params;
   redirect(`/dashboard/projects/${id}/edit`);
 }

@@ -147,7 +147,7 @@ export function GettingStartedChecklist({
                           {submitting ? "Submitting..." : "Submit Project"}
                         </Button>
                         <Link
-                          href="/dashboard/request-feedback/new"
+                          href="/dashboard/projects/new"
                           className="text-xs text-dark-text-muted hover:text-dark-text transition"
                         >
                           Add more details <ArrowRight className="inline h-3 w-3" />
@@ -159,7 +159,7 @@ export function GettingStartedChecklist({
                   {/* CTA for step 2 */}
                   {step.key === "review" && !step.complete && isHighlighted && (
                     <Link
-                      href="/dashboard/submit-feedback"
+                      href="/dashboard/feedback/submit"
                       className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition"
                     >
                       Start Giving Feedback <ArrowRight className="h-4 w-4" />

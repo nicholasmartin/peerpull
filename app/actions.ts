@@ -263,7 +263,7 @@ export async function submitFeedbackRequest(formData: FormData) {
   ].filter(Boolean) as string[];
 
   if (!title) {
-    return encodedRedirect("error", "/dashboard/request-feedback", "Project name is required");
+    return encodedRedirect("error", "/dashboard/projects/list", "Project name is required");
   }
 
   const settings = await getSettings();
@@ -276,7 +276,7 @@ export async function submitFeedbackRequest(formData: FormData) {
     .single();
 
   if (!profile || profile.peer_points_balance < settings.review_cost_amount) {
-    return encodedRedirect("error", "/dashboard/request-feedback", `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to submit a Feedback Request. Give feedback on other projects to earn points!`);
+    return encodedRedirect("error", "/dashboard/projects/list", `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to submit a Feedback Request. Give feedback on other projects to earn points!`);
   }
 
   // Check active project limit
@@ -288,7 +288,7 @@ export async function submitFeedbackRequest(formData: FormData) {
     .not("queue_position", "is", null);
 
   if ((activeCount ?? 0) >= settings.active_project_limit) {
-    return encodedRedirect("error", "/dashboard/request-feedback", `You can only have ${settings.active_project_limit} active project${settings.active_project_limit !== 1 ? "s" : ""} in the queue at a time.`);
+    return encodedRedirect("error", "/dashboard/projects/list", `You can only have ${settings.active_project_limit} active project${settings.active_project_limit !== 1 ? "s" : ""} in the queue at a time.`);
   }
 
   // Insert feedback request
@@ -308,7 +308,7 @@ export async function submitFeedbackRequest(formData: FormData) {
     .single();
 
   if (prError) {
-    return encodedRedirect("error", "/dashboard/request-feedback", "Failed to create Feedback Request");
+    return encodedRedirect("error", "/dashboard/projects/list", "Failed to create Feedback Request");
   }
 
   // Assign queue position (points charged on review completion, not upfront)
@@ -330,7 +330,7 @@ export async function submitFeedbackRequest(formData: FormData) {
     },
   });
 
-  const redirectTo = formData.get("redirectTo")?.toString() || "/dashboard/request-feedback";
+  const redirectTo = formData.get("redirectTo")?.toString() || "/dashboard/projects/list";
   return encodedRedirect("success", redirectTo, "Feedback Request created and added to queue!");
 }
 
@@ -340,7 +340,7 @@ export async function updateFeedbackRequest(formData: FormData) {
   if (!user) return redirect("/signin");
 
   const id = formData.get("id")?.toString();
-  if (!id) return encodedRedirect("error", "/dashboard/request-feedback", "Missing feedback request ID");
+  if (!id) return encodedRedirect("error", "/dashboard/projects/list", "Missing feedback request ID");
 
   // Fetch existing record
   const { data: existing } = await supabase
@@ -349,17 +349,17 @@ export async function updateFeedbackRequest(formData: FormData) {
     .eq("id", id)
     .single();
 
-  if (!existing) return encodedRedirect("error", "/dashboard/request-feedback", "Feedback request not found");
+  if (!existing) return encodedRedirect("error", "/dashboard/projects/list", "Feedback request not found");
 
   // Ownership check (defense-in-depth, RLS also enforces)
   if (existing.user_id !== user.id) {
-    return encodedRedirect("error", "/dashboard/request-feedback", "You can only edit your own feedback requests");
+    return encodedRedirect("error", "/dashboard/projects/list", "You can only edit your own feedback requests");
   }
 
   // Status-based editability
   const editableStatuses = ["draft", "open", "in_review"];
   if (!editableStatuses.includes(existing.status)) {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}`, "Completed or closed requests cannot be edited");
+    return encodedRedirect("error", `/dashboard/projects/${id}`, "Completed or closed requests cannot be edited");
   }
 
   // Extract form fields
@@ -376,7 +376,7 @@ export async function updateFeedbackRequest(formData: FormData) {
   ].filter(Boolean) as string[];
 
   if (!title) {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, "Project name is required");
+    return encodedRedirect("error", `/dashboard/projects/${id}/edit`, "Project name is required");
   }
 
   // Build update payload based on status
@@ -395,7 +395,7 @@ export async function updateFeedbackRequest(formData: FormData) {
     .eq("id", id);
 
   if (error) {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, "Failed to update feedback request");
+    return encodedRedirect("error", `/dashboard/projects/${id}/edit`, "Failed to update feedback request");
   }
 
   // PostHog tracking
@@ -410,7 +410,7 @@ export async function updateFeedbackRequest(formData: FormData) {
     },
   });
 
-  return encodedRedirect("success", `/dashboard/request-feedback/${id}`, "Feedback request updated");
+  return encodedRedirect("success", `/dashboard/projects/${id}`, "Feedback request updated");
 }
 
 export async function publishDraftFeedbackRequest(formData: FormData) {
@@ -424,7 +424,7 @@ export async function publishDraftFeedbackRequest(formData: FormData) {
   }
 
   const id = formData.get("id")?.toString();
-  if (!id) return encodedRedirect("error", "/dashboard/request-feedback", "Missing feedback request ID");
+  if (!id) return encodedRedirect("error", "/dashboard/projects/list", "Missing feedback request ID");
 
   // Fetch existing record
   const { data: existing } = await supabase
@@ -434,11 +434,11 @@ export async function publishDraftFeedbackRequest(formData: FormData) {
     .single();
 
   if (!existing || existing.user_id !== user.id) {
-    return encodedRedirect("error", "/dashboard/request-feedback", "Feedback request not found");
+    return encodedRedirect("error", "/dashboard/projects/list", "Feedback request not found");
   }
 
   if (existing.status !== "draft") {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}`, "Only draft requests can be published");
+    return encodedRedirect("error", `/dashboard/projects/${id}`, "Only draft requests can be published");
   }
 
   // Same checks as submitFeedbackRequest: points and project limit
@@ -451,7 +451,7 @@ export async function publishDraftFeedbackRequest(formData: FormData) {
     .single();
 
   if (!profile || profile.peer_points_balance < settings.review_cost_amount) {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to publish. Give feedback to earn points!`);
+    return encodedRedirect("error", `/dashboard/projects/${id}/edit`, `You need at least ${settings.review_cost_amount} PeerPoint${settings.review_cost_amount !== 1 ? "s" : ""} to publish. Give feedback to earn points!`);
   }
 
   const { count: activeCount } = await supabase
@@ -462,7 +462,7 @@ export async function publishDraftFeedbackRequest(formData: FormData) {
     .not("queue_position", "is", null);
 
   if ((activeCount ?? 0) >= settings.active_project_limit) {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, `You can only have ${settings.active_project_limit} active project${settings.active_project_limit !== 1 ? "s" : ""} in the queue at a time.`);
+    return encodedRedirect("error", `/dashboard/projects/${id}/edit`, `You can only have ${settings.active_project_limit} active project${settings.active_project_limit !== 1 ? "s" : ""} in the queue at a time.`);
   }
 
   // Update status to open
@@ -472,7 +472,7 @@ export async function publishDraftFeedbackRequest(formData: FormData) {
     .eq("id", id);
 
   if (updateError) {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}/edit`, "Failed to publish feedback request");
+    return encodedRedirect("error", `/dashboard/projects/${id}/edit`, "Failed to publish feedback request");
   }
 
   // Assign queue position
@@ -485,7 +485,7 @@ export async function publishDraftFeedbackRequest(formData: FormData) {
     properties: { feedback_request_id: id, title: existing.title },
   });
 
-  return encodedRedirect("success", `/dashboard/request-feedback/${id}`, "Feedback request published and added to queue!");
+  return encodedRedirect("success", `/dashboard/projects/${id}`, "Feedback request published and added to queue!");
 }
 
 export async function closeFeedbackRequest(formData: FormData) {
@@ -494,7 +494,7 @@ export async function closeFeedbackRequest(formData: FormData) {
   if (!user) return redirect("/signin");
 
   const id = formData.get("id")?.toString();
-  if (!id) return encodedRedirect("error", "/dashboard/request-feedback", "Missing feedback request ID");
+  if (!id) return encodedRedirect("error", "/dashboard/projects/list", "Missing feedback request ID");
 
   const { data: existing } = await supabase
     .from("feedback_requests")
@@ -503,12 +503,12 @@ export async function closeFeedbackRequest(formData: FormData) {
     .single();
 
   if (!existing || existing.user_id !== user.id) {
-    return encodedRedirect("error", "/dashboard/request-feedback", "Feedback request not found");
+    return encodedRedirect("error", "/dashboard/projects/list", "Feedback request not found");
   }
 
   const closableStatuses = ["draft", "open"];
   if (!closableStatuses.includes(existing.status)) {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}`, "Only draft or live requests can be closed");
+    return encodedRedirect("error", `/dashboard/projects/${id}`, "Only draft or live requests can be closed");
   }
 
   const { error } = await supabase
@@ -517,7 +517,7 @@ export async function closeFeedbackRequest(formData: FormData) {
     .eq("id", id);
 
   if (error) {
-    return encodedRedirect("error", `/dashboard/request-feedback/${id}`, "Failed to close feedback request");
+    return encodedRedirect("error", `/dashboard/projects/${id}`, "Failed to close feedback request");
   }
 
   const posthog = getPostHogClient();
@@ -527,7 +527,7 @@ export async function closeFeedbackRequest(formData: FormData) {
     properties: { feedback_request_id: id, title: existing.title, previous_status: existing.status },
   });
 
-  return encodedRedirect("success", "/dashboard/request-feedback", "Feedback request closed");
+  return encodedRedirect("success", "/dashboard/projects/list", "Feedback request closed");
 }
 
 export async function getNextReview(): Promise<{ error: string } | { pr_id: string } | undefined> {
@@ -627,7 +627,7 @@ export async function submitReview(formData: FormData) {
       message: `Someone submitted video feedback for "${fr.title}"`,
       referenceId: reviewId,
       productTitle: fr.title,
-      linkUrl: `/dashboard/request-feedback/${notifData.feedback_request_id}`,
+      linkUrl: `/dashboard/projects/list/${notifData.feedback_request_id}`,
     });
   }
 
@@ -648,7 +648,7 @@ export async function submitReview(formData: FormData) {
     },
   });
 
-  return redirect("/dashboard/submit-feedback");
+  return redirect("/dashboard/feedback/submit");
 }
 
 export async function changeReferralCode(newCode: string) {
@@ -717,7 +717,7 @@ export async function approveReview(reviewId: string) {
     message: `Your feedback for "${pr.title}" was approved by the project owner`,
     referenceId: reviewId,
     productTitle: pr.title,
-    linkUrl: `/dashboard/request-feedback/${review.feedback_request_id}`,
+    linkUrl: `/dashboard/projects/list/${review.feedback_request_id}`,
   });
 
   return { success: true };
@@ -903,7 +903,7 @@ export async function rateReviewAction(
       referenceId: reviewId,
       productTitle: title,
       rating,
-      linkUrl: `/dashboard/request-feedback/${reviewForNotif.feedback_request_id}`,
+      linkUrl: `/dashboard/projects/list/${reviewForNotif.feedback_request_id}`,
     });
   }
 
@@ -949,7 +949,7 @@ export async function rejectReview(reviewId: string) {
     message: `Your feedback for "${pr.title}" was not accepted by the project owner`,
     referenceId: reviewId,
     productTitle: pr.title,
-    linkUrl: `/dashboard/submit-feedback`,
+    linkUrl: `/dashboard/feedback/submit`,
   });
 
   return { success: true };

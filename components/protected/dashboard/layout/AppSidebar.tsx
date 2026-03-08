@@ -11,6 +11,7 @@ import GridIcon from "@/components/icons/grid.svg";
 import HorizontaLDots from "@/components/icons/horizontal-dots.svg";
 import TableIcon from "@/components/icons/table.svg";
 import BoxCubeIcon from "@/components/icons/box-cube.svg";
+import PageIcon from "@/components/icons/page.svg";
 import CheckIcon from "@/components/icons/check-circle.svg";
 import DollarLineIcon from "@/components/icons/dollar-line.svg";
 import GroupIcon from "@/components/icons/group.svg";
@@ -36,12 +37,24 @@ const navItems: NavItem[] = [
     path: "/dashboard",
   },
   {
+    icon: <PageIcon />,
+    name: "Projects",
+    path: "/dashboard/projects/overview",
+    subItems: [
+      { name: "Overview", path: "/dashboard/projects/overview" },
+      { name: "New", path: "/dashboard/projects/new" },
+      { name: "List", path: "/dashboard/projects/list" },
+      { name: "Completed", path: "/dashboard/projects/completed" },
+    ]
+  },
+  {
     icon: <BoxCubeIcon />,
     name: "Feedback",
-    path: "/dashboard/request-feedback",
+    path: "/dashboard/feedback/submit",
     subItems: [
-      { name: "Request Feedback", path: "/dashboard/request-feedback" },
-      { name: "Give Feedback", path: "/dashboard/submit-feedback" }
+      { name: "Submit", path: "/dashboard/feedback/submit" },
+      { name: "In Progress", path: "/dashboard/feedback/in-progress" },
+      { name: "Completed", path: "/dashboard/feedback/completed" },
     ]
   },
   {
@@ -251,22 +264,19 @@ const AppSidebar: React.FC<{
    const isActive = useCallback((path: string) => path === pathname, [pathname]);
 
   useEffect(() => {
-    // Check if the current path matches any submenu item
+    // Check if the current path matches any submenu item (exact or prefix)
     let submenuMatched = false;
     navItems.forEach((nav, index) => {
       if (nav.subItems) {
-        nav.subItems.forEach((subItem) => {
-          if (isActive(subItem.path)) {
-            setOpenSubmenu({
-              index,
-            });
-            submenuMatched = true;
-          }
-        });
+        const matched = nav.subItems.some((subItem) => isActive(subItem.path))
+          || (nav.path && pathname.startsWith(nav.path));
+        if (matched) {
+          setOpenSubmenu({ index });
+          submenuMatched = true;
+        }
       }
     });
 
-    // If no submenu item matches, close the open submenu
     if (!submenuMatched) {
       setOpenSubmenu(null);
     }

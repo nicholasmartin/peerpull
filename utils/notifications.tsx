@@ -89,7 +89,7 @@ export async function createNotification(params: CreateNotificationParams): Prom
               <ReviewRejectedEmail
                 productTitle={params.productTitle || "your project"}
                 recipientEmail={recipientEmail}
-                dashboardUrl={`${appUrl}/dashboard/submit-feedback`}
+                dashboardUrl={`${appUrl}/dashboard/feedback/submit`}
               />
             );
             break;

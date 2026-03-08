@@ -25,7 +25,7 @@ export function GetNextReviewButton() {
         posthog.capture("review_started", {
           feedback_request_id: result.pr_id,
         });
-        router.push(`/dashboard/submit-feedback/${result.pr_id}/review`);
+        router.push(`/dashboard/feedback/${result.pr_id}/review`);
       }
     });
   }
