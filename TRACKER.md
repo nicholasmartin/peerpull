@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-08 (GH #18: edit feedback requests after creation)
+> Last updated: 2026-03-08 (GH #25: Chrome mic permission handling)
 
 ---
 
@@ -121,7 +121,7 @@
 | [#22](https://github.com/nicholasmartin/peerpull/issues/22) | Handle identity linking for social + email login | Open | High | ✅ Done — `ON CONFLICT` guard in `handle_new_user()`, migration pushed |
 | [#23](https://github.com/nicholasmartin/peerpull/issues/23) | Enforce onboarding bypass on dashboard sub-routes | Open | High | ✅ Done — onboarding redirect moved to dashboard layout |
 | [#24](https://github.com/nicholasmartin/peerpull/issues/24) | Persist referral code across all public pages | Open | Medium | Cookie-based persistence needed |
-| [#25](https://github.com/nicholasmartin/peerpull/issues/25) | Cross-browser screen recording (Firefox/Safari) | Open | Medium | Firefox users blocked from core loop |
+| [#25](https://github.com/nicholasmartin/peerpull/issues/25) | Cross-browser screen recording: Chrome permission errors, Safari/Firefox compatibility | Open | Medium | 🟡 Chrome mic permission fix done (`ec8d132`), Safari/Firefox compatibility remaining |
 | [#26](https://github.com/nicholasmartin/peerpull/issues/26) | Theme toggle requires extra click (state desync) | Open | Medium | ✅ Done — synced ThemeContext from localStorage, removed "system" dead code, appearance page uses context |
 
 ---
