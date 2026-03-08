@@ -533,6 +533,22 @@ export async function closeFeedbackRequest(formData: FormData) {
   return encodedRedirect("success", "/dashboard/projects/list", "Feedback request closed");
 }
 
+export async function fetchPageTitle(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url, {
+      headers: { "User-Agent": "PeerPull/1.0 (page-title-fetch)" },
+      signal: AbortSignal.timeout(5000),
+      redirect: "follow",
+    });
+    if (!response.ok) return null;
+    const html = await response.text();
+    const match = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+    return match ? match[1].trim() : null;
+  } catch {
+    return null;
+  }
+}
+
 export async function getNextReview(): Promise<{ error: string } | { pr_id: string; review_id: string } | undefined> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

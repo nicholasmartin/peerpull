@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { ExternalLink, CheckCircle, Mic, MonitorPlay, RotateCcw } from "lucide-react";
+import { ExternalLink, CheckCircle, Mic, MonitorPlay, RotateCcw, Globe } from "lucide-react";
+import { fetchPageTitle } from "@/app/actions";
 import type { AudioDevice } from "@/hooks/useScreenRecorder";
 
 export interface FeedbackRequestData {
@@ -39,6 +40,7 @@ export function BriefingStep({
 }: BriefingStepProps) {
   const [siteOpened, setSiteOpened] = useState(false);
   const [siteClosed, setSiteClosed] = useState(false);
+  const [pageTitle, setPageTitle] = useState<string | null>(null);
   const projectWindowRef = useRef<Window | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -68,6 +70,12 @@ export function BriefingStep({
     setSiteOpened(true);
     setSiteClosed(false);
     startPolling();
+    // Fetch page title in the background for tab identification
+    if (feedbackRequest.url && !pageTitle) {
+      fetchPageTitle(feedbackRequest.url).then((title) => {
+        if (title) setPageTitle(title);
+      });
+    }
   }
 
   return (
@@ -169,9 +177,17 @@ export function BriefingStep({
                   {siteClosed ? "Re-open Project" : "Open Project in New Tab"}
                 </button>
               ) : (
-                <div className="flex items-center gap-2 rounded-md bg-dark-surface px-3 py-1.5 text-xs text-dark-text-muted max-w-full">
-                  <ExternalLink className="h-3 w-3 shrink-0" />
-                  <span className="truncate">{feedbackRequest.url}</span>
+                <div className="space-y-1.5">
+                  {pageTitle && (
+                    <div className="flex items-center gap-2 text-xs">
+                      <Globe className="h-3 w-3 text-green-400 shrink-0" />
+                      <span className="text-dark-text font-medium truncate">Tab name: {pageTitle}</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2 rounded-md bg-dark-surface px-3 py-1.5 text-xs text-dark-text-muted max-w-full">
+                    <ExternalLink className="h-3 w-3 shrink-0" />
+                    <span className="truncate">{feedbackRequest.url}</span>
+                  </div>
                 </div>
               )}
             </div>
@@ -235,7 +251,9 @@ export function BriefingStep({
               <div>
                 <h3 className="text-sm font-semibold text-dark-text">Start recording</h3>
                 <p className="text-xs text-dark-text-muted">
-                  Select the project&apos;s tab when prompted. You&apos;ll be taken straight there to narrate your feedback.
+                  {pageTitle
+                    ? <>Look for the tab named <span className="font-medium text-dark-text">&ldquo;{pageTitle}&rdquo;</span> in the picker. You&apos;ll be taken straight there.</>
+                    : "Select the project\u2019s tab when prompted. You\u2019ll be taken straight there to narrate your feedback."}
                 </p>
               </div>
               <button
