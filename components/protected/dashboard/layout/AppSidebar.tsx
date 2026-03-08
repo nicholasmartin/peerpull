@@ -42,8 +42,8 @@ const navItems: NavItem[] = [
     path: "/dashboard/projects/overview",
     subItems: [
       { name: "Overview", path: "/dashboard/projects/overview" },
-      { name: "New", path: "/dashboard/projects/new" },
-      { name: "List", path: "/dashboard/projects/list" },
+      { name: "Add New", path: "/dashboard/projects/new" },
+      { name: "List All", path: "/dashboard/projects/list" },
       { name: "Completed", path: "/dashboard/projects/completed" },
     ]
   },
