@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export type RecordingStatus = "idle" | "recording" | "stopped";
+export type MicStatus = "unknown" | "granted" | "denied" | "unavailable";
 
 export interface AudioDevice {
   deviceId: string;
@@ -39,6 +40,7 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
   const [warning, setWarning] = useState(false);
   const [audioDevices, setAudioDevices] = useState<AudioDevice[]>([]);
   const [selectedMic, setSelectedMic] = useState<string>("");
+  const [micStatus, setMicStatus] = useState<MicStatus>("unknown");
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -61,6 +63,7 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
       // Request mic access briefly to unlock device labels
       const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       tempStream.getTracks().forEach((t) => t.stop());
+      setMicStatus("granted");
 
       const devices = await navigator.mediaDevices.enumerateDevices();
       const mics = devices
@@ -70,12 +73,22 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
           label: d.label || `Microphone ${d.deviceId.slice(0, 6)}`,
         }));
       setAudioDevices(mics);
+      if (mics.length === 0) {
+        setMicStatus("unavailable");
+      }
       // Default to first mic if none selected
       if (!selectedMic && mics.length > 0) {
         setSelectedMic(mics[0].deviceId);
       }
-    } catch {
-      // If mic permission denied, continue with empty list
+    } catch (err: unknown) {
+      const name = err instanceof DOMException ? err.name : "";
+      if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+        setMicStatus("denied");
+      } else if (name === "NotFoundError") {
+        setMicStatus("unavailable");
+      } else {
+        setMicStatus("denied");
+      }
     }
   }, [selectedMic]);
 
@@ -113,8 +126,22 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
           ? { deviceId: { exact: selectedMic } }
           : true;
         micStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints });
-      } catch {
-        // Mic not available — continue with screen only
+        setMicStatus("granted");
+      } catch (micErr: unknown) {
+        const name = micErr instanceof DOMException ? micErr.name : "";
+        if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+          setMicStatus("denied");
+        } else if (name === "NotFoundError") {
+          setMicStatus("unavailable");
+        } else {
+          setMicStatus("denied");
+        }
+        // Stop screen share and block recording since audio is required
+        screenStream.getTracks().forEach((t) => t.stop());
+        setError(
+          "Microphone access is required for PeerPull feedback recordings. Please allow microphone access in your browser settings and try again.",
+        );
+        return;
       }
 
       // Merge audio tracks
@@ -228,6 +255,7 @@ export function useScreenRecorder(options?: ScreenRecorderOptions) {
     error,
     warning,
     isSupported: typeof window !== "undefined" && !!navigator.mediaDevices?.getDisplayMedia,
+    micStatus,
     audioDevices,
     selectedMic,
     setSelectedMic,
