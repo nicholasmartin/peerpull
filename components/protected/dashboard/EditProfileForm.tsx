@@ -123,8 +123,13 @@ export default function EditProfileForm({ profile, userEmail }: EditProfileFormP
     }
 
     if (website && website.trim()) {
-      const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-      if (!urlPattern.test(website.trim())) {
+      let testUrl = website.trim();
+      if (!/^https?:\/\//i.test(testUrl)) {
+        testUrl = "https://" + testUrl;
+      }
+      try {
+        new URL(testUrl);
+      } catch {
         newErrors.website = "Please enter a valid URL";
       }
     }
