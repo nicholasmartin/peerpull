@@ -12,6 +12,16 @@ type Setting = {
   updated_at: string;
 };
 
+const BOOLEAN_KEYS = new Set(["platform_launched"]);
+
+function isBooleanSetting(key: string) {
+  return BOOLEAN_KEYS.has(key);
+}
+
+function toBoolDisplay(value: string): boolean {
+  return value === "true";
+}
+
 export default function SettingsEditor({ settings }: { settings: Setting[] }) {
   const [values, setValues] = useState<Record<string, string>>(
     Object.fromEntries(settings.map(s => [s.key, s.value]))
@@ -33,6 +43,21 @@ export default function SettingsEditor({ settings }: { settings: Setting[] }) {
     }
   };
 
+  const handleToggle = async (key: string) => {
+    const newValue = values[key] === "true" ? "false" : "true";
+    setValues((prev) => ({ ...prev, [key]: newValue }));
+    setSaving(key);
+    setError(null);
+    const result = await updateSetting(key, newValue);
+    setSaving(null);
+    if (result.error) {
+      setError(result.error);
+    } else {
+      setSaved(key);
+      setTimeout(() => setSaved(null), 2000);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {error && (
@@ -44,6 +69,8 @@ export default function SettingsEditor({ settings }: { settings: Setting[] }) {
         const original = setting.value;
         const current = values[setting.key];
         const isDirty = current !== original;
+        const isBoolean = isBooleanSetting(setting.key);
+        const isOn = toBoolDisplay(current);
 
         return (
           <Card key={setting.key}>
@@ -55,25 +82,48 @@ export default function SettingsEditor({ settings }: { settings: Setting[] }) {
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-3">
-                <input
-                  type="number"
-                  value={current}
-                  onChange={(e) =>
-                    setValues((prev) => ({ ...prev, [setting.key]: e.target.value }))
-                  }
-                  className="w-32 rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm  focus:ring-1 focus:ring-primary/30 focus:border-primary/50 outline-none"
-                />
-                <button
-                  onClick={() => handleSave(setting.key)}
-                  disabled={!isDirty || saving === setting.key}
-                  className={`px-4 py-2 text-sm font-medium rounded-md transition ${
-                    isDirty
-                      ? "bg-primary text-white hover:bg-primary-muted"
-                      : "bg-dark-surface text-dark-text-muted cursor-not-allowed"
-                  }`}
-                >
-                  {saving === setting.key ? "Saving..." : saved === setting.key ? "Saved!" : "Save"}
-                </button>
+                {isBoolean ? (
+                  <>
+                    <button
+                      onClick={() => handleToggle(setting.key)}
+                      disabled={saving === setting.key}
+                      className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full transition-colors ${
+                        isOn ? "bg-emerald-500" : "bg-dark-border"
+                      } ${saving === setting.key ? "opacity-50" : ""}`}
+                    >
+                      <span
+                        className={`inline-block h-5 w-5 rounded-full bg-white shadow transition-transform ${
+                          isOn ? "translate-x-6" : "translate-x-1"
+                        }`}
+                      />
+                    </button>
+                    <span className={`text-sm font-medium ${isOn ? "text-emerald-400" : "text-dark-text-muted"}`}>
+                      {saving === setting.key ? "Saving..." : saved === setting.key ? "Saved!" : isOn ? "Enabled" : "Disabled"}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <input
+                      type="number"
+                      value={current}
+                      onChange={(e) =>
+                        setValues((prev) => ({ ...prev, [setting.key]: e.target.value }))
+                      }
+                      className="w-32 rounded-md border border-dark-border bg-dark-surface px-3 py-2 text-sm focus:ring-1 focus:ring-primary/30 focus:border-primary/50 outline-none"
+                    />
+                    <button
+                      onClick={() => handleSave(setting.key)}
+                      disabled={!isDirty || saving === setting.key}
+                      className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                        isDirty
+                          ? "bg-primary text-white hover:bg-primary-muted"
+                          : "bg-dark-surface text-dark-text-muted cursor-not-allowed"
+                      }`}
+                    >
+                      {saving === setting.key ? "Saving..." : saved === setting.key ? "Saved!" : "Save"}
+                    </button>
+                  </>
+                )}
                 <span className="text-xs text-dark-text-muted ml-auto">
                   Key: <code className="bg-dark-surface px-1 rounded">{setting.key}</code>
                 </span>
