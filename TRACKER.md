@@ -1,25 +1,23 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-08 (Streamlined feedback flow + celebration page)
+> Last updated: 2026-03-10 (Synced GitHub issue states, added GH #29)
 
 ---
 
 ## Current Sprint
 
-**Focus:** Phase 4 manual testing + terminology cleanup before launch.
+**Focus:** Manual test notifications, fix remaining UX bugs, resilient video upload.
 
 | Priority | Feature | Status | Blocker |
 |----------|---------|--------|---------|
 | 1 | Manual test Phase 4 notifications (4.1–4.6) | ⬜ Not Started | Needs 2 users for lifecycle tests |
 | 2 | End-to-end user journey polish (4.8) | ⬜ Not Started | After 4.1–4.6 verified |
-| 3 | Standardize terminology: feedback vs review vs rating (GH #12) | ✅ Done | `551820a` — 31 files, build passes |
-| 4 | Redesign onboarding page (GH #7) | ✅ Done | `d6e0fcd` — standalone `/onboarding` route, 2-step branded flow |
-| 5 | Smart OAuth avatar management (GH #13) | ⬜ Not Started | Low priority — cosmetic |
-| 6 | React Email templates for notifications (GH #14) | ✅ Done | `a1c23b1` — 8 email files + pipeline wired, needs manual testing |
-| 7 | Notification deep links (GH #17) | ✅ Done | `8b9ff1e` — `link_url` column + 4 call sites wired, needs `supabase db push` |
-| 8 | Profile page improvements (GH #20) | ✅ Done | `33cb400` — email privacy, expanded expertise, badge styling, tab-free layout, dedicated edit page |
-| 9 | Streamlined feedback submission flow | ✅ Done | `c2ac2af` — single-page state machine, 3-step briefing, tab-close detection, celebration page, upload progress, GH #28 for resilient upload |
+| 3 | Header dropdown z-index issues (GH #29) | ⬜ Not Started | — |
+| 4 | Upload video immediately after recording (GH #28) | 🟡 Planned | Prevents data loss on page refresh |
+| 5 | Cross-browser screen recording — Safari/Firefox (GH #25) | 🟡 Partial | Chrome mic fix done, others remaining |
+| 6 | Smart OAuth avatar management (GH #13) | ⬜ Not Started | Low priority — cosmetic |
+| 7 | Harden submit_review_atomic RPC (GH #5) | ⬜ Not Started | Tech debt |
 
 ---
 
@@ -96,36 +94,38 @@
 
 ## GitHub Issues
 
-> Synced from [nicholasmartin/peerpull/issues](https://github.com/nicholasmartin/peerpull/issues) on 2026-03-03
+> Synced from [nicholasmartin/peerpull/issues](https://github.com/nicholasmartin/peerpull/issues) — last verified 2026-03-10
 
 | # | Title | State | Severity | Notes |
 |---|-------|-------|----------|-------|
 | [#2](https://github.com/nicholasmartin/peerpull/issues/2) | Signup with existing email shows success message instead of error | Closed | Medium | `identities` length check + verify-email page — `a2fb4ff` |
 | [#3](https://github.com/nicholasmartin/peerpull/issues/3) | Sidebar: allow expanding Feedback menu when user is not active | Closed | Low | Resolved by removing lock gating entirely — `5a413a0` |
 | [#4](https://github.com/nicholasmartin/peerpull/issues/4) | Redesign auth pages to match dark gold theme | Closed | Medium | Verified and closed — commit `f885321` applied dark/gold theme to all auth pages |
+| [#5](https://github.com/nicholasmartin/peerpull/issues/5) | Harden submit_review_atomic RPC against drift and complexity | Open | Medium | ⬜ Not started |
 | [#6](https://github.com/nicholasmartin/peerpull/issues/6) | Redirect to email verification page after signup | Closed | Medium | Dedicated verify-email page — `a2fb4ff` |
-| [#7](https://github.com/nicholasmartin/peerpull/issues/7) | Redesign onboarding page — update logos, copy, and visual polish | Open | Medium | ✅ Done — `d6e0fcd`, standalone `/onboarding` route, 2-step branded flow |
+| [#7](https://github.com/nicholasmartin/peerpull/issues/7) | Redesign onboarding page — update logos, copy, and visual polish | Closed | Medium | ✅ Done — `d6e0fcd`, standalone `/onboarding` route, 2-step branded flow |
+| [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Closed | Medium | ✅ Done — `15eb1e5` |
+| [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Closed | Low | ✅ Done — `f6431de` |
 | [#10](https://github.com/nicholasmartin/peerpull/issues/10) | Admin activate user silently fails — RLS blocks update | Closed | High | Fixed — SECURITY DEFINER RPCs |
-| [#8](https://github.com/nicholasmartin/peerpull/issues/8) | Clean up all placeholder, dummy, and non-functional content | Open | Medium | ✅ Done — `15eb1e5` |
-| [#9](https://github.com/nicholasmartin/peerpull/issues/9) | Clean up sidebar navigation for waitlisted users | Open | Low | ✅ Done — `f6431de` |
-| [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Open | Medium | ✅ Done — `3e2dbcd`, CSS var foundation, 14 visual bug fixes, ThemeProvider wired |
-| [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | Refresh provider avatar on login, preserve custom uploads |
-| [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Open | Medium | ✅ Done — `551820a`, 31 files, UI-only, no DB changes |
-| [#14](https://github.com/nicholasmartin/peerpull/issues/14) | Use React Email for templated notification emails | Open | Medium | ✅ Done — `a1c23b1`, needs manual testing with Mailgun |
-| [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Open | Medium | ✅ Done — `93e7b53` |
-| [#16](https://github.com/nicholasmartin/peerpull/issues/16) | Add user-configurable text size preference | Open | Low | ✅ Done — `8b9ff1e`, TextSizeContext + appearance page wired |
-| [#17](https://github.com/nicholasmartin/peerpull/issues/17) | Notification deep links to detail pages | Open | Medium | ✅ Done — `8b9ff1e`, needs `supabase db push` for migration |
-| [#18](https://github.com/nicholasmartin/peerpull/issues/18) | Allow users to edit feedback requests after creation | Open | Medium | ✅ Done — `7b382fd`, edit/close/publish actions, shared form, confirmation modal, Live status rename |
-| [#19](https://github.com/nicholasmartin/peerpull/issues/19) | Public-facing user profiles | Open | Medium | Future feature request |
-| [#20](https://github.com/nicholasmartin/peerpull/issues/20) | Profile page improvements (email privacy, expertise, layout) | Open | Medium | ✅ Done — `33cb400`, needs `supabase db push` for migration |
-| [#21](https://github.com/nicholasmartin/peerpull/issues/21) | Inline field-level validation on auth forms | Open | Low | UX polish, not blocking |
-| [#22](https://github.com/nicholasmartin/peerpull/issues/22) | Handle identity linking for social + email login | Open | High | ✅ Done — `ON CONFLICT` guard in `handle_new_user()`, migration pushed |
-| [#23](https://github.com/nicholasmartin/peerpull/issues/23) | Enforce onboarding bypass on dashboard sub-routes | Open | High | ✅ Done — onboarding redirect moved to dashboard layout |
-| [#24](https://github.com/nicholasmartin/peerpull/issues/24) | Persist referral code across all public pages | Open | Medium | ✅ Done — `db2ecf8`, middleware cookie (90-day TTL), signup/OAuth/callback all read cookie fallback, invite link now uses homepage |
-| [#25](https://github.com/nicholasmartin/peerpull/issues/25) | Cross-browser screen recording: Chrome permission errors, Safari/Firefox compatibility | Open | Medium | 🟡 Chrome mic permission fix done (`ec8d132`), Safari/Firefox compatibility remaining |
-| [#26](https://github.com/nicholasmartin/peerpull/issues/26) | Theme toggle requires extra click (state desync) | Open | Medium | ✅ Done — synced ThemeContext from localStorage, removed "system" dead code, appearance page uses context |
-| [#27](https://github.com/nicholasmartin/peerpull/issues/27) | Completed feedback rows not clickable, no detail view for reviewers | Open | Medium | ✅ Done — `345aa29`, clickable rows + `/dashboard/feedback/[id]` detail page, Helpful/Unhelpful rename |
-| [#28](https://github.com/nicholasmartin/peerpull/issues/28) | Upload video to storage immediately after recording stops | Open | Medium | 🟡 Planned — prevents data loss on page refresh during submit step |
+| [#11](https://github.com/nicholasmartin/peerpull/issues/11) | Audit light/dark theme system and plan for dual-theme support | Closed | Medium | ✅ Done — `3e2dbcd`, CSS var foundation, 14 visual bug fixes, ThemeProvider wired |
+| [#12](https://github.com/nicholasmartin/peerpull/issues/12) | Standardize terminology: feedback vs review vs rating | Closed | Medium | ✅ Done — `551820a`, 31 files, UI-only, no DB changes |
+| [#13](https://github.com/nicholasmartin/peerpull/issues/13) | Smart avatar management for OAuth users | Open | Low | ⬜ Not started — refresh provider avatar on login, preserve custom uploads |
+| [#14](https://github.com/nicholasmartin/peerpull/issues/14) | Use React Email for templated notification emails | Closed | Medium | ✅ Done — `a1c23b1`, needs manual testing with Mailgun |
+| [#15](https://github.com/nicholasmartin/peerpull/issues/15) | Add consistent loading indicators across all interactions | Closed | Medium | ✅ Done — `93e7b53` |
+| [#16](https://github.com/nicholasmartin/peerpull/issues/16) | Add user-configurable text size preference | Closed | Low | ✅ Done — `8b9ff1e`, TextSizeContext + appearance page wired |
+| [#17](https://github.com/nicholasmartin/peerpull/issues/17) | Notification deep links to detail pages | Closed | Medium | ✅ Done — `8b9ff1e`, `link_url` column + 4 call sites |
+| [#18](https://github.com/nicholasmartin/peerpull/issues/18) | Allow users to edit feedback requests after creation | Closed | Medium | ✅ Done — `7b382fd`, edit/close/publish actions, shared form, confirmation modal |
+| [#19](https://github.com/nicholasmartin/peerpull/issues/19) | Public-facing user profiles | Open | Medium | ⬜ Not started — future feature |
+| [#20](https://github.com/nicholasmartin/peerpull/issues/20) | Profile page improvements (email privacy, expertise, layout) | Closed | Medium | ✅ Done — `33cb400` |
+| [#21](https://github.com/nicholasmartin/peerpull/issues/21) | Inline field-level validation on auth forms | Open | Low | ⬜ Not started — UX polish |
+| [#22](https://github.com/nicholasmartin/peerpull/issues/22) | Handle identity linking for social + email login | Open | Medium | ✅ Done — `ON CONFLICT` guard in `handle_new_user()`, migration pushed |
+| [#23](https://github.com/nicholasmartin/peerpull/issues/23) | Enforce onboarding bypass on dashboard sub-routes | Closed | High | ✅ Done — onboarding redirect moved to dashboard layout |
+| [#24](https://github.com/nicholasmartin/peerpull/issues/24) | Persist referral code across all public pages | Closed | Medium | ✅ Done — `db2ecf8`, middleware cookie (90-day TTL) |
+| [#25](https://github.com/nicholasmartin/peerpull/issues/25) | Cross-browser screen recording: Chrome permission errors, Safari/Firefox compatibility | Open | Medium | 🟡 Chrome mic permission fix done (`ec8d132`), Safari/Firefox remaining |
+| [#26](https://github.com/nicholasmartin/peerpull/issues/26) | Theme toggle requires extra click (state desync) | Closed | Medium | ✅ Done — synced ThemeContext from localStorage |
+| [#27](https://github.com/nicholasmartin/peerpull/issues/27) | Completed feedback rows not clickable, no detail view for reviewers | Closed | Medium | ✅ Done — `345aa29`, clickable rows + detail page |
+| [#28](https://github.com/nicholasmartin/peerpull/issues/28) | Upload video to storage immediately after recording stops | Open | Medium | 🟡 Planned — prevents data loss on page refresh |
+| [#29](https://github.com/nicholasmartin/peerpull/issues/29) | Header dropdowns overlap and z-index issues in top navigation | Open | Medium | ⬜ Not started |
 
 ---
 
