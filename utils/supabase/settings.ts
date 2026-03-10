@@ -21,7 +21,7 @@ const DEFAULTS: SystemSettings = {
   review_cost_amount: 2,
   first_review_bonus_amount: 2,
   referral_bonus_amount: 5,
-  active_project_limit: 1,
+  active_project_limit: 3,
   auto_requeue_limit: 3,
   auto_requeue_min_balance: 1,
   review_claim_timeout_minutes: 10,
