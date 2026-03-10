@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/client";
 import { injectPoints, injectPointsToAll, activateUser, activateAllWaitlisted } from "../actions";
@@ -195,8 +196,10 @@ export default function AdminUsersPage() {
               <tbody>
                 {users.map((u) => (
                   <tr key={u.id} className="border-b border-dark-border/50">
-                    <td className="px-4 py-3 font-medium text-dark-text">
-                      {u.first_name} {u.last_name}
+                    <td className="px-4 py-3 font-medium">
+                      <Link href={`/dashboard/admin/users/${u.id}`} className="text-primary hover:underline">
+                        {u.first_name} {u.last_name}
+                      </Link>
                     </td>
                     <td className="px-4 py-3">
                       <span className={`font-medium ${u.peer_points_balance > 0 ? "text-green-400" : "text-gray-500"}`}>

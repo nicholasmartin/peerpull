@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-10 (Synced GitHub issue states, added GH #29)
+> Last updated: 2026-03-10 (Admin user detail page implemented)
 
 ---
 
@@ -153,6 +153,7 @@
 | Sidebar nav restructure: Projects + Feedback top-level menus | ✅ Done | `c348750`, old routes converted to redirects for backward compat |
 | Streamlined feedback submission: single-page flow | ✅ Done | `c2ac2af` — 5 new components, state machine, tab title countdown, mic readiness gate, celebration page |
 | [#28](https://github.com/nicholasmartin/peerpull/issues/28) | Upload video to storage immediately after recording | 🟡 Planned | GH issue created, prevents data loss on page refresh |
+| Admin user detail page (`/dashboard/admin/users/[id]`) | ✅ Done | `670c7fb`, plan: `.agents/plans/admin-user-detail-page.md` |
 
 ---
 
