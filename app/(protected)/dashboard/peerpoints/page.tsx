@@ -111,14 +111,16 @@ export default async function PeerPointsPage() {
                             {t.amount > 0 ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
                           </div>
                           <div className="font-medium text-dark-text">
-                            {{
-                              earned_review: "Feedback submitted",
-                              spent_submission: "Feedback Request submitted",
-                              signup_bonus: "Welcome bonus",
-                              first_review_bonus: "First feedback bonus",
-                              referral_bonus: "Referral bonus",
-                              admin_injection: "Bonus points",
-                            }[t.type as string] || t.type}
+                            {t.type === 'admin_injection' && t.reason
+                              ? t.reason
+                              : {
+                                  earned_review: "Feedback submitted",
+                                  spent_submission: "Feedback Request submitted",
+                                  signup_bonus: "Welcome bonus",
+                                  first_review_bonus: "First feedback bonus",
+                                  referral_bonus: "Referral bonus",
+                                  admin_injection: "Bonus points",
+                                }[t.type as string] || t.type}
                           </div>
                         </div>
                       </td>
