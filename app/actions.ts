@@ -789,10 +789,12 @@ export async function submitOnboardingProject(formData: FormData) {
 
   // For live projects, queue position is auto-assigned by the trg_auto_queue_position trigger on insert
 
-  // Transition status from onboarding to waitlisted
+  // Transition status: active if platform is launched, waitlisted otherwise
+  const settings = await getSettings();
+  const newStatus = settings.platform_launched ? 'active' : 'waitlisted';
   const { error: statusError } = await supabase
     .from("profiles")
-    .update({ status: 'waitlisted' })
+    .update({ status: newStatus })
     .eq("id", user.id);
 
   if (statusError) {
