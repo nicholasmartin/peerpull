@@ -1,7 +1,7 @@
 # PeerPull — Project Tracker
 
 > **Single source of truth for what's done, what's next, and what's blocked.**
-> Last updated: 2026-03-13 (Phase 6.2 planned)
+> Last updated: 2026-03-14 (Phase 6.2 bug fixes from manual testing)
 >
 > **Archive:** Completed phases 1-3, 5 and resolved issues moved to `docs/tracker-archive.md`
 
@@ -47,7 +47,7 @@
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
 | 6.1 | API layer + database foundation | §12 Phase 1 | ✅ Done | `4f141d3`, Zod validation, JWT auth, 7 route handlers, `external_reviews` table, migration `20260314000000` |
-| 6.2 | Chrome extension core (auth, side panel, recording) | §12 Phase 2 | 🟡 Planned | Plan: `.agents/plans/phase-6-2-chrome-extension-core.md`. WXT + React 19 + TailwindCSS, offscreen doc for MediaRecorder |
+| 6.2 | Chrome extension core (auth, side panel, recording) | §12 Phase 2 | ✅ Done | WXT 0.20 + React 19 + TailwindCSS. Side panel auth, tab capture recording, offscreen MediaRecorder, signed URL upload. Build passes, 0 TS errors. Manual testing in progress, 3 bugs fixed (mic permission, tabCapture MV3, upload method). |
 | 6.3 | Internal + external review flows | §12 Phase 3 | ⬜ Not Started | Queue integration, metadata extraction, page generation |
 | 6.4 | Shareable pages + dashboard integration | §12 Phase 4 | ⬜ Not Started | Public pages at `/r/[code]/[slug]`, PostHog tracking |
 
