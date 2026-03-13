@@ -46,7 +46,7 @@
 
 | # | Feature | PRD Ref | Status | Notes |
 |---|---------|---------|--------|-------|
-| 6.1 | API layer + database foundation | §12 Phase 1 | ✅ Done | Zod validation, JWT auth, 7 route handlers, `external_reviews` table, migration `20260314000000` |
+| 6.1 | API layer + database foundation | §12 Phase 1 | ✅ Done | `4f141d3`, Zod validation, JWT auth, 7 route handlers, `external_reviews` table, migration `20260314000000` |
 | 6.2 | Chrome extension core (auth, side panel, recording) | §12 Phase 2 | ⬜ Not Started | Manifest V3, `chrome.tabCapture`, pause/resume |
 | 6.3 | Internal + external review flows | §12 Phase 3 | ⬜ Not Started | Queue integration, metadata extraction, page generation |
 | 6.4 | Shareable pages + dashboard integration | §12 Phase 4 | ⬜ Not Started | Public pages at `/r/[code]/[slug]`, PostHog tracking |
