@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
   const parsed = SubmitReviewSchema.safeParse(body);
   if (!parsed.success) {
-    return apiError("VALIDATION_ERROR", parsed.error.errors[0].message, 400);
+    return apiError("VALIDATION_ERROR", parsed.error.issues[0].message, 400);
   }
 
   const { review_id, video_url, duration, rating, strengths, improvements, signal_follow, signal_engage, signal_invest } = parsed.data;

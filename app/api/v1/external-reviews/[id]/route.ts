@@ -23,7 +23,7 @@ export async function PATCH(
 
   const parsed = UpdateExternalReviewSchema.safeParse(body);
   if (!parsed.success) {
-    return apiError("VALIDATION_ERROR", parsed.error.errors[0].message, 400);
+    return apiError("VALIDATION_ERROR", parsed.error.issues[0].message, 400);
   }
 
   // RLS ensures only the owner can update

@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
   const parsed = SignedUrlSchema.safeParse(body);
   if (!parsed.success) {
-    return apiError("VALIDATION_ERROR", parsed.error.errors[0].message, 400);
+    return apiError("VALIDATION_ERROR", parsed.error.issues[0].message, 400);
   }
 
   const { filename, content_type } = parsed.data;

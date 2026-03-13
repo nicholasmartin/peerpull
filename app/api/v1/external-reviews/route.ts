@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 
   const parsed = CreateExternalReviewSchema.safeParse(body);
   if (!parsed.success) {
-    return apiError("VALIDATION_ERROR", parsed.error.errors[0].message, 400);
+    return apiError("VALIDATION_ERROR", parsed.error.issues[0].message, 400);
   }
 
   // Get reviewer's referral code for the shareable URL
