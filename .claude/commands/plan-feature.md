@@ -16,9 +16,13 @@ Transform a feature request into a **comprehensive implementation plan** through
 
 ## Planning Process
 
-### Phase 0: Tracker Context
+### Phase 0: Tracker & PRD Context
 
-- Read `TRACKER.md` at project root
+- Read `TRACKER.md` at project root for active work and roadmap
+- If the feature relates to completed phases, check `docs/tracker-archive.md` for historical context
+- Read the relevant PRD for detailed feature specs:
+  - `.claude/PRD.md` for core platform features (Phases 1-5)
+  - `.claude/PRD-extension-growth.md` for Chrome extension and shareable pages (Phase 6+)
 - Identify where the requested feature sits in the project roadmap (which phase, which item)
 - Check if there are dependencies on other features that aren't done yet
 - Note any related completed work that provides context

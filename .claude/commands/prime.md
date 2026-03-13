@@ -20,9 +20,10 @@ On Linux, run: `tree -L 3 -I 'node_modules|__pycache__|.git|dist|build'`
 
 ### 2. Read Core Documentation
 
-- Read the PRD.md or similar spec file
+- Read PRD files in `.claude/` directory (core platform PRD + any supplemental PRDs like `PRD-extension-growth.md`)
 - Read CLAUDE.md or similar global rules file
 - Read README files at project root and major directories
+- Read `TRACKER.md` (active work) and note that completed phases are archived in `docs/tracker-archive.md`
 
 ### 3. Identify Key Files
 
