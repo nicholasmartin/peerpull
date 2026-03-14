@@ -227,14 +227,18 @@ async function uploadRecording(accessToken: string) {
       throw new Error(signedUrlJson.error.message || "Failed to get upload URL");
     }
 
-    const { signed_url, path } = signedUrlJson.data;
+    const { signed_url, token, path } = signedUrlJson.data;
     console.log("[PeerPull Upload] Got signed URL for path:", path);
 
     // Upload blob directly to Supabase Storage via signed URL.
-    // createSignedUploadUrl returns a URL that expects a POST, not PUT.
+    // createSignedUploadUrl returns a URL and token; the upload
+    // requires Authorization: Bearer <token> with the storage token.
     const uploadRes = await fetch(signed_url, {
-      method: "POST",
-      headers: { "Content-Type": contentType },
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": contentType,
+      },
       body: recordedBlob,
     });
 
